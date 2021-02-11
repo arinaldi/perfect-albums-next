@@ -1,0 +1,22 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "eslint-config-prettier",
+    "standard",
+    "standard-jsx"
+  ],
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "strict": ["error", "never"]
+  },
+  "env": {
+    "browser": true
+  }
+}

@@ -5,16 +5,26 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "lint": "eslint --ignore-path .gitignore .; exit 0",
     "start": "next start"
   },
   "dependencies": {
     "autoprefixer": "^9.8.6",
     "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",
-    "next": "9.5.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "swr": "^0.3.0",
+    "next": "^10.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "swr": "^0.4.2",
     "tailwindcss": "^1.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-jsx": "^8.1.0",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "prettier": "^2.0.5"
   }
 }

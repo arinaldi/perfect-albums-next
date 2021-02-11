@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import useSWR from 'swr';
 import { request, gql } from 'graphql-request';
 
@@ -34,10 +34,12 @@ export default function Home() {
         <Tester />
         <ul>
           {data.favorites.map((item, index) => (
-            <li key={index}>{item.artist} – {item.title}</li>
+            <li key={index}>
+              {item.artist} – {item.title}
+            </li>
           ))}
         </ul>
       </main>
     </div>
-  )
+  );
 }
