@@ -1,16 +1,26 @@
 import { useState } from 'react';
-
 import Link from 'next/link';
 
-const links = [
+import { DISPATCH_TYPES } from '../constants';
+import { useApp } from './Provider';
+
+const ROUTES = [
   { href: '/top-albums', label: 'Top Albums' },
   { href: '/perfect-songs', label: 'Perfect Songs' },
   { href: '/featured-songs', label: 'Featured Songs' },
   { href: '/new-releases', label: 'New Releases' },
 ];
 
-export default function NavBar() {
+export default function NavBar () {
+  const [state, dispatch] = useApp();
+  const { user: { isAuthenticated } } = state;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function handleSignout () {
+    dispatch({
+      type: DISPATCH_TYPES.SIGN_OUT_USER,
+    });
+  }
 
   return (
     <nav className="bg-gray-800">
@@ -37,24 +47,40 @@ export default function NavBar() {
             </div>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
-                {links.map(({ href, label }) => (
+                {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
                     <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{label}</a>
                   </Link>
                 ))}
+                {isAuthenticated && (
+                  <Link href="/admin">
+                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Link href="/signin">
-              <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</a>
-            </Link>
+            {isAuthenticated
+              ? (
+                <div onClick={handleSignout} className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  Sign Out
+                </div>
+              )
+              : (
+                <Link href="/signin">
+                  <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    Sign In
+                  </a>
+                </Link>
+              )
+            }
           </div>
         </div>
       </div>
       <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
-          {links.map(({ href, label }) => (
+          {ROUTES.map(({ href, label }) => (
             <Link key={href} href={href}>
               <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{label}</a>
             </Link>

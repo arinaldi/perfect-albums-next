@@ -9,14 +9,47 @@
   "extends": [
     "eslint:recommended",
     "eslint-config-prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react/recommended",
     "standard",
     "standard-jsx"
   ],
-  "plugins": ["react", "react-hooks"],
+  "plugins": [
+    "import",
+    "node",
+    "promise",
+    "react",
+    "react-hooks",
+    "standard"
+  ],
   "rules": {
-    "strict": ["error", "never"]
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": "error",
+    "indent": ["error", 2],
+    "import/order": [
+      "error",
+      { "groups": ["builtin", "external", "parent", "sibling", "index"] }
+    ],
+    "jsx-quotes": "off",
+    "no-console": "warn",
+    "no-unused-vars": ["error", { "varsIgnorePattern": "should|expect" }],
+    "quotes": ["error", "single"],
+    "react/jsx-fragments": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "semi": ["error", "always"],
+    "space-before-function-paren": "error",
+    "spaced-comment": "error"
   },
   "env": {
     "browser": true
+  },
+  "settings": {
+    "react": {
+      "version": "17.01"
+    }
   }
 }

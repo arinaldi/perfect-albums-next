@@ -1,3 +1,3 @@
-export default function PrefectSongs() {
-  return <div>Perfect Songs</div>
+export default function PrefectSongs () {
+  return <div>Perfect Songs</div>;
 }
