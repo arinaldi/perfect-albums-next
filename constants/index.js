@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://perfectalbums.herokuapp.com';
+export const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const DECADES = [
   {

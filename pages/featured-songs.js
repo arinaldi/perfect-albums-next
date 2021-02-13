@@ -14,8 +14,17 @@ export const GET_SONGS = gql`
 }
 `;
 
-export default function FeaturedSongs () {
-  const { data, error } = useSWR(GET_SONGS, fetcher);
+export async function getStaticProps () {
+  const { songs } = await fetcher(GET_SONGS);
+  return {
+    props: { songs },
+  };
+}
+
+export default function FeaturedSongs ({ songs }) {
+  const { data, error } = useSWR(GET_SONGS, fetcher, {
+    initialData: { songs },
+  });
 
   if (!data) return <p>Loading...</p>;
   if (error) return <p>Error</p>;

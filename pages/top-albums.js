@@ -37,12 +37,21 @@ function AlbumCol ({ data, year, total }) {
   );
 }
 
-export default function TopAlbums () {
+export async function getStaticProps () {
+  const { favorites } = await fetcher(GET_FAVORITES);
+  return {
+    props: { favorites },
+  };
+}
+
+export default function TopAlbums ({ favorites }) {
   const router = useRouter();
-  const { data, error } = useSWR(GET_FAVORITES, fetcher);
+  const { data, error } = useSWR(GET_FAVORITES, fetcher, {
+    initialData: { favorites },
+  });
   const [value, setValue] = useState('label');
 
-  function handleChange(event) {
+  function handleChange (event) {
     const { value } = event.target;
     setValue(value);
     router.push(`${router.pathname}${value}`);
