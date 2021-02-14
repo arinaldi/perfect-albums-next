@@ -1,15 +1,13 @@
 import { Provider } from '../components/Provider';
-import Page from '../components/Page';
+import Layout from '../components/Layout';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <Provider>
-      <Page>
+      <Layout>
         <Component {...pageProps} />
-      </Page>
+      </Layout>
     </Provider>
   );
 }
-
-export default MyApp

@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import NavBar from './NavBar';
 
-export default function Page ({ children }) {
+export default function Layout({ children }) {
   return (
     <div>
       <Head>

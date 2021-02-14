@@ -3,6 +3,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
+  useState,
 } from 'react';
 
 import api from '../utils/api';
@@ -13,9 +14,9 @@ import { DISPATCH_TYPES } from '../constants';
 export const StateContext = createContext();
 export const DispatchContext = createContext();
 
-function Provider (props) {
-  const { children } = props;
+function Provider({ children }) {
   const [state, dispatch] = useReducer(providerReducer, providerInitialState);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -39,13 +40,14 @@ function Provider (props) {
           });
         }
       }
+      setIsLoading(false);
     };
 
     checkUser();
   }, []);
 
   return (
-    <StateContext.Provider value={state}>
+    <StateContext.Provider value={{ ...state, isLoading }}>
       <DispatchContext.Provider value={dispatch}>
         {children}
       </DispatchContext.Provider>
@@ -53,7 +55,7 @@ function Provider (props) {
   );
 }
 
-function useAppState () {
+function useAppState() {
   const context = useContext(StateContext);
 
   if (context === undefined) {
@@ -63,7 +65,7 @@ function useAppState () {
   return context;
 }
 
-function useAppDispatch () {
+function useAppDispatch() {
   const context = useContext(DispatchContext);
 
   if (context === undefined) {
@@ -73,7 +75,7 @@ function useAppDispatch () {
   return context;
 }
 
-function useApp () {
+function useApp() {
   return [useAppState(), useAppDispatch()];
 }
 

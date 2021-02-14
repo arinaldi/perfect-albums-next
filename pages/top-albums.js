@@ -5,7 +5,7 @@ import { gql } from 'graphql-request';
 
 import { DECADES, ICONS } from '../constants';
 import { formatFavorites, sortDesc } from '../utils';
-import { fetcher } from '../utils/api';
+import { gqlFetcher } from '../utils/api';
 
 const GET_FAVORITES = gql`
   {
@@ -17,11 +17,13 @@ const GET_FAVORITES = gql`
   }
 `;
 
-function AlbumCol ({ data, year, total }) {
+function AlbumCol({ data, year, total }) {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h4 id={year} className="text-xl font-semibold">{year}</h4>
+        <h4 id={year} className="text-xl font-semibold">
+          {year}
+        </h4>
         <div className="px-2 py-1 mr-4 rounded-md bg-gray-100 text-xl font-semibold">
           {total.toLocaleString()}
         </div>
@@ -37,21 +39,14 @@ function AlbumCol ({ data, year, total }) {
   );
 }
 
-export async function getStaticProps () {
-  const { favorites } = await fetcher(GET_FAVORITES);
-  return {
-    props: { favorites },
-  };
-}
-
-export default function TopAlbums ({ favorites }) {
+export default function TopAlbums({ favorites }) {
   const router = useRouter();
-  const { data, error } = useSWR(GET_FAVORITES, fetcher, {
+  const { data, error } = useSWR(GET_FAVORITES, gqlFetcher, {
     initialData: { favorites },
   });
   const [value, setValue] = useState('label');
 
-  function handleChange (event) {
+  function handleChange(event) {
     const { value } = event.target;
     setValue(value);
     router.push(`${router.pathname}${value}`);
@@ -75,15 +70,18 @@ export default function TopAlbums ({ favorites }) {
           onChange={handleChange}
           value={value}
         >
-          <option disabled value="label">Jump to decade</option>
+          <option disabled value="label">
+            Jump to decade
+          </option>
           {DECADES.map(({ label, link }) => (
-            <option key={label} value={link}>{label}</option>
+            <option key={label} value={link}>
+              {label}
+            </option>
           ))}
         </select>
       </div>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
-        {Object
-          .entries(formatFavorites(data.favorites))
+        {Object.entries(formatFavorites(data.favorites))
           .sort(sortDesc)
           .map(([year, favorites]) => (
             <AlbumCol
@@ -94,9 +92,16 @@ export default function TopAlbums ({ favorites }) {
             />
           ))}
       </div>
-      <a className="fixed bottom-0 right-0 p-5 text-gray-500" href='#top'>
+      <a className="fixed bottom-0 right-0 p-5 text-gray-500" href="#top">
         {`${ICONS.UP} Top`}
       </a>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const { favorites } = await gqlFetcher(GET_FAVORITES);
+  return {
+    props: { favorites },
+  };
 }

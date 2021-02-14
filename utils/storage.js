@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie';
 
-const KEY = 'perfectalbums';
+export const COOKIE_KEY = 'perfectalbums';
 
-export const setToken = (token) => {
-  Cookies.set(KEY, token, { expires: 7 });
-};
+export function setToken(token) {
+  Cookies.set(COOKIE_KEY, token, { expires: 7 });
+}
 
-export const getToken = () => (
-  Cookies.get(KEY) || ''
-);
+export function getToken() {
+  return Cookies.get(COOKIE_KEY) || '';
+}
 
-export const removeToken = () => {
-  Cookies.remove(KEY);
-};
+export function removeToken() {
+  Cookies.remove(COOKIE_KEY);
+}

@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 
 import { useAppDispatch } from '../components/Provider';
 import api from '../utils/api';
+import { isTokenValid } from '../utils/auth';
 import { DISPATCH_TYPES } from '../constants';
 
-export default function SignIn () {
+export default function SignIn() {
   const dispatch = useAppDispatch();
   const [values, setValues] = useState({
     username: '',
@@ -15,7 +16,7 @@ export default function SignIn () {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  function handleChange (event) {
+  function handleChange(event) {
     const { name, value } = event.target;
 
     if (error) setError('');
@@ -23,7 +24,7 @@ export default function SignIn () {
     setValues({ ...values, [name]: value });
   }
 
-  async function handleSubmit (event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
 
@@ -50,7 +51,9 @@ export default function SignIn () {
         <form onSubmit={handleSubmit} method="POST">
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="username" className="sr-only">Username</label>
+              <label htmlFor="username" className="sr-only">
+                Username
+              </label>
               <input
                 autoComplete="username"
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -64,7 +67,9 @@ export default function SignIn () {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
               <input
                 autoComplete="current-password"
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -92,4 +97,19 @@ export default function SignIn () {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const { isValid } = await isTokenValid(req);
+
+  if (isValid) {
+    return {
+      redirect: {
+        destination: '/admin',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }

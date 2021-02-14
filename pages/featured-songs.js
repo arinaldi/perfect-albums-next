@@ -1,28 +1,21 @@
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { fetcher } from '../utils/api';
+import { gqlFetcher } from '../utils/api';
 
 export const GET_SONGS = gql`
-{
-  songs {
-    id
-    artist
-    title
-    link
+  {
+    songs {
+      id
+      artist
+      title
+      link
+    }
   }
-}
 `;
 
-export async function getStaticProps () {
-  const { songs } = await fetcher(GET_SONGS);
-  return {
-    props: { songs },
-  };
-}
-
-export default function FeaturedSongs ({ songs }) {
-  const { data, error } = useSWR(GET_SONGS, fetcher, {
+export default function FeaturedSongs({ songs }) {
+  const { data, error } = useSWR(GET_SONGS, gqlFetcher, {
     initialData: { songs },
   });
 
@@ -45,8 +38,8 @@ export default function FeaturedSongs ({ songs }) {
             <a
               className="text-blue-600"
               href={link}
-              rel='noopener noreferrer'
-              target='_blank'
+              rel="noopener noreferrer"
+              target="_blank"
             >
               Listen
             </a>
@@ -55,4 +48,11 @@ export default function FeaturedSongs ({ songs }) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const { songs } = await gqlFetcher(GET_SONGS);
+  return {
+    props: { songs },
+  };
 }

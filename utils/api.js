@@ -1,18 +1,17 @@
 import { request } from 'graphql-request';
 
-import {
-  BASE_URL,
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from '../constants';
+import { BASE_URL, DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
 import { getToken } from './storage';
 
-export function fetcher (query) {
+export async function fetcher(...args) {
+  return fetch(...args).then(res => res.json());
+}
+
+export function gqlFetcher(query) {
   return request(`${BASE_URL}/graphql`, query);
 }
 
-function logout (dispatch) {
+function logout(dispatch) {
   dispatch({
     type: DISPATCH_TYPES.SIGN_OUT_USER,
   });
@@ -25,7 +24,7 @@ function logout (dispatch) {
   });
 }
 
-async function handleResponse (response, dispatch) {
+async function handleResponse(response, dispatch) {
   const { status, url } = response;
 
   if (status === 401) {
@@ -44,9 +43,9 @@ async function handleResponse (response, dispatch) {
   } else {
     return Promise.reject(data);
   }
-};
+}
 
-async function api (endpoint, options = {}) {
+async function api(endpoint, options = {}) {
   const { body, dispatch, ...customConfig } = options;
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
@@ -68,7 +67,7 @@ async function api (endpoint, options = {}) {
     config.body = JSON.stringify(body);
   }
 
-  const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
+  const response = await fetch(`${BASE_URL}${endpoint}`, config);
   return handleResponse(response, dispatch);
 }
 

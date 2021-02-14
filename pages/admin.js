@@ -1,20 +1,6 @@
-import Link from 'next/link';
+import { isTokenValid } from '../utils/auth';
 
-import { useAppState } from '../components/Provider';
-
-export default function Admin () {
-  const { user: { isAuthenticated } } = useAppState();
-
-  if (!isAuthenticated) {
-    return (
-      <div className="flex justify-center mt-16">
-        <Link href="/signin">
-          <a className="text-xl text-blue-600">Go to Signin</a>
-        </Link>
-      </div>
-    );
-  }
-
+export default function Admin() {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="mb-4">
@@ -22,4 +8,19 @@ export default function Admin () {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const { isValid } = await isTokenValid(req);
+
+  if (!isValid) {
+    return {
+      redirect: {
+        destination: '/top-albums',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }
