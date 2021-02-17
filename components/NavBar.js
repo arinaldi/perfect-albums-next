@@ -80,14 +80,14 @@ export default function NavBar() {
               <div className="flex space-x-4">
                 {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
-                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
                       {label}
                     </a>
                   </Link>
                 ))}
                 {isAuthenticated && !isLoading && (
                   <Link href="/admin">
-                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
                       Admin
                     </a>
                   </Link>
@@ -99,13 +99,13 @@ export default function NavBar() {
             {isAuthenticated && !isLoading ? (
               <div
                 onClick={handleSignout}
-                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium"
               >
                 Sign Out
               </div>
             ) : (
               <Link href="/signin">
-                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
                   Sign In
                 </a>
               </Link>
