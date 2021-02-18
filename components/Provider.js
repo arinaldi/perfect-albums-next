@@ -9,7 +9,7 @@ import React, {
 import api from '../utils/api';
 import { getToken } from '../utils/storage';
 import { providerReducer, providerInitialState } from '../reducers/provider';
-import { DISPATCH_TYPES } from '../constants';
+import { DISPATCH_TYPES, TOAST_TIMEOUT } from '../constants';
 
 export const StateContext = createContext();
 export const DispatchContext = createContext();
@@ -17,6 +17,14 @@ export const DispatchContext = createContext();
 function Provider({ children }) {
   const [state, dispatch] = useReducer(providerReducer, providerInitialState);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (state.toast.isOpen) {
+      setTimeout(() => {
+        dispatch({ type: DISPATCH_TYPES.CLOSE_TOAST });
+      }, TOAST_TIMEOUT);
+    }
+  }, [state.toast.isOpen]);
 
   useEffect(() => {
     const checkUser = async () => {

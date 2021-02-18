@@ -1,6 +1,8 @@
 import Head from 'next/head';
 
 import NavBar from './NavBar';
+import ModalContainer from './ModalContainer';
+import Toast from './Toast';
 
 export default function Layout({ children }) {
   return (
@@ -11,6 +13,8 @@ export default function Layout({ children }) {
       </Head>
       <NavBar />
       {children}
+      <ModalContainer />
+      <Toast />
     </div>
   );
 }

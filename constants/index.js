@@ -50,6 +50,14 @@ export const MESSAGES = {
   NO_DATA: 'No Data',
 };
 
+export const MODAL_TYPES = {
+  FEATURED_SONGS_CREATE: 'Create Featured Song',
+  FEATURED_SONGS_DELETE: 'Delete Featured Song',
+  NEW_RELEASE_CREATE: 'Create New Release',
+  NEW_RELEASE_EDIT: 'Edit New Release',
+  NEW_RELEASE_DELETE: 'Delete New Release',
+};
+
 export const MONTHS = [
   'Jan',
   'Feb',
@@ -64,6 +72,8 @@ export const MONTHS = [
   'Nov',
   'Dec',
 ];
+
+export const TOAST_TIMEOUT = 2500;
 
 export const TOAST_TYPES = {
   SUCCESS: 'success',

@@ -22,10 +22,13 @@ export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function handleSignout() {
-    router.push('/top-albums');
     dispatch({
       type: DISPATCH_TYPES.SIGN_OUT_USER,
     });
+
+    if (router.pathname.startsWith('/admin')) {
+      router.push('/top-albums');
+    }
   }
 
   return (
@@ -117,7 +120,10 @@ export default function NavBar() {
         <div className="px-2 pt-2 pb-3 space-y-1">
           {ROUTES.map(({ href, label }) => (
             <Link key={href} href={href}>
-              <a className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+              <a
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 {label}
               </a>
             </Link>

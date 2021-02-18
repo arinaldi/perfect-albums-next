@@ -1,4 +1,4 @@
-import { request } from 'graphql-request';
+import { GraphQLClient } from 'graphql-request';
 
 import { BASE_URL, DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
 import { getToken } from './storage';
@@ -7,8 +7,15 @@ export async function fetcher(...args) {
   return fetch(...args).then(res => res.json());
 }
 
-export function gqlFetcher(query) {
-  return request(`${BASE_URL}/graphql`, query);
+export function gqlFetcher(query, variables = {}) {
+  const token = getToken();
+  const client = new GraphQLClient(`${BASE_URL}/graphql`, {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : '',
+    },
+  });
+
+  return client.request(query, variables);
 }
 
 function logout(dispatch) {
