@@ -15,7 +15,6 @@ function getToastColor(type) {
 export default function Toast() {
   const [state, dispatch] = useApp();
   const { isOpen, message, type } = state.toast;
-  const color = getToastColor(type);
 
   function closeToast() {
     dispatch({ type: DISPATCH_TYPES.CLOSE_TOAST });
@@ -25,8 +24,11 @@ export default function Toast() {
     <>
       {isOpen ? (
         <div
-          className={`z-50 absolute bottom-4 left-4 min flex justify-between items-center text-white px-6 py-4 border-0 rounded bg-${color}-500`}
-          style={{ minWidth: '400px' }}
+          className="opacity-50 z-50 absolute bottom-4 left-4 min flex justify-between items-center text-white px-6 py-4 border-0 rounded"
+          style={{
+            backgroundColor: getToastColor(type),
+            minWidth: '400px',
+          }}
         >
           <div>
             {message}
