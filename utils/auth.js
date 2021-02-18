@@ -4,6 +4,7 @@ import { BASE_URL } from '../constants';
 import { COOKIE_KEY } from './storage';
 
 export async function isTokenValid(req) {
+  console.log(req.headers.cookie, typeof req.headers.cookie);
   const cookies = cookie.parse(req.headers.cookie);
   const token = cookies[COOKIE_KEY];
 
