@@ -11,7 +11,7 @@ export default function Admin() {
 }
 
 export async function getServerSideProps({ req }) {
-  const { isValid } = await isTokenValid(req);
+  const isValid = await isTokenValid(req);
 
   if (!isValid) {
     return {

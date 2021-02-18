@@ -1,14 +1,10 @@
-import cookie from 'cookie';
-
 import { BASE_URL } from '../constants';
 import { COOKIE_KEY } from './storage';
 
 export async function isTokenValid(req) {
-  console.log(req.headers.cookie, typeof req.headers.cookie);
-  const cookies = cookie.parse(req.headers.cookie);
-  const token = cookies[COOKIE_KEY];
+  const token = req.cookies[COOKIE_KEY];
 
-  if (!token) return { isValid: null, token: null };
+  if (!token) return false;
 
   const { status } = await fetch(`${BASE_URL}/api/auth`, {
     headers: {
@@ -17,5 +13,5 @@ export async function isTokenValid(req) {
     },
   });
 
-  return { isValid: status === 200, token };
+  return status === 200;
 }
