@@ -4,11 +4,11 @@ import { useApp } from './Provider';
 function getToastColor(type) {
   switch (type) {
   case TOAST_TYPES.SUCCESS:
-    return 'green';
+    return '#48BB78';
   case TOAST_TYPES.ERROR:
-    return 'red';
+    return '#F56566';
   default:
-    return 'gray';
+    return '#A0AEC0';
   }
 }
 
@@ -24,10 +24,10 @@ export default function Toast() {
     <>
       {isOpen ? (
         <div
-          className="opacity-50 z-50 absolute bottom-4 left-4 min flex justify-between items-center text-white px-6 py-4 border-0 rounded"
+          className="z-50 absolute bottom-4 left-4 min flex justify-between items-center text-white px-6 py-4 border-0 rounded"
           style={{
             backgroundColor: getToastColor(type),
-            minWidth: '400px',
+            minWidth: '340px',
           }}
         >
           <div>
