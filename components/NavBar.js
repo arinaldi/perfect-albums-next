@@ -21,6 +21,10 @@ export default function NavBar() {
   } = state;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  function closeMenu() {
+    setIsMenuOpen(false);
+  }
+
   function handleSignout() {
     dispatch({
       type: DISPATCH_TYPES.SIGN_OUT_USER,
@@ -122,12 +126,22 @@ export default function NavBar() {
             <Link key={href} href={href}>
               <a
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={closeMenu}
               >
                 {label}
               </a>
             </Link>
           ))}
+          {isAuthenticated && !isLoading && (
+            <Link href="/admin">
+              <a
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={closeMenu}
+              >
+                Admin
+              </a>
+            </Link>
+          )}
         </div>
       </div>
     </nav>
