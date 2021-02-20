@@ -5,6 +5,7 @@ import { gql } from 'graphql-request';
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
 import { gqlFetcher } from '../utils/api';
 import { GET_SONGS } from '../pages/featured-songs';
+import useForm from '../hooks/useForm';
 import { useApp } from '../components/Provider';
 
 const CREATE_SONG = gql`
@@ -21,7 +22,7 @@ const CREATE_SONG = gql`
 export default function CreateSongModal() {
   const [state, dispatch] = useApp();
   const { mutate } = useSWR(GET_SONGS, gqlFetcher);
-  const [values, setValues] = useState({
+  const { values, handleChange, resetForm } = useForm({
     artist: '',
     title: '',
     link: '',
@@ -29,19 +30,11 @@ export default function CreateSongModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isOpen } = state.modal;
 
-  function handleChange({ target: { name, value } }) {
-    setValues({ ...values, [name]: value });
-  };
-
   function handleClose() {
     dispatch({
       type: DISPATCH_TYPES.CLOSE_MODAL,
     });
-    setValues({
-      artist: '',
-      title: '',
-      link: '',
-    });
+    resetForm();
   }
 
   async function handleSubmit(event) {
@@ -80,9 +73,7 @@ export default function CreateSongModal() {
             <div className="relative my-6 mx-auto w-11/12 lg:w-1/2 xl:w-1/3">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                  <h3 className="text-2xl font-semibold">
-                    Create Song
-                  </h3>
+                  <h3 className="text-2xl font-semibold">Create Song</h3>
                   <button
                     className="bg-transparent border-0 text-black text-2xl font-semibold outline-none focus:outline-none"
                     onClick={handleClose}
@@ -97,7 +88,10 @@ export default function CreateSongModal() {
                     <div className="bg-white p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6">
-                          <label htmlFor="artist" className="block text-sm font-medium text-gray-700">
+                          <label
+                            htmlFor="artist"
+                            className="block text-sm font-medium text-gray-700"
+                          >
                             Artist
                           </label>
                           <input
@@ -112,7 +106,10 @@ export default function CreateSongModal() {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                          <label
+                            htmlFor="title"
+                            className="block text-sm font-medium text-gray-700"
+                          >
                             Title
                           </label>
                           <input
@@ -127,7 +124,10 @@ export default function CreateSongModal() {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label htmlFor="link" className="block text-sm font-medium text-gray-700">
+                          <label
+                            htmlFor="link"
+                            className="block text-sm font-medium text-gray-700"
+                          >
                             Link
                           </label>
                           <input
@@ -155,7 +155,10 @@ export default function CreateSongModal() {
                       <button
                         className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50"
                         disabled={isSubmitting}
-                        style={{ minWidth: '135px', transition: 'all .15s ease' }}
+                        style={{
+                          minWidth: '135px',
+                          transition: 'all .15s ease',
+                        }}
                         type="submit"
                       >
                         {isSubmitting ? 'Saving...' : 'Save'}
