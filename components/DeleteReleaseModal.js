@@ -2,10 +2,10 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
-import { gqlFetcher } from '../utils/api';
-import { GET_RELEASES } from '../pages/new-releases';
-import { useApp } from '../components/Provider';
+import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
+import { gqlFetcher } from 'utils/api';
+import { GET_RELEASES } from 'pages/new-releases';
+import { useApp } from 'components/Provider';
 
 export const DELETE_RELEASE = gql`
   mutation DeleteRelease($id: ID!) {
@@ -62,9 +62,7 @@ export default function DeleteReleaseModal() {
             <div className="relative my-6 mx-auto w-11/12 lg:w-1/2 xl:w-1/3">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                  <h3 className="text-2xl font-semibold">
-                    Delete Release
-                  </h3>
+                  <h3 className="text-2xl font-semibold">Delete Release</h3>
                   <button
                     className="bg-transparent border-0 text-black text-2xl font-semibold outline-none focus:outline-none"
                     onClick={handleClose}
@@ -78,7 +76,8 @@ export default function DeleteReleaseModal() {
                   <div className="bg-white p-6">
                     <div className="grid grid-cols-6 gap-6">
                       <div className="col-span-6">
-                        Are you sure you want to delete {data.artist} &ndash; {data.title}?
+                        Are you sure you want to delete {data.artist} &ndash;{' '}
+                        {data.title}?
                       </div>
                     </div>
                   </div>

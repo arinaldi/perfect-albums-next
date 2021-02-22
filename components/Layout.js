@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-import NavBar from './NavBar';
-import ModalContainer from './ModalContainer';
-import Toast from './Toast';
+import NavBar from 'components/NavBar';
+import ModalContainer from 'components/ModalContainer';
+import Toast from 'components/Toast';
 
 export default function Layout({ children }) {
   return (

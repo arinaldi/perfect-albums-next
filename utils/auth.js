@@ -1,5 +1,5 @@
-import { BASE_URL } from '../constants';
-import { COOKIE_KEY } from './storage';
+import { BASE_URL } from 'constants/index';
+import { COOKIE_KEY } from 'utils/storage';
 
 export async function isTokenValid(req) {
   const token = req.cookies[COOKIE_KEY];

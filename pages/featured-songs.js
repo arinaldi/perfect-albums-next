@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, ICONS, MODAL_TYPES } from '../constants';
-import { gqlFetcher } from '../utils/api';
-import { useApp } from '../components/Provider';
+import { DISPATCH_TYPES, ICONS, MODAL_TYPES } from 'constants/index';
+import { gqlFetcher } from 'utils/api';
+import { useApp } from 'components/Provider';
 
 export const GET_SONGS = gql`
   {

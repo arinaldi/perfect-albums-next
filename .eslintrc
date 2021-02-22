@@ -43,6 +43,12 @@
   "settings": {
     "react": {
       "version": "17.01"
+    },
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules"],
+        "paths": ["."]
+      }
     }
   }
 }

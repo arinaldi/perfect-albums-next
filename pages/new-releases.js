@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, ICONS, MODAL_TYPES } from '../constants';
-import { formatReleases, sortByDate } from '../utils';
-import { gqlFetcher } from '../utils/api';
-import { useApp } from '../components/Provider';
+import { DISPATCH_TYPES, ICONS, MODAL_TYPES } from 'constants/index';
+import { formatReleases, sortByDate } from 'utils';
+import { gqlFetcher } from 'utils/api';
+import { useApp } from 'components/Provider';
 
 export const GET_RELEASES = gql`
   {
@@ -26,9 +26,7 @@ function DateCol({ data, date, onDelete, onEdit }) {
 
   return (
     <div>
-      <h4 className="text-xl font-semibold">
-        {date}
-      </h4>
+      <h4 className="text-xl font-semibold">{date}</h4>
       <ul data-testid={`list-${date}`} className="list-disc ml-6 p-1">
         {data.map(release => (
           <li key={release.id}>
@@ -58,7 +56,7 @@ function DateCol({ data, date, onDelete, onEdit }) {
   );
 }
 
-export default function NewReleases ({ releases }) {
+export default function NewReleases({ releases }) {
   const [state, dispatch] = useApp();
   const {
     isLoading,
@@ -103,9 +101,7 @@ export default function NewReleases ({ releases }) {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl sm:text-3xl font-semibold">
-          New Releases
-        </h1>
+        <h1 className="text-2xl sm:text-3xl font-semibold">New Releases</h1>
         {isAuthenticated && !isLoading && (
           <button
             className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"

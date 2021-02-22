@@ -1,7 +1,12 @@
 import { GraphQLClient } from 'graphql-request';
 
-import { BASE_URL, DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
-import { getToken } from './storage';
+import {
+  BASE_URL,
+  DISPATCH_TYPES,
+  MESSAGES,
+  TOAST_TYPES,
+} from 'constants/index';
+import { getToken } from 'utils/storage';
 
 export async function fetcher(...args) {
   return fetch(...args).then(res => res.json());

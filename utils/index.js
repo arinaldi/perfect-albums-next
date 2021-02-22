@@ -1,10 +1,8 @@
-import { MONTHS } from '../constants';
+import { MONTHS } from 'constants/index';
 
-const addZeroPrefix = (value) => (
-  value < 10 ? `0${value}` : value
-);
+const addZeroPrefix = value => (value < 10 ? `0${value}` : value);
 
-export const formatDate = (isoString) => {
+export const formatDate = isoString => {
   if (!isoString) return '';
 
   const date = new Date(isoString);
@@ -15,7 +13,7 @@ export const formatDate = (isoString) => {
   return `${year}-${addZeroPrefix(month)}-${addZeroPrefix(day)}`;
 };
 
-export const formatFavorites = (albums) => {
+export const formatFavorites = albums => {
   const results = {};
 
   albums.forEach(({ artist, title, year }) => {
@@ -31,7 +29,7 @@ export const formatFavorites = (albums) => {
   return results;
 };
 
-const formatReleaseDate = (isoString) => {
+const formatReleaseDate = isoString => {
   const newDate = new Date(isoString);
   const date = newDate.getUTCDate();
   const month = newDate.getUTCMonth();
@@ -41,25 +39,19 @@ const formatReleaseDate = (isoString) => {
 };
 
 export const sortByDate = (a, b) => {
-  const dateA = a[0] === 'TBD'
-    ? a[0]
-    : new Date(a[0]).toISOString();
-  const dateB = b[0] === 'TBD'
-    ? b[0]
-    : new Date(b[0]).toISOString();
+  const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
+  const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
 
   if (dateA < dateB) return -1;
   if (dateA > dateB) return 1;
   return 0;
 };
 
-export const formatReleases = (releases) => {
+export const formatReleases = releases => {
   const results = {};
 
-  releases.forEach((release) => {
-    const releaseDate = release.date
-      ? formatReleaseDate(release.date)
-      : 'TBD';
+  releases.forEach(release => {
+    const releaseDate = release.date ? formatReleaseDate(release.date) : 'TBD';
 
     if (results[releaseDate]) {
       results[releaseDate].push(release);

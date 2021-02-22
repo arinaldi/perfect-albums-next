@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { useAppDispatch } from '../components/Provider';
-import api from '../utils/api';
-import { isTokenValid } from '../utils/auth';
-import { DISPATCH_TYPES } from '../constants';
+import { useAppDispatch } from 'components/Provider';
+import api from 'utils/api';
+import { isTokenValid } from 'utils/auth';
+import { DISPATCH_TYPES } from 'constants/index';
 
 export default function SignIn() {
   const dispatch = useAppDispatch();

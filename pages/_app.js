@@ -1,10 +1,10 @@
 import router from 'next/router';
 import nProgress from 'nprogress';
 
-import { Provider } from '../components/Provider';
-import Layout from '../components/Layout';
-import '../styles/globals.css';
-import '../styles/nprogress.css';
+import { Provider } from 'components/Provider';
+import Layout from 'components/Layout';
+import 'styles/globals.css';
+import 'styles/nprogress.css';
 
 router.events.on('routeChangeStart', () => nProgress.start());
 router.events.on('routeChangeComplete', () => nProgress.done());

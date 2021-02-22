@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
-import { formatDate } from '../utils';
-import { gqlFetcher } from '../utils/api';
-import { GET_RELEASES } from '../pages/new-releases';
-import useForm from '../hooks/useForm';
-import { useApp } from '../components/Provider';
+import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
+import { formatDate } from 'utils';
+import { gqlFetcher } from 'utils/api';
+import { GET_RELEASES } from 'pages/new-releases';
+import useForm from 'hooks/useForm';
+import { useApp } from 'components/Provider';
 
 export const EDIT_RELEASE = gql`
   mutation EditRelease(

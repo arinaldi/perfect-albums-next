@@ -1,4 +1,4 @@
-import { isTokenValid } from '../utils/auth';
+import { isTokenValid } from 'utils/auth';
 
 export default function Admin() {
   return (

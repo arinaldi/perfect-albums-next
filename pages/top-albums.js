@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DECADES, ICONS } from '../constants';
-import { formatFavorites, sortDesc } from '../utils';
-import { gqlFetcher } from '../utils/api';
+import { DECADES, ICONS } from 'constants/index';
+import { formatFavorites, sortDesc } from 'utils';
+import { gqlFetcher } from 'utils/api';
 
 const GET_FAVORITES = gql`
   {

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { DISPATCH_TYPES } from '../constants';
-import { useApp } from './Provider';
+import { DISPATCH_TYPES } from 'constants/index';
+import { useApp } from 'components/Provider';
 
 const ROUTES = [
   { href: '/top-albums', label: 'Top Albums' },

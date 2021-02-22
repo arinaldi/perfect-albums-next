@@ -2,11 +2,11 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from '../constants';
-import { gqlFetcher } from '../utils/api';
-import { GET_RELEASES } from '../pages/new-releases';
-import useForm from '../hooks/useForm';
-import { useApp } from '../components/Provider';
+import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
+import { gqlFetcher } from 'utils/api';
+import { GET_RELEASES } from 'pages/new-releases';
+import useForm from 'hooks/useForm';
+import { useApp } from 'components/Provider';
 
 const CREATE_RELEASE = gql`
   mutation CreateRelease($artist: String!, $title: String!, $date: Date) {

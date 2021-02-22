@@ -6,10 +6,10 @@ import React, {
   useState,
 } from 'react';
 
-import api from '../utils/api';
-import { getToken } from '../utils/storage';
-import { providerReducer, providerInitialState } from '../reducers/provider';
-import { DISPATCH_TYPES, TOAST_TIMEOUT } from '../constants';
+import api from 'utils/api';
+import { getToken } from 'utils/storage';
+import { providerReducer, providerInitialState } from 'reducers/provider';
+import { DISPATCH_TYPES, TOAST_TIMEOUT } from 'constants/index';
 
 export const StateContext = createContext();
 export const DispatchContext = createContext();

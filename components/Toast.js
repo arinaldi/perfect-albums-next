@@ -1,14 +1,14 @@
-import { DISPATCH_TYPES, TOAST_TYPES } from '../constants';
-import { useApp } from './Provider';
+import { DISPATCH_TYPES, TOAST_TYPES } from 'constants/index';
+import { useApp } from 'components/Provider';
 
 function getToastColor(type) {
   switch (type) {
-  case TOAST_TYPES.SUCCESS:
-    return '#48BB78';
-  case TOAST_TYPES.ERROR:
-    return '#F56566';
-  default:
-    return '#A0AEC0';
+    case TOAST_TYPES.SUCCESS:
+      return '#48BB78';
+    case TOAST_TYPES.ERROR:
+      return '#F56566';
+    default:
+      return '#A0AEC0';
   }
 }
 
@@ -30,9 +30,7 @@ export default function Toast() {
             minWidth: '340px',
           }}
         >
-          <div>
-            {message}
-          </div>
+          <div>{message}</div>
           <button
             className="bg-transparent text-2xl font-semibold leading-none outline-none focus:outline-none"
             onClick={closeToast}
