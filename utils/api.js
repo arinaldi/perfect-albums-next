@@ -1,4 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
+import { mutate } from 'swr';
 
 import {
   BASE_URL,
@@ -8,9 +9,22 @@ import {
 } from 'constants/index';
 import { getToken } from 'utils/storage';
 
-export async function fetcher(...args) {
-  return fetch(...args).then(res => res.json());
+export function fetcher(url) {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json' };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return fetch(`${BASE_URL}${url}`, { headers }).then(res => res.json());
 }
+
+export function fetchAndCache(key) {
+  const request = fetcher(key);
+  mutate(key, request, false);
+  return request;
+};
 
 export function gqlFetcher(query, variables = {}) {
   const token = getToken();

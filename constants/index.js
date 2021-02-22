@@ -73,6 +73,13 @@ export const MONTHS = [
   'Dec',
 ];
 
+export const PER_PAGE = [25, 50, 100];
+
+export const SORT_DIRECTION = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
 export const TOAST_TIMEOUT = 2500;
 
 export const TOAST_TYPES = {

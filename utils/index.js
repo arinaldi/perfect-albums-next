@@ -1,8 +1,10 @@
-import { MONTHS } from 'constants/index';
+import { ICONS, MONTHS, SORT_DIRECTION } from 'constants/index';
 
-const addZeroPrefix = value => (value < 10 ? `0${value}` : value);
+function addZeroPrefix(value) {
+  return value < 10 ? `0${value}` : value;
+}
 
-export const formatDate = isoString => {
+export function formatDate(isoString) {
   if (!isoString) return '';
 
   const date = new Date(isoString);
@@ -11,9 +13,9 @@ export const formatDate = isoString => {
   const day = date.getUTCDate();
 
   return `${year}-${addZeroPrefix(month)}-${addZeroPrefix(day)}`;
-};
+}
 
-export const formatFavorites = albums => {
+export function formatFavorites(albums) {
   const results = {};
 
   albums.forEach(({ artist, title, year }) => {
@@ -27,27 +29,18 @@ export const formatFavorites = albums => {
   });
 
   return results;
-};
+}
 
-const formatReleaseDate = isoString => {
+function formatReleaseDate(isoString) {
   const newDate = new Date(isoString);
   const date = newDate.getUTCDate();
   const month = newDate.getUTCMonth();
   const year = newDate.getUTCFullYear();
 
   return `${date} ${MONTHS[month]} ${year}`;
-};
+}
 
-export const sortByDate = (a, b) => {
-  const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
-  const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
-
-  if (dateA < dateB) return -1;
-  if (dateA > dateB) return 1;
-  return 0;
-};
-
-export const formatReleases = releases => {
+export function formatReleases(releases) {
   const results = {};
 
   releases.forEach(release => {
@@ -61,6 +54,25 @@ export const formatReleases = releases => {
   });
 
   return results;
-};
+}
 
-export const sortDesc = (a, b) => b[0] - a[0];
+export function getSortIcon(direction) {
+  const { ASC, DESC } = SORT_DIRECTION;
+
+  if (!direction) return '';
+  if (direction === ASC) return `${ICONS.UP} `;
+  if (direction === DESC) return `${ICONS.DOWN} `;
+}
+
+export function sortByDate(a, b) {
+  const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
+  const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
+
+  if (dateA < dateB) return -1;
+  if (dateA > dateB) return 1;
+  return 0;
+}
+
+export function sortDesc(a, b) {
+  return b[0] - a[0];
+}
