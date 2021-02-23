@@ -1,33 +1,34 @@
 import { useRouter } from 'next/router';
 
-import { MESSAGES } from 'constants/index';
+import { BASE_URL, MESSAGES } from 'constants/index';
+import { COOKIE_KEY } from 'utils/storage';
 import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 
-export default function CreateAlbum () {
+export default function EditAlbum ({ album }) {
   const router = useRouter();
   const { mutate } = useAdminAlbums('/api/albums?page=1&per_page=25&search=&sort=&direction=');
   const { values, handleChange } = useForm({
-    artist: '',
-    title: '',
-    year: (new Date()).getFullYear().toString(),
-    cd: false,
-    aotd: false,
-    favorite: false,
+    artist: album.artist,
+    title: album.title,
+    year: album.year,
+    cd: album.cd,
+    aotd: album.aotd,
+    favorite: album.favorite,
   });
   const options = {
     body: values,
     callbacks: [mutate, () => router.push('/admin')],
-    method: 'POST',
-    path: '/api/albums',
-    successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
+    method: 'PUT',
+    path: `/api/albums/${album.id}`,
+    successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-      <h1 className="text-2xl sm:text-3xl font-semibold">Create Album</h1>
+      <h1 className="text-2xl sm:text-3xl font-semibold">Edit Album</h1>
       <div className="relative flex-auto">
         <form method="POST" onSubmit={handleSubmit}>
           <div className="bg-white p-6">
@@ -242,4 +243,24 @@ export default function CreateAlbum () {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ params, req }) {
+  const token = req.cookies[COOKIE_KEY];
+  const payload = {
+    props: { album: null },
+  };
+
+  if (!token) return payload;
+
+  const response = await fetch(`${BASE_URL}/api/albums/${params.id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  payload.props.album = data;
+
+  return payload;
 }

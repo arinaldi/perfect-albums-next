@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { ICONS, PER_PAGE, SORT_DIRECTION } from 'constants/index';
+import { BASE_URL, ICONS, PER_PAGE, SORT_DIRECTION } from 'constants/index';
 import { getSortIcon } from 'utils';
 import { fetchAndCache } from 'utils/api';
 import { isTokenValid } from 'utils/auth';
+import { COOKIE_KEY } from 'utils/storage';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import useDebounce from 'hooks/useDebounce';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
 
-export default function Admin() {
+export default function Admin({ data }) {
   const router = useRouter();
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,8 +21,8 @@ export default function Admin() {
   const debouncedSearch = useDebounce(searchText, 500);
   const searchRef = useRef(null);
   const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-  const preventFetch = false; // !debouncedSearch && searchText;
-  const { albums, total, isLoading } = useAdminAlbums(url, preventFetch);
+  const preventFetch = !debouncedSearch && searchText;
+  const { albums, total, isLoading } = useAdminAlbums(url, preventFetch, data);
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === Math.ceil(total / perPage);
 
@@ -170,7 +171,7 @@ export default function Admin() {
                           Artist
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
                           data-value="title"
                           onClick={handleSort}
                           scope="col"
@@ -179,7 +180,7 @@ export default function Admin() {
                           Title
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
                           data-value="year"
                           onClick={handleSort}
                           scope="col"
@@ -188,25 +189,25 @@ export default function Admin() {
                           Year
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           CD
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           AotD
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           Favorite
                         </th>
                         <th
-                          className="px-6 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           Actions
@@ -216,26 +217,41 @@ export default function Admin() {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {albums.map(album => (
                         <tr key={album.id} className="odd:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.artist}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.title}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.year}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.cd && ICONS.CHECK}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.aotd && ICONS.CHECK}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                             {album.favorite && ICONS.CHECK}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            Edit | Delete
+                          <td className="px-3 py-2 whitespace-nowrap text-sm text-gray-900">
+                            <button
+                              className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+                              onClick={() => {
+                                router.push(`/admin/edit/${album.id}`);
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="ml-1 py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+                              onClick={() => {
+                                router.push(`/admin/delete/${album.id}`);
+                              }}
+                            >
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -263,5 +279,19 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  return { props: {} };
+  const token = req.cookies[COOKIE_KEY];
+  const payload = {
+    props: { data: [] },
+  };
+
+  const response = await fetch(`${BASE_URL}/api/albums?page=1&per_page=25&search=&sort=&direction=`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = await response.json();
+  payload.props.data = data;
+
+  return payload;
 }
