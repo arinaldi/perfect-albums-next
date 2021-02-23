@@ -124,7 +124,9 @@ export default function Admin() {
           </button>
           <button
             className="ml-1 py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
-            onClick={() => alert('new')}
+            onClick={() => {
+              router.push('/admin/create');
+            }}
           >
             New
           </button>

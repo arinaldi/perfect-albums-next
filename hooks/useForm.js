@@ -10,8 +10,17 @@ export default function useForm(initialState = {}) {
 
   function handleChange(event) {
     const { name, value } = event.target;
+    let newValue = value;
 
-    setValues({ ...values, [name]: value });
+    if (name === 'year') {
+      newValue = value.replace(/\D/, '');
+    }
+
+    if (['aotd', 'cd', 'favorite'].includes(name)) {
+      newValue = value === 'true';
+    }
+
+    setValues({ ...values, [name]: newValue });
   }
 
   function resetForm() {
