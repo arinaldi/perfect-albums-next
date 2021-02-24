@@ -1,20 +1,15 @@
-import Head from 'next/head';
-
-import NavBar from 'components/NavBar';
-import ModalContainer from 'components/ModalContainer';
-import Toast from 'components/Toast';
-
-export default function Layout({ children }) {
+export default function Layout({ children, title, titleAction }) {
   return (
-    <div>
-      <Head>
-        <title>Perfect Albums</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <NavBar />
-      {children}
-      <ModalContainer />
-      <Toast />
+    <div className="max-w-7xl mx-auto p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl sm:text-3xl font-semibold">
+          {title}
+        </h1>
+        {titleAction}
+      </div>
+      <div className="relative flex-auto">
+        {children}
+      </div>
     </div>
   );
 }

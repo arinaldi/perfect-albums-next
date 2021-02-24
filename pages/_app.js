@@ -2,7 +2,7 @@ import router from 'next/router';
 import nProgress from 'nprogress';
 
 import { Provider } from 'components/Provider';
-import Layout from 'components/Layout';
+import PageWrapper from 'components/PageWrapper';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
 
@@ -13,9 +13,9 @@ router.events.on('routeChangeError', () => nProgress.done());
 export default function MyApp({ Component, pageProps }) {
   return (
     <Provider>
-      <Layout>
+      <PageWrapper>
         <Component {...pageProps} />
-      </Layout>
+      </PageWrapper>
     </Provider>
   );
 }
