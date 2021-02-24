@@ -1,9 +1,12 @@
-export default function Home() {
-  return (
-    <div className="p-4">
-      <main>
-        <h1 className="text-3xl font-semibold">Perfect Albums</h1>
-      </main>
-    </div>
-  );
+export default function HomePage() {
+  return null;
+}
+
+export function getServerSideProps() {
+  return {
+    redirect: {
+      destination: '/top-albums',
+      permanent: false,
+    },
+  };
 }
