@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
@@ -21,7 +21,7 @@ export default function CreateAlbumPage() {
   const options = {
     body: values,
     callbacks: [mutate, () => router.push({
-      pathname: '/admin',
+      pathname: ROUTES_ADMIN.base.href,
       query: { search },
     })],
     method: 'POST',

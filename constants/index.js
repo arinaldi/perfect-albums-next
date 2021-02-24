@@ -75,6 +75,20 @@ export const MONTHS = [
 
 export const PER_PAGE = [25, 50, 100];
 
+export const ROUTES = [
+  { href: '/top-albums', label: 'Top Albums' },
+  // { href: '/perfect-songs', label: 'Perfect Songs' },
+  { href: '/featured-songs', label: 'Featured Songs' },
+  { href: '/new-releases', label: 'New Releases' },
+];
+
+export const ROUTES_ADMIN = {
+  base: { href: '/admin', label: 'Admin' },
+  create: { href: '/admin/create', label: 'Admin Create' },
+  edit: { href: '/admin/edit', label: 'Admin Edit' },
+  delete: { href: '/admin/delete', label: 'Admin Delete' },
+};
+
 export const SORT_DIRECTION = {
   ASC: 'asc',
   DESC: 'desc',

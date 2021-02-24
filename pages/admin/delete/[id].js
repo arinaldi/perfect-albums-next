@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { BASE_URL, MESSAGES } from 'constants/index';
+import { BASE_URL, MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import { COOKIE_KEY } from 'utils/storage';
 import useSubmit from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
@@ -13,7 +13,7 @@ export default function DeleteAlbumPage({ album }) {
   const options = {
     body: null,
     callbacks: [mutate, () => router.push({
-      pathname: '/admin',
+      pathname: ROUTES_ADMIN.base.href,
       query: { search },
     })],
     method: 'DELETE',

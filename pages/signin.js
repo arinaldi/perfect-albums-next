@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { DISPATCH_TYPES } from 'constants/index';
+import { DISPATCH_TYPES, ROUTES_ADMIN } from 'constants/index';
 import api from 'utils/api';
 import { isTokenValid } from 'utils/auth';
 import { useAppDispatch } from 'components/Provider';
@@ -36,7 +36,7 @@ export default function SigninPage() {
         payload: data.token,
         type: DISPATCH_TYPES.SIGN_IN_USER,
       });
-      router.push('/admin');
+      router.push(ROUTES_ADMIN.base.href);
     } catch (error) {
       setIsSubmitting(false);
       setError(error.message);
@@ -60,7 +60,7 @@ export async function getServerSideProps({ req }) {
   if (isValid) {
     return {
       redirect: {
-        destination: '/admin',
+        destination: ROUTES_ADMIN.base.href,
         permanent: false,
       },
     };

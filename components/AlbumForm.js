@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { ROUTES_ADMIN } from 'constants/index';
+
 export default function AlbumForm({ isSubmitting, onChange, onSubmit, values }) {
   const router = useRouter();
   const { search } = router.query;
@@ -196,7 +198,7 @@ export default function AlbumForm({ isSubmitting, onChange, onSubmit, values }) 
           className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
           onClick={() => {
             router.push({
-              pathname: '/admin',
+              pathname: ROUTES_ADMIN.base.href,
               query: { search },
             });
           }}

@@ -2,18 +2,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { DISPATCH_TYPES } from 'constants/index';
+import { DISPATCH_TYPES, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useApp } from 'components/Provider';
-
-const ROUTES = [
-  { href: '/top-albums', label: 'Top Albums' },
-  // { href: '/perfect-songs', label: 'Perfect Songs' },
-  { href: '/featured-songs', label: 'Featured Songs' },
-  { href: '/new-releases', label: 'New Releases' },
-];
 
 export default function NavBar() {
   const router = useRouter();
+  const { pathname } = router;
   const [state, dispatch] = useApp();
   const {
     isLoading,
@@ -30,7 +24,7 @@ export default function NavBar() {
       type: DISPATCH_TYPES.SIGN_OUT_USER,
     });
 
-    if (router.pathname.startsWith('/admin')) {
+    if (pathname.startsWith(ROUTES_ADMIN.base)) {
       router.push('/top-albums');
     }
   }
@@ -87,15 +81,15 @@ export default function NavBar() {
               <div className="flex space-x-4">
                 {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
-                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
+                    <a className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium`}>
                       {label}
                     </a>
                   </Link>
                 ))}
                 {isAuthenticated && !isLoading && (
-                  <Link href="/admin">
-                    <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
-                      Admin
+                  <Link href={ROUTES_ADMIN.base.href}>
+                    <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium`}>
+                      {ROUTES_ADMIN.base.label}
                     </a>
                   </Link>
                 )}
@@ -125,7 +119,7 @@ export default function NavBar() {
           {ROUTES.map(({ href, label }) => (
             <Link key={href} href={href}>
               <a
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
                 onClick={closeMenu}
               >
                 {label}
@@ -133,12 +127,12 @@ export default function NavBar() {
             </Link>
           ))}
           {isAuthenticated && !isLoading && (
-            <Link href="/admin">
+            <Link href={ROUTES_ADMIN.base.href}>
               <a
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
                 onClick={closeMenu}
               >
-                Admin
+                {ROUTES_ADMIN.base.label}
               </a>
             </Link>
           )}

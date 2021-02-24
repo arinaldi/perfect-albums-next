@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { ICONS } from 'constants/index';
+import { ICONS, ROUTES_ADMIN } from 'constants/index';
 import { getSortIcon } from 'utils';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
@@ -62,7 +62,7 @@ export default function Admin({
             className="ml-1 py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
             onClick={() => {
               router.push({
-                pathname: '/admin/create',
+                pathname: ROUTES_ADMIN.create.href,
                 query: { search: searchText },
               });
             }}
@@ -178,7 +178,7 @@ export default function Admin({
                               className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
                               onClick={() => {
                                 router.push({
-                                  pathname: `/admin/edit/${album.id}`,
+                                  pathname: `${ROUTES_ADMIN.edit.href}/${album.id}`,
                                   query: { search: searchText },
                                 });
                               }}
@@ -189,7 +189,7 @@ export default function Admin({
                               className="ml-1 py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
                               onClick={() => {
                                 router.push({
-                                  pathname: `/admin/delete/${album.id}`,
+                                  pathname: `${ROUTES_ADMIN.delete.href}/${album.id}`,
                                   query: { search: searchText },
                                 });
                               }}
