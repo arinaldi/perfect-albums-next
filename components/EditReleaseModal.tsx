@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
+import { formatDate } from 'utils';
 import { gqlFetcher } from 'utils/api';
 import { GET_RELEASES } from 'pages/new-releases';
-import useForm from 'hooks/useForm';
+import useForm, { ReleaseInput } from 'hooks/useForm';
 import { useApp } from 'components/Provider';
 
-const CREATE_RELEASE = gql`
-  mutation CreateRelease($artist: String!, $title: String!, $date: Date) {
-    createRelease(artist: $artist, title: $title, date: $date) {
+export const EDIT_RELEASE = gql`
+  mutation EditRelease(
+    $id: ID!
+    $artist: String!
+    $title: String!
+    $date: Date
+  ) {
+    editRelease(id: $id, artist: $artist, title: $title, date: $date) {
       id
       artist
       title
@@ -19,16 +25,16 @@ const CREATE_RELEASE = gql`
   }
 `;
 
-export default function CreateReleaseModal() {
+const EditReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
+  const { data, isOpen } = state.modal;
   const { mutate } = useSWR(GET_RELEASES, gqlFetcher);
-  const { values, handleChange, resetForm } = useForm({
-    artist: '',
-    title: '',
-    date: '',
+  const { values, handleChange, resetForm } = useForm<ReleaseInput>({
+    artist: data.artist,
+    title: data.title,
+    date: formatDate(data.date),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { isOpen } = state.modal;
 
   function handleClose() {
     dispatch({
@@ -37,17 +43,17 @@ export default function CreateReleaseModal() {
     resetForm();
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await gqlFetcher(CREATE_RELEASE, values);
+      await gqlFetcher(EDIT_RELEASE, { ...values, id: data.id });
       setIsSubmitting(false);
       mutate();
       dispatch({
         payload: {
-          message: 'Release created successfully',
+          message: 'Release edited successfully',
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,
@@ -73,7 +79,7 @@ export default function CreateReleaseModal() {
             <div className="relative my-6 mx-auto w-11/12 lg:w-1/2 xl:w-1/3">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                  <h3 className="text-2xl font-semibold">Create Release</h3>
+                  <h3 className="text-2xl font-semibold">Edit Release</h3>
                   <button
                     className="bg-transparent border-0 text-black text-2xl font-semibold outline-none focus:outline-none"
                     onClick={handleClose}
@@ -174,4 +180,6 @@ export default function CreateReleaseModal() {
       ) : null}
     </>
   );
-}
+};
+
+export default EditReleaseModal;

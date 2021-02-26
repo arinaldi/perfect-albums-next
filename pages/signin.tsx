@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { DISPATCH_TYPES, ROUTES_ADMIN } from 'constants/index';
 import api from 'utils/api';
 import { isTokenValid } from 'utils/auth';
+import { COOKIE_KEY } from 'utils/storage';
 import { useAppDispatch } from 'components/Provider';
 import Signin from 'components/Signin';
 
@@ -34,7 +35,9 @@ const SigninPage: FC = () => {
       const { data } = await api('/api/signin', { body: values });
       setIsSubmitting(false);
       dispatch({
-        payload: data.token,
+        payload: {
+          data: data.token,
+        },
         type: DISPATCH_TYPES.SIGN_IN_USER,
       });
       router.push(ROUTES_ADMIN.base.href);
@@ -58,7 +61,8 @@ const SigninPage: FC = () => {
 export default SigninPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const isValid = await isTokenValid(req);
+  const token = req.cookies[COOKIE_KEY];
+  const isValid = await isTokenValid(token);
 
   if (isValid) {
     return {

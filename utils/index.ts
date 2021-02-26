@@ -1,10 +1,12 @@
 import { ICONS, MONTHS, SORT_DIRECTION } from 'constants/index';
+import { Release } from 'pages/new-releases';
+import { Favorite } from 'pages/top-albums';
 
-function addZeroPrefix(value) {
+function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
 }
 
-export function formatDate(isoString) {
+export function formatDate(isoString: string): string {
   if (!isoString) return '';
 
   const date = new Date(isoString);
@@ -15,23 +17,35 @@ export function formatDate(isoString) {
   return `${year}-${addZeroPrefix(month)}-${addZeroPrefix(day)}`;
 }
 
-export function formatFavorites(albums) {
-  const results = {};
+export interface ListItem {
+  artist: string;
+  title: string;
+  id?: string;
+}
 
-  albums.forEach(({ artist, title, year }) => {
-    const album = { artist, title };
+interface Results {
+  [key: string]: ListItem[];
+}
+
+type Tuple = [string, ListItem[]];
+
+export function formatFavorites(favorites: Favorite[]): Results {
+  const results: Results = {};
+
+  favorites.forEach(({ artist, title, year }) => {
+    const data = { artist, title };
 
     if (results[year]) {
-      results[year].push(album);
+      results[year].push(data);
     } else {
-      results[year] = [album];
+      results[year] = [data];
     }
   });
 
   return results;
 }
 
-function formatReleaseDate(isoString) {
+function formatReleaseDate(isoString: string) {
   const newDate = new Date(isoString);
   const date = newDate.getUTCDate();
   const month = newDate.getUTCMonth();
@@ -40,8 +54,8 @@ function formatReleaseDate(isoString) {
   return `${date} ${MONTHS[month]} ${year}`;
 }
 
-export function formatReleases(releases) {
-  const results = {};
+export function formatReleases(releases: Release[]): Results {
+  const results: Results = {};
 
   releases.forEach(release => {
     const releaseDate = release.date ? formatReleaseDate(release.date) : 'TBD';
@@ -56,15 +70,17 @@ export function formatReleases(releases) {
   return results;
 }
 
-export function getSortIcon(direction) {
+export function getSortIcon(direction: string): string {
   const { ASC, DESC } = SORT_DIRECTION;
 
   if (!direction) return '';
   if (direction === ASC) return `${ICONS.UP} `;
   if (direction === DESC) return `${ICONS.DOWN} `;
+
+  return '';
 }
 
-export function sortByDate(a, b) {
+export function sortByDate(a: Tuple, b: Tuple): number {
   const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
   const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
 
@@ -73,6 +89,6 @@ export function sortByDate(a, b) {
   return 0;
 }
 
-export function sortDesc(a, b) {
-  return b[0] - a[0];
+export function sortDesc(a: Tuple, b: Tuple): number {
+  return Number(b[0]) - Number(a[0]);
 }

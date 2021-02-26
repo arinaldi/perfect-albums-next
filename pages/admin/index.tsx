@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { PER_PAGE, SORT_DIRECTION } from 'constants/index';
 import { fetchAndCache } from 'utils/api';
 import { isTokenValid } from 'utils/auth';
+import { COOKIE_KEY } from 'utils/storage';
 import useDebounce from 'hooks/useDebounce';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import Admin from 'components/Admin';
@@ -14,7 +15,7 @@ const AdminPage: FC = () => {
   const { search } = router.query;
   const [searchText, setSearchText] = useState(typeof search === 'string' ? search : '');
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(PER_PAGE[0]);
+  const [perPage, setPerPage] = useState(PER_PAGE.twentyFive);
   const [sort, setSort] = useState('');
   const [direction, setDirection] = useState('');
   const debouncedSearch = useDebounce(searchText, 500);
@@ -50,7 +51,7 @@ const AdminPage: FC = () => {
 
   function handleFirst() {
     setCurrentPage(1);
-  };
+  }
 
   function handleLast() {
     const page = Math.ceil(total / perPage);
@@ -125,7 +126,8 @@ const AdminPage: FC = () => {
 export default AdminPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const isValid = await isTokenValid(req);
+  const token = req.cookies[COOKIE_KEY];
+  const isValid = await isTokenValid(token);
 
   if (!isValid) {
     return {

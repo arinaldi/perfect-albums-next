@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { BASE_URL, MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import { COOKIE_KEY } from 'utils/storage';
-import useForm from 'hooks/useForm';
+import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit, { Method } from 'hooks/useSubmit';
 import useAdminAlbums, { Album } from 'hooks/useAdminAlbums';
 import EditAlbum from 'components/EditAlbum';
@@ -17,7 +17,7 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
   const { mutate } = useAdminAlbums(`/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`);
-  const { values, handleChange } = useForm({
+  const { values, handleChange } = useForm<AlbumInput>({
     artist: album.artist,
     title: album.title,
     year: album.year,
@@ -42,7 +42,7 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
       isSubmitting={isSubmitting}
       onChange={handleChange}
       onSubmit={handleSubmit}
-      values={values}
+      values={values as AlbumInput}
     />
   );
 };

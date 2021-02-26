@@ -1,8 +1,16 @@
+import { FC, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
+import { Album } from 'hooks/useAdminAlbums';
 
-export default function DeleteAlbum({ album, isSubmitting, onSubmit }) {
+interface Props {
+  album: Album;
+  isSubmitting: boolean;
+  onSubmit: (event: FormEvent) => void;
+}
+
+const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
   const router = useRouter();
   const { search } = router.query;
 
@@ -44,4 +52,6 @@ export default function DeleteAlbum({ album, isSubmitting, onSubmit }) {
       </div>
     </div>
   );
-}
+};
+
+export default DeleteAlbum;

@@ -1,5 +1,8 @@
-import React, {
+import {
   createContext,
+  Dispatch,
+  FC,
+  ReactNode,
   useContext,
   useEffect,
   useReducer,
@@ -8,13 +11,17 @@ import React, {
 
 import api from 'utils/api';
 import { getToken } from 'utils/storage';
-import { providerReducer, providerInitialState } from 'reducers/provider';
+import { Action, providerReducer, providerInitialState, State } from 'reducers/provider';
 import { DISPATCH_TYPES, TOAST_TIMEOUT } from 'constants/index';
 
-export const StateContext = createContext();
-export const DispatchContext = createContext();
+interface Props {
+  children: ReactNode;
+}
 
-function Provider({ children }) {
+const StateContext = createContext<State>(providerInitialState);
+const DispatchContext = createContext<Dispatch<Action>>(() => undefined);
+
+const Provider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(providerReducer, providerInitialState);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,7 +43,9 @@ function Provider({ children }) {
 
           if (status === 200) {
             dispatch({
-              payload: token,
+              payload: {
+                data: token,
+              },
               type: DISPATCH_TYPES.SIGN_IN_USER,
             });
           } else {
@@ -61,9 +70,9 @@ function Provider({ children }) {
       </DispatchContext.Provider>
     </StateContext.Provider>
   );
-}
+};
 
-function useAppState() {
+function useAppState(): State {
   const context = useContext(StateContext);
 
   if (context === undefined) {
@@ -73,7 +82,7 @@ function useAppState() {
   return context;
 }
 
-function useAppDispatch() {
+function useAppDispatch(): Dispatch<Action> {
   const context = useContext(DispatchContext);
 
   if (context === undefined) {
@@ -83,7 +92,7 @@ function useAppDispatch() {
   return context;
 }
 
-function useApp() {
+function useApp(): [State, Dispatch<Action>] {
   return [useAppState(), useAppDispatch()];
 }
 

@@ -1,4 +1,24 @@
-export default function Pagination({ onFirst, onLast, onPrevious, onNext, currentPage, isFirstPage, isLastPage }) {
+import { FC } from 'react';
+
+interface Props {
+  currentPage: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  onFirst: () => void;
+  onLast: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
+}
+
+const Pagination: FC<Props> = ({
+  currentPage,
+  isFirstPage,
+  isLastPage,
+  onFirst,
+  onLast,
+  onNext,
+  onPrevious,
+}) => {
   return (
     <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
       <button
@@ -38,4 +58,6 @@ export default function Pagination({ onFirst, onLast, onPrevious, onNext, curren
       </button>
     </nav>
   );
-}
+};
+
+export default Pagination;

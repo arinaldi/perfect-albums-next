@@ -1,30 +1,20 @@
+import { ChangeEvent, FC } from 'react';
+
 import { DECADES, ICONS } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
+import { Favorite } from 'pages/top-albums';
 import Layout from 'components/Layout';
+import TopAlbumList from 'components/TopAlbumList';
 
-function AlbumCol({ data, year, total }) {
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        <h4 id={year} className="text-xl font-semibold">
-          {year}
-        </h4>
-        <div className="px-2 py-1 mr-4 rounded-md bg-gray-100 text-xl font-semibold">
-          {total.toLocaleString()}
-        </div>
-      </div>
-      <ul data-testid={`list-${year}`} className="list-disc ml-6 p-1">
-        {data.map((album, index) => (
-          <li key={index}>
-            {album.artist} &ndash; {album.title}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+interface Props {
+  data: {
+    favorites: Favorite[];
+  };
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  value: string;
 }
 
-export default function TopAlbums({ data, onChange, value }) {
+const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
   const Title = (
     <>
       Top Albums
@@ -58,7 +48,7 @@ export default function TopAlbums({ data, onChange, value }) {
         {Object.entries(formatFavorites(data.favorites))
           .sort(sortDesc)
           .map(([year, favorites]) => (
-            <AlbumCol
+            <TopAlbumList
               key={year}
               data={favorites}
               year={year}
@@ -71,4 +61,6 @@ export default function TopAlbums({ data, onChange, value }) {
       </a>
     </Layout>
   );
-}
+};
+
+export default TopAlbums;

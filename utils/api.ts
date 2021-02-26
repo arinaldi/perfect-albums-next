@@ -1,4 +1,6 @@
+import { Dispatch } from 'react';
 import { GraphQLClient } from 'graphql-request';
+import { RequestDocument } from 'graphql-request/dist/types';
 import { mutate } from 'swr';
 
 import {
@@ -8,10 +10,14 @@ import {
   TOAST_TYPES,
 } from 'constants/index';
 import { getToken } from 'utils/storage';
+import { Action } from 'reducers/provider';
 
-export function fetcher(url) {
+export function fetcher(url: string): Promise<any> {
   const token = getToken();
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {
+    Authorization: '',
+    'Content-Type': 'application/json',
+  };
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
@@ -20,13 +26,13 @@ export function fetcher(url) {
   return fetch(`${BASE_URL}${url}`, { headers }).then(res => res.json());
 }
 
-export function fetchAndCache(key) {
+export function fetchAndCache(key: string): Promise<any> {
   const request = fetcher(key);
   mutate(key, request, false);
   return request;
 };
 
-export function gqlFetcher(query, variables = {}) {
+export function gqlFetcher(query: RequestDocument, variables = {}): Promise<any> {
   const token = getToken();
   const client = new GraphQLClient(`${BASE_URL}/graphql`, {
     headers: {
@@ -37,7 +43,7 @@ export function gqlFetcher(query, variables = {}) {
   return client.request(query, variables);
 }
 
-function logout(dispatch) {
+function logout(dispatch: Dispatch<Action>) {
   dispatch({
     type: DISPATCH_TYPES.SIGN_OUT_USER,
   });
@@ -50,7 +56,7 @@ function logout(dispatch) {
   });
 }
 
-async function handleResponse(response, dispatch) {
+async function handleResponse(response: Response, dispatch: Dispatch<Action>) {
   const { status, url } = response;
 
   if (status === 401) {
@@ -71,16 +77,33 @@ async function handleResponse(response, dispatch) {
   }
 }
 
-async function api(endpoint, options = {}) {
+interface Options {
+  body?: any;
+  dispatch?: Dispatch<Action>;
+  [key: string]: any;
+}
+
+type ResponseObject = {
+  data: any;
+  status: number;
+};
+
+const defaultOptions = { body: null, dispatch: () => undefined };
+
+async function api(endpoint: string, options: Options = defaultOptions): Promise<ResponseObject> {
   const { body, dispatch, ...customConfig } = options;
   const token = getToken();
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {
+    Authorization: '',
+    'Content-Type': 'application/json',
+  };
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
 
   const config = {
+    body,
     method: body ? 'POST' : 'GET',
     ...customConfig,
     headers: {

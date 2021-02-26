@@ -23,14 +23,14 @@ export const DECADES = [
   },
 ];
 
-export const DISPATCH_TYPES = {
-  SIGN_IN_USER: 'SIGN_IN_USER',
-  SIGN_OUT_USER: 'SIGN_OUT_USER',
-  OPEN_TOAST: 'OPEN_TOAST',
-  CLOSE_TOAST: 'CLOSE_TOAST',
-  OPEN_MODAL: 'OPEN_MODAL',
-  CLOSE_MODAL: 'CLOSE_MODAL',
-};
+export enum DISPATCH_TYPES {
+  SIGN_IN_USER = 'SIGN_IN_USER',
+  SIGN_OUT_USER = 'SIGN_OUT_USER',
+  OPEN_TOAST = 'OPEN_TOAST',
+  CLOSE_TOAST = 'CLOSE_TOAST',
+  OPEN_MODAL = 'OPEN_MODAL',
+  CLOSE_MODAL = 'CLOSE_MODAL',
+}
 
 export const ICONS = {
   CHECK: '✔',
@@ -50,12 +50,12 @@ export const MESSAGES = {
   NO_DATA: 'No Data',
 };
 
-export const MODAL_TYPES = {
-  FEATURED_SONGS_CREATE: 'Create Featured Song',
-  FEATURED_SONGS_DELETE: 'Delete Featured Song',
-  NEW_RELEASE_CREATE: 'Create New Release',
-  NEW_RELEASE_EDIT: 'Edit New Release',
-  NEW_RELEASE_DELETE: 'Delete New Release',
+export enum MODAL_TYPES {
+  FEATURED_SONGS_CREATE = 'Create Featured Song',
+  FEATURED_SONGS_DELETE = 'Delete Featured Song',
+  NEW_RELEASE_CREATE = 'Create New Release',
+  NEW_RELEASE_EDIT = 'Edit New Release',
+  NEW_RELEASE_DELETE = 'Delete New Release',
 };
 
 export const MONTHS = [
@@ -73,7 +73,11 @@ export const MONTHS = [
   'Dec',
 ];
 
-export const PER_PAGE = [25, 50, 100];
+export enum PER_PAGE {
+  twentyFive = 25,
+  fifty = 50,
+  oneHundred = 100,
+}
 
 export const ROUTES = [
   { href: '/top-albums', label: 'Top Albums' },
@@ -88,14 +92,15 @@ export const ROUTES_ADMIN = {
   delete: { href: '/admin/delete', label: 'Admin Delete' },
 };
 
-export const SORT_DIRECTION = {
-  ASC: 'asc',
-  DESC: 'desc',
+export enum SORT_DIRECTION {
+  ASC = 'asc',
+  DESC = 'desc',
 };
 
 export const TOAST_TIMEOUT = 2500;
 
-export const TOAST_TYPES = {
-  SUCCESS: 'success',
-  ERROR: 'error',
-};
+export enum TOAST_TYPES {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+}

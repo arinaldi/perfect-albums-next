@@ -6,7 +6,7 @@ import {
   MESSAGES,
   TOAST_TYPES,
 } from 'constants/index';
-import { AlbumInput } from 'hooks/useForm';
+import { Values } from 'hooks/useForm';
 import { useAppDispatch } from 'components/Provider';
 
 type Callback = () => void;
@@ -19,7 +19,7 @@ export enum Method {
 }
 
 interface Options {
-  body: AlbumInput | null;
+  body: Values | null;
   callbacks: Callback[];
   method: Method;
   path: string;

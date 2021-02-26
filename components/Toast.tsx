@@ -1,18 +1,21 @@
+import { FC } from 'react';
+
 import { DISPATCH_TYPES, TOAST_TYPES } from 'constants/index';
 import { useApp } from 'components/Provider';
 
-function getToastColor(type) {
+function getToastColor(type: TOAST_TYPES) {
   switch (type) {
-    case TOAST_TYPES.SUCCESS:
-      return '#48BB78';
-    case TOAST_TYPES.ERROR:
-      return '#F56566';
-    default:
-      return '#A0AEC0';
+  case TOAST_TYPES.SUCCESS:
+    return '#48BB78';
+  case TOAST_TYPES.ERROR:
+    return '#F56566';
+  case TOAST_TYPES.INFO:
+  default:
+    return '#A0AEC0';
   }
 }
 
-export default function Toast() {
+const Toast: FC = () => {
   const [state, dispatch] = useApp();
   const { isOpen, message, type } = state.toast;
 
@@ -41,4 +44,6 @@ export default function Toast() {
       ) : null}
     </>
   );
-}
+};
+
+export default Toast;

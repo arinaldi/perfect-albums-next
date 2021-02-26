@@ -1,8 +1,19 @@
+import { FC } from 'react';
+
 import { ICONS } from 'constants/index';
+import { Song } from 'pages/featured-songs';
 import { useAppState } from 'components/Provider';
 import Layout from 'components/Layout';
 
-export default function FeaturedSongs({ data, onCreateOpen, onDeleteOpen }) {
+interface Props {
+  data: {
+    songs: Song[];
+  };
+  onCreateOpen: () => void;
+  onDeleteOpen: (song: Song) => void;
+}
+
+const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
   const {
     isLoading,
     user: { isAuthenticated },
@@ -52,4 +63,6 @@ export default function FeaturedSongs({ data, onCreateOpen, onDeleteOpen }) {
       </div>
     </Layout>
   );
-}
+};
+
+export default FeaturedSongs;

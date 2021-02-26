@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
@@ -15,7 +15,7 @@ const DELETE_SONG = gql`
   }
 `;
 
-export default function DeleteReleaseModal() {
+const DeleteSongModal: FC = () => {
   const [state, dispatch] = useApp();
   const { mutate } = useSWR(GET_SONGS, gqlFetcher);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,4 +109,6 @@ export default function DeleteReleaseModal() {
       ) : null}
     </>
   );
-}
+};
+
+export default DeleteSongModal;

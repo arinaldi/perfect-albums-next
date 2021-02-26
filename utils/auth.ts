@@ -1,9 +1,6 @@
 import { BASE_URL } from 'constants/index';
-import { COOKIE_KEY } from 'utils/storage';
 
-export async function isTokenValid(req) {
-  const token = req.cookies[COOKIE_KEY];
-
+export async function isTokenValid(token: string): Promise<boolean> {
   if (!token) return false;
 
   const { status } = await fetch(`${BASE_URL}/api/auth`, {

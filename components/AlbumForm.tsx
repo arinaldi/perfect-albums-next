@@ -1,8 +1,17 @@
+import { ChangeEvent, FC, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
+import { AlbumInput } from 'hooks/useForm';
 
-export default function AlbumForm({ isSubmitting, onChange, onSubmit, values }) {
+interface Props {
+  isSubmitting: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (event: FormEvent<Element>) => void;
+  values: AlbumInput;
+}
+
+const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
   const router = useRouter();
   const { search } = router.query;
 
@@ -221,4 +230,6 @@ export default function AlbumForm({ isSubmitting, onChange, onSubmit, values }) 
       </div>
     </form>
   );
-}
+};
+
+export default AlbumForm;

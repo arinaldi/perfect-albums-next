@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { DISPATCH_TYPES, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useApp } from 'components/Provider';
 
-export default function NavBar() {
+const NavBar: FC = () => {
   const router = useRouter();
   const { pathname } = router;
   const [state, dispatch] = useApp();
@@ -24,7 +24,7 @@ export default function NavBar() {
       type: DISPATCH_TYPES.SIGN_OUT_USER,
     });
 
-    if (pathname.startsWith(ROUTES_ADMIN.base)) {
+    if (pathname.startsWith(ROUTES_ADMIN.base.href)) {
       router.push('/top-albums');
     }
   }
@@ -140,4 +140,6 @@ export default function NavBar() {
       </div>
     </nav>
   );
-}
+};
+
+export default NavBar;

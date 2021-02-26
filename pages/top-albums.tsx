@@ -17,7 +17,7 @@ const GET_FAVORITES = gql`
   }
 `;
 
-interface Favorite {
+export interface Favorite {
   artist: string;
   title: string;
   year: string;

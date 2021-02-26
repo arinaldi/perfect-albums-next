@@ -19,7 +19,7 @@ export const GET_RELEASES = gql`
   }
 `;
 
-interface Release {
+export interface Release {
   id: string;
   artist: string;
   title: string;

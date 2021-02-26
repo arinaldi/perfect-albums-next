@@ -1,12 +1,36 @@
+import { ChangeEvent, FC, MouseEvent, RefObject } from 'react';
 import { useRouter } from 'next/router';
 
 import { ICONS, ROUTES_ADMIN } from 'constants/index';
+import { Album } from 'hooks/useAdminAlbums';
 import { getSortIcon } from 'utils';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
 
-export default function Admin({
+interface Props {
+  albums: Album[];
+  currentPage: number;
+  direction: string;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+  isLoading: boolean;
+  onClear: () => void;
+  onFirst: () => void;
+  onLast: () => void;
+  onNext: () => void;
+  onPerPageChange: (value: number) => void;
+  onPrevious: () => void;
+  onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSort: (event: MouseEvent<HTMLElement>) => void;
+  perPage: number;
+  searchRef: RefObject<HTMLInputElement>;
+  searchText: string;
+  sort: string;
+  total: number;
+}
+
+const Admin: FC<Props> = ({
   albums,
   currentPage,
   direction,
@@ -26,7 +50,7 @@ export default function Admin({
   searchText,
   sort,
   total,
-}) {
+}) => {
   const router = useRouter();
 
   const Title = (
@@ -208,4 +232,6 @@ export default function Admin({
         )}
     </Layout>
   );
-}
+};
+
+export default Admin;

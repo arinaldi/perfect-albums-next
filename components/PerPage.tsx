@@ -1,8 +1,15 @@
+import { FC } from 'react';
+
 import { PER_PAGE } from 'constants/index';
 
-const [twentyFive, fifty, oneHundred] = PER_PAGE;
+interface Props {
+  onPerPageChange: (value: number) => void;
+  perPage: number;
+}
 
-export default function PerPage({ onPerPageChange, perPage }) {
+const { twentyFive, fifty, oneHundred } = PER_PAGE;
+
+const PerPage: FC<Props> = ({ onPerPageChange, perPage }) => {
   return (
     <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
       <button
@@ -31,4 +38,6 @@ export default function PerPage({ onPerPageChange, perPage }) {
       </button>
     </nav>
   );
-}
+};
+
+export default PerPage;

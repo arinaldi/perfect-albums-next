@@ -1,6 +1,16 @@
+import { ChangeEvent, FC, FormEvent } from 'react';
+
 import Layout from 'components/Layout';
 
-export default function Signin({ error, isSubmitting, onChange, onSubmit, values }) {
+interface Props {
+  error: string;
+  isSubmitting: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (event: FormEvent) => void;
+  values: any;
+}
+
+const Signin: FC<Props> = ({ error, isSubmitting, onChange, onSubmit, values }) => {
   return (
     <Layout title="Sign In">
       <div className="max-w-xl mx-auto">
@@ -54,4 +64,6 @@ export default function Signin({ error, isSubmitting, onChange, onSubmit, values
       </div>
     </Layout>
   );
-}
+};
+
+export default Signin;

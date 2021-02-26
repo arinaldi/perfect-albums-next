@@ -19,7 +19,7 @@ export const GET_SONGS = gql`
   }
 `;
 
-interface Song {
+export interface Song {
   id: string;
   artist: string;
   title: string;

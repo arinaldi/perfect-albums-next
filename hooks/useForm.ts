@@ -9,13 +9,32 @@ export interface AlbumInput {
   favorite: boolean;
 }
 
+export interface ReleaseInput {
+  artist: string;
+  title: string;
+  date: string;
+}
+
+export interface SongInput {
+  artist: string;
+  title: string;
+  link: string;
+}
+
+export interface UserInput {
+  username: string;
+  password: string;
+}
+
+export type Values = AlbumInput | ReleaseInput | SongInput | UserInput;
+
 interface Payload {
-  values: AlbumInput;
+  values: any;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   resetForm: () => void;
 }
 
-export default function useForm(initialState: AlbumInput): Payload {
+export default function useForm<T>(initialState: T): Payload {
   const [values, setValues] = useState(initialState);
   const initialValues = Object.values(initialState).join('');
 
