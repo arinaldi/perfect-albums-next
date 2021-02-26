@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { DISPATCH_TYPES, ROUTES_ADMIN } from 'constants/index';
@@ -7,7 +8,7 @@ import { isTokenValid } from 'utils/auth';
 import { useAppDispatch } from 'components/Provider';
 import Signin from 'components/Signin';
 
-export default function SigninPage() {
+const SigninPage: FC = () => {
   const dispatch = useAppDispatch();
   const [values, setValues] = useState({
     username: '',
@@ -17,7 +18,7 @@ export default function SigninPage() {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
 
     if (error) setError('');
@@ -25,7 +26,7 @@ export default function SigninPage() {
     setValues({ ...values, [name]: value });
   }
 
-  async function handleSubmit(event) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setIsSubmitting(true);
 
@@ -52,9 +53,11 @@ export default function SigninPage() {
       values={values}
     />
   );
-}
+};
 
-export async function getServerSideProps({ req }) {
+export default SigninPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const isValid = await isTokenValid(req);
 
   if (isValid) {
@@ -67,4 +70,4 @@ export async function getServerSideProps({ req }) {
   }
 
   return { props: {} };
-}
+};

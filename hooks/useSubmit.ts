@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import api from 'utils/api';
 import {
@@ -6,9 +6,32 @@ import {
   MESSAGES,
   TOAST_TYPES,
 } from 'constants/index';
+import { AlbumInput } from 'hooks/useForm';
 import { useAppDispatch } from 'components/Provider';
 
-export default function useSubmit(options) {
+type Callback = () => void;
+
+export enum Method {
+  get = 'GET',
+  post = 'POST',
+  put = 'PUT',
+  delete = 'DELETE',
+}
+
+interface Options {
+  body: AlbumInput | null;
+  callbacks: Callback[];
+  method: Method;
+  path: string;
+  successMessage: string;
+}
+
+interface Payload {
+  handleSubmit: (event: FormEvent) => Promise<void>;
+  isSubmitting: boolean;
+}
+
+export default function useSubmit(options: Options): Payload {
   const {
     body,
     callbacks,
@@ -19,7 +42,7 @@ export default function useSubmit(options) {
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setIsSubmitting(true);
 
@@ -27,8 +50,8 @@ export default function useSubmit(options) {
       await api(path, { body, dispatch, method });
       setIsSubmitting(false);
 
-      callbacks.forEach(cb => {
-        cb();
+      callbacks.forEach((callback: Callback) => {
+        callback();
       });
 
       dispatch({
@@ -53,4 +76,4 @@ export default function useSubmit(options) {
   };
 
   return { handleSubmit, isSubmitting };
-};
+}

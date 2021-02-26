@@ -1,3 +1,5 @@
+import { FC } from 'react';
+import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
@@ -17,7 +19,18 @@ export const GET_RELEASES = gql`
   }
 `;
 
-export default function NewReleasesPage({ releases }) {
+interface Release {
+  id: string;
+  artist: string;
+  title: string;
+  date: string;
+}
+
+interface Props {
+  releases: Release[];
+}
+
+const NewReleasesPage: FC<Props> = ({ releases }) => {
   const dispatch = useAppDispatch();
   const { data, error } = useSWR(GET_RELEASES, gqlFetcher, {
     initialData: { releases },
@@ -35,7 +48,7 @@ export default function NewReleasesPage({ releases }) {
     });
   }
 
-  function handleEditOpen(data) {
+  function handleEditOpen(data: Release) {
     dispatch({
       payload: {
         data: { ...data, dataType: 'Release' },
@@ -45,7 +58,7 @@ export default function NewReleasesPage({ releases }) {
     });
   }
 
-  function handleDeleteOpen(data) {
+  function handleDeleteOpen(data: Release) {
     dispatch({
       payload: {
         data: { ...data, dataType: 'Release' },
@@ -63,11 +76,13 @@ export default function NewReleasesPage({ releases }) {
       onEditOpen={handleEditOpen}
     />
   );
-}
+};
 
-export async function getStaticProps() {
+export default NewReleasesPage;
+
+export const getStaticProps: GetStaticProps = async () => {
   const { releases } = await gqlFetcher(GET_RELEASES);
   return {
     props: { releases },
   };
-}
+};

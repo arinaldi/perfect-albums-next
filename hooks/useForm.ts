@@ -1,6 +1,21 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
-export default function useForm(initialState = {}) {
+export interface AlbumInput {
+  artist: string;
+  title: string;
+  year: string;
+  cd: boolean;
+  aotd: boolean;
+  favorite: boolean;
+}
+
+interface Payload {
+  values: AlbumInput;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  resetForm: () => void;
+}
+
+export default function useForm(initialState: AlbumInput): Payload {
   const [values, setValues] = useState(initialState);
   const initialValues = Object.values(initialState).join('');
 
@@ -8,9 +23,9 @@ export default function useForm(initialState = {}) {
     setValues(initialState);
   }, [initialValues]);
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-    let newValue = value;
+    let newValue: string | boolean = value;
 
     if (name === 'year') {
       newValue = value.replace(/\D/, '');
@@ -24,7 +39,7 @@ export default function useForm(initialState = {}) {
   }
 
   function resetForm() {
-    setValues(initialValues);
+    setValues(initialState);
   }
 
   return {

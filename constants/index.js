@@ -77,7 +77,6 @@ export const PER_PAGE = [25, 50, 100];
 
 export const ROUTES = [
   { href: '/top-albums', label: 'Top Albums' },
-  // { href: '/perfect-songs', label: 'Perfect Songs' },
   { href: '/featured-songs', label: 'Featured Songs' },
   { href: '/new-releases', label: 'New Releases' },
 ];

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
+import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
@@ -16,14 +17,24 @@ const GET_FAVORITES = gql`
   }
 `;
 
-export default function TopAlbumsPage({ favorites }) {
+interface Favorite {
+  artist: string;
+  title: string;
+  year: string;
+}
+
+interface Props {
+  favorites: Favorite[];
+}
+
+const TopAlbumsPage: FC<Props> = ({ favorites }) => {
   const router = useRouter();
   const { data, error } = useSWR(GET_FAVORITES, gqlFetcher, {
     initialData: { favorites },
   });
   const [value, setValue] = useState('label');
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     const { value } = event.target;
     setValue(value);
     router.push(`${router.pathname}${value}`);
@@ -39,11 +50,13 @@ export default function TopAlbumsPage({ favorites }) {
       value={value}
     />
   );
-}
+};
 
-export async function getStaticProps() {
+export default TopAlbumsPage;
+
+export const getStaticProps: GetStaticProps = async () => {
   const { favorites } = await gqlFetcher(GET_FAVORITES);
   return {
     props: { favorites },
   };
-}
+};

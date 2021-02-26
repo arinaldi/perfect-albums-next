@@ -1,12 +1,13 @@
+import { FC } from 'react';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import useForm from 'hooks/useForm';
-import useSubmit from 'hooks/useSubmit';
+import useSubmit, { Method } from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import CreateAlbum from 'components/CreateAlbum';
 
-export default function CreateAlbumPage() {
+const CreateAlbumPage: FC = () => {
   const router = useRouter();
   const { search } = router.query;
   const { mutate } = useAdminAlbums(`/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`);
@@ -24,7 +25,7 @@ export default function CreateAlbumPage() {
       pathname: ROUTES_ADMIN.base.href,
       query: { search },
     })],
-    method: 'POST',
+    method: Method.post,
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
@@ -38,4 +39,6 @@ export default function CreateAlbumPage() {
       values={values}
     />
   );
-}
+};
+
+export default CreateAlbumPage;

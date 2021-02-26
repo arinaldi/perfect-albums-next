@@ -1,7 +1,9 @@
+import { FC } from 'react';
+import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, ICONS, MODAL_TYPES } from 'constants/index';
+import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
 import { gqlFetcher } from 'utils/api';
 import { useAppDispatch } from 'components/Provider';
 import FeaturedSongs from 'components/FeaturedSongs';
@@ -17,7 +19,18 @@ export const GET_SONGS = gql`
   }
 `;
 
-export default function FeaturedSongsPage({ songs }) {
+interface Song {
+  id: string;
+  artist: string;
+  title: string;
+  link: string;
+}
+
+interface Props {
+  songs: Song[];
+}
+
+const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   const dispatch = useAppDispatch();
   const { data, error } = useSWR(GET_SONGS, gqlFetcher, {
     initialData: { songs },
@@ -35,7 +48,7 @@ export default function FeaturedSongsPage({ songs }) {
     });
   }
 
-  function handleDeleteOpen(data) {
+  function handleDeleteOpen(data: Song) {
     dispatch({
       payload: {
         data: { ...data, dataType: 'Song' },
@@ -52,11 +65,13 @@ export default function FeaturedSongsPage({ songs }) {
       onDeleteOpen={handleDeleteOpen}
     />
   );
-}
+};
 
-export async function getStaticProps() {
+export default FeaturedSongsPage;
+
+export const getStaticProps: GetStaticProps = async () => {
   const { songs } = await gqlFetcher(GET_SONGS);
   return {
     props: { songs },
   };
-}
+};

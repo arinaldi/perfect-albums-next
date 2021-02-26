@@ -1,53 +1,51 @@
+import { FC } from 'react';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import { BASE_URL, MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import { COOKIE_KEY } from 'utils/storage';
-import useForm from 'hooks/useForm';
-import useSubmit from 'hooks/useSubmit';
-import useAdminAlbums from 'hooks/useAdminAlbums';
-import EditAlbum from 'components/EditAlbum';
+import useSubmit, { Method } from 'hooks/useSubmit';
+import useAdminAlbums, { Album } from 'hooks/useAdminAlbums';
+import DeleteAlbum from 'components/DeleteAlbum';
 
-export default function EditAlbumPage({ album }) {
+interface Props {
+  album: Album;
+}
+
+const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
   const { mutate } = useAdminAlbums(`/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`);
-  const { values, handleChange } = useForm({
-    artist: album.artist,
-    title: album.title,
-    year: album.year,
-    cd: album.cd,
-    aotd: album.aotd,
-    favorite: album.favorite,
-  });
   const options = {
-    body: values,
+    body: null,
     callbacks: [mutate, () => router.push({
       pathname: ROUTES_ADMIN.base.href,
       query: { search },
     })],
-    method: 'PUT',
+    method: Method.delete,
     path: `/api/albums/${album.id}`,
-    successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
+    successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
-    <EditAlbum
+    <DeleteAlbum
+      album={album}
       isSubmitting={isSubmitting}
-      onChange={handleChange}
       onSubmit={handleSubmit}
-      values={values}
     />
   );
-}
+};
 
-export async function getServerSideProps({ params, req }) {
+export default DeleteAlbumPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
   const token = req.cookies[COOKIE_KEY];
   const payload = {
-    props: { album: null },
+    props: { album: {} },
   };
 
-  if (!token) return payload;
+  if (!token || !params?.id) return payload;
 
   const response = await fetch(`${BASE_URL}/api/albums/${params.id}`, {
     headers: {
@@ -59,4 +57,4 @@ export async function getServerSideProps({ params, req }) {
   payload.props.album = data;
 
   return payload;
-}
+};

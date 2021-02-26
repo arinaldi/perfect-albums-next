@@ -1,3 +1,5 @@
+import { FC } from 'react';
+import { AppProps } from 'next/app';
 import router from 'next/router';
 import nProgress from 'nprogress';
 
@@ -10,7 +12,7 @@ router.events.on('routeChangeStart', () => nProgress.start());
 router.events.on('routeChangeComplete', () => nProgress.done());
 router.events.on('routeChangeError', () => nProgress.done());
 
-export default function MyApp({ Component, pageProps }) {
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Provider>
       <PageWrapper>
@@ -18,4 +20,6 @@ export default function MyApp({ Component, pageProps }) {
       </PageWrapper>
     </Provider>
   );
-}
+};
+
+export default MyApp;
