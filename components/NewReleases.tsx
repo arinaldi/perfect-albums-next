@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { formatReleases, sortByDate } from 'utils';
+import { formatReleases, ListItem, sortByDate } from 'utils';
+import useUser from 'hooks/useUser';
 import { Release } from 'pages/new-releases';
-import { useAppState } from 'components/Provider';
 import Layout from 'components/Layout';
 import NewReleaseList from 'components/NewReleaseList';
 
@@ -11,17 +11,14 @@ interface Props {
     releases: Release[];
   };
   onCreateOpen: () => void;
-  onDeleteOpen: (release: Release) => void;
-  onEditOpen: (release: Release) => void;
+  onDeleteOpen: (release: ListItem) => void;
+  onEditOpen: (release: ListItem) => void;
 }
 
 const NewReleases: FC<Props> = ({ data, onCreateOpen, onDeleteOpen, onEditOpen }) => {
-  const {
-    isLoading,
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useUser();
 
-  const NewButton = isAuthenticated && !isLoading
+  const NewButton = hasAuth
     ? (
       <button
         className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"

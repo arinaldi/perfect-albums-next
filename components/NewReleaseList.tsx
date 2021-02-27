@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { ICONS } from 'constants/index';
 import { ListItem } from 'utils';
-import { useAppState } from 'components/Provider';
+import useUser from 'hooks/useUser';
 
 interface Props {
   data: ListItem[];
@@ -12,10 +12,7 @@ interface Props {
 }
 
 const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
-  const {
-    isLoading,
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useUser();
 
   return (
     <div>
@@ -26,7 +23,7 @@ const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
             <span>
               {release.artist} &ndash; {release.title}
             </span>
-            {isAuthenticated && !isLoading && (
+            {hasAuth && (
               <>
                 <span
                   className="align-middle cursor-pointer ml-2"

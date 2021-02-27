@@ -2,17 +2,14 @@ import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { DISPATCH_TYPES, ROUTES, ROUTES_ADMIN } from 'constants/index';
-import { useApp } from 'components/Provider';
+import { ROUTES, ROUTES_ADMIN } from 'constants/index';
+import { removeToken } from 'utils/storage';
+import useUser from 'hooks/useUser';
 
 const NavBar: FC = () => {
   const router = useRouter();
   const { pathname } = router;
-  const [state, dispatch] = useApp();
-  const {
-    isLoading,
-    user: { isAuthenticated },
-  } = state;
+  const { hasAuth, mutate } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function closeMenu() {
@@ -20,9 +17,8 @@ const NavBar: FC = () => {
   }
 
   function handleSignout() {
-    dispatch({
-      type: DISPATCH_TYPES.SIGN_OUT_USER,
-    });
+    removeToken();
+    mutate('User not valid', false);
 
     if (pathname.startsWith(ROUTES_ADMIN.base.href)) {
       router.push('/top-albums');
@@ -86,7 +82,7 @@ const NavBar: FC = () => {
                     </a>
                   </Link>
                 ))}
-                {isAuthenticated && !isLoading && (
+                {hasAuth && (
                   <Link href={ROUTES_ADMIN.base.href}>
                     <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium`}>
                       {ROUTES_ADMIN.base.label}
@@ -97,7 +93,7 @@ const NavBar: FC = () => {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            {isAuthenticated && !isLoading ? (
+            {hasAuth ? (
               <div
                 onClick={handleSignout}
                 className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium"
@@ -126,7 +122,7 @@ const NavBar: FC = () => {
               </a>
             </Link>
           ))}
-          {isAuthenticated && !isLoading && (
+          {hasAuth && (
             <Link href={ROUTES_ADMIN.base.href}>
               <a
                 className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}

@@ -57,7 +57,7 @@ const CreateReleaseModal: FC = () => {
       setIsSubmitting(false);
       dispatch({
         payload: {
-          message: error.message || MESSAGES.ERROR,
+          message: MESSAGES.ERROR,
           type: TOAST_TYPES.ERROR,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,
@@ -136,7 +136,6 @@ const CreateReleaseModal: FC = () => {
                             id="date"
                             name="date"
                             onChange={handleChange}
-                            required
                             type="date"
                             value={values.date}
                           />

@@ -2,22 +2,22 @@ import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
-import { DISPATCH_TYPES, ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'constants/index';
 import api from 'utils/api';
 import { isTokenValid } from 'utils/auth';
-import { COOKIE_KEY } from 'utils/storage';
-import { useAppDispatch } from 'components/Provider';
+import { COOKIE_KEY, setToken } from 'utils/storage';
+import useUser from 'hooks/useUser';
 import Signin from 'components/Signin';
 
 const SigninPage: FC = () => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { mutate } = useUser();
   const [values, setValues] = useState({
     username: '',
     password: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const router = useRouter();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -33,13 +33,9 @@ const SigninPage: FC = () => {
 
     try {
       const { data } = await api('/api/signin', { body: values });
+      setToken(data.token);
+      mutate();
       setIsSubmitting(false);
-      dispatch({
-        payload: {
-          data: data.token,
-        },
-        type: DISPATCH_TYPES.SIGN_IN_USER,
-      });
       router.push(ROUTES_ADMIN.base.href);
     } catch (error) {
       setIsSubmitting(false);

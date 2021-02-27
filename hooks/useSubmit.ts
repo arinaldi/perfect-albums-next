@@ -66,7 +66,7 @@ export default function useSubmit(options: Options): Payload {
         setIsSubmitting(false);
         dispatch({
           payload: {
-            message: err.message || MESSAGES.ERROR,
+            message: MESSAGES.ERROR,
             type: TOAST_TYPES.ERROR,
           },
           type: DISPATCH_TYPES.OPEN_TOAST,

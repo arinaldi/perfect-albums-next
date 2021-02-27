@@ -9,10 +9,15 @@ import {
   MESSAGES,
   TOAST_TYPES,
 } from 'constants/index';
-import { getToken } from 'utils/storage';
+import { getToken, removeToken } from 'utils/storage';
 import { Action } from 'reducers/provider';
 
-export function fetcher(url: string): Promise<any> {
+interface FetchError {
+  info?: string;
+  status?: number;
+}
+
+export async function fetcher(url: string): Promise<any> {
   const token = getToken();
   const headers = {
     Authorization: '',
@@ -23,14 +28,23 @@ export function fetcher(url: string): Promise<any> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  return fetch(`${BASE_URL}${url}`, { headers }).then(res => res.json());
+  const res = await fetch(`${BASE_URL}${url}`, { headers });
+
+  if (!res.ok) {
+    const error: Error & FetchError = new Error('An error occured while fetching the data.');
+    error.info = await res.json();
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
 }
 
 export function fetchAndCache(key: string): Promise<any> {
   const request = fetcher(key);
   mutate(key, request, false);
   return request;
-};
+}
 
 export function gqlFetcher(query: RequestDocument, variables = {}): Promise<any> {
   const token = getToken();
@@ -44,9 +58,7 @@ export function gqlFetcher(query: RequestDocument, variables = {}): Promise<any>
 }
 
 function logout(dispatch: Dispatch<Action>) {
-  dispatch({
-    type: DISPATCH_TYPES.SIGN_OUT_USER,
-  });
+  removeToken();
   dispatch({
     payload: {
       message: MESSAGES.UNAUTHORIZED,
@@ -88,7 +100,7 @@ type ResponseObject = {
   status: number;
 };
 
-const defaultOptions = { body: null, dispatch: () => undefined };
+const defaultOptions = { body: null, dispatch: () => ({}) };
 
 async function api(endpoint: string, options: Options = defaultOptions): Promise<ResponseObject> {
   const { body, dispatch, ...customConfig } = options;

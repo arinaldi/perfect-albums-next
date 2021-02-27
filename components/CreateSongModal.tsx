@@ -57,7 +57,7 @@ const CreateSongModal: FC = () => {
       setIsSubmitting(false);
       dispatch({
         payload: {
-          message: error.message || MESSAGES.ERROR,
+          message: MESSAGES.ERROR,
           type: TOAST_TYPES.ERROR,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,

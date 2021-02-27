@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { ICONS } from 'constants/index';
+import useUser from 'hooks/useUser';
 import { Song } from 'pages/featured-songs';
-import { useAppState } from 'components/Provider';
 import Layout from 'components/Layout';
 
 interface Props {
@@ -14,12 +14,9 @@ interface Props {
 }
 
 const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
-  const {
-    isLoading,
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useUser();
 
-  const NewButton = isAuthenticated && !isLoading
+  const NewButton = hasAuth
     ? (
       <button
         className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
@@ -49,7 +46,7 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
               >
                 Listen
               </a>
-              {isAuthenticated && !isLoading && (
+              {hasAuth && (
                 <span
                   className="align-middle cursor-pointer ml-2"
                   onClick={() => onDeleteOpen(song)}

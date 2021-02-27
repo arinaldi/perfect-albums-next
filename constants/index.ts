@@ -24,8 +24,6 @@ export const DECADES = [
 ];
 
 export enum DISPATCH_TYPES {
-  SIGN_IN_USER = 'SIGN_IN_USER',
-  SIGN_OUT_USER = 'SIGN_OUT_USER',
   OPEN_TOAST = 'OPEN_TOAST',
   CLOSE_TOAST = 'CLOSE_TOAST',
   OPEN_MODAL = 'OPEN_MODAL',
@@ -56,7 +54,7 @@ export enum MODAL_TYPES {
   NEW_RELEASE_CREATE = 'Create New Release',
   NEW_RELEASE_EDIT = 'Edit New Release',
   NEW_RELEASE_DELETE = 'Delete New Release',
-};
+}
 
 export const MONTHS = [
   'Jan',
@@ -95,7 +93,7 @@ export const ROUTES_ADMIN = {
 export enum SORT_DIRECTION {
   ASC = 'asc',
   DESC = 'desc',
-};
+}
 
 export const TOAST_TIMEOUT = 2500;
 
