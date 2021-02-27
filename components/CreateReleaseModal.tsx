@@ -47,7 +47,7 @@ const CreateReleaseModal: FC = () => {
       mutate();
       dispatch({
         payload: {
-          message: 'Release created successfully',
+          message: `${MESSAGES.RELEASE_PREFIX} created`,
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,

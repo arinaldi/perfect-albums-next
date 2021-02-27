@@ -52,7 +52,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
   function handleEditOpen(data: ListItem) {
     dispatch({
       payload: {
-        data: { ...data, dataType: 'Release' },
+        data,
         type: MODAL_TYPES.NEW_RELEASE_EDIT,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,
@@ -62,7 +62,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
   function handleDeleteOpen(data: ListItem) {
     dispatch({
       payload: {
-        data: { ...data, dataType: 'Release' },
+        data,
         type: MODAL_TYPES.NEW_RELEASE_DELETE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,

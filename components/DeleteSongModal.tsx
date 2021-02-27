@@ -36,7 +36,7 @@ const DeleteSongModal: FC = () => {
       mutate();
       dispatch({
         payload: {
-          message: 'Song deleted successfully',
+          message: `${MESSAGES.SONG_PREFIX} deleted`,
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,

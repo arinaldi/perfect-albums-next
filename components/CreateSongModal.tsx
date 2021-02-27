@@ -47,7 +47,7 @@ const CreateSongModal: FC = () => {
       mutate();
       dispatch({
         payload: {
-          message: 'Song created successfully',
+          message: `${MESSAGES.SONG_PREFIX} created`,
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,

@@ -1,4 +1,6 @@
 import { DISPATCH_TYPES, MODAL_TYPES, TOAST_TYPES } from 'constants/index';
+import { ListItem } from 'utils';
+import { Song } from 'pages/featured-songs';
 
 interface Modal {
   data: any;
@@ -17,14 +19,31 @@ export interface State {
   toast: Toast;
 }
 
-export interface Action {
-  payload?: {
-    data?: any;
-    message?: string;
-    type?: MODAL_TYPES | TOAST_TYPES;
+interface OpenModalAction {
+  payload: {
+    data?: ListItem | Song;
+    type: MODAL_TYPES;
   };
-  type: DISPATCH_TYPES;
+  type: DISPATCH_TYPES.OPEN_MODAL;
 }
+
+interface CloseModalAction {
+  type: DISPATCH_TYPES.CLOSE_MODAL;
+}
+
+interface OpenToastAction {
+  payload: {
+    message: string;
+    type: TOAST_TYPES;
+  };
+  type: DISPATCH_TYPES.OPEN_TOAST;
+}
+
+interface CloseToastAction {
+  type: DISPATCH_TYPES.CLOSE_TOAST;
+}
+
+export type Action = OpenModalAction | CloseModalAction | OpenToastAction | CloseToastAction;
 
 export const providerInitialState = {
   modal: {
@@ -40,16 +59,14 @@ export const providerInitialState = {
 };
 
 export function providerReducer(state: State, action: Action): State {
-  const { payload, type } = action;
-
-  switch (type) {
+  switch (action.type) {
   case DISPATCH_TYPES.OPEN_TOAST:
     return {
       ...state,
       toast: {
         isOpen: true,
-        message: payload?.message || '',
-        type: payload?.type,
+        message: action.payload.message,
+        type: action.payload.type,
       },
     };
   case DISPATCH_TYPES.CLOSE_TOAST:
@@ -64,9 +81,9 @@ export function providerReducer(state: State, action: Action): State {
     return {
       ...state,
       modal: {
-        data: payload?.data || '',
+        data: action.payload.data,
         isOpen: true,
-        type: payload?.type,
+        type: action.payload.type,
       },
     };
   case DISPATCH_TYPES.CLOSE_MODAL:

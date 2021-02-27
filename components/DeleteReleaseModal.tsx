@@ -36,7 +36,7 @@ const DeleteReleaseModal: FC = () => {
       mutate();
       dispatch({
         payload: {
-          message: 'Release deleted successfully',
+          message: `${MESSAGES.RELEASE_PREFIX} deleted`,
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,

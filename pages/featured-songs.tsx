@@ -51,7 +51,7 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   function handleDeleteOpen(data: Song) {
     dispatch({
       payload: {
-        data: { ...data, dataType: 'Song' },
+        data,
         type: MODAL_TYPES.FEATURED_SONGS_DELETE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,

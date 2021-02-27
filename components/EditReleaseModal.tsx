@@ -53,7 +53,7 @@ const EditReleaseModal: FC = () => {
       mutate();
       dispatch({
         payload: {
-          message: 'Release edited successfully',
+          message: `${MESSAGES.RELEASE_PREFIX} edited`,
           type: TOAST_TYPES.SUCCESS,
         },
         type: DISPATCH_TYPES.OPEN_TOAST,
