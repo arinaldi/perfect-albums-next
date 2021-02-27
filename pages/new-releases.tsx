@@ -7,6 +7,7 @@ import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
 import { gqlFetcher } from 'utils/api';
 import { useAppDispatch } from 'components/Provider';
 import NewReleases from 'components/NewReleases';
+import { ListItem } from 'utils';
 
 export const GET_RELEASES = gql`
   {
@@ -48,7 +49,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
     });
   }
 
-  function handleEditOpen(data: Release) {
+  function handleEditOpen(data: ListItem) {
     dispatch({
       payload: {
         data: { ...data, dataType: 'Release' },
@@ -58,7 +59,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
     });
   }
 
-  function handleDeleteOpen(data: Release) {
+  function handleDeleteOpen(data: ListItem) {
     dispatch({
       payload: {
         data: { ...data, dataType: 'Release' },
