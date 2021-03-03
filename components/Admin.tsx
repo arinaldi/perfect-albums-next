@@ -2,8 +2,8 @@ import { ChangeEvent, FC, MouseEvent, RefObject } from 'react';
 import { useRouter } from 'next/router';
 
 import { ICONS, ROUTES_ADMIN } from 'constants/index';
-import { Album } from 'hooks/useAdminAlbums';
 import { getSortIcon } from 'utils';
+import { Album } from 'utils/types';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
