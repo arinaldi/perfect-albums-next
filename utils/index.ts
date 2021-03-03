@@ -1,6 +1,6 @@
 import { ICONS, MONTHS, SORT_DIRECTION } from 'constants/index';
 import { Release } from 'pages/new-releases';
-import { Favorite } from 'pages/top-albums';
+import { Favorite } from 'utils/types';
 
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
