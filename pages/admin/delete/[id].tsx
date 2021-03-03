@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 
 import { BASE_URL, MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import { COOKIE_KEY } from 'utils/storage';
+import { Album } from 'utils/types';
 import useSubmit, { Method } from 'hooks/useSubmit';
-import useAdminAlbums, { Album } from 'hooks/useAdminAlbums';
+import useAdminAlbums from 'hooks/useAdminAlbums';
 import DeleteAlbum from 'components/DeleteAlbum';
 
 interface Props {
