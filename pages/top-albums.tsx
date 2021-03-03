@@ -2,26 +2,12 @@ import { ChangeEvent, FC, useState } from 'react';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
-import { gqlFetcher } from 'utils/api';
+import { fetcher } from 'utils/api';
+import dbConnect from 'utils/dbConnect';
+import { Favorite } from 'utils/types';
+import { getFavorites } from 'pages/api/favorites';
 import TopAlbums from 'components/TopAlbums';
-
-const GET_FAVORITES = gql`
-  {
-    favorites {
-      artist
-      title
-      year
-    }
-  }
-`;
-
-export interface Favorite {
-  artist: string;
-  title: string;
-  year: string;
-}
 
 interface Props {
   favorites: Favorite[];
@@ -29,7 +15,7 @@ interface Props {
 
 const TopAlbumsPage: FC<Props> = ({ favorites }) => {
   const router = useRouter();
-  const { data, error } = useSWR(GET_FAVORITES, gqlFetcher, {
+  const { data, error } = useSWR(['/api/favorites', true], fetcher, {
     initialData: { favorites },
   });
   const [value, setValue] = useState('label');
@@ -55,7 +41,9 @@ const TopAlbumsPage: FC<Props> = ({ favorites }) => {
 export default TopAlbumsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { favorites } = await gqlFetcher(GET_FAVORITES);
+  await dbConnect();
+  const favorites = await getFavorites();
+
   return {
     props: { favorites },
   };

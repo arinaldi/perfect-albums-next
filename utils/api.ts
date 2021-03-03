@@ -17,7 +17,8 @@ interface FetchError {
   status?: number;
 }
 
-export async function fetcher(url: string): Promise<any> {
+export async function fetcher(url: string, isInternalApi = false): Promise<any> {
+  const endpoint = `${isInternalApi ? '' : BASE_URL}${url}`;
   const token = getToken();
   const headers = {
     Authorization: '',
@@ -28,7 +29,7 @@ export async function fetcher(url: string): Promise<any> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${BASE_URL}${url}`, { headers });
+  const res = await fetch(endpoint, { headers });
 
   if (!res.ok) {
     const error: Error & FetchError = new Error('An error occured while fetching the data.');
