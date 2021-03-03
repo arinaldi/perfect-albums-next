@@ -1,17 +1,7 @@
 import useSWR from 'swr';
 
 import { fetcher } from 'utils/api';
-
-export interface Album {
-  aotd: boolean;
-  artist: string;
-  cd: boolean;
-  favorite: boolean;
-  id: string;
-  title: string;
-  updatedAt: string;
-  year: string;
-}
+import { Album } from 'utils/types';
 
 interface Payload {
   albums: Album[];

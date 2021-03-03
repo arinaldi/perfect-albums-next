@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from 'react';
 
 import { DECADES, ICONS } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
-import { Favorite } from 'pages/top-albums';
+import { Favorite } from 'utils/types';
 import Layout from 'components/Layout';
 import TopAlbumList from 'components/TopAlbumList';
 

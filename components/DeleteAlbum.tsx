@@ -2,7 +2,7 @@ import { FC, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
-import { Album } from 'hooks/useAdminAlbums';
+import { Album } from 'utils/types';
 
 interface Props {
   album: Album;
