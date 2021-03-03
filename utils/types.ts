@@ -14,3 +14,10 @@ export interface Favorite {
   title: string;
   year: string;
 }
+
+export interface Song {
+  id: string;
+  artist: string;
+  title: string;
+  link: string;
+}

@@ -3,8 +3,7 @@ import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { gqlFetcher } from 'utils/api';
-import { GET_SONGS } from 'pages/featured-songs';
+import { fetcher, gqlFetcher } from 'utils/api';
 import { useApp } from 'components/Provider';
 
 const DELETE_SONG = gql`
@@ -17,7 +16,7 @@ const DELETE_SONG = gql`
 
 const DeleteSongModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(GET_SONGS, gqlFetcher);
+  const { mutate } = useSWR(['/api/songs', true], fetcher);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data, isOpen } = state.modal;
 

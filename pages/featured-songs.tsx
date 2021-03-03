@@ -1,30 +1,14 @@
 import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
-import { gqlFetcher } from 'utils/api';
+import { fetcher } from 'utils/api';
+import dbConnect from 'utils/dbConnect';
+import { Song } from 'utils/types';
+import { getSongs } from 'pages/api/songs';
 import { useAppDispatch } from 'components/Provider';
 import FeaturedSongs from 'components/FeaturedSongs';
-
-export const GET_SONGS = gql`
-  {
-    songs {
-      id
-      artist
-      title
-      link
-    }
-  }
-`;
-
-export interface Song {
-  id: string;
-  artist: string;
-  title: string;
-  link: string;
-}
 
 interface Props {
   songs: Song[];
@@ -32,7 +16,7 @@ interface Props {
 
 const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   const dispatch = useAppDispatch();
-  const { data, error } = useSWR(GET_SONGS, gqlFetcher, {
+  const { data, error } = useSWR(['/api/songs', true], fetcher, {
     initialData: { songs },
   });
 
@@ -70,7 +54,9 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
 export default FeaturedSongsPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { songs } = await gqlFetcher(GET_SONGS);
+  await dbConnect();
+  const songs = await getSongs();
+
   return {
     props: { songs },
   };

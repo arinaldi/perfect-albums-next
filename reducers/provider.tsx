@@ -1,6 +1,6 @@
 import { DISPATCH_TYPES, MODAL_TYPES, TOAST_TYPES } from 'constants/index';
 import { ListItem } from 'utils';
-import { Song } from 'pages/featured-songs';
+import { Song } from 'utils/types';
 
 interface Modal {
   data: any;

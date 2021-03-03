@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { ICONS } from 'constants/index';
 import useUser from 'hooks/useUser';
-import { Song } from 'pages/featured-songs';
+import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 
 interface Props {
