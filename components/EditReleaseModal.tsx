@@ -4,8 +4,7 @@ import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
 import { formatDate } from 'utils';
-import { gqlFetcher } from 'utils/api';
-import { GET_RELEASES } from 'pages/new-releases';
+import { fetcher, gqlFetcher } from 'utils/api';
 import useForm, { ReleaseInput } from 'hooks/useForm';
 import { useApp } from 'components/Provider';
 
@@ -28,7 +27,7 @@ export const EDIT_RELEASE = gql`
 const EditReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
   const { data, isOpen } = state.modal;
-  const { mutate } = useSWR(GET_RELEASES, gqlFetcher);
+  const { mutate } = useSWR(['/api/releases', true], fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: data.artist,
     title: data.title,

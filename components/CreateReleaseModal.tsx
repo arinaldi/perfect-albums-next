@@ -3,8 +3,7 @@ import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { gqlFetcher } from 'utils/api';
-import { GET_RELEASES } from 'pages/new-releases';
+import { fetcher, gqlFetcher } from 'utils/api';
 import useForm, { ReleaseInput } from 'hooks/useForm';
 import { useApp } from 'components/Provider';
 
@@ -21,7 +20,7 @@ const CREATE_RELEASE = gql`
 
 const CreateReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(GET_RELEASES, gqlFetcher);
+  const { mutate } = useSWR(['/api/releases', true], fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: '',
     title: '',

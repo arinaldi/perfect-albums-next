@@ -58,7 +58,7 @@ const AdminPage: FC = () => {
     const prevUrl = `/api/albums?page=${page - 1}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
     fetchAndCache(prevUrl);
     setCurrentPage(page);
-  };
+  }
 
   function handlePerPageChange(value: number) {
     setPerPage(value);

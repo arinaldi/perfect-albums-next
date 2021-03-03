@@ -1,31 +1,15 @@
 import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
-import { gqlFetcher } from 'utils/api';
+import { fetcher } from 'utils/api';
+import dbConnect from 'utils/dbConnect';
+import { Release } from 'utils/types';
+import { getReleases } from 'pages/api/releases';
 import { useAppDispatch } from 'components/Provider';
 import NewReleases from 'components/NewReleases';
 import { ListItem } from 'utils';
-
-export const GET_RELEASES = gql`
-  {
-    releases {
-      id
-      artist
-      title
-      date
-    }
-  }
-`;
-
-export interface Release {
-  id: string;
-  artist: string;
-  title: string;
-  date: string;
-}
 
 interface Props {
   releases: Release[];
@@ -33,7 +17,7 @@ interface Props {
 
 const NewReleasesPage: FC<Props> = ({ releases }) => {
   const dispatch = useAppDispatch();
-  const { data, error } = useSWR(GET_RELEASES, gqlFetcher, {
+  const { data, error } = useSWR(['/api/releases', true], fetcher, {
     initialData: { releases },
   });
 
@@ -82,7 +66,9 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
 export default NewReleasesPage;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { releases } = await gqlFetcher(GET_RELEASES);
+  await dbConnect();
+  const releases = await getReleases();
+
   return {
     props: { releases },
   };

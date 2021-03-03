@@ -15,6 +15,13 @@ export interface Favorite {
   year: string;
 }
 
+export interface Release {
+  id: string;
+  artist: string;
+  title: string;
+  date: string;
+}
+
 export interface Song {
   id: string;
   artist: string;

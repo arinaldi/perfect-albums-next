@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { formatReleases, ListItem, sortByDate } from 'utils';
 import useUser from 'hooks/useUser';
-import { Release } from 'pages/new-releases';
+import { Release } from 'utils/types';
 import Layout from 'components/Layout';
 import NewReleaseList from 'components/NewReleaseList';
 

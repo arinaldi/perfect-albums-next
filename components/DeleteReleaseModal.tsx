@@ -3,8 +3,7 @@ import useSWR from 'swr';
 import { gql } from 'graphql-request';
 
 import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { gqlFetcher } from 'utils/api';
-import { GET_RELEASES } from 'pages/new-releases';
+import { fetcher, gqlFetcher } from 'utils/api';
 import { useApp } from 'components/Provider';
 
 export const DELETE_RELEASE = gql`
@@ -17,7 +16,7 @@ export const DELETE_RELEASE = gql`
 
 const DeleteReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(GET_RELEASES, gqlFetcher);
+  const { mutate } = useSWR(['/api/releases', true], fetcher);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data, isOpen } = state.modal;
 
