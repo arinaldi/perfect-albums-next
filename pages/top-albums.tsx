@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 import { fetcher } from 'utils/api';
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import { Favorite } from 'utils/types';
 import { getFavorites } from 'pages/api/favorites';
 import TopAlbums from 'components/TopAlbums';

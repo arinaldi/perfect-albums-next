@@ -4,7 +4,7 @@ import useSWR from 'swr';
 
 import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
 import { fetcher } from 'utils/api';
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import { Release } from 'utils/types';
 import { getReleases } from 'pages/api/releases';
 import { useAppDispatch } from 'components/Provider';

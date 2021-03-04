@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import { Release as ReleaseType } from 'utils/types';
 import Release from 'models/Release';
 

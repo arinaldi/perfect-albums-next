@@ -28,3 +28,10 @@ export interface Song {
   title: string;
   link: string;
 }
+
+export interface User {
+  hash: string;
+  id: string;
+  salt: string;
+  username: string;
+}

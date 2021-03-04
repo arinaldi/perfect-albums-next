@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import { Song as SongType } from 'utils/types';
 import Song from 'models/Song';
 
