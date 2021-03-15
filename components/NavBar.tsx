@@ -3,26 +3,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
-import { removeToken } from 'utils/storage';
-import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 
 const NavBar: FC = () => {
   const router = useRouter();
   const { pathname } = router;
-  const { hasAuth, mutate } = useUser();
+  const { hasAuth, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function closeMenu() {
     setIsMenuOpen(false);
-  }
-
-  function handleSignout() {
-    removeToken();
-    mutate('User not valid', false);
-
-    if (pathname.startsWith(ROUTES_ADMIN.base.href)) {
-      router.push('/top-albums');
-    }
   }
 
   return (
@@ -95,7 +85,7 @@ const NavBar: FC = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {hasAuth ? (
               <div
-                onClick={handleSignout}
+                onClick={logout}
                 className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium"
               >
                 Sign Out

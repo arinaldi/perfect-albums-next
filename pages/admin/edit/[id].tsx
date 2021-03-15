@@ -1,17 +1,20 @@
 import { FC } from 'react';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextApiRequest } from 'next';
 import { useRouter } from 'next/router';
 
-import { BASE_URL, MESSAGES, ROUTES_ADMIN } from 'constants/index';
-import { COOKIE_KEY } from 'utils/storage';
-import { Album } from 'utils/types';
+import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import dbConnect from 'lib/dbConnect';
+import formatAlbum from 'lib/formatAlbum';
+import { loadIdToken } from 'auth/firebaseAdmin';
+import { Album as AlbumType, Method } from 'utils/types';
+import Album from 'models/Album';
 import useForm, { AlbumInput } from 'hooks/useForm';
-import useSubmit, { Method } from 'hooks/useSubmit';
+import useSubmit from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import EditAlbum from 'components/EditAlbum';
 
 interface Props {
-  album: Album;
+  album: AlbumType;
 }
 
 const EditAlbumPage: FC<Props> = ({ album }) => {
@@ -51,21 +54,19 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
 export default EditAlbumPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const token = req.cookies[COOKIE_KEY];
+  const uid = await loadIdToken(req as NextApiRequest);
   const payload = {
     props: { album: {} },
   };
 
-  if (!token || !params?.id) return payload;
+  if (!uid || !params?.id) return payload;
 
-  const response = await fetch(`${BASE_URL}/api/albums/${params.id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
-  const data = await response.json();
-  payload.props.album = data;
+  await dbConnect();
+  const data = await Album.findById(params.id);
+
+  if (data) {
+    payload.props.album = formatAlbum(data);
+  }
 
   return payload;
 };

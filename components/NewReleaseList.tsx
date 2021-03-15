@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { ICONS } from 'constants/index';
 import { ListItem } from 'utils';
-import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 
 interface Props {
   data: ListItem[];
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
-  const { hasAuth } = useUser();
+  const { hasAuth } = useAuth();
 
   return (
     <div>

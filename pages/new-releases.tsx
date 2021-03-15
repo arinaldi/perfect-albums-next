@@ -17,7 +17,7 @@ interface Props {
 
 const NewReleasesPage: FC<Props> = ({ releases }) => {
   const dispatch = useAppDispatch();
-  const { data, error } = useSWR(['/api/releases', true], fetcher, {
+  const { data, error } = useSWR('/api/releases', fetcher, {
     initialData: { releases },
   });
 

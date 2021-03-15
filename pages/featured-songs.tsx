@@ -16,7 +16,7 @@ interface Props {
 
 const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   const dispatch = useAppDispatch();
-  const { data, error } = useSWR(['/api/songs', true], fetcher, {
+  const { data, error } = useSWR('/api/songs', fetcher, {
     initialData: { songs },
   });
 

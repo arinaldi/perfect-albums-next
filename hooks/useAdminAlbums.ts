@@ -24,7 +24,7 @@ export default function useAdminAlbums(url: string, preventFetch = false): Paylo
   };
 
   if (data && !error) {
-    payload.albums = data.data;
+    payload.albums = data.albums;
     payload.total = data.count;
   }
 

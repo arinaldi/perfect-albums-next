@@ -3,6 +3,7 @@ import { AppProps } from 'next/app';
 import router from 'next/router';
 import nProgress from 'nprogress';
 
+import { AuthProvider } from 'hooks/useAuth';
 import { Provider } from 'components/Provider';
 import PageWrapper from 'components/PageWrapper';
 import 'styles/globals.css';
@@ -14,11 +15,13 @@ router.events.on('routeChangeError', () => nProgress.done());
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <Provider>
-      <PageWrapper>
-        <Component {...pageProps} />
-      </PageWrapper>
-    </Provider>
+    <AuthProvider>
+      <Provider>
+        <PageWrapper>
+          <Component {...pageProps} />
+        </PageWrapper>
+      </Provider>
+    </AuthProvider>
   );
 };
 

@@ -7,16 +7,10 @@ import {
   TOAST_TYPES,
 } from 'constants/index';
 import { Values } from 'hooks/useForm';
+import { Method } from 'utils/types';
 import { useAppDispatch } from 'components/Provider';
 
 type Callback = () => void;
-
-export enum Method {
-  get = 'GET',
-  post = 'POST',
-  put = 'PUT',
-  delete = 'DELETE',
-}
 
 interface Options {
   body: Values | null;
@@ -48,7 +42,6 @@ export default function useSubmit(options: Options): Payload {
 
     try {
       await api(path, { body, dispatch, method });
-      setIsSubmitting(false);
 
       callbacks.forEach((callback: Callback) => {
         callback();
@@ -63,7 +56,6 @@ export default function useSubmit(options: Options): Payload {
       });
     } catch (err) {
       if (err.message !== MESSAGES.UNAUTHORIZED) {
-        setIsSubmitting(false);
         dispatch({
           payload: {
             message: MESSAGES.ERROR,
@@ -72,6 +64,8 @@ export default function useSubmit(options: Options): Payload {
           type: DISPATCH_TYPES.OPEN_TOAST,
         });
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

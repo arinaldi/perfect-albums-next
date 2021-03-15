@@ -26,7 +26,11 @@ export interface UserInput {
   password: string;
 }
 
-export type Values = AlbumInput | ReleaseInput | SongInput | UserInput;
+interface IdInput {
+  id: string;
+}
+
+export type Values = AlbumInput | ReleaseInput | SongInput | UserInput | IdInput;
 
 interface Payload {
   values: any;

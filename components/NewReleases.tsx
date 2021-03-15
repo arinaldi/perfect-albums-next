@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { formatReleases, ListItem, sortByDate } from 'utils';
-import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';
 import NewReleaseList from 'components/NewReleaseList';
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const NewReleases: FC<Props> = ({ data, onCreateOpen, onDeleteOpen, onEditOpen }) => {
-  const { hasAuth } = useUser();
+  const { hasAuth } = useAuth();
 
   const NewButton = hasAuth
     ? (

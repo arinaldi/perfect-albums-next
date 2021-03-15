@@ -15,7 +15,7 @@ interface Props {
 
 const TopAlbumsPage: FC<Props> = ({ favorites }) => {
   const router = useRouter();
-  const { data, error } = useSWR(['/api/favorites', true], fetcher, {
+  const { data, error } = useSWR('/api/favorites', fetcher, {
     initialData: { favorites },
   });
   const [value, setValue] = useState('label');

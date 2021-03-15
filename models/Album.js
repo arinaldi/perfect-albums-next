@@ -29,13 +29,4 @@ const AlbumSchema = new mongoose.Schema({
 { timestamps: true },
 );
 
-AlbumSchema.set('toJSON', {
-  transform: (_, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
-  },
-});
-
-export default mongoose.models.Album || mongoose.model('Album', AlbumSchema);
+export default mongoose?.models?.Album || mongoose.model('Album', AlbumSchema);

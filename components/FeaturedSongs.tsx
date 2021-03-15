@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { ICONS } from 'constants/index';
-import useUser from 'hooks/useUser';
+import { useAuth } from 'hooks/useAuth';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
-  const { hasAuth } = useUser();
+  const { hasAuth } = useAuth();
 
   const NewButton = hasAuth
     ? (

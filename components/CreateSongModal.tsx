@@ -1,32 +1,21 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC } from 'react';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { fetcher, gqlFetcher } from 'utils/api';
+import { DISPATCH_TYPES, MESSAGES } from 'constants/index';
+import { fetcher } from 'utils/api';
+import { Method } from 'utils/types';
 import useForm, { SongInput } from 'hooks/useForm';
+import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
-
-const CREATE_SONG = gql`
-  mutation CreateSong($artist: String!, $title: String!, $link: String!) {
-    createSong(artist: $artist, title: $title, link: $link) {
-      id
-      artist
-      title
-      link
-    }
-  }
-`;
 
 const CreateSongModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(['/api/songs', true], fetcher);
+  const { mutate } = useSWR('/api/songs', fetcher);
   const { values, handleChange, resetForm } = useForm<SongInput>({
     artist: '',
     title: '',
     link: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { isOpen } = state.modal;
 
   function handleClose() {
@@ -36,33 +25,14 @@ const CreateSongModal: FC = () => {
     resetForm();
   }
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await gqlFetcher(CREATE_SONG, values);
-      setIsSubmitting(false);
-      mutate();
-      dispatch({
-        payload: {
-          message: `${MESSAGES.SONG_PREFIX} created`,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-      handleClose();
-    } catch (error) {
-      setIsSubmitting(false);
-      dispatch({
-        payload: {
-          message: MESSAGES.ERROR,
-          type: TOAST_TYPES.ERROR,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    }
-  }
+  const options = {
+    body: values,
+    callbacks: [mutate, handleClose],
+    method: Method.post,
+    path: '/api/songs',
+    successMessage: `${MESSAGES.SONG_PREFIX} created`,
+  };
+  const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <>

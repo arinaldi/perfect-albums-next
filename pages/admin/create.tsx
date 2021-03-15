@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 
 import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import useForm, { AlbumInput } from 'hooks/useForm';
-import useSubmit, { Method } from 'hooks/useSubmit';
+import useSubmit from 'hooks/useSubmit';
 import useAdminAlbums from 'hooks/useAdminAlbums';
+import { Method } from 'utils/types';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
