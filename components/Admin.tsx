@@ -1,57 +1,39 @@
-import { ChangeEvent, FC, MouseEvent, RefObject } from 'react';
+import { FC } from 'react';
 import { useRouter } from 'next/router';
 
 import { ICONS, ROUTES_ADMIN } from 'constants/index';
 import { getSortIcon } from 'utils';
-import { Album } from 'utils/types';
+import useAdminState from 'hooks/useAdminState';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
 
-interface Props {
-  albums: Album[];
-  currentPage: number;
-  direction: string;
-  isFirstPage: boolean;
-  isLastPage: boolean;
-  isLoading: boolean;
-  onClear: () => void;
-  onFirst: () => void;
-  onLast: () => void;
-  onNext: () => void;
-  onPerPageChange: (value: number) => void;
-  onPrevious: () => void;
-  onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSort: (event: MouseEvent<HTMLElement>) => void;
-  perPage: number;
-  searchRef: RefObject<HTMLInputElement>;
-  searchText: string;
-  sort: string;
-  total: number;
-}
-
-const Admin: FC<Props> = ({
-  albums,
-  currentPage,
-  direction,
-  isFirstPage,
-  isLastPage,
-  isLoading,
-  onClear,
-  onFirst,
-  onLast,
-  onNext,
-  onPerPageChange,
-  onPrevious,
-  onSearchChange,
-  onSort,
-  perPage,
-  searchRef,
-  searchText,
-  sort,
-  total,
-}) => {
+const Admin: FC = () => {
   const router = useRouter();
+  const {
+    albums,
+    currentPage,
+    direction,
+    handlers,
+    isFirstPage,
+    isLastPage,
+    isLoading,
+    perPage,
+    searchRef,
+    searchText,
+    sort,
+    total,
+  } = useAdminState();
+  const {
+    onClear,
+    onFirst,
+    onLast,
+    onNext,
+    onPerPageChange,
+    onPrevious,
+    onSearchChange,
+    onSort,
+  } = handlers;
 
   const Title = (
     <>
