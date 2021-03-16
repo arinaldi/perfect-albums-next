@@ -12,7 +12,7 @@ const firebaseAuthConfig = {
       disableSignUp: { status: true },
     },
   ],
-  signInSuccessUrl: '/admin',
+  signInSuccessUrl: '/new-releases',
 };
 
 const FirebaseAuth: FC = () => {
@@ -23,7 +23,7 @@ const FirebaseAuth: FC = () => {
   }, []);
 
   return (
-    <div className='mt-16'>
+    <div className='mt-6 px-4 sm:mt-16 sm:px-0'>
       {renderAuth ? (
         <StyledFirebaseAuth
           uiConfig={firebaseAuthConfig}

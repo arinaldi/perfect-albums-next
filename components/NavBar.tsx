@@ -82,7 +82,7 @@ const NavBar: FC = () => {
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {hasAuth ? (
               <div
                 onClick={logout}
@@ -112,13 +112,33 @@ const NavBar: FC = () => {
               </a>
             </Link>
           ))}
-          {hasAuth && (
-            <Link href={ROUTES_ADMIN.base.href}>
+          {hasAuth ? (
+            <>
+              <Link href={ROUTES_ADMIN.base.href}>
+                <a
+                  className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
+                  onClick={closeMenu}
+                >
+                  {ROUTES_ADMIN.base.label}
+                </a>
+              </Link>
+              <div
+                onClick={() => {
+                  closeMenu();
+                  logout();
+                }}
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                Sign Out
+              </div>
+            </>
+          ) : (
+            <Link href="/signin">
               <a
-                className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 onClick={closeMenu}
               >
-                {ROUTES_ADMIN.base.label}
+                Sign In
               </a>
             </Link>
           )}
