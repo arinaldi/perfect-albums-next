@@ -44,7 +44,7 @@ export default function useForm<T>(initialState: T): Payload {
 
   useEffect(() => {
     setValues(initialState);
-  }, [initialValues]);
+  }, [initialValues]); // eslint-disable-line
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
