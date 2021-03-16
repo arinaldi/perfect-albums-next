@@ -1,13 +1,12 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useRef, useState } from 'react';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextApiRequest } from 'next';
 import { useRouter } from 'next/router';
 
 import { PER_PAGE, SORT_DIRECTION } from 'constants/index';
 import { fetchAndCache } from 'utils/api';
-import { isTokenValid } from 'utils/auth';
-import { COOKIE_KEY } from 'utils/storage';
 import useDebounce from 'hooks/useDebounce';
 import useAdminAlbums from 'hooks/useAdminAlbums';
+import { loadIdToken } from 'auth/firebaseAdmin';
 import Admin from 'components/Admin';
 
 const AdminPage: FC = () => {
@@ -38,8 +37,10 @@ const AdminPage: FC = () => {
   }, []);
 
   function handlePrevious() {
-    const previousUrl = `/api/albums?page=${currentPage - 2}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-    fetchAndCache(previousUrl);
+    const newPage = currentPage - 2;
+    const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+
+    if (newPage !== 0) fetchAndCache(previousUrl);
     setCurrentPage(page => page - 1);
   }
 
@@ -126,10 +127,9 @@ const AdminPage: FC = () => {
 export default AdminPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const token = req.cookies[COOKIE_KEY];
-  const isValid = await isTokenValid(token);
+  const uid = await loadIdToken(req as NextApiRequest);
 
-  if (!isValid) {
+  if (!uid) {
     return {
       redirect: {
         destination: '/top-albums',

@@ -1,23 +1,15 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { fetcher, gqlFetcher } from 'utils/api';
+import { DISPATCH_TYPES, MESSAGES } from 'constants/index';
+import { fetcher } from 'utils/api';
+import { Method } from 'utils/types';
+import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
-
-export const DELETE_RELEASE = gql`
-  mutation DeleteRelease($id: ID!) {
-    deleteRelease(id: $id) {
-      id
-    }
-  }
-`;
 
 const DeleteReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(['/api/releases', true], fetcher);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutate } = useSWR('/api/releases', fetcher);
   const { data, isOpen } = state.modal;
 
   function handleClose() {
@@ -26,32 +18,14 @@ const DeleteReleaseModal: FC = () => {
     });
   }
 
-  async function handleDelete() {
-    setIsSubmitting(true);
-
-    try {
-      await gqlFetcher(DELETE_RELEASE, { id: data.id });
-      setIsSubmitting(false);
-      mutate();
-      dispatch({
-        payload: {
-          message: `${MESSAGES.RELEASE_PREFIX} deleted`,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-      handleClose();
-    } catch (error) {
-      setIsSubmitting(false);
-      dispatch({
-        payload: {
-          message: MESSAGES.ERROR,
-          type: TOAST_TYPES.ERROR,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    }
-  }
+  const options = {
+    body: { id: data.id },
+    callbacks: [mutate, handleClose],
+    method: Method.delete,
+    path: '/api/releases',
+    successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
+  };
+  const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <>
@@ -92,7 +66,7 @@ const DeleteReleaseModal: FC = () => {
                     <button
                       className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50"
                       disabled={isSubmitting}
-                      onClick={handleDelete}
+                      onClick={handleSubmit}
                       style={{ minWidth: '135px', transition: 'all .15s ease' }}
                       type="submit"
                     >

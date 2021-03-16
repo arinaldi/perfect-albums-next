@@ -26,7 +26,11 @@ export interface UserInput {
   password: string;
 }
 
-export type Values = AlbumInput | ReleaseInput | SongInput | UserInput;
+interface IdInput {
+  id: string;
+}
+
+export type Values = AlbumInput | ReleaseInput | SongInput | UserInput | IdInput;
 
 interface Payload {
   values: any;
@@ -40,7 +44,7 @@ export default function useForm<T>(initialState: T): Payload {
 
   useEffect(() => {
     setValues(initialState);
-  }, [initialValues]);
+  }, [initialValues]); // eslint-disable-line
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;

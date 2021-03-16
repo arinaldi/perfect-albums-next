@@ -1,35 +1,24 @@
 import { Dispatch } from 'react';
-import { GraphQLClient } from 'graphql-request';
-import { RequestDocument } from 'graphql-request/dist/types';
 import { mutate } from 'swr';
+import firebase from 'firebase/app';
 
 import {
-  BASE_URL,
   DISPATCH_TYPES,
   MESSAGES,
   TOAST_TYPES,
 } from 'constants/index';
-import { getToken, removeToken } from 'utils/storage';
 import { Action } from 'reducers/provider';
+import { Method } from 'utils/types';
 
 interface FetchError {
   info?: string;
   status?: number;
 }
 
-export async function fetcher(url: string, isInternalApi = false): Promise<any> {
-  const endpoint = `${isInternalApi ? '' : BASE_URL}${url}`;
-  const token = getToken();
-  const headers = {
-    Authorization: '',
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  const res = await fetch(endpoint, { headers });
+export async function fetcher(url: string): Promise<any> {
+  const res = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+  });
 
   if (!res.ok) {
     const error: Error & FetchError = new Error('An error occured while fetching the data.');
@@ -47,19 +36,13 @@ export function fetchAndCache(key: string): Promise<any> {
   return request;
 }
 
-export function gqlFetcher(query: RequestDocument, variables = {}): Promise<any> {
-  const token = getToken();
-  const client = new GraphQLClient(`${BASE_URL}/graphql`, {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : '',
-    },
-  });
-
-  return client.request(query, variables);
-}
-
 function logout(dispatch: Dispatch<Action> | undefined) {
-  removeToken();
+  firebase
+    .auth()
+    .signOut()
+    .catch((e) => {
+      console.error(e); // eslint-disable-line no-console
+    });
 
   if (dispatch) {
     dispatch({
@@ -104,26 +87,26 @@ type ResponseObject = {
   status: number;
 };
 
-const defaultOptions = { body: null, dispatch: undefined };
+const defaultOptions = {
+  body: null,
+  dispatch: undefined,
+  method: Method.get,
+};
 
 async function api(endpoint: string, options: Options = defaultOptions): Promise<ResponseObject> {
-  const { body, dispatch, ...customConfig } = options;
-  const token = getToken();
-  const headers = {
-    Authorization: '',
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
+  const {
+    body,
+    dispatch,
+    method,
+    ...customConfig
+  } = options;
 
   const config = {
     body,
-    method: body ? 'POST' : 'GET',
+    method,
     ...customConfig,
     headers: {
-      ...headers,
+      'Content-Type': 'application/json',
       ...customConfig.headers,
     },
   };
@@ -132,7 +115,7 @@ async function api(endpoint: string, options: Options = defaultOptions): Promise
     config.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, config);
+  const response = await fetch(endpoint, config);
   return handleResponse(response, dispatch);
 }
 

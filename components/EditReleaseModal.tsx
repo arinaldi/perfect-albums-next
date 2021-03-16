@@ -1,39 +1,23 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC } from 'react';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
+import { DISPATCH_TYPES, MESSAGES } from 'constants/index';
 import { formatDate } from 'utils';
-import { fetcher, gqlFetcher } from 'utils/api';
+import { fetcher } from 'utils/api';
+import { Method } from 'utils/types';
 import useForm, { ReleaseInput } from 'hooks/useForm';
+import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
-
-export const EDIT_RELEASE = gql`
-  mutation EditRelease(
-    $id: ID!
-    $artist: String!
-    $title: String!
-    $date: Date
-  ) {
-    editRelease(id: $id, artist: $artist, title: $title, date: $date) {
-      id
-      artist
-      title
-      date
-    }
-  }
-`;
 
 const EditReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
   const { data, isOpen } = state.modal;
-  const { mutate } = useSWR(['/api/releases', true], fetcher);
+  const { mutate } = useSWR('/api/releases', fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: data.artist,
     title: data.title,
     date: formatDate(data.date),
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleClose() {
     dispatch({
@@ -42,33 +26,14 @@ const EditReleaseModal: FC = () => {
     resetForm();
   }
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await gqlFetcher(EDIT_RELEASE, { ...values, id: data.id });
-      setIsSubmitting(false);
-      mutate();
-      dispatch({
-        payload: {
-          message: `${MESSAGES.RELEASE_PREFIX} edited`,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-      handleClose();
-    } catch (error) {
-      setIsSubmitting(false);
-      dispatch({
-        payload: {
-          message: MESSAGES.ERROR,
-          type: TOAST_TYPES.ERROR,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    }
-  }
+  const options = {
+    body: { ...values, id: data.id },
+    callbacks: [mutate, handleClose],
+    method: Method.put,
+    path: '/api/releases',
+    successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
+  };
+  const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <>

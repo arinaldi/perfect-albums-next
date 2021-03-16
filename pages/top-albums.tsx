@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 import { fetcher } from 'utils/api';
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import { Favorite } from 'utils/types';
 import { getFavorites } from 'pages/api/favorites';
 import TopAlbums from 'components/TopAlbums';
@@ -15,7 +15,7 @@ interface Props {
 
 const TopAlbumsPage: FC<Props> = ({ favorites }) => {
   const router = useRouter();
-  const { data, error } = useSWR(['/api/favorites', true], fetcher, {
+  const { data, error } = useSWR('/api/favorites', fetcher, {
     initialData: { favorites },
   });
   const [value, setValue] = useState('label');

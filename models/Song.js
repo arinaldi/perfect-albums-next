@@ -17,13 +17,4 @@ const SongSchema = new mongoose.Schema({
 { timestamps: true },
 );
 
-SongSchema.set('toJSON', {
-  transform: (_, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
-  },
-});
-
-export default mongoose.models.Song || mongoose.model('Song', SongSchema);
+export default mongoose?.models?.Song || mongoose.model('Song', SongSchema);

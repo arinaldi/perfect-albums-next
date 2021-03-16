@@ -1,32 +1,21 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC } from 'react';
 import useSWR from 'swr';
-import { gql } from 'graphql-request';
 
-import { DISPATCH_TYPES, MESSAGES, TOAST_TYPES } from 'constants/index';
-import { fetcher, gqlFetcher } from 'utils/api';
+import { DISPATCH_TYPES, MESSAGES } from 'constants/index';
+import { fetcher } from 'utils/api';
+import { Method } from 'utils/types';
 import useForm, { ReleaseInput } from 'hooks/useForm';
+import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
-
-const CREATE_RELEASE = gql`
-  mutation CreateRelease($artist: String!, $title: String!, $date: Date) {
-    createRelease(artist: $artist, title: $title, date: $date) {
-      id
-      artist
-      title
-      date
-    }
-  }
-`;
 
 const CreateReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
-  const { mutate } = useSWR(['/api/releases', true], fetcher);
+  const { mutate } = useSWR('/api/releases', fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: '',
     title: '',
     date: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { isOpen } = state.modal;
 
   function handleClose() {
@@ -36,33 +25,14 @@ const CreateReleaseModal: FC = () => {
     resetForm();
   }
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await gqlFetcher(CREATE_RELEASE, values);
-      setIsSubmitting(false);
-      mutate();
-      dispatch({
-        payload: {
-          message: `${MESSAGES.RELEASE_PREFIX} created`,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-      handleClose();
-    } catch (error) {
-      setIsSubmitting(false);
-      dispatch({
-        payload: {
-          message: MESSAGES.ERROR,
-          type: TOAST_TYPES.ERROR,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    }
-  }
+  const options = {
+    body: values,
+    callbacks: [mutate, handleClose],
+    method: Method.post,
+    path: '/api/releases',
+    successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
+  };
+  const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <>

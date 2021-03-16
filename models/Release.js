@@ -14,13 +14,4 @@ const ReleaseSchema = new mongoose.Schema({
   },
 });
 
-ReleaseSchema.set('toJSON', {
-  transform: (_, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
-  },
-});
-
-export default mongoose.models.Release || mongoose.model('Release', ReleaseSchema);
+export default mongoose?.models?.Release || mongoose.model('Release', ReleaseSchema);

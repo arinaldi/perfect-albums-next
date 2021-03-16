@@ -1,12 +1,22 @@
-export interface Album {
+import { Document } from 'mongoose';
+
+interface AlbumBase {
   aotd: boolean;
   artist: string;
   cd: boolean;
   favorite: boolean;
-  id: string;
   title: string;
-  updatedAt: string;
   year: string;
+}
+
+export interface Album extends AlbumBase {
+  id: string;
+  updatedAt: string;
+}
+
+export interface AlbumData extends AlbumBase, Document {
+  _id: string;
+  updatedAt: Date;
 }
 
 export interface Favorite {
@@ -27,4 +37,18 @@ export interface Song {
   artist: string;
   title: string;
   link: string;
+}
+
+export interface User {
+  hash: string;
+  id: string;
+  salt: string;
+  username: string;
+}
+
+export enum Method {
+  get = 'GET',
+  post = 'POST',
+  put = 'PUT',
+  delete = 'DELETE',
 }
