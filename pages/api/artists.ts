@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'utils/dbConnect';
+import dbConnect from 'lib/dbConnect';
 import Album from 'models/Album';
 
 async function getArtists(): Promise<string[]> {
