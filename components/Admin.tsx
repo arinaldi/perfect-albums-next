@@ -45,8 +45,12 @@ const Admin: FC = () => {
     </>
   );
 
+  const AppVersion = (
+    <code>{process.env.NEXT_PUBLIC_APP_VERSION}</code>
+  );
+
   return (
-    <Layout title={Title}>
+    <Layout title={Title} titleAction={AppVersion}>
       <div className="block sm:flex sm:justify-between sm:items-center mb-4">
         <input
           className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -103,11 +107,11 @@ const Admin: FC = () => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200 table-fixed">
+                  <table className="min-w-full divide-y divide-gray-200 table-auto sm:table-fixed">
                     <thead className="">
                       <tr>
                         <th
-                          className="w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
                           data-value="artist"
                           onClick={onSort}
                           scope="col"
@@ -116,7 +120,7 @@ const Admin: FC = () => {
                           Artist
                         </th>
                         <th
-                          className="w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
                           data-value="title"
                           onClick={onSort}
                           scope="col"
@@ -125,7 +129,7 @@ const Admin: FC = () => {
                           Title
                         </th>
                         <th
-                          className="w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
                           data-value="year"
                           onClick={onSort}
                           scope="col"
@@ -134,25 +138,25 @@ const Admin: FC = () => {
                           Year
                         </th>
                         <th
-                          className="w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           CD
                         </th>
                         <th
-                          className="w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           AotD
                         </th>
                         <th
-                          className="w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           Favorite
                         </th>
                         <th
-                          className="w-auto px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-auto px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
                           scope="col"
                         >
                           Actions
@@ -165,25 +169,25 @@ const Admin: FC = () => {
                         <tbody className="bg-white divide-y divide-gray-200">
                           {albums.map(album => (
                             <tr key={album.id} className="odd:bg-gray-50">
-                              <td className="max-w-0 w-1/4 px-3 py-2 truncate text-sm text-gray-900">
+                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900">
                                 {album.artist}
                               </td>
-                              <td className="max-w-0 w-1/4 px-3 py-2 truncate text-sm text-gray-900">
+                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900">
                                 {album.title}
                               </td>
-                              <td className="w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
                                 {album.year}
                               </td>
-                              <td className="w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
                                 {album.cd && ICONS.CHECK}
                               </td>
-                              <td className="w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
                                 {album.aotd && ICONS.CHECK}
                               </td>
-                              <td className="w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
                                 {album.favorite && ICONS.CHECK}
                               </td>
-                              <td className="w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900">
+                              <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                                 <button
                                   className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
                                   onClick={() => {
