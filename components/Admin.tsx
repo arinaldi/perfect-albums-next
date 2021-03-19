@@ -64,13 +64,13 @@ const Admin: FC = () => {
         />
         <div className="block mt-2 sm:flex sm:mt-0 sm:ml-4">
           <button
-            className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+            className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={onClear}
           >
             Clear
           </button>
           <button
-            className="ml-1 py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+            className="ml-1 py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => {
               router.push({
                 pathname: ROUTES_ADMIN.create.href,
@@ -189,7 +189,7 @@ const Admin: FC = () => {
                               </td>
                               <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900">
                                 <button
-                                  className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+                                  className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                                   onClick={() => {
                                     router.push({
                                       pathname: `${ROUTES_ADMIN.edit.href}/${album.id}`,
@@ -200,7 +200,7 @@ const Admin: FC = () => {
                                   Edit
                                 </button>
                                 <button
-                                  className="ml-1 py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+                                  className="ml-1 py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                                   onClick={() => {
                                     router.push({
                                       pathname: `${ROUTES_ADMIN.delete.href}/${album.id}`,

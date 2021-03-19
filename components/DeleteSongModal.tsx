@@ -64,7 +64,7 @@ const DeleteSongModal: FC = () => {
                       Close
                     </button>
                     <button
-                      className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50"
+                      className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={isSubmitting}
                       onClick={handleSubmit}
                       style={{ minWidth: '135px', transition: 'all .15s ease' }}

@@ -21,7 +21,7 @@ const NewReleases: FC<Props> = ({ data, onCreateOpen, onDeleteOpen, onEditOpen }
   const NewButton = hasAuth
     ? (
       <button
-        className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50"
+        className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={onCreateOpen}
       >
         New
