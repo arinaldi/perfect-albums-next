@@ -8,6 +8,7 @@ import dbConnect from 'lib/dbConnect';
 import { Favorite } from 'utils/types';
 import { getFavorites } from 'pages/api/favorites';
 import TopAlbums from 'components/TopAlbums';
+import AppMessage from 'components/AppMessage';
 
 interface Props {
   favorites: Favorite[];
@@ -26,8 +27,7 @@ const TopAlbumsPage: FC<Props> = ({ favorites }) => {
     router.push(`${router.pathname}${value}`);
   }
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (error) return <AppMessage />;
 
   return (
     <TopAlbums

@@ -5,11 +5,12 @@ import useSWR from 'swr';
 import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
 import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
+import { ListItem } from 'utils';
 import { Release } from 'utils/types';
 import { getReleases } from 'pages/api/releases';
 import { useAppDispatch } from 'components/Provider';
 import NewReleases from 'components/NewReleases';
-import { ListItem } from 'utils';
+import AppMessage from 'components/AppMessage';
 
 interface Props {
   releases: Release[];
@@ -21,8 +22,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
     initialData: { releases },
   });
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (error) return <AppMessage />;
 
   function handleCreateOpen() {
     dispatch({

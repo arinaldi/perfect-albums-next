@@ -8,6 +8,7 @@ import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
 import TableSkeleton from 'components/TableSkeleton';
+import AppMessage from 'components/AppMessage';
 
 const Admin: FC = () => {
   const router = useRouter();
@@ -101,7 +102,7 @@ const Admin: FC = () => {
       </div>
 
       {albums.length === 0 && !isLoading
-        ? <p className="text-center mt-8 text-2xl">No results found</p>
+        ? <AppMessage message="No results found" />
         : (
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

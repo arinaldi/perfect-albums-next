@@ -9,6 +9,7 @@ import { Song } from 'utils/types';
 import { getSongs } from 'pages/api/songs';
 import { useAppDispatch } from 'components/Provider';
 import FeaturedSongs from 'components/FeaturedSongs';
+import AppMessage from 'components/AppMessage';
 
 interface Props {
   songs: Song[];
@@ -20,8 +21,7 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
     initialData: { songs },
   });
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (error) return <AppMessage />;
 
   function handleCreateOpen() {
     dispatch({
