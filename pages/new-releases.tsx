@@ -71,5 +71,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { releases },
+    revalidate: 5,
   };
 };

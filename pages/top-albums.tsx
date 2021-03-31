@@ -46,6 +46,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { favorites },
-    revalidate: 10,
+    revalidate: 5,
   };
 };
