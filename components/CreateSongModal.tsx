@@ -65,7 +65,7 @@ const CreateSongModal: FC = () => {
                           </label>
                           <input
                             autoComplete="artist"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-red-500"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             id="artist"
                             name="artist"
                             onChange={handleChange}
