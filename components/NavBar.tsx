@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Switch } from '@headlessui/react';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useAuth } from 'hooks/useAuth';
@@ -10,13 +11,24 @@ const NavBar: FC = () => {
   const { pathname } = router;
   const { hasAuth, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   function closeMenu() {
     setIsMenuOpen(false);
   }
 
+  function toggleDarkMode() {
+    if (isDarkMode) {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    } else {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }
+
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gray-800 dark:bg-gray-700">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -67,14 +79,14 @@ const NavBar: FC = () => {
               <div className="flex space-x-4">
                 {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
-                    <a className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium`}>
+                    <a className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800`}>
                       {label}
                     </a>
                   </Link>
                 ))}
                 {hasAuth && (
                   <Link href={ROUTES_ADMIN.base.href}>
-                    <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium`}>
+                    <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800`}>
                       {ROUTES_ADMIN.base.label}
                     </a>
                   </Link>
@@ -82,17 +94,31 @@ const NavBar: FC = () => {
               </div>
             </div>
           </div>
-          <div className="hidden sm:block absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div className="hidden absolute inset-y-0 right-0 sm:flex sm:items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <Switch
+              checked={isDarkMode}
+              onChange={toggleDarkMode}
+              className={`${
+                isDarkMode ? 'bg-gray-900' : 'bg-gray-500'
+              } relative inline-flex items-center w-11 h-6 rounded-full`}
+            >
+              <span className="sr-only">Enable dark mode</span>
+              <span
+                className={`transform transition ease-in-out duration-200 ${
+                  isDarkMode ? 'translate-x-6' : 'translate-x-1'
+                } inline-block w-4 h-4 transform bg-white rounded-full`}
+              />
+            </Switch>
             {hasAuth ? (
               <div
                 onClick={logout}
-                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium"
+                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800"
               >
                 Sign Out
               </div>
             ) : (
               <Link href="/signin">
-                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium">
+                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800">
                   Sign In
                 </a>
               </Link>
@@ -100,6 +126,7 @@ const NavBar: FC = () => {
           </div>
         </div>
       </div>
+      {/* Mobile menu */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           {ROUTES.map(({ href, label }) => (
@@ -142,6 +169,12 @@ const NavBar: FC = () => {
               </a>
             </Link>
           )}
+          <div
+            onClick={toggleDarkMode}
+            className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            {isDarkMode ? 'Disable' : 'Enable'} Dark Mode
+          </div>
         </div>
       </div>
     </nav>

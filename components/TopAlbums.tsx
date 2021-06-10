@@ -18,7 +18,7 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
   const Title = (
     <>
       Top Albums
-      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold">
+      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
         {data.favorites.length.toLocaleString()}
       </span>
     </>
@@ -26,7 +26,7 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
 
   const DecadeSelect = (
     <select
-      className="py-2 pl-3 pr-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      className="py-2 pl-3 pr-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-black dark:text-white"
       name="decade"
       onChange={onChange}
       value={value}
@@ -56,7 +56,7 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
             />
           ))}
       </div>
-      <a className="fixed bottom-0 right-0 p-5 text-gray-500" href="#top">
+      <a className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200" href="#top">
         {`${ICONS.UP} Top`}
       </a>
     </Layout>

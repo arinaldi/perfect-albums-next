@@ -17,13 +17,13 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
 
   return (
     <form method="POST" onSubmit={onSubmit}>
-      <div className="bg-white p-6">
+      <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 sm:col-span-4">
             <div className="mb-4">
               <label
                 htmlFor="artist"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-white"
               >
                 Artist
               </label>
@@ -41,7 +41,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             <div className="mb-4">
               <label
                 htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-white"
               >
                 Title
               </label>
@@ -59,7 +59,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             <div className="mb-4">
               <label
                 htmlFor="year"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-white"
               >
                 Year
               </label>
@@ -78,7 +78,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
           <div className="col-span-6 sm:col-span-2">
             <fieldset className="mb-10">
               <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700">CD</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-white">CD</p>
               </div>
               <div className="flex">
                 <div className="flex items-center mr-4">
@@ -92,7 +92,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="false"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="cd_false"
                   >
                     false
@@ -109,7 +109,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="true"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="cd_true"
                   >
                     true
@@ -119,7 +119,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             </fieldset>
             <fieldset className="mb-10">
               <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700">Album of the Day</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-white">Album of the Day</p>
               </div>
               <div className="flex">
                 <div className="flex items-center mr-4">
@@ -133,7 +133,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="false"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="aotd_false"
                   >
                     false
@@ -150,7 +150,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="true"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="aotd_true"
                   >
                     true
@@ -160,7 +160,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             </fieldset>
             <fieldset>
               <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700">Favorite</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-white">Favorite</p>
               </div>
               <div className="flex">
                 <div className="flex items-center mr-4">
@@ -174,7 +174,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="false"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="favorite_false"
                   >
                     false
@@ -191,7 +191,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                     value="true"
                   />
                   <label
-                    className="ml-3 block text-sm font-medium text-gray-700"
+                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
                     htmlFor="favorite_true"
                   >
                     true
@@ -217,7 +217,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
           Cancel
         </button>
         <button
-          className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-gray-800"
           disabled={isSubmitting}
           style={{
             minWidth: '135px',

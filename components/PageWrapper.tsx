@@ -11,7 +11,7 @@ interface Props {
 
 const PageWrapper: FC<Props> = ({ children }) => {
   return (
-    <div>
+    <div className="h-full">
       <Head>
         <title>Perfect Albums</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

@@ -12,16 +12,16 @@ const TopAlbumList: FC<Props> = ({ data, year, total }) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h4 id={year} className="text-xl font-semibold">
+        <h4 id={year} className="text-xl font-semibold dark:text-white">
           {year}
         </h4>
-        <div className="px-2 py-1 mr-4 rounded-md bg-gray-100 text-xl font-semibold">
+        <div className="px-2 py-1 mr-4 rounded-md bg-gray-100 text-xl font-semibold dark:text-white dark:bg-gray-700">
           {total.toLocaleString()}
         </div>
       </div>
       <ul data-testid={`list-${year}`} className="list-disc ml-6 p-1">
         {data.map((album, index) => (
-          <li key={index}>
+          <li key={index} className="dark:text-white">
             {album.artist} &ndash; {album.title}
           </li>
         ))}

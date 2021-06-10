@@ -16,23 +16,23 @@ const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
 
   return (
     <div>
-      <h4 className="text-xl font-semibold">{date}</h4>
+      <h4 className="text-xl font-semibold dark:text-white">{date}</h4>
       <ul data-testid={`list-${date}`} className="list-disc ml-6 p-1">
         {data.map(release => (
-          <li key={release.id}>
+          <li key={release.id} className="dark:text-white">
             <span>
               {release.artist} &ndash; {release.title}
             </span>
             {hasAuth && (
               <>
                 <span
-                  className="align-middle cursor-pointer ml-2"
+                  className="align-middle cursor-pointer ml-2 dark:text-white"
                   onClick={() => onEdit(release)}
                 >
                   {ICONS.PENCIL}
                 </span>
                 <span
-                  className="align-middle cursor-pointer"
+                  className="align-middle cursor-pointer ml-1 dark:text-white"
                   onClick={() => onDelete(release)}
                 >
                   {ICONS.X}

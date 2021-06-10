@@ -40,14 +40,14 @@ const Admin: FC = () => {
   const Title = (
     <>
       Admin
-      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold">
+      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
         {isLoading ? '—' : total.toLocaleString()}
       </span>
     </>
   );
 
   const AppVersion = (
-    <code>{process.env.NEXT_PUBLIC_APP_VERSION}</code>
+    <code className="dark:text-white">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
   );
 
   return (
@@ -112,7 +112,7 @@ const Admin: FC = () => {
                     <thead className="">
                       <tr>
                         <th
-                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
                           data-value="artist"
                           onClick={onSort}
                           scope="col"
@@ -121,7 +121,7 @@ const Admin: FC = () => {
                           Artist
                         </th>
                         <th
-                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
                           data-value="title"
                           onClick={onSort}
                           scope="col"
@@ -130,7 +130,7 @@ const Admin: FC = () => {
                           Title
                         </th>
                         <th
-                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
                           data-value="year"
                           onClick={onSort}
                           scope="col"
@@ -139,25 +139,25 @@ const Admin: FC = () => {
                           Year
                         </th>
                         <th
-                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
                           scope="col"
                         >
                           CD
                         </th>
                         <th
-                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
                           scope="col"
                         >
                           AotD
                         </th>
                         <th
-                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
                           scope="col"
                         >
                           Favorite
                         </th>
                         <th
-                          className="sm:w-auto px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider"
+                          className="sm:w-auto px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
                           scope="col"
                         >
                           Actions
@@ -167,7 +167,7 @@ const Admin: FC = () => {
                     {isLoading
                       ? <TableSkeleton />
                       : (
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className="bg-white divide-y divide-gray-20">
                           {albums.map(album => (
                             <tr key={album.id} className="odd:bg-gray-50">
                               <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900">
