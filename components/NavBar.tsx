@@ -5,26 +5,17 @@ import { Switch } from '@headlessui/react';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useAuth } from 'hooks/useAuth';
+import useDarkMode from 'hooks/useDarkMode';
 
 const NavBar: FC = () => {
   const router = useRouter();
   const { pathname } = router;
   const { hasAuth, logout } = useAuth();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   function closeMenu() {
     setIsMenuOpen(false);
-  }
-
-  function toggleDarkMode() {
-    if (isDarkMode) {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove('dark');
-    } else {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
   }
 
   return (
