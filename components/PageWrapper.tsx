@@ -15,6 +15,16 @@ const PageWrapper: FC<Props> = ({ children }) => {
       <Head>
         <title>Perfect Albums</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if (localStorage.theme === 'dark') {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          `,
+        }}
+        />
       </Head>
       <NavBar />
       {children}

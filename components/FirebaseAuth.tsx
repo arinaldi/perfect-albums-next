@@ -23,7 +23,7 @@ const FirebaseAuth: FC = () => {
   }, []);
 
   return (
-    <div className='mt-6 px-4 sm:mt-16 sm:px-0'>
+    <div className='min-h-screen mt-6 px-4 sm:mt-16 sm:px-0'>
       {renderAuth ? (
         <StyledFirebaseAuth
           uiConfig={firebaseAuthConfig}

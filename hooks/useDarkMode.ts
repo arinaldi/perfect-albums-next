@@ -9,9 +9,8 @@ export default function useDarkMode(): Payload {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    if (window && localStorage.theme === 'dark') {
+    if (localStorage.theme === 'dark') {
       setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
     }
   }, []);
 
