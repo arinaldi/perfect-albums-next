@@ -107,9 +107,9 @@ const Admin: FC = () => {
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200 table-auto sm:table-fixed">
-                    <thead className="">
+                <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg dark:border-black">
+                  <table className="min-w-full divide-y divide-gray-200 table-auto sm:table-fixed dark:divide-black">
+                    <thead>
                       <tr>
                         <th
                           className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
@@ -167,28 +167,28 @@ const Admin: FC = () => {
                     {isLoading
                       ? <TableSkeleton />
                       : (
-                        <tbody className="bg-white divide-y divide-gray-20">
+                        <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-500 dark:divide-black">
                           {albums.map(album => (
-                            <tr key={album.id} className="odd:bg-gray-50">
-                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900">
+                            <tr key={album.id} className="odd:bg-gray-50 dark:odd:bg-gray-400">
+                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
                                 {album.artist}
                               </td>
-                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900">
+                              <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
                                 {album.title}
                               </td>
-                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                                 {album.year}
                               </td>
-                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                                 {album.cd && ICONS.CHECK}
                               </td>
-                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                                 {album.aotd && ICONS.CHECK}
                               </td>
-                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900">
+                              <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                                 {album.favorite && ICONS.CHECK}
                               </td>
-                              <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900">
+                              <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                 <button
                                   className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                                   onClick={() => {
