@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { ROUTES_ADMIN } from 'constants/index';
 import { AlbumInput } from 'hooks/useForm';
 import Input from 'components/Input';
+import RadioFieldset from 'components/RadioFieldset';
 
 interface Props {
   isSubmitting: boolean;
@@ -57,129 +58,24 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             </div>
           </div>
           <div className="col-span-6 sm:col-span-2">
-            <fieldset className="mb-10">
-              <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700 dark:text-white">CD</p>
-              </div>
-              <div className="flex">
-                <div className="flex items-center mr-4">
-                  <input
-                    checked={values.cd === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="cd_false"
-                    name="cd"
-                    onChange={onChange}
-                    type="radio"
-                    value="false"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="cd_false"
-                  >
-                    false
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    checked={values.cd === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="cd_true"
-                    name="cd"
-                    onChange={onChange}
-                    type="radio"
-                    value="true"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="cd_true"
-                  >
-                    true
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset className="mb-10">
-              <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700 dark:text-white">Album of the Day</p>
-              </div>
-              <div className="flex">
-                <div className="flex items-center mr-4">
-                  <input
-                    checked={values.aotd === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="aotd_false"
-                    name="aotd"
-                    onChange={onChange}
-                    type="radio"
-                    value="false"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="aotd_false"
-                  >
-                    false
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    checked={values.aotd === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="aotd_true"
-                    name="aotd"
-                    onChange={onChange}
-                    type="radio"
-                    value="true"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="aotd_true"
-                  >
-                    true
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset>
-              <div className="mb-2">
-                <p className="text-sm font-medium text-gray-700 dark:text-white">Favorite</p>
-              </div>
-              <div className="flex">
-                <div className="flex items-center mr-4">
-                  <input
-                    checked={values.favorite === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="favorite_false"
-                    name="favorite"
-                    onChange={onChange}
-                    type="radio"
-                    value="false"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="favorite_false"
-                  >
-                    false
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    checked={values.favorite === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
-                    id="favorite_true"
-                    name="favorite"
-                    onChange={onChange}
-                    type="radio"
-                    value="true"
-                  />
-                  <label
-                    className="ml-3 block text-sm font-medium text-gray-700 dark:text-white"
-                    htmlFor="favorite_true"
-                  >
-                    true
-                  </label>
-                </div>
-              </div>
-            </fieldset>
+            <RadioFieldset
+              id="cd"
+              label="CD"
+              onChange={onChange}
+              value={values.cd}
+            />
+            <RadioFieldset
+              id="aotd"
+              label="Album of the Day"
+              onChange={onChange}
+              value={values.aotd}
+            />
+            <RadioFieldset
+              id="favorite"
+              label="Favorite"
+              onChange={onChange}
+              value={values.favorite}
+            />
           </div>
         </div>
       </div>
