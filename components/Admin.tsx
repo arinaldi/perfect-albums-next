@@ -54,7 +54,7 @@ const Admin: FC = () => {
     <Layout title={Title} titleAction={AppVersion}>
       <div className="block sm:flex sm:justify-between sm:items-center mb-4">
         <input
-          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
           id="search"
           name="search"
           onChange={onSearchChange}

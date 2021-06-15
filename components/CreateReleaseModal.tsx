@@ -7,6 +7,7 @@ import { Method } from 'utils/types';
 import useForm, { ReleaseInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
+import Input from 'components/Input';
 
 const CreateReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
@@ -57,17 +58,8 @@ const CreateReleaseModal: FC = () => {
                     <div className="bg-white p-6 dark:bg-gray-800">
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6">
-                          <label
-                            htmlFor="artist"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Artist
-                          </label>
-                          <input
-                            autoComplete="artist"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="artist"
-                            name="artist"
                             onChange={handleChange}
                             required
                             type="text"
@@ -75,17 +67,8 @@ const CreateReleaseModal: FC = () => {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label
-                            htmlFor="title"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Title
-                          </label>
-                          <input
-                            autoComplete="title"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="title"
-                            name="title"
                             onChange={handleChange}
                             required
                             type="text"
@@ -93,18 +76,10 @@ const CreateReleaseModal: FC = () => {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label
-                            htmlFor="date"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Date
-                          </label>
-                          <input
-                            autoComplete="date"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="date"
-                            name="date"
                             onChange={handleChange}
+                            required
                             type="date"
                             value={values.date}
                           />

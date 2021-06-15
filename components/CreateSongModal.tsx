@@ -7,6 +7,7 @@ import { Method } from 'utils/types';
 import useForm, { SongInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
+import Input from 'components/Input';
 
 const CreateSongModal: FC = () => {
   const [state, dispatch] = useApp();
@@ -57,17 +58,8 @@ const CreateSongModal: FC = () => {
                     <div className="bg-white p-6 dark:bg-gray-800">
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6">
-                          <label
-                            htmlFor="artist"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Artist
-                          </label>
-                          <input
-                            autoComplete="artist"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="artist"
-                            name="artist"
                             onChange={handleChange}
                             required
                             type="text"
@@ -75,17 +67,8 @@ const CreateSongModal: FC = () => {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label
-                            htmlFor="title"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Title
-                          </label>
-                          <input
-                            autoComplete="title"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="title"
-                            name="title"
                             onChange={handleChange}
                             required
                             type="text"
@@ -93,21 +76,12 @@ const CreateSongModal: FC = () => {
                           />
                         </div>
                         <div className="col-span-6">
-                          <label
-                            htmlFor="link"
-                            className="block text-sm font-medium text-gray-700 dark:text-white"
-                          >
-                            Link
-                          </label>
-                          <input
-                            autoComplete="link"
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          <Input
                             id="link"
-                            name="link"
                             onChange={handleChange}
                             required
                             type="text"
-                            value={values.date}
+                            value={values.link}
                           />
                         </div>
                       </div>

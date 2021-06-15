@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
 import { AlbumInput } from 'hooks/useForm';
+import Input from 'components/Input';
 
 interface Props {
   isSubmitting: boolean;
@@ -15,23 +16,21 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
   const router = useRouter();
   const { search } = router.query;
 
+  function handleCancel() {
+    router.push({
+      pathname: ROUTES_ADMIN.base.href,
+      query: { search },
+    });
+  }
+
   return (
     <form method="POST" onSubmit={onSubmit}>
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 sm:col-span-4">
             <div className="mb-4">
-              <label
-                htmlFor="artist"
-                className="block text-sm font-medium text-gray-700 dark:text-white"
-              >
-                Artist
-              </label>
-              <input
-                autoComplete="artist"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              <Input
                 id="artist"
-                name="artist"
                 onChange={onChange}
                 required
                 type="text"
@@ -39,17 +38,8 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700 dark:text-white"
-              >
-                Title
-              </label>
-              <input
-                autoComplete="title"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              <Input
                 id="title"
-                name="title"
                 onChange={onChange}
                 required
                 type="text"
@@ -57,17 +47,8 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="year"
-                className="block text-sm font-medium text-gray-700 dark:text-white"
-              >
-                Year
-              </label>
-              <input
-                autoComplete="year"
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              <Input
                 id="year"
-                name="year"
                 onChange={onChange}
                 required
                 type="text"
@@ -84,7 +65,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center mr-4">
                   <input
                     checked={values.cd === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="cd_false"
                     name="cd"
                     onChange={onChange}
@@ -101,7 +82,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center">
                   <input
                     checked={values.cd === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="cd_true"
                     name="cd"
                     onChange={onChange}
@@ -125,7 +106,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center mr-4">
                   <input
                     checked={values.aotd === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="aotd_false"
                     name="aotd"
                     onChange={onChange}
@@ -142,7 +123,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center">
                   <input
                     checked={values.aotd === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="aotd_true"
                     name="aotd"
                     onChange={onChange}
@@ -166,7 +147,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center mr-4">
                   <input
                     checked={values.favorite === false}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="favorite_false"
                     name="favorite"
                     onChange={onChange}
@@ -183,7 +164,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
                 <div className="flex items-center">
                   <input
                     checked={values.favorite === true}
-                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                    className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 dark:border-black dark:bg-gray-700"
                     id="favorite_true"
                     name="favorite"
                     onChange={onChange}
@@ -205,12 +186,7 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
       <div className="flex items-center justify-end p-6">
         <button
           className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-          onClick={() => {
-            router.push({
-              pathname: ROUTES_ADMIN.base.href,
-              query: { search },
-            });
-          }}
+          onClick={handleCancel}
           style={{ transition: 'all .15s ease' }}
           type="button"
         >
