@@ -6,6 +6,7 @@ import { fetcher } from 'utils/api';
 import { Method } from 'utils/types';
 import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
+import CancelButton from 'components/CancelButton';
 
 const DeleteReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
@@ -55,14 +56,7 @@ const DeleteReleaseModal: FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b dark:border-black">
-                    <button
-                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                      onClick={handleClose}
-                      style={{ transition: 'all .15s ease' }}
-                      type="button"
-                    >
-                      Close
-                    </button>
+                    <CancelButton onClick={handleClose} />
                     <button
                       className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-gray-800"
                       disabled={isSubmitting}
