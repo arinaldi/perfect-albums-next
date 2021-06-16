@@ -70,14 +70,14 @@ const NavBar: FC = () => {
               <div className="flex space-x-4">
                 {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
-                    <a className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800`}>
+                    <a className={`${pathname === href ? 'text-white font-semibold' : 'text-gray-300 font-medium'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md dark:hover:bg-gray-800`}>
                       {label}
                     </a>
                   </Link>
                 ))}
                 {hasAuth && (
                   <Link href={ROUTES_ADMIN.base.href}>
-                    <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800`}>
+                    <a className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white font-semibold' : 'text-gray-300 font-medium'} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md dark:hover:bg-gray-800`}>
                       {ROUTES_ADMIN.base.label}
                     </a>
                   </Link>
@@ -123,7 +123,7 @@ const NavBar: FC = () => {
           {ROUTES.map(({ href, label }) => (
             <Link key={href} href={href}>
               <a
-                className={`${pathname === href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
+                className={`${pathname === href ? 'text-white font-semibold' : 'text-gray-300 font-medium'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base`}
                 onClick={closeMenu}
               >
                 {label}
@@ -134,7 +134,7 @@ const NavBar: FC = () => {
             <>
               <Link href={ROUTES_ADMIN.base.href}>
                 <a
-                  className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white' : 'text-gray-300'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium`}
+                  className={`${pathname === ROUTES_ADMIN.base.href ? 'text-white font-semibold' : 'text-gray-300 font-medium'} hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base`}
                   onClick={closeMenu}
                 >
                   {ROUTES_ADMIN.base.label}
