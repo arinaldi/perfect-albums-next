@@ -7,6 +7,7 @@ import { Method } from 'utils/types';
 import useSubmit from 'hooks/useSubmit';
 import { useApp } from 'components/Provider';
 import CancelButton from 'components/CancelButton';
+import SubmitButton from 'components/SubmitButton';
 
 const DeleteReleaseModal: FC = () => {
   const [state, dispatch] = useApp();
@@ -55,18 +56,14 @@ const DeleteReleaseModal: FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b dark:border-black">
+                  <form
+                    className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b dark:border-black"
+                    method="POST"
+                    onSubmit={handleSubmit}
+                  >
                     <CancelButton onClick={handleClose} />
-                    <button
-                      className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-gray-800"
-                      disabled={isSubmitting}
-                      onClick={handleSubmit}
-                      style={{ minWidth: '135px', transition: 'all .15s ease' }}
-                      type="submit"
-                    >
-                      {isSubmitting ? 'Deleting...' : 'Delete'}
-                    </button>
-                  </div>
+                    <SubmitButton isSubmitting={isSubmitting} />
+                  </form>
                 </div>
               </div>
             </div>
