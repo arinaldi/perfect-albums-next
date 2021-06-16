@@ -9,6 +9,7 @@ import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
+import Button from 'components/Button';
 
 const Admin: FC = () => {
   const router = useRouter();
@@ -37,6 +38,13 @@ const Admin: FC = () => {
     onSort,
   } = handlers;
 
+  function handleClick() {
+    router.push({
+      pathname: ROUTES_ADMIN.create.href,
+      query: { search: searchText },
+    });
+  }
+
   const Title = (
     <>
       Admin
@@ -64,23 +72,9 @@ const Admin: FC = () => {
           value={searchText}
         />
         <div className="block mt-2 sm:flex sm:mt-0 sm:ml-4">
-          <button
-            className="py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={onClear}
-          >
-            Clear
-          </button>
-          <button
-            className="ml-1 py-2 px-4 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={() => {
-              router.push({
-                pathname: ROUTES_ADMIN.create.href,
-                query: { search: searchText },
-              });
-            }}
-          >
-            New
-          </button>
+          <Button label="Clear" onClick={onClear} />
+          <span className="ml-1" />
+          <Button label="New" onClick={handleClick} />
         </div>
       </div>
 
