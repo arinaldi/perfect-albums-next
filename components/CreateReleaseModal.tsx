@@ -81,7 +81,6 @@ const CreateReleaseModal: FC = () => {
                           <Input
                             id="date"
                             onChange={handleChange}
-                            required
                             type="date"
                             value={values.date}
                           />
