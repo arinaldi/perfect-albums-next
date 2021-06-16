@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
 import ModalContainer from 'components/ModalContainer';
-import Toast from 'components/Toast';
 
 interface Props {
   children: ReactNode;
@@ -29,7 +29,21 @@ const PageWrapper: FC<Props> = ({ children }) => {
       <NavBar />
       {children}
       <ModalContainer />
-      <Toast />
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          success: {
+            style: {
+              background: '#A7F3D0',
+            },
+          },
+          error: {
+            style: {
+              background: '#FECACA',
+            },
+          },
+        }}
+      />
     </div>
   );
 };

@@ -1,13 +1,8 @@
-import { Dispatch } from 'react';
 import { mutate } from 'swr';
 import firebase from 'firebase/app';
+import toast from 'react-hot-toast';
 
-import {
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from 'constants/index';
-import { Action } from 'reducers/provider';
+import { MESSAGES } from 'constants/index';
 import { Method } from 'utils/types';
 
 interface FetchError {
@@ -36,33 +31,24 @@ export function fetchAndCache(key: string): Promise<any> {
   return request;
 }
 
-function logout(dispatch: Dispatch<Action> | undefined) {
+function logout() {
   firebase
     .auth()
     .signOut()
     .catch((e) => {
       console.error(e); // eslint-disable-line no-console
     });
-
-  if (dispatch) {
-    dispatch({
-      payload: {
-        message: MESSAGES.UNAUTHORIZED,
-        type: TOAST_TYPES.ERROR,
-      },
-      type: DISPATCH_TYPES.OPEN_TOAST,
-    });
-  }
 }
 
-async function handleResponse(response: Response, dispatch: Dispatch<Action> | undefined) {
+async function handleResponse(response: Response) {
   const { status, url } = response;
 
   if (status === 401) {
     if (url.includes('signin')) {
       return Promise.reject(new Error(MESSAGES.SIGNIN));
     } else {
-      logout(dispatch);
+      toast.error(MESSAGES.UNAUTHORIZED);
+      logout();
       return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
     }
   }
@@ -78,7 +64,6 @@ async function handleResponse(response: Response, dispatch: Dispatch<Action> | u
 
 interface Options {
   body?: any;
-  dispatch?: Dispatch<Action>;
   [key: string]: any;
 }
 
@@ -89,14 +74,12 @@ type ResponseObject = {
 
 const defaultOptions = {
   body: null,
-  dispatch: undefined,
   method: Method.get,
 };
 
 async function api(endpoint: string, options: Options = defaultOptions): Promise<ResponseObject> {
   const {
     body,
-    dispatch,
     method,
     ...customConfig
   } = options;
@@ -116,7 +99,7 @@ async function api(endpoint: string, options: Options = defaultOptions): Promise
   }
 
   const response = await fetch(endpoint, config);
-  return handleResponse(response, dispatch);
+  return handleResponse(response);
 }
 
 export default api;

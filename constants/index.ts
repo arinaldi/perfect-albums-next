@@ -22,8 +22,6 @@ export const DECADES = [
 ];
 
 export enum DISPATCH_TYPES {
-  OPEN_TOAST = 'OPEN_TOAST',
-  CLOSE_TOAST = 'CLOSE_TOAST',
   OPEN_MODAL = 'OPEN_MODAL',
   CLOSE_MODAL = 'CLOSE_MODAL',
 }
@@ -91,12 +89,4 @@ export const ROUTES_ADMIN = {
 export enum SORT_DIRECTION {
   ASC = 'asc',
   DESC = 'desc',
-}
-
-export const TOAST_TIMEOUT = 2500;
-
-export enum TOAST_TYPES {
-  SUCCESS = 'success',
-  ERROR = 'error',
-  INFO = 'info',
 }

@@ -1,11 +1,8 @@
 import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import api from 'utils/api';
-import {
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from 'constants/index';
+import { MESSAGES } from 'constants/index';
 import { Values } from 'hooks/useForm';
 import { Method } from 'utils/types';
 import { useAppDispatch } from 'components/Provider';
@@ -47,22 +44,10 @@ export default function useSubmit(options: Options): Payload {
         callback();
       });
 
-      dispatch({
-        payload: {
-          message: successMessage,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
+      toast.success(successMessage);
     } catch (err) {
       if (err.message !== MESSAGES.UNAUTHORIZED) {
-        dispatch({
-          payload: {
-            message: MESSAGES.ERROR,
-            type: TOAST_TYPES.ERROR,
-          },
-          type: DISPATCH_TYPES.OPEN_TOAST,
-        });
+        toast.error(MESSAGES.ERROR);
       }
     } finally {
       setIsSubmitting(false);

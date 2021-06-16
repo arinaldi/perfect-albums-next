@@ -4,12 +4,10 @@ import {
   FC,
   ReactNode,
   useContext,
-  useEffect,
   useReducer,
 } from 'react';
 
 import { Action, providerReducer, providerInitialState, State } from 'reducers/provider';
-import { DISPATCH_TYPES, TOAST_TIMEOUT } from 'constants/index';
 
 interface Props {
   children: ReactNode;
@@ -20,20 +18,6 @@ const DispatchContext = createContext<Dispatch<Action>>(() => undefined);
 
 const Provider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(providerReducer, providerInitialState);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (state.toast.isOpen) {
-      timeout = setTimeout(() => {
-        dispatch({ type: DISPATCH_TYPES.CLOSE_TOAST });
-      }, TOAST_TIMEOUT);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [state.toast.isOpen]);
 
   return (
     <StateContext.Provider value={state}>
