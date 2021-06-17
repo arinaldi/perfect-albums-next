@@ -9,7 +9,7 @@ import { useAppDispatch } from 'components/Provider';
 
 type Callback = () => void;
 
-interface Options {
+export interface Options {
   body: Values | null;
   callbacks: Callback[];
   method: Method;
