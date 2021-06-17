@@ -18,7 +18,7 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
   const { hasAuth } = useAuth();
 
   const NewButton = hasAuth
-    ? <Button label="New" onClick={onCreateOpen} />
+    ? <Button onClick={onCreateOpen}>New</Button>
     : null;
 
   return (

@@ -20,7 +20,7 @@ const NewReleases: FC<Props> = ({ data, onCreateOpen, onDeleteOpen, onEditOpen }
   const { hasAuth } = useAuth();
 
   const NewButton = hasAuth
-    ? <Button label="New" onClick={onCreateOpen} />
+    ? <Button onClick={onCreateOpen}>New</Button>
     : null;
 
   return (

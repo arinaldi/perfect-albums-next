@@ -10,6 +10,7 @@ import PerPage from 'components/PerPage';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
+import TableButton from 'components/TableButton';
 
 const Admin: FC = () => {
   const router = useRouter();
@@ -38,9 +39,9 @@ const Admin: FC = () => {
     onSort,
   } = handlers;
 
-  function handleClick() {
+  function handleRouteChange(pathname: string) {
     router.push({
-      pathname: ROUTES_ADMIN.create.href,
+      pathname,
       query: { search: searchText },
     });
   }
@@ -72,9 +73,9 @@ const Admin: FC = () => {
           value={searchText}
         />
         <div className="block mt-2 sm:flex sm:mt-0 sm:ml-4">
-          <Button label="Clear" onClick={onClear} />
+          <Button onClick={onClear}>Clear</Button>
           <span className="ml-1" />
-          <Button label="New" onClick={handleClick} />
+          <Button onClick={() => handleRouteChange(ROUTES_ADMIN.create.href)}>New</Button>
         </div>
       </div>
 
@@ -183,28 +184,17 @@ const Admin: FC = () => {
                                 {album.favorite && ICONS.CHECK}
                               </td>
                               <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                                <button
-                                  className="py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-                                  onClick={() => {
-                                    router.push({
-                                      pathname: `${ROUTES_ADMIN.edit.href}/${album.id}`,
-                                      query: { search: searchText },
-                                    });
-                                  }}
+                                <TableButton
+                                  onClick={() => handleRouteChange(`${ROUTES_ADMIN.edit.href}/${album.id}`)}
                                 >
                                   Edit
-                                </button>
-                                <button
-                                  className="ml-1 py-1 px-2 border border-transparent text-md font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-                                  onClick={() => {
-                                    router.push({
-                                      pathname: `${ROUTES_ADMIN.delete.href}/${album.id}`,
-                                      query: { search: searchText },
-                                    });
-                                  }}
+                                </TableButton>
+                                <span className="ml-1" />
+                                <TableButton
+                                  onClick={() => handleRouteChange(`${ROUTES_ADMIN.delete.href}/${album.id}`)}
                                 >
                                   Delete
-                                </button>
+                                </TableButton>
                               </td>
                             </tr>
                           ))}
