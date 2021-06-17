@@ -8,7 +8,7 @@ interface Props {
 
 const Layout: FC<Props> = ({ children, title, titleAction }) => {
   return (
-    <div className="min-h-screen max-w-7xl mx-auto p-4 dark:bg-gray-800 dark:color-white">
+    <div className="min-h-screen max-w-7xl mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
           {title}
