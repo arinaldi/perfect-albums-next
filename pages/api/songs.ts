@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
 import dbConnect from 'lib/dbConnect';
-import { Song as SongType } from 'utils/types';
+import formatSong from 'lib/formatSong';
+import { Song as SongType, SongData } from 'utils/types';
 import Song from 'models/Song';
 import auth from 'middleware/auth';
 
@@ -10,14 +11,8 @@ export async function getSongs(): Promise<SongType[]> {
   const data = await Song
     .find({})
     .sort({ createdAt: 'desc' });
-  const songs = data.map(item => {
-    const { _id, artist, link, title } = item.toObject();
-    return {
-      artist,
-      id: _id.toString(),
-      link,
-      title,
-    };
+  const songs = data.map((item: SongData) => {
+    return formatSong(item);
   });
 
   return songs;

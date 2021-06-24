@@ -9,14 +9,14 @@ interface AlbumBase {
   year: string;
 }
 
-export interface Album extends AlbumBase {
-  id: string;
-  updatedAt: string;
-}
-
 export interface AlbumData extends AlbumBase, Document {
   _id: string;
   updatedAt: Date;
+}
+
+export interface Album extends AlbumBase {
+  id: string;
+  updatedAt: string;
 }
 
 export interface Favorite {
@@ -25,18 +25,33 @@ export interface Favorite {
   year: string;
 }
 
-export interface Release {
-  id: string;
+interface ReleaseBase {
   artist: string;
   title: string;
-  date: string;
 }
 
-export interface Song {
+export interface ReleaseData extends ReleaseBase, Document {
+  _id: string;
+  date: Date | null;
+}
+
+export interface Release extends ReleaseBase {
   id: string;
+  date: string | null;
+}
+
+interface SongBase {
   artist: string;
   title: string;
   link: string;
+}
+
+export interface SongData extends SongBase, Document {
+  _id: string;
+}
+
+export interface Song extends SongBase {
+  id: string;
 }
 
 export interface User {

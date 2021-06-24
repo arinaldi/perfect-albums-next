@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
 import dbConnect from 'lib/dbConnect';
-import { Release as ReleaseType } from 'utils/types';
+import formatRelease from 'lib/formatRelease';
+import { Release as ReleaseType, ReleaseData } from 'utils/types';
 import Release from 'models/Release';
 import auth from 'middleware/auth';
 
@@ -10,14 +11,8 @@ export async function getReleases(): Promise<ReleaseType[]> {
   const data = await Release
     .find({})
     .sort({ date: 'asc', artist: 'asc', title: 'asc' });
-  const releases = data.map(item => {
-    const { _id, artist, date, title } = item.toObject();
-    return {
-      artist,
-      date: date ? date.toISOString() : null,
-      id: _id.toString(),
-      title,
-    };
+  const releases = data.map((item: ReleaseData) => {
+    return formatRelease(item);
   });
 
   return releases;

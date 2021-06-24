@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import dbConnect from 'lib/dbConnect';
-import { Favorite } from 'utils/types';
+import formatFavorite from 'lib/formatFavorite';
+import { AlbumData, Favorite } from 'utils/types';
 import Album from 'models/Album';
 
 export async function getFavorites(): Promise<Favorite[]> {
   const albums = await Album
     .find({ favorite: true })
     .sort({ year: 'desc', artist: 'asc', title: 'asc' });
-  const favorites = albums.map(album => {
-    const { artist, title, year } = album.toObject();
-    return { artist, title, year };
+  const favorites = albums.map((item: AlbumData) => {
+    return formatFavorite(item);
   });
 
   return favorites;
