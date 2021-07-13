@@ -23,13 +23,7 @@ interface Payload {
 }
 
 export default function useSubmit(options: Options): Payload {
-  const {
-    body,
-    callbacks,
-    method,
-    path,
-    successMessage,
-  } = options;
+  const { body, callbacks, method, path, successMessage } = options;
   const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
 

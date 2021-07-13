@@ -8,7 +8,9 @@ import { useAppState } from 'components/Provider';
 import Modal from 'components/Modal';
 
 const DeleteReleaseModal: FC = () => {
-  const { modal: { data } } = useAppState();
+  const {
+    modal: { data },
+  } = useAppState();
   const { mutate } = useSWR('/api/releases', fetcher);
   const options = {
     body: { id: data.id },
@@ -19,15 +21,11 @@ const DeleteReleaseModal: FC = () => {
   };
 
   return (
-    <Modal
-      options={options}
-      title="Delete Release"
-    >
+    <Modal options={options} title="Delete Release">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 dark:text-white">
-            Are you sure you want to delete {data.artist} &ndash;{' '}
-            {data.title}?
+            Are you sure you want to delete {data.artist} &ndash; {data.title}?
           </div>
         </div>
       </div>

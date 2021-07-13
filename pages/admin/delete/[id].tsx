@@ -19,13 +19,19 @@ interface Props {
 const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
-  const { mutate } = useAdminAlbums(`/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`);
+  const { mutate } = useAdminAlbums(
+    `/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`,
+  );
   const options = {
     body: null,
-    callbacks: [mutate, () => router.push({
-      pathname: ROUTES_ADMIN.base.href,
-      query: { search },
-    })],
+    callbacks: [
+      mutate,
+      () =>
+        router.push({
+          pathname: ROUTES_ADMIN.base.href,
+          query: { search },
+        }),
+    ],
     method: Method.delete,
     path: `/api/albums/${album.id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
@@ -43,7 +49,10 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
 
 export default DeleteAlbumPage;
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const uid = await loadIdToken(req as NextApiRequest);
   const payload = {
     props: { album: {} },

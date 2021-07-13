@@ -14,4 +14,5 @@ const ReleaseSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose?.models?.Release || mongoose.model('Release', ReleaseSchema);
+export default mongoose?.models?.Release ||
+  mongoose.model('Release', ReleaseSchema);

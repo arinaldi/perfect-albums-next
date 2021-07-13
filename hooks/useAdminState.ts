@@ -1,4 +1,12 @@
-import { ChangeEvent, MouseEvent, RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  MouseEvent,
+  RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useRouter } from 'next/router';
 
 import { PER_PAGE, SORT_DIRECTION } from 'constants/index';
@@ -36,7 +44,9 @@ interface Payload {
 export default function useAdminState(): Payload {
   const router = useRouter();
   const { search } = router.query;
-  const [searchText, setSearchText] = useState(typeof search === 'string' ? search : '');
+  const [searchText, setSearchText] = useState(
+    typeof search === 'string' ? search : '',
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(PER_PAGE.twentyFive);
   const [sort, setSort] = useState('');
@@ -60,63 +70,70 @@ export default function useAdminState(): Payload {
     searchRef?.current?.focus();
   }, []);
 
-  const handlers = useMemo(() => ({
-    onPrevious: () => {
-      const newPage = currentPage - 2;
-      const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+  const handlers = useMemo(
+    () => ({
+      onPrevious: () => {
+        const newPage = currentPage - 2;
+        const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
 
-      if (newPage !== 0) fetchAndCache(previousUrl);
-      setCurrentPage(page => page - 1);
-    },
-    onNext: () => {
-      const nextUrl = `/api/albums?page=${currentPage + 2}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-      fetchAndCache(nextUrl);
-      setCurrentPage(page => page + 1);
-    },
-    onFirst: () => {
-      setCurrentPage(1);
-    },
-    onLast: () => {
-      const page = Math.ceil(total / perPage);
-      const prevUrl = `/api/albums?page=${page - 1}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-      fetchAndCache(prevUrl);
-      setCurrentPage(page);
-    },
-    onPerPageChange: (value: number) => {
-      setPerPage(value);
-      setCurrentPage(1);
-    },
-    onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
-      setCurrentPage(1);
-      setSearchText(value);
-    },
-    onClear: () => {
-      setCurrentPage(1);
-      setSearchText('');
-      searchRef?.current?.focus();
+        if (newPage !== 0) fetchAndCache(previousUrl);
+        setCurrentPage(page => page - 1);
+      },
+      onNext: () => {
+        const nextUrl = `/api/albums?page=${
+          currentPage + 2
+        }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+        fetchAndCache(nextUrl);
+        setCurrentPage(page => page + 1);
+      },
+      onFirst: () => {
+        setCurrentPage(1);
+      },
+      onLast: () => {
+        const page = Math.ceil(total / perPage);
+        const prevUrl = `/api/albums?page=${
+          page - 1
+        }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+        fetchAndCache(prevUrl);
+        setCurrentPage(page);
+      },
+      onPerPageChange: (value: number) => {
+        setPerPage(value);
+        setCurrentPage(1);
+      },
+      onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setCurrentPage(1);
+        setSearchText(value);
+      },
+      onClear: () => {
+        setCurrentPage(1);
+        setSearchText('');
+        searchRef?.current?.focus();
 
-      if (router.query.search) {
-        router.replace(router.pathname);
-      }
-    },
-    onSort: (event: MouseEvent<HTMLElement>) => {
-      if (!(event.target instanceof HTMLElement)) return;
-
-      const { value } = event.target.dataset;
-      const { ASC, DESC } = SORT_DIRECTION;
-
-      setSort(value || '');
-      setDirection(direction => {
-        if (sort !== value || !direction || direction === DESC) {
-          return ASC;
+        if (router.query.search) {
+          router.replace(router.pathname);
         }
+      },
+      onSort: (event: MouseEvent<HTMLElement>) => {
+        if (!(event.target instanceof HTMLElement)) return;
 
-        return DESC;
-      });
-      setCurrentPage(1);
-    },
-  }), [currentPage, debouncedSearch, direction, perPage, router, sort, total]);
+        const { value } = event.target.dataset;
+        const { ASC, DESC } = SORT_DIRECTION;
+
+        setSort(value || '');
+        setDirection(direction => {
+          if (sort !== value || !direction || direction === DESC) {
+            return ASC;
+          }
+
+          return DESC;
+        });
+        setCurrentPage(1);
+      },
+    }),
+    [currentPage, debouncedSearch, direction, perPage, router, sort, total],
+  );
 
   return {
     albums,

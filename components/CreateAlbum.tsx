@@ -11,7 +11,12 @@ interface Props {
   values: AlbumInput;
 }
 
-const CreateAlbum: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
+const CreateAlbum: FC<Props> = ({
+  isSubmitting,
+  onChange,
+  onSubmit,
+  values,
+}) => {
   return (
     <Layout title="Create Album">
       <AlbumForm

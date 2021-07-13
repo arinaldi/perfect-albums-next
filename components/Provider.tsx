@@ -7,7 +7,12 @@ import {
   useReducer,
 } from 'react';
 
-import { Action, providerReducer, providerInitialState, State } from 'reducers/provider';
+import {
+  Action,
+  providerReducer,
+  providerInitialState,
+  State,
+} from 'reducers/provider';
 
 interface Props {
   children: ReactNode;

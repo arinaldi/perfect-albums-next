@@ -16,7 +16,9 @@ export async function fetcher(url: string): Promise<any> {
   });
 
   if (!res.ok) {
-    const error: Error & FetchError = new Error('An error occured while fetching the data.');
+    const error: Error & FetchError = new Error(
+      'An error occured while fetching the data.',
+    );
     error.info = await res.json();
     error.status = res.status;
     throw error;
@@ -35,8 +37,8 @@ function logout() {
   firebase
     .auth()
     .signOut()
-    .catch((e) => {
-      console.error(e); // eslint-disable-line no-console
+    .catch((error: Error) => {
+      console.error(error); // eslint-disable-line no-console
     });
 }
 
@@ -77,12 +79,11 @@ const defaultOptions = {
   method: Method.get,
 };
 
-async function api(endpoint: string, options: Options = defaultOptions): Promise<ResponseObject> {
-  const {
-    body,
-    method,
-    ...customConfig
-  } = options;
+async function api(
+  endpoint: string,
+  options: Options = defaultOptions,
+): Promise<ResponseObject> {
+  const { body, method, ...customConfig } = options;
 
   const config = {
     body,

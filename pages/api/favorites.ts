@@ -6,9 +6,11 @@ import { AlbumData, Favorite } from 'utils/types';
 import Album from 'models/Album';
 
 export async function getFavorites(): Promise<Favorite[]> {
-  const albums = await Album
-    .find({ favorite: true })
-    .sort({ year: 'desc', artist: 'asc', title: 'asc' });
+  const albums = await Album.find({ favorite: true }).sort({
+    year: 'desc',
+    artist: 'asc',
+    title: 'asc',
+  });
   const favorites = albums.map((item: AlbumData) => {
     return formatFavorite(item);
   });
@@ -16,7 +18,10 @@ export async function getFavorites(): Promise<Favorite[]> {
   return favorites;
 }
 
-export default async function(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default async function (
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<void> {
   await dbConnect();
 
   try {

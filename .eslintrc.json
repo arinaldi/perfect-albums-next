@@ -9,32 +9,32 @@
   },
   "extends": [
     "eslint:recommended",
-    "eslint-config-prettier",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "standard",
-    "standard-jsx"
+    "standard-jsx",
+    "prettier"
   ],
   "plugins": ["import", "node", "promise", "react", "react-hooks", "standard"],
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "eol-last": "error",
-    "indent": ["error", 2],
     "import/order": [
       "error",
       { "groups": ["builtin", "external", "parent", "sibling", "index"] }
     ],
-    "jsx-quotes": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "jsx-quotes": ["error", "prefer-double"],
     "no-console": "warn",
-    "no-unused-vars": "off",
     "quotes": ["error", "single"],
     "react/jsx-fragments": "off",
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-handler-names": "off",
+    "react/react-in-jsx-scope": "off",
     "semi": ["error", "always"],
     "space-before-function-paren": "off",
     "spaced-comment": "error",
@@ -48,7 +48,7 @@
   },
   "settings": {
     "react": {
-      "version": "17.01"
+      "version": "17.02"
     },
     "import/resolver": {
       "node": {

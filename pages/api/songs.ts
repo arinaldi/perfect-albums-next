@@ -8,9 +8,7 @@ import Song from 'models/Song';
 import auth from 'middleware/auth';
 
 export async function getSongs(): Promise<SongType[]> {
-  const data = await Song
-    .find({})
-    .sort({ createdAt: 'desc' });
+  const data = await Song.find({}).sort({ createdAt: 'desc' });
   const songs = data.map((item: SongData) => {
     return formatSong(item);
   });

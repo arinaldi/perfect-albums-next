@@ -8,9 +8,11 @@ import Release from 'models/Release';
 import auth from 'middleware/auth';
 
 export async function getReleases(): Promise<ReleaseType[]> {
-  const data = await Release
-    .find({})
-    .sort({ date: 'asc', artist: 'asc', title: 'asc' });
+  const data = await Release.find({}).sort({
+    date: 'asc',
+    artist: 'asc',
+    title: 'asc',
+  });
   const releases = data.map((item: ReleaseData) => {
     return formatRelease(item);
   });

@@ -11,7 +11,9 @@ import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 const EditReleaseModal: FC = () => {
-  const { modal: { data } } = useAppState();
+  const {
+    modal: { data },
+  } = useAppState();
   const { mutate } = useSWR('/api/releases', fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: data.artist,
@@ -27,11 +29,7 @@ const EditReleaseModal: FC = () => {
   };
 
   return (
-    <Modal
-      options={options}
-      resetForm={resetForm}
-      title="Edit Release"
-    >
+    <Modal options={options} resetForm={resetForm} title="Edit Release">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">

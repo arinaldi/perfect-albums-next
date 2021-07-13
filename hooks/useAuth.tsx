@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useContext,
-  createContext,
-  FC,
-} from 'react';
+import { useEffect, useState, useContext, createContext, FC } from 'react';
 import { useRouter } from 'next/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -37,24 +31,22 @@ export const AuthProvider: FC = ({ children }) => {
       .then(() => {
         router.push('/top-albums');
       })
-      .catch((e) => {
+      .catch(e => {
         console.error(e); // eslint-disable-line no-console
       });
   };
 
   useEffect(() => {
-    const cancelAuthListener = firebase
-      .auth()
-      .onIdTokenChanged(async (user) => {
-        if (user) {
-          const token = await user.getIdToken();
-          setTokenCookie(token);
-          setUser(user);
-        } else {
-          removeTokenCookie();
-          setUser(null);
-        }
-      });
+    const cancelAuthListener = firebase.auth().onIdTokenChanged(async user => {
+      if (user) {
+        const token = await user.getIdToken();
+        setTokenCookie(token);
+        setUser(user);
+      } else {
+        removeTokenCookie();
+        setUser(null);
+      }
+    });
 
     return () => {
       cancelAuthListener();
@@ -67,11 +59,7 @@ export const AuthProvider: FC = ({ children }) => {
     hasAuth: Boolean(user),
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export function useAuth(): Context {

@@ -36,24 +36,24 @@ export const providerInitialState = {
 
 export function providerReducer(state: State, action: Action): State {
   switch (action.type) {
-  case DISPATCH_TYPES.OPEN_MODAL:
-    return {
-      ...state,
-      modal: {
-        data: action.payload.data,
-        isOpen: true,
-        type: action.payload.type,
-      },
-    };
-  case DISPATCH_TYPES.CLOSE_MODAL:
-    return {
-      ...state,
-      modal: {
-        ...state.modal,
-        isOpen: false,
-      },
-    };
-  default:
-    return state;
+    case DISPATCH_TYPES.OPEN_MODAL:
+      return {
+        ...state,
+        modal: {
+          data: action.payload.data,
+          isOpen: true,
+          type: action.payload.type,
+        },
+      };
+    case DISPATCH_TYPES.CLOSE_MODAL:
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          isOpen: false,
+        },
+      };
+    default:
+      return state;
   }
 }

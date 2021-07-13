@@ -20,7 +20,9 @@ interface Props {
 const EditAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
-  const { mutate } = useAdminAlbums(`/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`);
+  const { mutate } = useAdminAlbums(
+    `/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`,
+  );
   const { values, handleChange } = useForm<AlbumInput>({
     artist: album.artist,
     title: album.title,
@@ -31,10 +33,14 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
   });
   const options = {
     body: values,
-    callbacks: [mutate, () => router.push({
-      pathname: ROUTES_ADMIN.base.href,
-      query: { search },
-    })],
+    callbacks: [
+      mutate,
+      () =>
+        router.push({
+          pathname: ROUTES_ADMIN.base.href,
+          query: { search },
+        }),
+    ],
     method: Method.put,
     path: `/api/albums/${album.id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
@@ -53,7 +59,10 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
 
 export default EditAlbumPage;
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const uid = await loadIdToken(req as NextApiRequest);
   const payload = {
     props: { album: {} },

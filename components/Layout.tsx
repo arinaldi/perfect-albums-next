@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react';
 interface Props {
   children: ReactNode;
   title: ReactNode;
-  titleAction?: ReactNode
+  titleAction?: ReactNode;
 }
 
 const Layout: FC<Props> = ({ children, title, titleAction }) => {
@@ -15,9 +15,7 @@ const Layout: FC<Props> = ({ children, title, titleAction }) => {
         </h1>
         {titleAction}
       </div>
-      <div className="relative flex-auto">
-        {children}
-      </div>
+      <div className="relative flex-auto">{children}</div>
     </div>
   );
 };

@@ -16,12 +16,17 @@ interface Props {
   onEditOpen: (release: ListItem) => void;
 }
 
-const NewReleases: FC<Props> = ({ data, onCreateOpen, onDeleteOpen, onEditOpen }) => {
+const NewReleases: FC<Props> = ({
+  data,
+  onCreateOpen,
+  onDeleteOpen,
+  onEditOpen,
+}) => {
   const { hasAuth } = useAuth();
 
-  const NewButton = hasAuth
-    ? <Button onClick={onCreateOpen}>New</Button>
-    : null;
+  const NewButton = hasAuth ? (
+    <Button onClick={onCreateOpen}>New</Button>
+  ) : null;
 
   return (
     <Layout title="New Releases" titleAction={NewButton}>

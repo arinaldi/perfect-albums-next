@@ -31,7 +31,9 @@ handler
     await dbConnect();
 
     try {
-      const album = await Album.findByIdAndUpdate(req.query.id, req.body, { new: true });
+      const album = await Album.findByIdAndUpdate(req.query.id, req.body, {
+        new: true,
+      });
       res.status(200).json({ success: true, album });
     } catch (error) {
       res.status(400).json({ success: false });

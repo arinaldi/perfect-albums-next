@@ -24,11 +24,7 @@ const CreateReleaseModal: FC = () => {
   };
 
   return (
-    <Modal
-      options={options}
-      resetForm={resetForm}
-      title="Create Release"
-    >
+    <Modal options={options} resetForm={resetForm} title="Create Release">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">

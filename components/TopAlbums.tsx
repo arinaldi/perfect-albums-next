@@ -56,7 +56,10 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
             />
           ))}
       </div>
-      <a className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200" href="#top">
+      <a
+        className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200"
+        href="#top"
+      >
         {`${ICONS.UP} Top`}
       </a>
     </Layout>

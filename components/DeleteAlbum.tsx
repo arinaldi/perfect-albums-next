@@ -25,7 +25,9 @@ const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto p-4 dark:bg-gray-800">
-      <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">Delete Album</h1>
+      <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
+        Delete Album
+      </h1>
       <div className="relative flex-auto">
         <div className="bg-white p-6 dark:bg-gray-800 dark:text-white">
           Are you sure you want to delete {album.artist} – {album.title}?

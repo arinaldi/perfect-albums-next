@@ -29,13 +29,7 @@ const TopAlbumsPage: FC<Props> = ({ favorites }) => {
 
   if (error) return <AppMessage />;
 
-  return (
-    <TopAlbums
-      data={data}
-      onChange={handleChange}
-      value={value}
-    />
-  );
+  return <TopAlbums data={data} onChange={handleChange} value={value} />;
 };
 
 export default TopAlbumsPage;
