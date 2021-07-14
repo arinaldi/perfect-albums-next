@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { ICONS } from 'constants/index';
 import { useAuth } from 'hooks/useAuth';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
+import { DeleteIcon } from 'components/Icons';
 
 interface Props {
   data: {
@@ -46,10 +46,10 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
               </a>
               {hasAuth && (
                 <span
-                  className="align-middle cursor-pointer ml-2"
+                  className="cursor-pointer ml-2"
                   onClick={() => onDeleteOpen(song)}
                 >
-                  {ICONS.X}
+                  <DeleteIcon />
                 </span>
               )}
             </div>

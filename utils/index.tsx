@@ -1,5 +1,8 @@
-import { ICONS, MONTHS, SORT_DIRECTION } from 'constants/index';
+import { ReactNode } from 'react';
+
+import { MONTHS, SORT_DIRECTION } from 'constants/index';
 import { Favorite, Release } from 'utils/types';
+import { ArrowDownIcon, ArrowUpIcon } from 'components/Icons';
 
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
@@ -69,12 +72,12 @@ export function formatReleases(releases: Release[]): Results {
   return results;
 }
 
-export function getSortIcon(direction: string): string {
+export function getSortIcon(direction: string): ReactNode {
   const { ASC, DESC } = SORT_DIRECTION;
 
   if (!direction) return '';
-  if (direction === ASC) return `${ICONS.UP} `;
-  if (direction === DESC) return `${ICONS.DOWN} `;
+  if (direction === ASC) return <ArrowUpIcon />;
+  if (direction === DESC) return <ArrowDownIcon />;
 
   return '';
 }

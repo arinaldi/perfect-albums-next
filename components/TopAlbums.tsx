@@ -1,10 +1,11 @@
 import { ChangeEvent, FC } from 'react';
 
-import { DECADES, ICONS } from 'constants/index';
+import { DECADES } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
 import { Favorite } from 'utils/types';
 import Layout from 'components/Layout';
 import TopAlbumList from 'components/TopAlbumList';
+import { ArrowUpIcon } from 'components/Icons';
 
 interface Props {
   data: {
@@ -60,7 +61,8 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
         className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200"
         href="#top"
       >
-        {`${ICONS.UP} Top`}
+        <ArrowUpIcon />
+        <span>&nbsp;Top</span>
       </a>
     </Layout>
   );

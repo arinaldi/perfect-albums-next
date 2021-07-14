@@ -26,14 +26,6 @@ export enum DISPATCH_TYPES {
   CLOSE_MODAL = 'CLOSE_MODAL',
 }
 
-export const ICONS = {
-  CHECK: '✔',
-  DOWN: '↓',
-  UP: '↑',
-  X: '✖',
-  PENCIL: '✎',
-};
-
 export const MESSAGES = {
   ALBUM_PREFIX: 'Album successfully',
   SONG_PREFIX: 'Song successfully',

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { ICONS, ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'constants/index';
 import { getSortIcon } from 'utils';
 import useAdminState from 'hooks/useAdminState';
 import Layout from 'components/Layout';
@@ -11,6 +11,7 @@ import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
 import TableButton from 'components/TableButton';
+import { CheckIcon } from 'components/Icons';
 
 const Admin: FC = () => {
   const router = useRouter();
@@ -113,7 +114,7 @@ const Admin: FC = () => {
                         onClick={onSort}
                         scope="col"
                       >
-                        {sort === 'artist' && getSortIcon(direction)}
+                        {sort === 'artist' ? getSortIcon(direction) : null}
                         Artist
                       </th>
                       <th
@@ -122,7 +123,7 @@ const Admin: FC = () => {
                         onClick={onSort}
                         scope="col"
                       >
-                        {sort === 'title' && getSortIcon(direction)}
+                        {sort === 'title' ? getSortIcon(direction) : null}
                         Title
                       </th>
                       <th
@@ -131,7 +132,7 @@ const Admin: FC = () => {
                         onClick={onSort}
                         scope="col"
                       >
-                        {sort === 'year' && getSortIcon(direction)}
+                        {sort === 'year' ? getSortIcon(direction) : null}
                         Year
                       </th>
                       <th
@@ -179,13 +180,13 @@ const Admin: FC = () => {
                             {album.year}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.cd && ICONS.CHECK}
+                            {album.cd ? <CheckIcon /> : null}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.aotd && ICONS.CHECK}
+                            {album.aotd ? <CheckIcon /> : null}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.favorite && ICONS.CHECK}
+                            {album.favorite ? <CheckIcon /> : null}
                           </td>
                           <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                             <TableButton

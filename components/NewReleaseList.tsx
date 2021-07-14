@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { ICONS } from 'constants/index';
 import { ListItem } from 'utils';
 import { useAuth } from 'hooks/useAuth';
+import { DeleteIcon, EditIcon } from 'components/Icons';
 
 interface Props {
   data: ListItem[];
@@ -26,16 +26,16 @@ const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
             {hasAuth && (
               <>
                 <span
-                  className="align-middle cursor-pointer ml-2 dark:text-white"
+                  className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onEdit(release)}
                 >
-                  {ICONS.PENCIL}
+                  <EditIcon />
                 </span>
                 <span
-                  className="align-middle cursor-pointer ml-1 dark:text-white"
+                  className="cursor-pointer ml-1 dark:text-white"
                   onClick={() => onDelete(release)}
                 >
-                  {ICONS.X}
+                  <DeleteIcon />
                 </span>
               </>
             )}
