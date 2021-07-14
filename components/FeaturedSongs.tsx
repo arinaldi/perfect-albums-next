@@ -46,7 +46,7 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
               </a>
               {hasAuth && (
                 <span
-                  className="cursor-pointer ml-2"
+                  className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onDeleteOpen(song)}
                 >
                   <DeleteIcon />

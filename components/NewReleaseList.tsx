@@ -32,7 +32,7 @@ const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
                   <EditIcon />
                 </span>
                 <span
-                  className="cursor-pointer ml-1 dark:text-white"
+                  className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onDelete(release)}
                 >
                   <DeleteIcon />
