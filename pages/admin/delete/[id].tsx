@@ -9,7 +9,6 @@ import formatAlbum from 'lib/formatAlbum';
 import { Album as AlbumType, Method } from 'utils/types';
 import Album from 'models/Album';
 import useSubmit from 'hooks/useSubmit';
-import useAdminAlbums from 'hooks/useAdminAlbums';
 import DeleteAlbum from 'components/DeleteAlbum';
 
 interface Props {
@@ -19,13 +18,9 @@ interface Props {
 const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
-  const { mutate } = useAdminAlbums(
-    `/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`,
-  );
   const options = {
     body: null,
     callbacks: [
-      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,

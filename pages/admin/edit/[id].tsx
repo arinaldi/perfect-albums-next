@@ -10,7 +10,6 @@ import { Album as AlbumType, Method } from 'utils/types';
 import Album from 'models/Album';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
-import useAdminAlbums from 'hooks/useAdminAlbums';
 import EditAlbum from 'components/EditAlbum';
 
 interface Props {
@@ -20,9 +19,6 @@ interface Props {
 const EditAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const { search } = router.query;
-  const { mutate } = useAdminAlbums(
-    `/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`,
-  );
   const { values, handleChange } = useForm<AlbumInput>({
     artist: album.artist,
     title: album.title,
@@ -34,7 +30,6 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
   const options = {
     body: values,
     callbacks: [
-      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,

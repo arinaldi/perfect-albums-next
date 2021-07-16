@@ -4,16 +4,12 @@ import { useRouter } from 'next/router';
 import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
-import useAdminAlbums from 'hooks/useAdminAlbums';
 import { Method } from 'utils/types';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
   const router = useRouter();
   const { search } = router.query;
-  const { mutate } = useAdminAlbums(
-    `/api/albums?page=1&per_page=25&search=${search}&sort=&direction=`,
-  );
   const { values, handleChange } = useForm<AlbumInput>({
     artist: '',
     title: '',
@@ -25,7 +21,6 @@ const CreateAlbumPage: FC = () => {
   const options = {
     body: values,
     callbacks: [
-      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,
