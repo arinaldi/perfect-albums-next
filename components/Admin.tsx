@@ -51,7 +51,7 @@ const Admin: FC = () => {
   const Title = (
     <>
       Admin
-      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
+      <span className="ml-3 px-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
         {isLoading ? '—' : total.toLocaleString()}
       </span>
     </>
@@ -60,7 +60,7 @@ const Admin: FC = () => {
   const AppVersion = (
     <div className="dark:text-white">
       <code className="mr-3">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
-      <span className="mr-1 p-1 rounded-md bg-gray-100 text-md sm:text-lg font-semibold dark:bg-gray-700">
+      <span className="mr-1 px-1 rounded-md bg-gray-100 text-md sm:text-lg font-semibold dark:bg-gray-700">
         {cdTotal}
       </span>
       CDs
