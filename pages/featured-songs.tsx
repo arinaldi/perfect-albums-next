@@ -59,5 +59,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { songs },
+    revalidate: 5,
   };
 };

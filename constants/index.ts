@@ -37,6 +37,7 @@ export const MESSAGES = {
 };
 
 export enum MODAL_TYPES {
+  INITIAL = '',
   FEATURED_SONGS_CREATE = 'Create Featured Song',
   FEATURED_SONGS_DELETE = 'Delete Featured Song',
   NEW_RELEASE_CREATE = 'Create New Release',

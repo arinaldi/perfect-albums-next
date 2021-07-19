@@ -4,9 +4,9 @@ import dbConnect from 'lib/dbConnect';
 import Album from 'models/Album';
 
 export async function getCdCount(): Promise<number> {
-  const albums = await Album.find({ cd: true }).sort({});
+  const count = await Album.countDocuments({ cd: true });
 
-  return albums.length;
+  return count;
 }
 
 export default async function (

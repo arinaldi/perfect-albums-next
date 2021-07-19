@@ -30,7 +30,7 @@ export const providerInitialState = {
   modal: {
     data: null,
     isOpen: false,
-    type: MODAL_TYPES.FEATURED_SONGS_CREATE,
+    type: MODAL_TYPES.INITIAL,
   },
 };
 
@@ -51,6 +51,7 @@ export function providerReducer(state: State, action: Action): State {
         modal: {
           ...state.modal,
           isOpen: false,
+          type: MODAL_TYPES.INITIAL,
         },
       };
     default:
