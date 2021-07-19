@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Switch } from '@headlessui/react';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useAuth } from 'hooks/useAuth';
 import useDarkMode from 'hooks/useDarkMode';
+import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
 
 const NavBar: FC = () => {
   const router = useRouter();
@@ -13,6 +13,10 @@ const NavBar: FC = () => {
   const { hasAuth, logout } = useAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function toggleMenu() {
+    setIsMenuOpen(isOpen => !isOpen);
+  }
 
   function closeMenu() {
     setIsMenuOpen(false);
@@ -22,44 +26,20 @@ const NavBar: FC = () => {
     <nav className="bg-gray-800 dark:bg-gray-700">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <div className="flex items-center sm:hidden">
             <button
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-expanded="false"
-              onClick={() => setIsMenuOpen(open => !open)}
+              onClick={toggleMenu}
               type="button"
             >
               <span className="sr-only">Open main menu</span>
-              <svg
+              <MenuIcon
                 className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
+              />
+              <CloseIcon
                 className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              />
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -97,21 +77,16 @@ const NavBar: FC = () => {
               </div>
             </div>
           </div>
-          <div className="hidden absolute inset-y-0 right-0 sm:flex sm:items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Switch
-              checked={isDarkMode}
-              onChange={toggleDarkMode}
-              className={`${
-                isDarkMode ? 'bg-gray-900' : 'bg-gray-500'
-              } relative inline-flex items-center w-11 h-6 rounded-full`}
-            >
-              <span className="sr-only">Enable dark mode</span>
-              <span
-                className={`transform transition ease-in-out duration-200 ${
-                  isDarkMode ? 'translate-x-6' : 'translate-x-1'
-                } inline-block w-4 h-4 transform bg-white rounded-full`}
-              />
-            </Switch>
+          <button
+            className="p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            aria-expanded="false"
+            onClick={toggleDarkMode}
+            type="button"
+          >
+            <span className="sr-only">Toggle dark mode</span>
+            {isDarkMode ? <SunIcon /> : <MoonIcon />}
+          </button>
+          <div className="hidden absolute inset-y-0 right-0 sm:flex sm:items-center pr-2 sm:static sm:inset-auto sm:ml-0 sm:pr-0">
             {hasAuth ? (
               <div
                 onClick={logout}
@@ -180,12 +155,6 @@ const NavBar: FC = () => {
               </a>
             </Link>
           )}
-          <div
-            onClick={toggleDarkMode}
-            className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            {isDarkMode ? 'Disable' : 'Enable'} Dark Mode
-          </div>
         </div>
       </div>
     </nav>
