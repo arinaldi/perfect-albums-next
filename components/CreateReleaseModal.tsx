@@ -5,11 +5,16 @@ import { MESSAGES } from 'constants/index';
 import { fetcher } from 'utils/api';
 import { Method } from 'utils/types';
 import useForm, { ReleaseInput } from 'hooks/useForm';
+import { useAppState } from 'components/Provider';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 const CreateReleaseModal: FC = () => {
-  const { mutate } = useSWR('/api/releases', fetcher);
+  const {
+    modal: { isOpen },
+  } = useAppState();
+  const key = isOpen ? '/api/releases' : null;
+  const { mutate } = useSWR(key, fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: '',
     title: '',

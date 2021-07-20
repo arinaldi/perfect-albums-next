@@ -2,11 +2,11 @@ import { FC } from 'react';
 
 import { MODAL_TYPES } from 'constants/index';
 import { useAppState } from 'components/Provider';
+import CreateSongModal from 'components/CreateSongModal';
+import DeleteSongModal from 'components/DeleteSongModal';
 import CreateReleaseModal from 'components/CreateReleaseModal';
 import EditReleaseModal from 'components/EditReleaseModal';
 import DeleteReleaseModal from 'components/DeleteReleaseModal';
-import CreateSongModal from 'components/CreateSongModal';
-import DeleteSongModal from 'components/DeleteSongModal';
 
 const ModalContainer: FC = () => {
   const { modal } = useAppState();

@@ -9,9 +9,10 @@ import Modal from 'components/Modal';
 
 const DeleteReleaseModal: FC = () => {
   const {
-    modal: { data },
+    modal: { data, isOpen },
   } = useAppState();
-  const { mutate } = useSWR('/api/releases', fetcher);
+  const key = isOpen ? '/api/releases' : null;
+  const { mutate } = useSWR(key, fetcher);
   const options = {
     body: { id: data.id },
     callbacks: [mutate],

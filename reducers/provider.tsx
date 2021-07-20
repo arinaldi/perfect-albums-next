@@ -51,7 +51,6 @@ export function providerReducer(state: State, action: Action): State {
         modal: {
           ...state.modal,
           isOpen: false,
-          type: MODAL_TYPES.INITIAL,
         },
       };
     default:

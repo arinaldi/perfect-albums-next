@@ -1,4 +1,5 @@
-import { FC, ReactNode } from 'react';
+import { FC, Fragment, ReactNode } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
 import { DISPATCH_TYPES } from 'constants/index';
 import useSubmit, { Options } from 'hooks/useSubmit';
@@ -30,41 +31,55 @@ const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
-    <>
-      {state.modal.isOpen ? (
-        <>
-          <div className="justify-center items-start flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative my-6 mx-auto w-11/12 lg:w-1/2 xl:w-1/3">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none dark:bg-gray-800">
-                <div className="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t dark:border-black">
-                  <h3 className="text-2xl font-semibold dark:text-white">
-                    {title}
-                  </h3>
-                  <button
-                    className="bg-transparent border-0 text-black text-2xl font-semibold outline-none focus:outline-none"
-                    onClick={handleClose}
-                  >
-                    <span className="bg-transparent text-black h-6 w-6 text-2xl outline-none focus:outline-none dark:text-white">
-                      ×
-                    </span>
-                  </button>
+    <Transition appear show={state.modal.isOpen} as={Fragment}>
+      <Dialog
+        as="div"
+        className="fixed inset-0 z-10 overflow-y-auto"
+        onClose={handleClose}
+      >
+        <div className="min-h-screen px-4 text-center">
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
+          </Transition.Child>
+          <span className="inline-block h-screen" aria-hidden="true">
+            &#8203;
+          </span>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <div className="inline-block w-full max-w-lg my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl dark:bg-gray-800">
+              <Dialog.Title
+                as="h3"
+                className="text-2xl p-6 pb-0 font-semibold dark:text-white"
+              >
+                {title}
+              </Dialog.Title>
+              <form method="POST" onSubmit={handleSubmit}>
+                {children}
+                <div className="flex items-center justify-end p-6 pt-0">
+                  <CancelButton onClick={handleClose} />
+                  <SubmitButton isSubmitting={isSubmitting} />
                 </div>
-                <div className="relative flex-auto">
-                  <form method="POST" onSubmit={handleSubmit}>
-                    {children}
-                    <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b dark:border-black">
-                      <CancelButton onClick={handleClose} />
-                      <SubmitButton isSubmitting={isSubmitting} />
-                    </div>
-                  </form>
-                </div>
-              </div>
+              </form>
             </div>
-          </div>
-          <div className="opacity-50 fixed inset-0 z-40 bg-black" />
-        </>
-      ) : null}
-    </>
+          </Transition.Child>
+        </div>
+      </Dialog>
+    </Transition>
   );
 };
 

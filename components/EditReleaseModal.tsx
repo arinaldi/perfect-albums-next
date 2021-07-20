@@ -12,9 +12,10 @@ import Modal from 'components/Modal';
 
 const EditReleaseModal: FC = () => {
   const {
-    modal: { data },
+    modal: { data, isOpen },
   } = useAppState();
-  const { mutate } = useSWR('/api/releases', fetcher);
+  const key = isOpen ? '/api/releases' : null;
+  const { mutate } = useSWR(key, fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: data.artist,
     title: data.title,

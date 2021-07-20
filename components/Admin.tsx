@@ -61,7 +61,7 @@ const Admin: FC = () => {
     <div className="dark:text-white">
       <code className="mr-3">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
       <span className="mr-1 px-1 rounded-md bg-gray-100 text-md sm:text-lg font-semibold dark:bg-gray-700">
-        {cdTotal}
+        {cdTotal === 0 ? '—' : cdTotal}
       </span>
       CDs
     </div>
