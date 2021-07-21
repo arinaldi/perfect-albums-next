@@ -31,22 +31,24 @@ export const AuthProvider: FC = ({ children }) => {
       .then(() => {
         router.push('/top-albums');
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e); // eslint-disable-line no-console
       });
   };
 
   useEffect(() => {
-    const cancelAuthListener = firebase.auth().onIdTokenChanged(async user => {
-      if (user) {
-        const token = await user.getIdToken();
-        setTokenCookie(token);
-        setUser(user);
-      } else {
-        removeTokenCookie();
-        setUser(null);
-      }
-    });
+    const cancelAuthListener = firebase
+      .auth()
+      .onIdTokenChanged(async (user) => {
+        if (user) {
+          const token = await user.getIdToken();
+          setTokenCookie(token);
+          setUser(user);
+        } else {
+          removeTokenCookie();
+          setUser(null);
+        }
+      });
 
     return () => {
       cancelAuthListener();
