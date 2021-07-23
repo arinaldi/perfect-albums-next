@@ -9,7 +9,6 @@ import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
   const router = useRouter();
-  const { search } = router.query;
   const { values, handleChange } = useForm<AlbumInput>({
     artist: '',
     title: '',
@@ -24,7 +23,7 @@ const CreateAlbumPage: FC = () => {
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,
-          query: { search },
+          query: router.query,
         }),
     ],
     method: Method.post,

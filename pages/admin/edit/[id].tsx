@@ -18,7 +18,6 @@ interface Props {
 
 const EditAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
-  const { search } = router.query;
   const { values, handleChange } = useForm<AlbumInput>({
     artist: album.artist,
     title: album.title,
@@ -33,7 +32,7 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,
-          query: { search },
+          query: router.query,
         }),
     ],
     method: Method.put,

@@ -1,3 +1,46 @@
+export enum PER_PAGE {
+  twentyFive = 25,
+  fifty = 50,
+  oneHundred = 100,
+}
+
+export enum SORT_VALUE {
+  ARTIST = 'artist',
+  NONE = '',
+  TITLE = 'title',
+  YEAR = 'year',
+}
+
+export enum SORT_DIRECTION {
+  ASC = 'asc',
+  DESC = 'desc',
+  NONE = '',
+}
+
+export enum DISPATCH_TYPES {
+  OPEN_MODAL = 'OPEN_MODAL',
+  CLOSE_MODAL = 'CLOSE_MODAL',
+}
+
+export enum MESSAGES {
+  ALBUM_PREFIX = 'Album successfully',
+  SONG_PREFIX = 'Song successfully',
+  RELEASE_PREFIX = 'Release successfully',
+  UNAUTHORIZED = 'You are unauthorized to perform this operation',
+  SIGNIN = 'Invalid username or password',
+  ERROR = 'Something went wrong',
+  NO_DATA = 'No Data',
+}
+
+export enum MODAL_TYPES {
+  INITIAL = '',
+  FEATURED_SONGS_CREATE = 'Create Featured Song',
+  FEATURED_SONGS_DELETE = 'Delete Featured Song',
+  NEW_RELEASE_CREATE = 'Create New Release',
+  NEW_RELEASE_EDIT = 'Edit New Release',
+  NEW_RELEASE_DELETE = 'Delete New Release',
+}
+
 export const DECADES = [
   {
     label: '10s',
@@ -21,30 +64,6 @@ export const DECADES = [
   },
 ];
 
-export enum DISPATCH_TYPES {
-  OPEN_MODAL = 'OPEN_MODAL',
-  CLOSE_MODAL = 'CLOSE_MODAL',
-}
-
-export const MESSAGES = {
-  ALBUM_PREFIX: 'Album successfully',
-  SONG_PREFIX: 'Song successfully',
-  RELEASE_PREFIX: 'Release successfully',
-  UNAUTHORIZED: 'You are unauthorized to perform this operation',
-  SIGNIN: 'Invalid username or password',
-  ERROR: 'Something went wrong',
-  NO_DATA: 'No Data',
-};
-
-export enum MODAL_TYPES {
-  INITIAL = '',
-  FEATURED_SONGS_CREATE = 'Create Featured Song',
-  FEATURED_SONGS_DELETE = 'Delete Featured Song',
-  NEW_RELEASE_CREATE = 'Create New Release',
-  NEW_RELEASE_EDIT = 'Edit New Release',
-  NEW_RELEASE_DELETE = 'Delete New Release',
-}
-
 export const MONTHS = [
   'Jan',
   'Feb',
@@ -60,12 +79,6 @@ export const MONTHS = [
   'Dec',
 ];
 
-export enum PER_PAGE {
-  twentyFive = 25,
-  fifty = 50,
-  oneHundred = 100,
-}
-
 export const ROUTES = [
   { href: '/top-albums', label: 'Top Albums' },
   { href: '/featured-songs', label: 'Featured Songs' },
@@ -78,8 +91,3 @@ export const ROUTES_ADMIN = {
   edit: { href: '/admin/edit', label: 'Admin Edit' },
   delete: { href: '/admin/delete', label: 'Admin Delete' },
 };
-
-export enum SORT_DIRECTION {
-  ASC = 'asc',
-  DESC = 'desc',
-}

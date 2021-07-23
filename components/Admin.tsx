@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import { getSortIcon } from 'utils';
 import useAdminState from 'hooks/useAdminState';
 import Layout from 'components/Layout';
@@ -12,6 +12,8 @@ import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
 import TableButton from 'components/TableButton';
 import { CheckIcon } from 'components/Icons';
+
+const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
 const Admin: FC = () => {
   const router = useRouter();
@@ -44,7 +46,7 @@ const Admin: FC = () => {
   function handleRouteChange(pathname: string) {
     router.push({
       pathname,
-      query: { search: searchText },
+      query: router.query,
     });
   }
 
@@ -115,29 +117,26 @@ const Admin: FC = () => {
                     <tr>
                       <th
                         className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
-                        data-value="artist"
-                        onClick={onSort}
+                        onClick={() => onSort(ARTIST)}
                         scope="col"
                       >
-                        {sort === 'artist' ? getSortIcon(direction) : null}
+                        {sort === ARTIST ? getSortIcon(direction) : null}
                         Artist
                       </th>
                       <th
                         className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
-                        data-value="title"
-                        onClick={onSort}
+                        onClick={() => onSort(TITLE)}
                         scope="col"
                       >
-                        {sort === 'title' ? getSortIcon(direction) : null}
+                        {sort === TITLE ? getSortIcon(direction) : null}
                         Title
                       </th>
                       <th
                         className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
-                        data-value="year"
-                        onClick={onSort}
+                        onClick={() => onSort(YEAR)}
                         scope="col"
                       >
-                        {sort === 'year' ? getSortIcon(direction) : null}
+                        {sort === YEAR ? getSortIcon(direction) : null}
                         Year
                       </th>
                       <th
@@ -170,7 +169,7 @@ const Admin: FC = () => {
                     <TableSkeleton />
                   ) : (
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-500 dark:divide-black">
-                      {albums.map(album => (
+                      {albums.map((album) => (
                         <tr
                           key={album.id}
                           className="odd:bg-gray-50 dark:odd:bg-gray-400"

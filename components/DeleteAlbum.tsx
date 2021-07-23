@@ -14,12 +14,14 @@ interface Props {
 
 const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
   const router = useRouter();
-  const { search } = router.query;
 
   function handleCancel() {
+    const query = { ...router.query };
+    delete query.id;
+
     router.push({
       pathname: ROUTES_ADMIN.base.href,
-      query: { search },
+      query,
     });
   }
 

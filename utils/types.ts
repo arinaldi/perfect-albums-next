@@ -67,3 +67,7 @@ export enum Method {
   put = 'PUT',
   delete = 'DELETE',
 }
+
+export interface GenericObject {
+  [key: string]: string;
+}

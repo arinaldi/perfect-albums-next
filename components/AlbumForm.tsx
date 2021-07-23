@@ -17,12 +17,14 @@ interface Props {
 
 const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
   const router = useRouter();
-  const { search } = router.query;
 
   function handleCancel() {
+    const query = { ...router.query };
+    delete query.id;
+
     router.push({
       pathname: ROUTES_ADMIN.base.href,
-      query: { search },
+      query,
     });
   }
 

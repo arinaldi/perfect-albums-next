@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { MONTHS, SORT_DIRECTION } from 'constants/index';
+import { MONTHS, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
 import { Favorite, Release } from 'utils/types';
 import { ArrowDownIcon, ArrowUpIcon } from 'components/Icons';
 
@@ -59,7 +59,7 @@ function formatReleaseDate(isoString: string) {
 export function formatReleases(releases: Release[]): Results {
   const results: Results = {};
 
-  releases.forEach(release => {
+  releases.forEach((release) => {
     const releaseDate = release.date ? formatReleaseDate(release.date) : 'TBD';
 
     if (results[releaseDate]) {
@@ -72,14 +72,14 @@ export function formatReleases(releases: Release[]): Results {
   return results;
 }
 
-export function getSortIcon(direction: string): ReactNode {
+export function getSortIcon(direction: SORT_DIRECTION): ReactNode {
   const { ASC, DESC } = SORT_DIRECTION;
 
-  if (!direction) return '';
+  if (!direction) return null;
   if (direction === ASC) return <ArrowUpIcon />;
   if (direction === DESC) return <ArrowDownIcon />;
 
-  return '';
+  return null;
 }
 
 export function sortByDate(a: Tuple, b: Tuple): number {
@@ -93,4 +93,27 @@ export function sortByDate(a: Tuple, b: Tuple): number {
 
 export function sortDesc(a: Tuple, b: Tuple): number {
   return Number(b[0]) - Number(a[0]);
+}
+
+type QueryValue = string | string[] | undefined;
+
+export function parseQuery(value: QueryValue): string {
+  return typeof value === 'string' ? value : '';
+}
+
+export function parseDirectionQuery(value: QueryValue): SORT_DIRECTION {
+  const { ASC, DESC, NONE } = SORT_DIRECTION;
+
+  if (value === ASC) return ASC;
+  if (value === DESC) return DESC;
+  return NONE;
+}
+
+export function parseSortQuery(value: QueryValue): SORT_VALUE {
+  const { ARTIST, TITLE, YEAR, NONE } = SORT_VALUE;
+
+  if (value === ARTIST) return ARTIST;
+  if (value === TITLE) return TITLE;
+  if (value === YEAR) return YEAR;
+  return NONE;
 }

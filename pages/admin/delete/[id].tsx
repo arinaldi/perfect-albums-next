@@ -17,14 +17,13 @@ interface Props {
 
 const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
-  const { search } = router.query;
   const options = {
     body: null,
     callbacks: [
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,
-          query: { search },
+          query: router.query,
         }),
     ],
     method: Method.delete,
