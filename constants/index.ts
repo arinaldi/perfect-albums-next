@@ -1,7 +1,7 @@
 export enum PER_PAGE {
-  twentyFive = 25,
-  fifty = 50,
-  oneHundred = 100,
+  SMALL = 25,
+  MEDIUM = 50,
+  LARGE = 100,
 }
 
 export enum SORT_VALUE {

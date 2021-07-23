@@ -55,7 +55,7 @@ export default function useAdminState(): Payload {
     parseInt(parseQuery(router.query.page)) || 1,
   );
   const [perPage, setPerPage] = useState(
-    parseInt(parseQuery(router.query.perPage)) || PER_PAGE.twentyFive,
+    parseInt(parseQuery(router.query.perPage)) || PER_PAGE.SMALL,
   );
   const [sort, setSort] = useState(parseSortQuery(router.query.sort));
   const [direction, setDirection] = useState(
@@ -74,7 +74,7 @@ export default function useAdminState(): Payload {
 
   useEffect(() => {
     if (!search) {
-      const nextUrl = '/api/albums?page=2&per_page=25&search=&sort=&direction=';
+      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&search=&sort=&direction=`;
       fetchAndCache(nextUrl);
     }
   }, [search]);
