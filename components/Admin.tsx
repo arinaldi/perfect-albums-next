@@ -20,12 +20,12 @@ const Admin: FC = () => {
   const {
     albums,
     cdTotal,
-    currentPage,
     direction,
     handlers,
     isFirstPage,
     isLastPage,
     isLoading,
+    page,
     perPage,
     searchRef,
     searchText,
@@ -93,7 +93,7 @@ const Admin: FC = () => {
 
       <div className="flex justify-center mb-4">
         <Pagination
-          currentPage={currentPage}
+          currentPage={page}
           isFirstPage={isFirstPage}
           isLastPage={isLastPage}
           onFirst={onFirst}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { MONTHS, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
+import { MONTHS, PER_PAGE, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
 import { Favorite, Release } from 'utils/types';
 import { ArrowDownIcon, ArrowUpIcon } from 'components/Icons';
 
@@ -101,6 +101,20 @@ export function parseQuery(value: QueryValue): string {
   return typeof value === 'string' ? value : '';
 }
 
+export function parsePageQuery(value: QueryValue): number {
+  return typeof value === 'string' ? parseInt(value) : 1;
+}
+
+export function parsePerPageQuery(value: QueryValue): PER_PAGE {
+  const { SMALL, MEDIUM, LARGE } = PER_PAGE;
+  const perPage = typeof value === 'string' ? parseInt(value) : PER_PAGE.SMALL;
+
+  if (perPage === SMALL) return SMALL;
+  if (perPage === MEDIUM) return MEDIUM;
+  if (perPage === LARGE) return LARGE;
+  return SMALL;
+}
+
 export function parseDirectionQuery(value: QueryValue): SORT_DIRECTION {
   const { ASC, DESC, NONE } = SORT_DIRECTION;
 
@@ -116,4 +130,8 @@ export function parseSortQuery(value: QueryValue): SORT_VALUE {
   if (value === TITLE) return TITLE;
   if (value === YEAR) return YEAR;
   return NONE;
+}
+
+export function isEmptyObject(obj: Record<string, unknown>): boolean {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
 }

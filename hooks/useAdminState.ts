@@ -14,7 +14,13 @@ import {
   SORT_DIRECTION,
   SORT_VALUE,
 } from 'constants/index';
-import { parseDirectionQuery, parseQuery, parseSortQuery } from 'utils';
+import {
+  parseDirectionQuery,
+  parsePageQuery,
+  parsePerPageQuery,
+  parseQuery,
+  parseSortQuery,
+} from 'utils';
 import { fetchAndCache } from 'utils/api';
 import { Album, GenericObject } from 'utils/types';
 import useDebounce from 'hooks/useDebounce';
@@ -34,13 +40,13 @@ interface Handlers {
 interface Payload {
   albums: Album[];
   cdTotal: number;
-  currentPage: number;
   direction: SORT_DIRECTION;
   handlers: Handlers;
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
-  perPage: number;
+  page: number;
+  perPage: PER_PAGE;
   searchRef: RefObject<HTMLInputElement>;
   searchText: string;
   sort: SORT_VALUE;
@@ -49,28 +55,22 @@ interface Payload {
 
 export default function useAdminState(): Payload {
   const router = useRouter();
+  const direction = parseDirectionQuery(router.query.direction);
+  const page = parsePageQuery(router.query.page);
+  const perPage = parsePerPageQuery(router.query.perPage);
   const search = parseQuery(router.query.search);
+  const sort = parseSortQuery(router.query.sort);
   const [searchText, setSearchText] = useState(search);
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(parseQuery(router.query.page)) || 1,
-  );
-  const [perPage, setPerPage] = useState(
-    parseInt(parseQuery(router.query.perPage)) || PER_PAGE.SMALL,
-  );
-  const [sort, setSort] = useState(parseSortQuery(router.query.sort));
-  const [direction, setDirection] = useState(
-    parseDirectionQuery(router.query.direction),
-  );
   const debouncedSearch = useDebounce(searchText, 500);
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+  const url = `/api/albums?page=${page}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
   const preventFetch = !debouncedSearch && Boolean(searchText);
   const { albums, cdTotal, total, isLoading } = useAdminAlbums(
     url,
     preventFetch,
   );
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage === Math.ceil(total / perPage);
+  const isFirstPage = page === 1;
+  const isLastPage = page === Math.ceil(total / perPage);
 
   useEffect(() => {
     if (!search) {
@@ -96,27 +96,24 @@ export default function useAdminState(): Payload {
 
     return {
       onPrevious: () => {
-        const newPage = currentPage - 2;
+        const newPage = page - 2;
         const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
 
         if (newPage !== 0) fetchAndCache(previousUrl);
 
-        const prevPage = currentPage - 1;
-        setCurrentPage(prevPage);
+        const prevPage = page - 1;
         updateQueryParams({ page: prevPage.toString() });
       },
       onNext: () => {
         const nextUrl = `/api/albums?page=${
-          currentPage + 2
+          page + 2
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(nextUrl);
 
-        const nextPage = currentPage + 1;
-        setCurrentPage(nextPage);
+        const nextPage = page + 1;
         updateQueryParams({ page: nextPage.toString() });
       },
       onFirst: () => {
-        setCurrentPage(1);
         updateQueryParams({ page: '1' });
       },
       onLast: () => {
@@ -126,25 +123,20 @@ export default function useAdminState(): Payload {
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(prevUrl);
 
-        setCurrentPage(lastPage);
         updateQueryParams({ page: lastPage.toString() });
       },
-      onPerPageChange: (value: number) => {
-        setPerPage(value);
-        setCurrentPage(1);
+      onPerPageChange: (value: PER_PAGE) => {
         updateQueryParams({ page: '1', perPage: value.toString() });
       },
       onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
 
-        setCurrentPage(1);
         setSearchText(value);
         updateQueryParams({ page: '1', search: value });
       },
       onClear: () => {
         searchRef?.current?.focus();
 
-        setCurrentPage(1);
         setSearchText('');
         updateQueryParams({ page: '1', search: '' });
       },
@@ -156,23 +148,20 @@ export default function useAdminState(): Payload {
           newDirection = ASC;
         }
 
-        setCurrentPage(1);
-        setSort(value);
-        setDirection(newDirection);
         updateQueryParams({ page: '1', sort: value, direction: newDirection });
       },
     };
-  }, [currentPage, debouncedSearch, direction, perPage, router, sort, total]);
+  }, [debouncedSearch, direction, page, perPage, router, sort, total]);
 
   return {
     albums,
     cdTotal,
-    currentPage,
     direction,
     handlers,
     isFirstPage,
     isLastPage,
     isLoading,
+    page,
     perPage,
     searchRef,
     searchText,

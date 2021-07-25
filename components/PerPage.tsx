@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { PER_PAGE } from 'constants/index';
 
 interface Props {
-  onPerPageChange: (value: number) => void;
-  perPage: number;
+  onPerPageChange: (value: PER_PAGE) => void;
+  perPage: PER_PAGE;
 }
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
@@ -20,7 +20,7 @@ const PerPage: FC<Props> = ({ onPerPageChange, perPage }) => {
         disabled={perPage === SMALL}
         onClick={() => onPerPageChange(SMALL)}
       >
-        <span className="sr-only">25</span>
+        <span className="sr-only">{SMALL}</span>
         {SMALL}
       </button>
       <button
@@ -28,7 +28,7 @@ const PerPage: FC<Props> = ({ onPerPageChange, perPage }) => {
         disabled={perPage === MEDIUM}
         onClick={() => onPerPageChange(MEDIUM)}
       >
-        <span className="sr-only">50</span>
+        <span className="sr-only">{MEDIUM}</span>
         {MEDIUM}
       </button>
       <button
@@ -36,7 +36,7 @@ const PerPage: FC<Props> = ({ onPerPageChange, perPage }) => {
         disabled={perPage === LARGE}
         onClick={() => onPerPageChange(LARGE)}
       >
-        <span className="sr-only">100</span>
+        <span className="sr-only">{LARGE}</span>
         {LARGE}
       </button>
     </nav>
