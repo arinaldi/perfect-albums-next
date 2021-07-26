@@ -17,11 +17,6 @@ export enum SORT_DIRECTION {
   NONE = '',
 }
 
-export enum DISPATCH_TYPES {
-  OPEN_MODAL = 'OPEN_MODAL',
-  CLOSE_MODAL = 'CLOSE_MODAL',
-}
-
 export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
   SONG_PREFIX = 'Song successfully',
@@ -39,6 +34,13 @@ export enum MODAL_TYPES {
   NEW_RELEASE_CREATE = 'Create New Release',
   NEW_RELEASE_EDIT = 'Edit New Release',
   NEW_RELEASE_DELETE = 'Delete New Release',
+}
+
+export enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 
 export const DECADES = [

@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
 import { useRouter } from 'next/router';
 
-import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { loadIdToken } from 'auth/firebaseAdmin';
-import { Album as AlbumType, Method } from 'utils/types';
+import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
@@ -35,7 +35,7 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
           query: router.query,
         }),
     ],
-    method: Method.put,
+    method: METHODS.PUT,
     path: `/api/albums/${album.id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };

@@ -65,5 +65,11 @@ export const AuthProvider: FC = ({ children }) => {
 };
 
 export function useAuth(): Context {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a Provider');
+  }
+
+  return context;
 }

@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 
-import { DISPATCH_TYPES, MODAL_TYPES } from 'constants/index';
+import { MODAL_TYPES } from 'constants/index';
 import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
 import { Song } from 'utils/types';
 import { getSongs } from 'pages/api/songs';
-import { useAppDispatch } from 'components/Provider';
+import useStore from 'hooks/useStore';
 import FeaturedSongs from 'components/FeaturedSongs';
 import AppMessage from 'components/AppMessage';
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const FeaturedSongsPage: FC<Props> = ({ songs }) => {
-  const dispatch = useAppDispatch();
+  const openModal = useStore((state) => state.openModal);
   const { data, error } = useSWR('/api/songs', fetcher, {
     initialData: { songs },
   });
@@ -24,22 +24,11 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   if (error) return <AppMessage />;
 
   function handleCreateOpen() {
-    dispatch({
-      payload: {
-        type: MODAL_TYPES.FEATURED_SONGS_CREATE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+    openModal(MODAL_TYPES.FEATURED_SONGS_CREATE);
   }
 
   function handleDeleteOpen(data: Song) {
-    dispatch({
-      payload: {
-        data,
-        type: MODAL_TYPES.FEATURED_SONGS_DELETE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+    openModal(MODAL_TYPES.FEATURED_SONGS_DELETE, data);
   }
 
   return (

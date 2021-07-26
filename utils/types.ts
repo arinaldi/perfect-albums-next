@@ -61,13 +61,6 @@ export interface User {
   username: string;
 }
 
-export enum Method {
-  get = 'GET',
-  post = 'POST',
-  put = 'PUT',
-  delete = 'DELETE',
-}
-
 export interface GenericObject {
   [key: string]: string;
 }

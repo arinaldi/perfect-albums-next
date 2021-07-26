@@ -2,17 +2,15 @@ import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import api from 'utils/api';
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, METHODS } from 'constants/index';
 import { Values } from 'hooks/useForm';
-import { Method } from 'utils/types';
-import { useAppDispatch } from 'components/Provider';
 
 type Callback = () => void;
 
 export interface Options {
   body: Values | null;
   callbacks: Callback[];
-  method: Method;
+  method: METHODS;
   path: string;
   successMessage: string;
 }
@@ -24,7 +22,6 @@ interface Payload {
 
 export default function useSubmit(options: Options): Payload {
   const { body, callbacks, method, path, successMessage } = options;
-  const dispatch = useAppDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
@@ -32,7 +29,7 @@ export default function useSubmit(options: Options): Payload {
     setIsSubmitting(true);
 
     try {
-      await api(path, { body, dispatch, method });
+      await api(path, { body, method });
 
       callbacks.forEach((callback: Callback) => {
         callback();

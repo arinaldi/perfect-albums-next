@@ -1,18 +1,15 @@
 import { FC } from 'react';
 import useSWR from 'swr';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, METHODS } from 'constants/index';
 import { fetcher } from 'utils/api';
-import { Method } from 'utils/types';
 import useForm, { ReleaseInput } from 'hooks/useForm';
-import { useAppState } from 'components/Provider';
+import useStore from 'hooks/useStore';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 const CreateReleaseModal: FC = () => {
-  const {
-    modal: { isOpen },
-  } = useAppState();
+  const isOpen = useStore((state) => state.isOpen);
   const key = isOpen ? '/api/releases' : null;
   const { mutate } = useSWR(key, fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
@@ -23,7 +20,7 @@ const CreateReleaseModal: FC = () => {
   const options = {
     body: values,
     callbacks: [mutate],
-    method: Method.post,
+    method: METHODS.POST,
     path: '/api/releases',
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };

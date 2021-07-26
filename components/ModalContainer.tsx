@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { MODAL_TYPES } from 'constants/index';
-import { useAppState } from 'components/Provider';
+import useStore from 'hooks/useStore';
 import CreateSongModal from 'components/CreateSongModal';
 import DeleteSongModal from 'components/DeleteSongModal';
 import CreateReleaseModal from 'components/CreateReleaseModal';
@@ -9,9 +9,9 @@ import EditReleaseModal from 'components/EditReleaseModal';
 import DeleteReleaseModal from 'components/DeleteReleaseModal';
 
 const ModalContainer: FC = () => {
-  const { modal } = useAppState();
+  const type = useStore((state) => state.type);
 
-  switch (modal.type) {
+  switch (type) {
     case MODAL_TYPES.FEATURED_SONGS_CREATE:
       return <CreateSongModal />;
     case MODAL_TYPES.FEATURED_SONGS_DELETE:

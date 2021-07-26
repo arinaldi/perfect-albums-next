@@ -2,8 +2,7 @@ import { mutate } from 'swr';
 import firebase from 'firebase/app';
 import toast from 'react-hot-toast';
 
-import { MESSAGES } from 'constants/index';
-import { Method } from 'utils/types';
+import { MESSAGES, METHODS } from 'constants/index';
 
 interface FetchError {
   info?: string;
@@ -76,7 +75,7 @@ type ResponseObject = {
 
 const defaultOptions = {
   body: null,
-  method: Method.get,
+  method: METHODS.GET,
 };
 
 async function api(

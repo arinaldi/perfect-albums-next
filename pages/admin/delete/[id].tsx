@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
 import { useRouter } from 'next/router';
 
-import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import { loadIdToken } from 'auth/firebaseAdmin';
 import formatAlbum from 'lib/formatAlbum';
-import { Album as AlbumType, Method } from 'utils/types';
+import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
 import useSubmit from 'hooks/useSubmit';
 import DeleteAlbum from 'components/DeleteAlbum';
@@ -26,7 +26,7 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
           query: router.query,
         }),
     ],
-    method: Method.delete,
+    method: METHODS.DELETE,
     path: `/api/albums/${album.id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };

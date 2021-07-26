@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
-import { Method } from 'utils/types';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
@@ -26,7 +25,7 @@ const CreateAlbumPage: FC = () => {
           query: router.query,
         }),
     ],
-    method: Method.post,
+    method: METHODS.POST,
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };

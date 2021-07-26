@@ -1,9 +1,8 @@
 import { FC, Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import { DISPATCH_TYPES } from 'constants/index';
 import useSubmit, { Options } from 'hooks/useSubmit';
-import { useApp } from 'components/Provider';
+import useStore from 'hooks/useStore';
 import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
@@ -15,12 +14,11 @@ interface Props {
 }
 
 const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
-  const [state, dispatch] = useApp();
+  const isOpen = useStore((state) => state.isOpen);
+  const closeModal = useStore((state) => state.closeModal);
 
   function handleClose() {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
+    closeModal();
 
     if (resetForm) {
       resetForm();
@@ -31,7 +29,7 @@ const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
-    <Transition appear show={state.modal.isOpen} as={Fragment}>
+    <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"

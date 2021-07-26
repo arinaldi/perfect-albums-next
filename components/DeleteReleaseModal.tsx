@@ -1,22 +1,20 @@
 import { FC } from 'react';
 import useSWR from 'swr';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, METHODS } from 'constants/index';
 import { fetcher } from 'utils/api';
-import { Method } from 'utils/types';
-import { useAppState } from 'components/Provider';
+import useStore from 'hooks/useStore';
 import Modal from 'components/Modal';
 
 const DeleteReleaseModal: FC = () => {
-  const {
-    modal: { data, isOpen },
-  } = useAppState();
+  const data = useStore((state) => state.data);
+  const isOpen = useStore((state) => state.isOpen);
   const key = isOpen ? '/api/releases' : null;
   const { mutate } = useSWR(key, fetcher);
   const options = {
     body: { id: data.id },
     callbacks: [mutate],
-    method: Method.delete,
+    method: METHODS.DELETE,
     path: '/api/releases',
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
