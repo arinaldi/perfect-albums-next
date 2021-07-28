@@ -17,7 +17,7 @@
     "standard-jsx",
     "prettier"
   ],
-  "plugins": ["import", "node", "promise", "react", "react-hooks", "standard"],
+  "plugins": ["import", "jsx-a11y", "node", "promise", "react", "react-hooks"],
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "eol-last": "error",
