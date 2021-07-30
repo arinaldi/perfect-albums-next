@@ -31,8 +31,9 @@ const PageWrapper: FC<Props> = ({ children }) => {
       {children}
       <ModalContainer />
       <Toaster
-        position="bottom-center"
+        position="top-right"
         toastOptions={{
+          duration: 4000,
           success: {
             style: {
               background: '#A7F3D0',
