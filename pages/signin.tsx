@@ -1,11 +1,20 @@
 import { FC } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
+import Head from 'next/head';
 
 import { ROUTES_ADMIN } from 'constants/index';
 import { loadIdToken } from 'auth/firebaseAdmin';
+import { getTitle } from 'utils';
 import FirebaseAuth from 'components/FirebaseAuth';
 
-const SigninPage: FC = () => <FirebaseAuth />;
+const SigninPage: FC = () => (
+  <>
+    <Head>
+      <title>{getTitle('Sign In')}</title>
+    </Head>
+    <FirebaseAuth />
+  </>
+);
 
 export default SigninPage;
 

@@ -1,9 +1,11 @@
 import { FC } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
+import { getTitle } from 'utils';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
@@ -32,12 +34,17 @@ const CreateAlbumPage: FC = () => {
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
-    <CreateAlbum
-      isSubmitting={isSubmitting}
-      onChange={handleChange}
-      onSubmit={handleSubmit}
-      values={values as AlbumInput}
-    />
+    <>
+      <Head>
+        <title>{getTitle('Create Album')}</title>
+      </Head>
+      <CreateAlbum
+        isSubmitting={isSubmitting}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        values={values as AlbumInput}
+      />
+    </>
   );
 };
 

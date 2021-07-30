@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
-import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
-import { ListItem } from 'utils';
+import { fetcher } from 'utils/api';
+import { getTitle, ListItem } from 'utils';
 import { Release } from 'utils/types';
 import { getReleases } from 'pages/api/releases';
 import useStore from 'hooks/useStore';
@@ -37,12 +38,17 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
   }
 
   return (
-    <NewReleases
-      data={data}
-      onCreateOpen={handleCreateOpen}
-      onDeleteOpen={handleDeleteOpen}
-      onEditOpen={handleEditOpen}
-    />
+    <>
+      <Head>
+        <title>{getTitle('New Releases')}</title>
+      </Head>
+      <NewReleases
+        data={data}
+        onCreateOpen={handleCreateOpen}
+        onDeleteOpen={handleDeleteOpen}
+        onEditOpen={handleEditOpen}
+      />
+    </>
   );
 };
 

@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
+import { getTitle } from 'utils';
 import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
 import { Song } from 'utils/types';
@@ -32,11 +34,16 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   }
 
   return (
-    <FeaturedSongs
-      data={data}
-      onCreateOpen={handleCreateOpen}
-      onDeleteOpen={handleDeleteOpen}
-    />
+    <>
+      <Head>
+        <title>{getTitle('Featured Songs')}</title>
+      </Head>
+      <FeaturedSongs
+        data={data}
+        onCreateOpen={handleCreateOpen}
+        onDeleteOpen={handleDeleteOpen}
+      />
+    </>
   );
 };
 

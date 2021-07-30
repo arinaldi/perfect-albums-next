@@ -135,3 +135,7 @@ export function parseSortQuery(value: QueryValue): SORT_VALUE {
 export function isEmptyObject(obj: Record<string, unknown>): boolean {
   return Object.keys(obj).length === 0 && obj.constructor === Object;
 }
+
+export function getTitle(title: string): string {
+  return `Perfect Albums | ${title}`;
+}

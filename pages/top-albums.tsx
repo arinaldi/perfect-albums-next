@@ -1,8 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
+import { getTitle } from 'utils';
 import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
 import { Favorite } from 'utils/types';
@@ -29,7 +31,14 @@ const TopAlbumsPage: FC<Props> = ({ favorites }) => {
 
   if (error) return <AppMessage />;
 
-  return <TopAlbums data={data} onChange={handleChange} value={value} />;
+  return (
+    <>
+      <Head>
+        <title>{getTitle('Top Albums')}</title>
+      </Head>
+      <TopAlbums data={data} onChange={handleChange} value={value} />
+    </>
+  );
 };
 
 export default TopAlbumsPage;

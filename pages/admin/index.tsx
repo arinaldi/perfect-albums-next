@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import {
@@ -10,7 +11,7 @@ import {
 } from 'constants/index';
 import { loadIdToken } from 'auth/firebaseAdmin';
 import Admin from 'components/Admin';
-import { isEmptyObject } from 'utils';
+import { getTitle, isEmptyObject } from 'utils';
 
 const AdminPage: FC = () => {
   const router = useRouter();
@@ -30,7 +31,14 @@ const AdminPage: FC = () => {
     }
   }, [router]);
 
-  return <Admin />;
+  return (
+    <>
+      <Head>
+        <title>{getTitle('Admin')}</title>
+      </Head>
+      <Admin />
+    </>
+  );
 };
 
 export default AdminPage;

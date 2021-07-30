@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { loadIdToken } from 'auth/firebaseAdmin';
+import { getTitle } from 'utils';
 import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
 import useForm, { AlbumInput } from 'hooks/useForm';
@@ -42,12 +44,17 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
-    <EditAlbum
-      isSubmitting={isSubmitting}
-      onChange={handleChange}
-      onSubmit={handleSubmit}
-      values={values as AlbumInput}
-    />
+    <>
+      <Head>
+        <title>{getTitle('Edit Album')}</title>
+      </Head>
+      <EditAlbum
+        isSubmitting={isSubmitting}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        values={values as AlbumInput}
+      />
+    </>
   );
 };
 
