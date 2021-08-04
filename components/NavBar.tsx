@@ -15,7 +15,7 @@ const NavBar: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function toggleMenu() {
-    setIsMenuOpen(isOpen => !isOpen);
+    setIsMenuOpen((isOpen) => !isOpen);
   }
 
   function closeMenu() {
@@ -47,7 +47,7 @@ const NavBar: FC = () => {
               <span className="text-xl text-white">Perfect Albums</span>
             </div>
             <div className="hidden sm:block sm:ml-6">
-              <div className="flex space-x-4">
+              <div className="flex">
                 {ROUTES.map(({ href, label }) => (
                   <Link key={href} href={href}>
                     <a
