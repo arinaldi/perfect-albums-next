@@ -36,8 +36,8 @@ export default function useSubmit(options: Options): Payload {
       });
 
       toast.success(successMessage);
-    } catch (err) {
-      if (err.message !== MESSAGES.UNAUTHORIZED) {
+    } catch (error) {
+      if (error?.message !== MESSAGES.UNAUTHORIZED) {
         toast.error(MESSAGES.ERROR);
       }
     } finally {
