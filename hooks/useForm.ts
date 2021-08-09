@@ -1,42 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-export interface AlbumInput {
-  artist: string;
-  title: string;
-  year: string;
-  cd: boolean;
-  aotd: boolean;
-  favorite: boolean;
-}
-
-export interface ReleaseInput {
-  artist: string;
-  title: string;
-  date: string;
-}
-
-export interface SongInput {
-  artist: string;
-  title: string;
-  link: string;
-}
-
-export interface UserInput {
-  username: string;
-  password: string;
-}
-
-interface IdInput {
-  id: string;
-}
-
-export type Values =
-  | AlbumInput
-  | ReleaseInput
-  | SongInput
-  | UserInput
-  | IdInput;
-
 interface Payload {
   values: any;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;

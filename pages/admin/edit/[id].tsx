@@ -9,9 +9,9 @@ import formatAlbum from 'lib/formatAlbum';
 import { loadIdToken } from 'auth/firebaseAdmin';
 import { getTitle } from 'utils';
 import api from 'utils/api';
-import { Album as AlbumType } from 'utils/types';
+import { Album as AlbumType, AlbumInput } from 'utils/types';
 import Album from 'models/Album';
-import useForm, { AlbumInput } from 'hooks/useForm';
+import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import EditAlbum from 'components/EditAlbum';
 
@@ -38,7 +38,10 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
         }),
     ],
     submitFn: async () => {
-      await api(`/api/albums/${album.id}`, { body: values, method: METHODS.PUT });
+      await api(`/api/albums/${album.id}`, {
+        body: values,
+        method: METHODS.PUT,
+      });
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };

@@ -2,7 +2,7 @@ import { ChangeEvent, FC, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
-import { AlbumInput } from 'hooks/useForm';
+import { AlbumInput } from 'utils/types';
 import Input from 'components/Input';
 import RadioFieldset from 'components/RadioFieldset';
 import CancelButton from 'components/CancelButton';

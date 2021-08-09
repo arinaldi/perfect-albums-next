@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, FormEvent } from 'react';
 
-import { AlbumInput } from 'hooks/useForm';
+import { AlbumInput } from 'utils/types';
 import Layout from 'components/Layout';
 import AlbumForm from 'components/AlbumForm';
 

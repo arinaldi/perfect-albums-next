@@ -3,7 +3,8 @@ import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
 import api, { fetcher } from 'utils/api';
-import useForm, { ReleaseInput } from 'hooks/useForm';
+import { ReleaseInput } from 'utils/types';
+import useForm from 'hooks/useForm';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
 import Modal from 'components/Modal';

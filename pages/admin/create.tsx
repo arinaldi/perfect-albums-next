@@ -3,10 +3,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
-import useForm, { AlbumInput } from 'hooks/useForm';
+import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
 import api from 'utils/api';
+import { AlbumInput } from 'utils/types';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
