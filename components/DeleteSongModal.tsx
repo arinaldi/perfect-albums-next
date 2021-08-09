@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import { fetcher } from 'utils/api';
+import api, { fetcher } from 'utils/api';
 import useStore from 'hooks/useStore';
 import Modal from 'components/Modal';
 
@@ -12,10 +12,13 @@ const DeleteSongModal: FC = () => {
   const key = isOpen ? '/api/songs' : null;
   const { mutate } = useSWR(key, fetcher);
   const options = {
-    body: { id: data.id },
     callbacks: [mutate],
-    method: METHODS.DELETE,
-    path: '/api/songs',
+    submitFn: async () => {
+      await api('/api/songs', {
+        body: { id: data.id },
+        method: METHODS.DELETE,
+      });
+    },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
 

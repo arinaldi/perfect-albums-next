@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
 import { formatDate } from 'utils';
-import { fetcher } from 'utils/api';
+import api, { fetcher } from 'utils/api';
 import useForm, { ReleaseInput } from 'hooks/useForm';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
@@ -20,10 +20,13 @@ const EditReleaseModal: FC = () => {
     date: formatDate(data.date),
   });
   const options = {
-    body: { ...values, id: data.id },
     callbacks: [mutate],
-    method: METHODS.PUT,
-    path: '/api/releases',
+    submitFn: async () => {
+      await api('/api/releases', {
+        body: { ...values, id: data.id },
+        method: METHODS.PUT,
+      });
+    },
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
 

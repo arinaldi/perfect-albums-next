@@ -8,6 +8,7 @@ import dbConnect from 'lib/dbConnect';
 import { loadIdToken } from 'auth/firebaseAdmin';
 import formatAlbum from 'lib/formatAlbum';
 import { getTitle } from 'utils';
+import api from 'utils/api';
 import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
 import useSubmit from 'hooks/useSubmit';
@@ -20,7 +21,6 @@ interface Props {
 const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
   const options = {
-    body: null,
     callbacks: [
       () =>
         router.push({
@@ -28,8 +28,9 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
           query: router.query,
         }),
     ],
-    method: METHODS.DELETE,
-    path: `/api/albums/${album.id}`,
+    submitFn: async () => {
+      await api(`/api/albums/${album.id}`, { body: null, method: METHODS.DELETE });
+    },
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
   const { handleSubmit, isSubmitting } = useSubmit(options);

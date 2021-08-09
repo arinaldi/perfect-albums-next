@@ -6,6 +6,7 @@ import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import useForm, { AlbumInput } from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
+import api from 'utils/api';
 import CreateAlbum from 'components/CreateAlbum';
 
 const CreateAlbumPage: FC = () => {
@@ -19,7 +20,6 @@ const CreateAlbumPage: FC = () => {
     favorite: false,
   });
   const options = {
-    body: values,
     callbacks: [
       () =>
         router.push({
@@ -27,8 +27,9 @@ const CreateAlbumPage: FC = () => {
           query: router.query,
         }),
     ],
-    method: METHODS.POST,
-    path: '/api/albums',
+    submitFn: async () => {
+      await api('/api/albums', { body: values, method: METHODS.POST });
+    },
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
   const { handleSubmit, isSubmitting } = useSubmit(options);

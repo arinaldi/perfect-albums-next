@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import { fetcher } from 'utils/api';
+import api, { fetcher } from 'utils/api';
 import useForm, { SongInput } from 'hooks/useForm';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
@@ -18,10 +18,10 @@ const CreateSongModal: FC = () => {
     link: '',
   });
   const options = {
-    body: values,
     callbacks: [mutate],
-    method: METHODS.POST,
-    path: '/api/songs',
+    submitFn: async () => {
+      await api('/api/songs', { body: values, method: METHODS.POST });
+    },
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };
 

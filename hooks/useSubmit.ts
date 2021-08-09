@@ -1,17 +1,13 @@
 import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import api from 'utils/api';
-import { MESSAGES, METHODS } from 'constants/index';
-import { Values } from 'hooks/useForm';
+import { MESSAGES } from 'constants/index';
 
 type Callback = () => void;
 
 export interface Options {
-  body: Values | null;
   callbacks: Callback[];
-  method: METHODS;
-  path: string;
+  submitFn: () => Promise<void>;
   successMessage: string;
 }
 
@@ -21,27 +17,26 @@ interface Payload {
 }
 
 export default function useSubmit(options: Options): Payload {
-  const { body, callbacks, method, path, successMessage } = options;
+  const { callbacks, submitFn, successMessage } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setIsSubmitting(true);
 
     try {
-      await api(path, { body, method });
-
+      setIsSubmitting(true);
+      await submitFn();
+      setIsSubmitting(false);
       callbacks.forEach((callback: Callback) => {
         callback();
       });
 
       toast.success(successMessage);
     } catch (error) {
-      if (error?.message !== MESSAGES.UNAUTHORIZED) {
-        toast.error(MESSAGES.ERROR);
-      }
-    } finally {
       setIsSubmitting(false);
+      if (error?.message === MESSAGES.UNAUTHORIZED) return;
+
+      toast.error(MESSAGES.ERROR);
     }
   };
 

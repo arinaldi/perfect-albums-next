@@ -8,6 +8,7 @@ import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { loadIdToken } from 'auth/firebaseAdmin';
 import { getTitle } from 'utils';
+import api from 'utils/api';
 import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
 import useForm, { AlbumInput } from 'hooks/useForm';
@@ -29,7 +30,6 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
     favorite: album.favorite,
   });
   const options = {
-    body: values,
     callbacks: [
       () =>
         router.push({
@@ -37,8 +37,9 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
           query: router.query,
         }),
     ],
-    method: METHODS.PUT,
-    path: `/api/albums/${album.id}`,
+    submitFn: async () => {
+      await api(`/api/albums/${album.id}`, { body: values, method: METHODS.PUT });
+    },
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
   const { handleSubmit, isSubmitting } = useSubmit(options);

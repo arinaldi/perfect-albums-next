@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import { fetcher } from 'utils/api';
+import api, { fetcher } from 'utils/api';
 import useForm, { ReleaseInput } from 'hooks/useForm';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
@@ -18,10 +18,10 @@ const CreateReleaseModal: FC = () => {
     date: '',
   });
   const options = {
-    body: values,
     callbacks: [mutate],
-    method: METHODS.POST,
-    path: '/api/releases',
+    submitFn: async () => {
+      await api('/api/releases', { body: values, method: METHODS.POST });
+    },
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
 
