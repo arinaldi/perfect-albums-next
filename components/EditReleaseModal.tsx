@@ -12,6 +12,7 @@ import Modal from 'components/Modal';
 const EditReleaseModal: FC = () => {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
+  const closeModal = useStore((state) => state.closeModal);
   const key = isOpen ? '/api/releases' : null;
   const { mutate } = useSWR(key, fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
@@ -19,8 +20,14 @@ const EditReleaseModal: FC = () => {
     title: data.title,
     date: formatDate(data.date),
   });
+
+  function handleClose() {
+    closeModal();
+    resetForm();
+  }
+
   const options = {
-    callbacks: [mutate],
+    callbacks: [handleClose, mutate],
     submitFn: async () => {
       await api('/api/releases', {
         body: { ...values, id: data.id },
@@ -31,7 +38,7 @@ const EditReleaseModal: FC = () => {
   };
 
   return (
-    <Modal options={options} resetForm={resetForm} title="Edit Release">
+    <Modal onClose={handleClose} options={options} title="Edit Release">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">

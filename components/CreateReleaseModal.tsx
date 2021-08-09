@@ -10,6 +10,7 @@ import Modal from 'components/Modal';
 
 const CreateReleaseModal: FC = () => {
   const isOpen = useStore((state) => state.isOpen);
+  const closeModal = useStore((state) => state.closeModal);
   const key = isOpen ? '/api/releases' : null;
   const { mutate } = useSWR(key, fetcher);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
@@ -17,8 +18,14 @@ const CreateReleaseModal: FC = () => {
     title: '',
     date: '',
   });
+
+  function handleClose() {
+    closeModal();
+    resetForm();
+  }
+
   const options = {
-    callbacks: [mutate],
+    callbacks: [handleClose, mutate],
     submitFn: async () => {
       await api('/api/releases', { body: values, method: METHODS.POST });
     },
@@ -26,7 +33,7 @@ const CreateReleaseModal: FC = () => {
   };
 
   return (
-    <Modal options={options} resetForm={resetForm} title="Create Release">
+    <Modal onClose={handleClose} options={options} title="Create Release">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">

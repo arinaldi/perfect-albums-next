@@ -9,10 +9,11 @@ import Modal from 'components/Modal';
 const DeleteSongModal: FC = () => {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
+  const closeModal = useStore((state) => state.closeModal);
   const key = isOpen ? '/api/songs' : null;
   const { mutate } = useSWR(key, fetcher);
   const options = {
-    callbacks: [mutate],
+    callbacks: [closeModal, mutate],
     submitFn: async () => {
       await api('/api/songs', {
         body: { id: data.id },
@@ -23,7 +24,7 @@ const DeleteSongModal: FC = () => {
   };
 
   return (
-    <Modal options={options} title="Delete Song">
+    <Modal onClose={closeModal} options={options} title="Delete Song">
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 dark:text-white">

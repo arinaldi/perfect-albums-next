@@ -8,24 +8,13 @@ import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   children: ReactNode;
+  onClose: () => void;
   options: Options;
-  resetForm?: () => void;
   title: string;
 }
 
-const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
+const Modal: FC<Props> = ({ children, onClose, options, title }) => {
   const isOpen = useStore((state) => state.isOpen);
-  const closeModal = useStore((state) => state.closeModal);
-
-  function handleClose() {
-    closeModal();
-
-    if (resetForm) {
-      resetForm();
-    }
-  }
-
-  options.callbacks.push(handleClose);
   const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
@@ -33,7 +22,7 @@ const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
-        onClose={handleClose}
+        onClose={onClose}
       >
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
@@ -69,7 +58,7 @@ const Modal: FC<Props> = ({ children, options, resetForm, title }) => {
               <form method="POST" onSubmit={handleSubmit}>
                 {children}
                 <div className="flex items-center justify-end p-6 pt-0">
-                  <CancelButton onClick={handleClose} />
+                  <CancelButton onClick={onClose} />
                   <SubmitButton isSubmitting={isSubmitting} />
                 </div>
               </form>
