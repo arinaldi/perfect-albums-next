@@ -10,8 +10,8 @@ import {
   SORT_VALUE,
 } from 'constants/index';
 import { loadIdToken } from 'auth/firebaseAdmin';
-import Admin from 'components/Admin';
 import { getTitle, isEmptyObject } from 'utils';
+import Admin from 'components/Admin';
 
 const AdminPage: FC = () => {
   const router = useRouter();
