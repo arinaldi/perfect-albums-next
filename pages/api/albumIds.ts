@@ -1,4 +1,4 @@
-import { NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 import Album from 'models/Album';
 
@@ -8,6 +8,9 @@ export async function getAlbumIds(): Promise<string[]> {
   return ids;
 }
 
-export default async function (_, res: NextApiResponse): Promise<void> {
+export default async function (
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<void> {
   res.status(200).json({ success: true });
 }
