@@ -1,23 +1,5 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "standard",
-    "standard-jsx",
-    "prettier"
-  ],
-  "plugins": ["import", "jsx-a11y", "node", "promise", "react", "react-hooks"],
+  "extends": ["next", "next/core-web-vitals", "prettier"],
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "eol-last": "error",
@@ -25,37 +7,8 @@
       "error",
       { "groups": ["builtin", "external", "parent", "sibling", "index"] }
     ],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "jsx-quotes": ["error", "prefer-double"],
     "no-console": "warn",
     "quotes": ["error", "single"],
-    "react/jsx-fragments": "off",
-    "react/prop-types": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/jsx-handler-names": "off",
-    "react/react-in-jsx-scope": "off",
-    "semi": ["error", "always"],
-    "space-before-function-paren": "off",
-    "spaced-comment": "error",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "off"
-  },
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "settings": {
-    "react": {
-      "version": "17.02"
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules"],
-        "paths": ["."]
-      }
-    }
+    "semi": ["error", "always"]
   }
 }
