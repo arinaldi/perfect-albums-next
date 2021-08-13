@@ -1,18 +1,18 @@
 import { FC } from 'react';
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import { GetServerSideProps, NextApiRequest } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
+import { loadIdToken } from 'auth/firebaseAdmin';
 import { getTitle } from 'utils';
 import api from 'utils/api';
 import { Album as AlbumType, AlbumInput } from 'utils/types';
 import Album from 'models/Album';
 import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
-import { getAlbumIds } from 'pages/api/albumIds';
 import EditAlbum from 'components/EditAlbum';
 
 interface Props {
@@ -64,26 +64,16 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
 
 export default EditAlbumPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  await dbConnect();
-  const ids = await getAlbumIds();
-
-  const paths = ids.map((id) => ({
-    params: { id: id.toString() },
-  }));
-
-  return { paths, fallback: false };
-};
-
-export const getStaticProps: GetStaticProps = async ({
+export const getServerSideProps: GetServerSideProps = async ({
   params,
-}: GetStaticPropsContext) => {
+  req,
+}) => {
+  const uid = await loadIdToken(req as NextApiRequest);
   const payload = {
     props: { album: {} },
-    revalidate: 1,
   };
 
-  if (!params?.id) return payload;
+  if (!uid || !params?.id) return payload;
 
   await dbConnect();
   const data = await Album.findById(params.id);
