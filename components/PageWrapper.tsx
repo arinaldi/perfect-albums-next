@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, memo, ReactNode } from 'react';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 
@@ -50,4 +50,4 @@ const PageWrapper: FC<Props> = ({ children }) => {
   );
 };
 
-export default PageWrapper;
+export default memo(PageWrapper);
