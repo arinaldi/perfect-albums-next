@@ -37,11 +37,13 @@ const PageWrapper: FC<Props> = ({ children }) => {
           success: {
             style: {
               background: '#A7F3D0',
+              borderLeft: '4px solid #059669',
             },
           },
           error: {
             style: {
               background: '#FECACA',
+              borderLeft: '4px solid #DC2626',
             },
           },
         }}

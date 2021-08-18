@@ -1,15 +1,12 @@
 import { FC, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useAuth } from 'hooks/useAuth';
 import useDarkMode from 'hooks/useDarkMode';
 import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
+import LinkWrapper from 'components/LinkWrapper';
 
 const NavBar: FC = () => {
-  const router = useRouter();
-  const { pathname } = router;
   const { hasAuth, logout } = useAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,31 +46,15 @@ const NavBar: FC = () => {
             <div className="hidden sm:block sm:ml-6">
               <div className="flex">
                 {ROUTES.map(({ href, label }) => (
-                  <Link key={href} href={href}>
-                    <a
-                      className={`${
-                        pathname === href
-                          ? 'text-white font-semibold'
-                          : 'text-gray-300 font-medium'
-                      } hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md dark:hover:bg-gray-800`}
-                    >
-                      {label}
-                    </a>
-                  </Link>
+                  <LinkWrapper key={href} href={href}>
+                    {label}
+                  </LinkWrapper>
                 ))}
-                {hasAuth && (
-                  <Link href={ROUTES_ADMIN.base.href}>
-                    <a
-                      className={`${
-                        pathname === ROUTES_ADMIN.base.href
-                          ? 'text-white font-semibold'
-                          : 'text-gray-300 font-medium'
-                      } hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md dark:hover:bg-gray-800`}
-                    >
-                      {ROUTES_ADMIN.base.label}
-                    </a>
-                  </Link>
-                )}
+                {hasAuth ? (
+                  <LinkWrapper href={ROUTES_ADMIN.base.href}>
+                    {ROUTES_ADMIN.base.label}
+                  </LinkWrapper>
+                ) : null}
               </div>
             </div>
           </div>
@@ -95,11 +76,7 @@ const NavBar: FC = () => {
                 Sign Out
               </div>
             ) : (
-              <Link href="/signin">
-                <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800">
-                  Sign In
-                </a>
-              </Link>
+              <LinkWrapper href="/signin">Sign In</LinkWrapper>
             )}
           </div>
         </div>
@@ -108,52 +85,42 @@ const NavBar: FC = () => {
       <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           {ROUTES.map(({ href, label }) => (
-            <Link key={href} href={href}>
-              <a
-                className={`${
-                  pathname === href
-                    ? 'text-white font-semibold'
-                    : 'text-gray-300 font-medium'
-                } hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base`}
-                onClick={closeMenu}
-              >
-                {label}
-              </a>
-            </Link>
+            <LinkWrapper
+              key={href}
+              classNames="block text-base"
+              href={href}
+              onClick={closeMenu}
+            >
+              {label}
+            </LinkWrapper>
           ))}
           {hasAuth ? (
             <>
-              <Link href={ROUTES_ADMIN.base.href}>
-                <a
-                  className={`${
-                    pathname === ROUTES_ADMIN.base.href
-                      ? 'text-white font-semibold'
-                      : 'text-gray-300 font-medium'
-                  } hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base`}
-                  onClick={closeMenu}
-                >
-                  {ROUTES_ADMIN.base.label}
-                </a>
-              </Link>
+              <LinkWrapper
+                classNames="block text-base"
+                href={ROUTES_ADMIN.base.href}
+                onClick={closeMenu}
+              >
+                {ROUTES_ADMIN.base.label}
+              </LinkWrapper>
               <div
                 onClick={() => {
                   closeMenu();
                   logout();
                 }}
-                className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 Sign Out
               </div>
             </>
           ) : (
-            <Link href="/signin">
-              <a
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={closeMenu}
-              >
-                Sign In
-              </a>
-            </Link>
+            <LinkWrapper
+              classNames="block text-base"
+              href="/signin"
+              onClick={closeMenu}
+            >
+              Sign In
+            </LinkWrapper>
           )}
         </div>
       </div>
