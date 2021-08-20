@@ -15,16 +15,14 @@ interface Props {
 }
 
 const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
-  const { hasAuth } = useAuth();
+  const { user } = useAuth();
 
-  const NewButton = hasAuth ? (
-    <Button onClick={onCreateOpen}>New</Button>
-  ) : null;
+  const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
 
   return (
     <Layout title="Featured Songs" titleAction={NewButton}>
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
-        {data.songs.map(song => (
+        {data.songs.map((song) => (
           <div
             className="border border-gray-200 bg-white rounded-md shadow-sm p-4 dark:bg-gray-700 dark:border-black"
             key={song.id}
@@ -44,14 +42,14 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
               >
                 Listen
               </a>
-              {hasAuth && (
+              {user ? (
                 <span
                   className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onDeleteOpen(song)}
                 >
                   <DeleteIcon />
                 </span>
-              )}
+              ) : null}
             </div>
           </div>
         ))}

@@ -1,4 +1,11 @@
-import { useEffect, useState, useContext, createContext, FC } from 'react';
+import {
+  createContext,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useRouter } from 'next/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -11,30 +18,16 @@ initFirebase();
 interface Context {
   user: firebase.User | null;
   logout: () => void;
-  hasAuth: boolean;
 }
 
 const AuthContext = createContext<Context>({
   user: null,
-  logout: () => null,
-  hasAuth: false,
+  logout: () => undefined,
 });
 
 export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const router = useRouter();
-
-  const logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        router.push('/top-albums');
-      })
-      .catch((e) => {
-        console.error(e); // eslint-disable-line no-console
-      });
-  };
 
   useEffect(() => {
     const cancelAuthListener = firebase
@@ -55,11 +48,22 @@ export const AuthProvider: FC = ({ children }) => {
     };
   }, []);
 
-  const value = {
-    user,
-    logout,
-    hasAuth: Boolean(user),
-  };
+  const value = useMemo(() => {
+    return {
+      user,
+      logout: () => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            router.push('/top-albums');
+          })
+          .catch((e) => {
+            console.error(e); // eslint-disable-line no-console
+          });
+      },
+    };
+  }, [router, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

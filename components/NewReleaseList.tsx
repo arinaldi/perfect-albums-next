@@ -12,18 +12,18 @@ interface Props {
 }
 
 const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
-  const { hasAuth } = useAuth();
+  const { user } = useAuth();
 
   return (
     <div>
       <h4 className="text-xl font-semibold dark:text-white">{date}</h4>
       <ul data-testid={`list-${date}`} className="list-disc ml-6 p-1">
-        {data.map(release => (
+        {data.map((release) => (
           <li key={release.id} className="dark:text-white">
             <span>
               {release.artist} &ndash; {release.title}
             </span>
-            {hasAuth && (
+            {user && (
               <>
                 <span
                   className="cursor-pointer ml-2 dark:text-white"

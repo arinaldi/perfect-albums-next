@@ -22,11 +22,9 @@ const NewReleases: FC<Props> = ({
   onDeleteOpen,
   onEditOpen,
 }) => {
-  const { hasAuth } = useAuth();
+  const { user } = useAuth();
 
-  const NewButton = hasAuth ? (
-    <Button onClick={onCreateOpen}>New</Button>
-  ) : null;
+  const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
 
   return (
     <Layout title="New Releases" titleAction={NewButton}>

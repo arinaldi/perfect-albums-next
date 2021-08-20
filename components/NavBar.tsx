@@ -7,7 +7,7 @@ import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
 import LinkWrapper from 'components/LinkWrapper';
 
 const NavBar: FC = () => {
-  const { hasAuth, logout } = useAuth();
+  const { user, logout } = useAuth();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -50,7 +50,7 @@ const NavBar: FC = () => {
                     {label}
                   </LinkWrapper>
                 ))}
-                {hasAuth ? (
+                {user ? (
                   <LinkWrapper href={ROUTES_ADMIN.base.href}>
                     {ROUTES_ADMIN.base.label}
                   </LinkWrapper>
@@ -68,7 +68,7 @@ const NavBar: FC = () => {
             {isDarkMode ? <SunIcon /> : <MoonIcon />}
           </button>
           <div className="hidden absolute inset-y-0 right-0 sm:flex sm:items-center pr-2 sm:static sm:inset-auto sm:ml-0 sm:pr-0">
-            {hasAuth ? (
+            {user ? (
               <div
                 onClick={logout}
                 className="cursor-pointer text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-md font-medium dark:hover:bg-gray-800"
@@ -94,7 +94,7 @@ const NavBar: FC = () => {
               {label}
             </LinkWrapper>
           ))}
-          {hasAuth ? (
+          {user ? (
             <>
               <LinkWrapper
                 classNames="block text-base"
