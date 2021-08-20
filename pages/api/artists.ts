@@ -9,7 +9,7 @@ async function getArtists(): Promise<string[]> {
   return artists;
 }
 
-export default async function (
+export default async function artists(
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {

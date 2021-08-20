@@ -18,7 +18,7 @@ export async function getFavorites(): Promise<Favorite[]> {
   return favorites;
 }
 
-export default async function (
+export default async function favorites(
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {

@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import cookie from 'cookie';
 
-export default (req: NextApiRequest, res: NextApiResponse): void => {
+export default function logout(
+  req: NextApiRequest,
+  res: NextApiResponse,
+): void {
   res.setHeader(
     'Set-Cookie',
     cookie.serialize('token', '', {
@@ -14,4 +17,4 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
   );
 
   res.status(200).json({ success: true });
-};
+}

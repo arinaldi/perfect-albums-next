@@ -9,7 +9,7 @@ export async function getCdCount(): Promise<number> {
   return count;
 }
 
-export default async function (
+export default async function cds(
   req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
