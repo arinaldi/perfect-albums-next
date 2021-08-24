@@ -61,10 +61,6 @@ export interface User {
   username: string;
 }
 
-export interface GenericObject {
-  [key: string]: string;
-}
-
 export interface AlbumInput {
   artist: string;
   title: string;

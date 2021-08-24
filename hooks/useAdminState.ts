@@ -22,7 +22,7 @@ import {
   parseSortQuery,
 } from 'utils';
 import { fetchAndCache } from 'utils/api';
-import { Album, GenericObject } from 'utils/types';
+import { Album } from 'utils/types';
 import useDebounce from 'hooks/useDebounce';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 
@@ -84,7 +84,7 @@ export default function useAdminState(): Payload {
   }, []);
 
   const handlers = useMemo(() => {
-    function updateQueryParams(query: GenericObject): void {
+    function updateQueryParams(query: Record<string, string>): void {
       router.replace({
         pathname: ROUTES_ADMIN.base.href,
         query: {
