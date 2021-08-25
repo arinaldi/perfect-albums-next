@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode } from 'react';
+import { FC, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import useSubmit, { Options } from 'hooks/useSubmit';
@@ -7,7 +7,6 @@ import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
-  children: ReactNode;
   onClose: () => void;
   options: Options;
   title: string;

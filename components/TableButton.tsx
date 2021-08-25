@@ -1,7 +1,6 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 interface Props {
-  children: ReactNode;
   onClick: () => void;
 }
 

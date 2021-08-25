@@ -1,15 +1,11 @@
-import { FC, memo, ReactNode } from 'react';
+import { FC, memo } from 'react';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
 import ModalContainer from 'components/ModalContainer';
 
-interface Props {
-  children: ReactNode;
-}
-
-const PageWrapper: FC<Props> = ({ children }) => {
+const PageWrapper: FC = ({ children }) => {
   return (
     <div className="h-full dark:bg-gray-800">
       <Head>

@@ -1,9 +1,8 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface Props {
-  children: ReactNode;
   classNames?: string;
   href: string;
   onClick?: () => void;
