@@ -8,7 +8,9 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 import { getAuth, onIdTokenChanged, signOut, User } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
+import { MESSAGES } from 'constants/index';
 import initFirebase from 'auth/initFirebase';
 import { removeTokenCookie, setTokenCookie } from 'auth/tokenCookies';
 
@@ -49,14 +51,13 @@ export const AuthProvider: FC = ({ children }) => {
   const value = useMemo(() => {
     return {
       user,
-      logout: () => {
-        signOut(auth)
-          .then(() => {
-            router.push('/top-albums');
-          })
-          .catch((e) => {
-            console.error(e); // eslint-disable-line no-console
-          });
+      logout: async () => {
+        try {
+          await signOut(auth);
+          router.push('/top-albums');
+        } catch (error) {
+          toast.error(MESSAGES.ERROR);
+        }
       },
     };
   }, [auth, router, user]);

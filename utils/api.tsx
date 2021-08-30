@@ -27,11 +27,14 @@ export async function fetcher(url: string): Promise<any> {
   return res.json();
 }
 
-function logout() {
+async function logout(errorMessage = MESSAGES.ERROR) {
   const auth = getAuth();
-  signOut(auth).catch((error: Error) => {
-    console.error(error); // eslint-disable-line no-console
-  });
+
+  try {
+    await signOut(auth);
+  } catch (error) {
+    toast.error(errorMessage);
+  }
 }
 
 async function handleResponse(response: Response) {
@@ -41,8 +44,7 @@ async function handleResponse(response: Response) {
     if (url.includes('signin')) {
       return Promise.reject(new Error(MESSAGES.SIGNIN));
     } else {
-      toast.error(MESSAGES.UNAUTHORIZED);
-      logout();
+      await logout(MESSAGES.UNAUTHORIZED);
       return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
     }
   }
