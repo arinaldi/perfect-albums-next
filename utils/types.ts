@@ -86,3 +86,5 @@ export interface SignInInput {
   email: string;
   password: string;
 }
+
+export type Callback = () => void;

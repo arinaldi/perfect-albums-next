@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { mutate, SWRConfig } from 'swr';
+import { SWRConfig } from 'swr';
 import { getAuth, signOut } from 'firebase/auth';
 import toast from 'react-hot-toast';
 
@@ -10,7 +10,7 @@ interface FetchError {
   status?: number;
 }
 
-async function fetcher(url: string): Promise<any> {
+export async function fetcher(url: string): Promise<any> {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -25,12 +25,6 @@ async function fetcher(url: string): Promise<any> {
   }
 
   return res.json();
-}
-
-export function fetchAndCache(key: string): Promise<any> {
-  const request = fetcher(key);
-  mutate(key, request, false);
-  return request;
 }
 
 function logout() {

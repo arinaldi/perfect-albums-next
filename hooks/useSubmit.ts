@@ -2,8 +2,7 @@ import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { MESSAGES } from 'constants/index';
-
-type Callback = () => void;
+import { Callback } from 'utils/types';
 
 export interface Options {
   callbacks: Callback[];
