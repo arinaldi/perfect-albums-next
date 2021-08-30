@@ -4,7 +4,7 @@ interface Props {
   id: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
-  type: 'text' | 'date';
+  type: 'text' | 'date' | 'email' | 'password';
   value: string;
 }
 

@@ -8,7 +8,7 @@ type Callback = () => void;
 export interface Options {
   callbacks: Callback[];
   submitFn: () => Promise<void>;
-  successMessage: string;
+  successMessage?: string;
 }
 
 interface Payload {
@@ -31,7 +31,9 @@ export default function useSubmit(options: Options): Payload {
         callback();
       });
 
-      toast.success(successMessage);
+      if (successMessage) {
+        toast.success(successMessage);
+      }
     } catch (error) {
       setIsSubmitting(false);
       if (error?.message === MESSAGES.UNAUTHORIZED) return;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { mutate, SWRConfig } from 'swr';
-import firebase from 'firebase/app';
+import { getAuth, signOut } from 'firebase/auth';
 import toast from 'react-hot-toast';
 
 import { MESSAGES, METHODS } from 'constants/index';
@@ -34,12 +34,10 @@ export function fetchAndCache(key: string): Promise<any> {
 }
 
 function logout() {
-  firebase
-    .auth()
-    .signOut()
-    .catch((error: Error) => {
-      console.error(error); // eslint-disable-line no-console
-    });
+  const auth = getAuth();
+  signOut(auth).catch((error: Error) => {
+    console.error(error); // eslint-disable-line no-console
+  });
 }
 
 async function handleResponse(response: Response) {

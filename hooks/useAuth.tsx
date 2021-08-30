@@ -7,8 +7,7 @@ import {
   useState,
 } from 'react';
 import { useRouter } from 'next/router';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { getAuth, onIdTokenChanged, signOut, User } from 'firebase/auth';
 
 import initFirebase from 'auth/initFirebase';
 import { removeTokenCookie, setTokenCookie } from 'auth/tokenCookies';
@@ -16,7 +15,7 @@ import { removeTokenCookie, setTokenCookie } from 'auth/tokenCookies';
 initFirebase();
 
 interface Context {
-  user: firebase.User | null;
+  user: User | null;
   logout: () => void;
 }
 
@@ -26,35 +25,32 @@ const AuthContext = createContext<Context>({
 });
 
 export const AuthProvider: FC = ({ children }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const auth = getAuth();
 
   useEffect(() => {
-    const cancelAuthListener = firebase
-      .auth()
-      .onIdTokenChanged(async (user) => {
-        if (user) {
-          const token = await user.getIdToken();
-          setTokenCookie(token);
-          setUser(user);
-        } else {
-          removeTokenCookie();
-          setUser(null);
-        }
-      });
+    const cancelAuthListener = onIdTokenChanged(auth, async (user) => {
+      if (user) {
+        const token = await user.getIdToken();
+        setTokenCookie(token);
+        setUser(user);
+      } else {
+        removeTokenCookie();
+        setUser(null);
+      }
+    });
 
     return () => {
       cancelAuthListener();
     };
-  }, []);
+  }, [auth]);
 
   const value = useMemo(() => {
     return {
       user,
       logout: () => {
-        firebase
-          .auth()
-          .signOut()
+        signOut(auth)
           .then(() => {
             router.push('/top-albums');
           })
@@ -63,7 +59,7 @@ export const AuthProvider: FC = ({ children }) => {
           });
       },
     };
-  }, [router, user]);
+  }, [auth, router, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

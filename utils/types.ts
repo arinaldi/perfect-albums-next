@@ -81,3 +81,8 @@ export interface SongInput {
   title: string;
   link: string;
 }
+
+export interface SignInInput {
+  email: string;
+  password: string;
+}

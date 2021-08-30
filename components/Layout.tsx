@@ -1,13 +1,14 @@
 import { FC, ReactNode } from 'react';
 
 interface Props {
+  maxWidth?: string;
   title: ReactNode;
   titleAction?: ReactNode;
 }
 
-const Layout: FC<Props> = ({ children, title, titleAction }) => {
+const Layout: FC<Props> = ({ children, maxWidth, title, titleAction }) => {
   return (
-    <div className="min-h-screen max-w-7xl mx-auto p-4">
+    <div className={`min-h-screen mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
           {title}
