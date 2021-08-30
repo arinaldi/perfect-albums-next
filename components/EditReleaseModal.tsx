@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
 import { formatDate } from 'utils';
-import api, { fetcher } from 'utils/api';
+import api from 'utils/api';
 import { ReleaseInput } from 'utils/types';
 import useForm from 'hooks/useForm';
 import useStore from 'hooks/useStore';
@@ -14,8 +14,7 @@ const EditReleaseModal: FC = () => {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const key = isOpen ? '/api/releases' : null;
-  const { mutate } = useSWR(key, fetcher);
+  const { mutate } = useSWR(isOpen ? '/api/releases' : null);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: data.artist,
     title: data.title,

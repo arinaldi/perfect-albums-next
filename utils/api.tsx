@@ -1,4 +1,5 @@
-import { mutate } from 'swr';
+import { FC } from 'react';
+import { mutate, SWRConfig } from 'swr';
 import firebase from 'firebase/app';
 import toast from 'react-hot-toast';
 
@@ -9,7 +10,7 @@ interface FetchError {
   status?: number;
 }
 
-export async function fetcher(url: string): Promise<any> {
+async function fetcher(url: string): Promise<any> {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
   });
@@ -78,7 +79,7 @@ const defaultOptions = {
   method: METHODS.GET,
 };
 
-async function api(
+export default async function api(
   endpoint: string,
   options: Options = defaultOptions,
 ): Promise<ResponseObject> {
@@ -102,4 +103,6 @@ async function api(
   return handleResponse(response);
 }
 
-export default api;
+export const SWRProvider: FC = ({ children }) => {
+  return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
+};

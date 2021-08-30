@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import api, { fetcher } from 'utils/api';
+import api from 'utils/api';
 import useStore from 'hooks/useStore';
 import Modal from 'components/Modal';
 
@@ -10,8 +10,8 @@ const DeleteSongModal: FC = () => {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const key = isOpen ? '/api/songs' : null;
-  const { mutate } = useSWR(key, fetcher);
+  const { mutate } = useSWR(isOpen ? '/api/songs' : null);
+
   const options = {
     callbacks: [closeModal, mutate],
     submitFn: async () => {

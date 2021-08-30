@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 
-import { fetcher } from 'utils/api';
 import { Album } from 'utils/types';
 
 interface Payload {
@@ -17,10 +16,8 @@ export default function useAdminAlbums(
   preventFetch = false,
 ): Payload {
   const key = preventFetch ? null : url;
-  const { data, error, mutate } = useSWR(key, fetcher, {
-    dedupingInterval: 5000,
-  });
-  const { data: cdData, error: cdError } = useSWR('/api/cds', fetcher);
+  const { data, error, mutate } = useSWR(key, { dedupingInterval: 5000 });
+  const { data: cdData, error: cdError } = useSWR('/api/cds');
 
   const payload = {
     albums: [],

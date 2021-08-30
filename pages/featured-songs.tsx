@@ -5,7 +5,6 @@ import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
 import { getTitle } from 'utils';
-import { fetcher } from 'utils/api';
 import dbConnect from 'lib/dbConnect';
 import { Song } from 'utils/types';
 import { getSongs } from 'pages/api/songs';
@@ -19,11 +18,11 @@ interface Props {
 
 const FeaturedSongsPage: FC<Props> = ({ songs }) => {
   const openModal = useStore((state) => state.openModal);
-  const { data, error } = useSWR('/api/songs', fetcher, {
-    initialData: { songs },
+  const { data, error } = useSWR('/api/songs', {
+    fallbackData: { songs },
   });
 
-  if (error) return <AppMessage />;
+  if (error || !data) return <AppMessage />;
 
   function handleCreateOpen() {
     openModal(MODAL_TYPES.FEATURED_SONGS_CREATE);

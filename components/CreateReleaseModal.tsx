@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import api, { fetcher } from 'utils/api';
+import api from 'utils/api';
 import { ReleaseInput } from 'utils/types';
 import useForm from 'hooks/useForm';
 import useStore from 'hooks/useStore';
@@ -12,8 +12,7 @@ import Modal from 'components/Modal';
 const CreateReleaseModal: FC = () => {
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const key = isOpen ? '/api/releases' : null;
-  const { mutate } = useSWR(key, fetcher);
+  const { mutate } = useSWR(isOpen ? '/api/releases' : null);
   const { values, handleChange, resetForm } = useForm<ReleaseInput>({
     artist: '',
     title: '',

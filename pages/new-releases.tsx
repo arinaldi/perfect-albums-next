@@ -5,7 +5,6 @@ import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
-import { fetcher } from 'utils/api';
 import { getTitle, ListItem } from 'utils';
 import { Release } from 'utils/types';
 import { getReleases } from 'pages/api/releases';
@@ -19,11 +18,11 @@ interface Props {
 
 const NewReleasesPage: FC<Props> = ({ releases }) => {
   const openModal = useStore((state) => state.openModal);
-  const { data, error } = useSWR('/api/releases', fetcher, {
-    initialData: { releases },
+  const { data, error } = useSWR('/api/releases', {
+    fallbackData: { releases },
   });
 
-  if (error) return <AppMessage />;
+  if (error || !data) return <AppMessage />;
 
   function handleCreateOpen() {
     openModal(MODAL_TYPES.NEW_RELEASE_CREATE);
