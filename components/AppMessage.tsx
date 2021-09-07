@@ -5,9 +5,14 @@ interface Props {
 }
 
 const AppMessage: FC<Props> = ({ message = 'Something went wrong' }) => (
-  <p className="min-h-screen text-center mt-8 text-2xl dark:text-white">
-    {message}
-  </p>
+  <div className="mt-8 flex justify-center min-h-screen">
+    <div
+      className="px-6 py-4 bg-red-200 border-l-4 border-red-700 rounded-sm"
+      style={{ height: 'fit-content' }}
+    >
+      <p className="text-center text-lg">{message}</p>
+    </div>
+  </div>
 );
 
 export default AppMessage;
