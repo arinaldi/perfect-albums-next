@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { useRouter } from 'next/router';
-import { getAuth, onIdTokenChanged, signOut, User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import toast from 'react-hot-toast';
 
 import { MESSAGES } from 'constants/index';
@@ -16,23 +16,25 @@ import { removeTokenCookie, setTokenCookie } from 'auth/tokenCookies';
 
 initFirebase();
 
+type CurrentUser = User | null | undefined;
+
 interface Context {
-  user: User | null;
+  user: CurrentUser;
   logout: () => void;
 }
 
 const AuthContext = createContext<Context>({
-  user: null,
+  user: undefined,
   logout: () => undefined,
 });
 
 export const AuthProvider: FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<CurrentUser>(undefined);
   const router = useRouter();
   const auth = getAuth();
 
   useEffect(() => {
-    const cancelAuthListener = onIdTokenChanged(auth, async (user) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const token = await user.getIdToken();
         setTokenCookie(token);
@@ -44,7 +46,7 @@ export const AuthProvider: FC = ({ children }) => {
     });
 
     return () => {
-      cancelAuthListener();
+      unsub();
     };
   }, [auth]);
 
@@ -54,13 +56,17 @@ export const AuthProvider: FC = ({ children }) => {
       logout: async () => {
         try {
           await signOut(auth);
-          router.push('/top-albums');
+          if (router.pathname.startsWith('/admin')) {
+            router.push('/top-albums');
+          }
         } catch (error) {
           toast.error(MESSAGES.ERROR);
         }
       },
     };
   }, [auth, router, user]);
+
+  if (user === undefined) return null;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

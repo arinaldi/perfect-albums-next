@@ -54,13 +54,6 @@ export interface Song extends SongBase {
   id: string;
 }
 
-export interface User {
-  hash: string;
-  id: string;
-  salt: string;
-  username: string;
-}
-
 export interface AlbumInput {
   artist: string;
   title: string;
