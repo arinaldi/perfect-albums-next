@@ -19,6 +19,8 @@ const Admin: FC = () => {
   const router = useRouter();
   const {
     albums,
+    artistSearch,
+    artistSearchRef,
     cdTotal,
     direction,
     handlers,
@@ -27,20 +29,21 @@ const Admin: FC = () => {
     isLoading,
     page,
     perPage,
-    searchRef,
-    searchText,
     sort,
+    titleSearch,
+    titleSearchRef,
     total,
   } = useAdminState();
   const {
+    onArtistChange,
     onClear,
     onFirst,
     onLast,
     onNext,
     onPerPageChange,
     onPrevious,
-    onSearchChange,
     onSort,
+    onTitleChange,
   } = handlers;
 
   function handleRouteChange(pathname: string) {
@@ -74,13 +77,23 @@ const Admin: FC = () => {
       <div className="block sm:flex sm:justify-between sm:items-center mb-4">
         <input
           className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
-          id="search"
-          name="search"
-          onChange={onSearchChange}
-          placeholder="Search"
-          ref={searchRef}
+          id="artist-search"
+          name="artist"
+          onChange={onArtistChange}
+          placeholder="Search artist"
+          ref={artistSearchRef}
           type="text"
-          value={searchText}
+          value={artistSearch}
+        />
+        <input
+          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm sm:ml-4 mt-2 sm:mt-0 border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
+          id="title-search"
+          name="title"
+          onChange={onTitleChange}
+          placeholder="Search title"
+          ref={titleSearchRef}
+          type="text"
+          value={titleSearch}
         />
         <div className="block mt-2 sm:flex sm:mt-0 sm:ml-4">
           <Button onClick={onClear}>Clear</Button>

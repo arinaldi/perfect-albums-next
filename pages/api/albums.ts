@@ -18,20 +18,26 @@ function parseQuery(query: string | string[]): string {
 
 async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
   return new Promise((resolve, reject) => {
-    let { direction, page, per_page: perPage, search, sort } = queries;
+    let { artist, direction, page, per_page: perPage, title, sort } = queries;
+    artist = parseQuery(artist);
     direction = parseQuery(direction) || 'asc';
     page = parseQuery(page);
     perPage = parseQuery(perPage);
     sort = parseQuery(sort);
-    const searchTerm = parseQuery(search);
-    const regex = new RegExp(searchTerm, 'i');
+    title = parseQuery(title);
+    const artistRegex = new RegExp(artist, 'i');
+    const titleRegex = new RegExp(title, 'i');
     const pageNumber = Math.abs(parseInt(page)) - 1;
     const limit = Math.abs(parseInt(perPage)) || 25;
 
     const query = Album.find({});
 
-    if (searchTerm) {
-      query.or([{ artist: regex }, { title: regex }]);
+    if (artist) {
+      query.find({ artist: artistRegex });
+    }
+
+    if (title) {
+      query.find({ title: titleRegex });
     }
 
     const sortParams = sort

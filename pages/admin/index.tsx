@@ -21,11 +21,12 @@ const AdminPage: FC = () => {
       router.replace({
         pathname: ROUTES_ADMIN.base.href,
         query: {
-          direction: SORT_DIRECTION.NONE,
           page: 1,
           perPage: PER_PAGE.SMALL,
-          search: '',
+          artist: '',
+          title: '',
           sort: SORT_VALUE.NONE,
+          direction: SORT_DIRECTION.NONE,
         },
       });
     }
