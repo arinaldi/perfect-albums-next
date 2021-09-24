@@ -65,8 +65,8 @@ export default function useAdminState(): Payload {
   const title = parseQuery(router.query.title);
   const sort = parseSortQuery(router.query.sort);
   const direction = parseDirectionQuery(router.query.direction);
-  const [artistSearch, setArtistSearch] = useState('');
-  const [titleSearch, setTitleSearch] = useState('');
+  const [artistSearch, setArtistSearch] = useState(artist);
+  const [titleSearch, setTitleSearch] = useState(title);
   const debouncedArtist = useDebounce(artistSearch);
   const debouncedTitle = useDebounce(titleSearch);
   const artistSearchRef = useRef<HTMLInputElement | null>(null);
