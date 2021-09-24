@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   RefObject,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -82,6 +83,19 @@ export default function useAdminState(): Payload {
   const isFirstPage = page === 1;
   const isLastPage = page === Math.ceil(total / perPage);
 
+  const updateQueryParams = useCallback(
+    (query: Record<string, string>) => {
+      router.replace({
+        pathname: ROUTES_ADMIN.base.href,
+        query: {
+          ...router.query,
+          ...query,
+        },
+      });
+    },
+    [router],
+  );
+
   useEffect(() => {
     if (!artist || !title) {
       const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=`;
@@ -93,17 +107,25 @@ export default function useAdminState(): Payload {
     artistSearchRef?.current?.focus();
   }, []);
 
-  const handlers = useMemo(() => {
-    function updateQueryParams(query: Record<string, string>): void {
-      router.replace({
-        pathname: ROUTES_ADMIN.base.href,
-        query: {
-          ...router.query,
-          ...query,
-        },
-      });
-    }
+  useEffect(() => {
+    const shouldUpdate =
+      artistSearch === debouncedArtist && artist !== debouncedArtist;
 
+    if (shouldUpdate) {
+      updateQueryParams({ artist: debouncedArtist, page: '1' });
+    }
+  }, [artist, artistSearch, debouncedArtist, updateQueryParams]);
+
+  useEffect(() => {
+    const shouldUpdate =
+      titleSearch === debouncedTitle && title !== debouncedTitle;
+
+    if (shouldUpdate) {
+      updateQueryParams({ page: '1', title: debouncedTitle });
+    }
+  }, [debouncedTitle, updateQueryParams, title, titleSearch]);
+
+  const handlers = useMemo(() => {
     return {
       onPrevious: () => {
         const newPage = page - 2;
@@ -142,7 +164,6 @@ export default function useAdminState(): Payload {
         const { value } = event.target;
 
         setArtistSearch(value);
-        updateQueryParams({ page: '1', artist: value });
       },
       onClear: () => {
         artistSearchRef?.current?.focus();
@@ -165,7 +186,6 @@ export default function useAdminState(): Payload {
         const { value } = event.target;
 
         setTitleSearch(value);
-        updateQueryParams({ page: '1', title: value });
       },
     };
   }, [
@@ -175,9 +195,9 @@ export default function useAdminState(): Payload {
     page,
     perPage,
     prefetch,
-    router,
     sort,
     total,
+    updateQueryParams,
   ]);
 
   return {
