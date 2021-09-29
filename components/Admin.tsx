@@ -192,7 +192,7 @@ const Admin: FC = () => {
                           </td>
                           <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
                             {album.studio ? (
-                              <span className="mr-3">💿</span>
+                              <span className="mr-2">💿</span>
                             ) : null}
                             {album.title}
                           </td>
