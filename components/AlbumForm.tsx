@@ -80,6 +80,12 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
               onChange={onChange}
               value={values.favorite}
             />
+            <RadioFieldset
+              id="studio"
+              label="Studio Album"
+              onChange={onChange}
+              value={values.studio}
+            />
           </div>
         </div>
       </div>

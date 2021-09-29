@@ -191,6 +191,9 @@ const Admin: FC = () => {
                             {album.artist}
                           </td>
                           <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
+                            {album.studio ? (
+                              <span className="mr-3">💿</span>
+                            ) : null}
                             {album.title}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">

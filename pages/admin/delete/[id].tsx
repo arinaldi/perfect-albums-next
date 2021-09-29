@@ -11,6 +11,7 @@ import { getTitle } from 'utils';
 import api from 'utils/api';
 import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
+import useAdminState from 'hooks/useAdminState';
 import useSubmit from 'hooks/useSubmit';
 import DeleteAlbum from 'components/DeleteAlbum';
 
@@ -20,8 +21,10 @@ interface Props {
 
 const DeleteAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
+  const { mutate } = useAdminState();
   const options = {
     callbacks: [
+      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,

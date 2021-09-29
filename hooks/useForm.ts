@@ -22,7 +22,7 @@ export default function useForm<T>(initialState: T): Payload {
       newValue = value.replace(/\D/, '');
     }
 
-    if (['aotd', 'cd', 'favorite'].includes(name)) {
+    if (['aotd', 'cd', 'favorite', 'studio'].includes(name)) {
       newValue = value === 'true';
     }
 

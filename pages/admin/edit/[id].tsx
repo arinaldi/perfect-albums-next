@@ -11,6 +11,7 @@ import { getTitle } from 'utils';
 import api from 'utils/api';
 import { Album as AlbumType, AlbumInput } from 'utils/types';
 import Album from 'models/Album';
+import useAdminState from 'hooks/useAdminState';
 import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import EditAlbum from 'components/EditAlbum';
@@ -28,9 +29,12 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
     cd: album.cd,
     aotd: album.aotd,
     favorite: album.favorite,
+    studio: album.studio,
   });
+  const { mutate } = useAdminState();
   const options = {
     callbacks: [
+      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,

@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
+import useAdminState from 'hooks/useAdminState';
 import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
@@ -19,9 +20,12 @@ const CreateAlbumPage: FC = () => {
     cd: false,
     aotd: false,
     favorite: false,
+    studio: false,
   });
+  const { mutate } = useAdminState();
   const options = {
     callbacks: [
+      mutate,
       () =>
         router.push({
           pathname: ROUTES_ADMIN.base.href,

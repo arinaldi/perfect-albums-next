@@ -26,6 +26,10 @@ const AlbumSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    studio: {
+      type: Boolean,
+      required: true,
+    },
   },
   { timestamps: true },
 );

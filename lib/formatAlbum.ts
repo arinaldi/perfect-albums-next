@@ -1,16 +1,8 @@
 import { Album as AlbumType, AlbumData } from 'utils/types';
 
 export default function formatAlbum(data: AlbumData): AlbumType {
-  const {
-    _id,
-    aotd,
-    artist,
-    cd,
-    favorite,
-    title,
-    updatedAt,
-    year,
-  } = data.toObject();
+  const { _id, aotd, artist, cd, favorite, studio, title, updatedAt, year } =
+    data.toObject();
 
   return {
     aotd,
@@ -18,6 +10,7 @@ export default function formatAlbum(data: AlbumData): AlbumType {
     cd,
     favorite,
     id: _id.toString(),
+    studio,
     title,
     updatedAt: updatedAt ? updatedAt.toISOString() : '',
     year,
