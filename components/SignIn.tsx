@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -16,6 +16,7 @@ const SignIn: FC = () => {
     email: '',
     password: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const options = {
     callbacks: [() => router.push('/new-releases')],
@@ -45,7 +46,7 @@ const SignIn: FC = () => {
                   id="password"
                   onChange={handleChange}
                   required
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={values.password}
                 />
               </div>
@@ -53,7 +54,18 @@ const SignIn: FC = () => {
           </div>
         </div>
         <div className="flex items-center justify-end">
-          <SubmitButton isSubmitting={isSubmitting} />
+          <button
+            className="text-gray-500 background-transparent font-bold uppercase px-6 py-3 rounded text-sm outline-none focus:outline-none mr-1 mb-1 hover:bg-gray-200"
+            onClick={() => setShowPassword((show) => !show)}
+            type="button"
+          >
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            label="Submit"
+            loadingLabel="Submitting..."
+          />
         </div>
       </form>
     </Layout>
