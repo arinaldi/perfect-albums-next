@@ -35,11 +35,15 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
   const options = {
     callbacks: [
       mutate,
-      () =>
+      () => {
+        const query = { ...router.query };
+        delete query.id;
+
         router.push({
           pathname: ROUTES_ADMIN.base.href,
-          query: router.query,
-        }),
+          query,
+        });
+      },
     ],
     submitFn: async () => {
       await api(`/api/albums/${album.id}`, {
