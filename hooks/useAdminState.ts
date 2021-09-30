@@ -30,13 +30,13 @@ import usePrefetch from 'hooks/usePrefetch';
 interface Handlers {
   onArtistChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
+  onFilter: () => void;
   onFirst: () => void;
   onLast: () => void;
   onNext: () => void;
   onPerPageChange: (value: number) => void;
   onPrevious: () => void;
   onSort: (value: SORT_VALUE) => void;
-  onStudio: () => void;
   onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -102,10 +102,10 @@ export default function useAdminState(): Payload {
 
   useEffect(() => {
     if (!artist || !title) {
-      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=&studio=`;
+      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=&studio=${studio}`;
       prefetch(nextUrl);
     }
-  }, [artist, prefetch, title]);
+  }, [artist, prefetch, studio, title]);
 
   useEffect(() => {
     artistSearchRef?.current?.focus();
@@ -184,7 +184,7 @@ export default function useAdminState(): Payload {
 
         updateQueryParams({ page: '1', sort: value, direction: newDirection });
       },
-      onStudio: () => {
+      onFilter: () => {
         updateQueryParams({ studio: studio === 'true' ? '' : 'true' });
       },
       onClear: () => {

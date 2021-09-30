@@ -1,15 +1,14 @@
 import { FC } from 'react';
 
 import { PER_PAGE } from 'constants/index';
-
-interface Props {
-  onPerPageChange: (value: PER_PAGE) => void;
-  perPage: PER_PAGE;
-}
+import useAdminState from 'hooks/useAdminState';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 
-const PerPage: FC<Props> = ({ onPerPageChange, perPage }) => {
+const PerPage: FC = () => {
+  const { handlers, perPage } = useAdminState();
+  const { onPerPageChange } = handlers;
+
   return (
     <nav
       className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"

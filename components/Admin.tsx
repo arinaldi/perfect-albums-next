@@ -25,29 +25,13 @@ const Admin: FC = () => {
     cdTotal,
     direction,
     handlers,
-    isFirstPage,
-    isLastPage,
     isLoading,
-    page,
-    perPage,
     sort,
-    studio,
     titleSearch,
     titleSearchRef,
     total,
   } = useAdminState();
-  const {
-    onArtistChange,
-    onClear,
-    onFirst,
-    onLast,
-    onNext,
-    onPerPageChange,
-    onPrevious,
-    onSort,
-    onStudio,
-    onTitleChange,
-  } = handlers;
+  const { onArtistChange, onClear, onSort, onTitleChange } = handlers;
 
   function handleRouteChange(pathname: string) {
     router.push({
@@ -107,26 +91,18 @@ const Admin: FC = () => {
             </Button>
           </div>
           <div className="inline sm:hidden">
-            <StudioFilter onStudio={onStudio} studio={studio} />
+            <StudioFilter />
           </div>
         </div>
       </div>
 
       <div className="flex justify-center mb-4">
-        <Pagination
-          currentPage={page}
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-          onFirst={onFirst}
-          onLast={onLast}
-          onNext={onNext}
-          onPrevious={onPrevious}
-        />
+        <Pagination />
         <div className="mx-2" />
-        <PerPage onPerPageChange={onPerPageChange} perPage={perPage} />
+        <PerPage />
         <div className="mx-2" />
         <div className="hidden sm:block">
-          <StudioFilter onStudio={onStudio} studio={studio} />
+          <StudioFilter />
         </div>
       </div>
 
