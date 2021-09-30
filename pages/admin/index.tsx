@@ -27,6 +27,7 @@ const AdminPage: FC = () => {
           title: '',
           sort: SORT_VALUE.NONE,
           direction: SORT_DIRECTION.NONE,
+          studio: '',
         },
       });
     }

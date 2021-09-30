@@ -36,6 +36,7 @@ interface Handlers {
   onPerPageChange: (value: number) => void;
   onPrevious: () => void;
   onSort: (value: SORT_VALUE) => void;
+  onStudio: () => void;
   onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -53,6 +54,7 @@ interface Payload {
   page: number;
   perPage: PER_PAGE;
   sort: SORT_VALUE;
+  studio: string;
   titleSearch: string;
   titleSearchRef: RefObject<HTMLInputElement>;
   total: number;
@@ -67,13 +69,14 @@ export default function useAdminState(): Payload {
   const title = parseQuery(router.query.title);
   const sort = parseSortQuery(router.query.sort);
   const direction = parseDirectionQuery(router.query.direction);
+  const studio = parseQuery(router.query.studio);
   const [artistSearch, setArtistSearch] = useState(artist);
   const [titleSearch, setTitleSearch] = useState(title);
   const debouncedArtist = useDebounce(artistSearch);
   const debouncedTitle = useDebounce(titleSearch);
   const artistSearchRef = useRef<HTMLInputElement | null>(null);
   const titleSearchRef = useRef<HTMLInputElement | null>(null);
-  const url = `/api/albums?page=${page}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
+  const url = `/api/albums?page=${page}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}&studio=${studio}`;
   const preventFetch =
     (!debouncedArtist && Boolean(artistSearch)) ||
     (!debouncedTitle && Boolean(titleSearch));
@@ -99,7 +102,7 @@ export default function useAdminState(): Payload {
 
   useEffect(() => {
     if (!artist || !title) {
-      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=`;
+      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=&studio=`;
       prefetch(nextUrl);
     }
   }, [artist, prefetch, title]);
@@ -130,7 +133,7 @@ export default function useAdminState(): Payload {
     return {
       onPrevious: () => {
         const newPage = page - 2;
-        const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
+        const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}&studio=${studio}`;
 
         if (newPage !== 0) prefetch(previousUrl);
 
@@ -140,7 +143,7 @@ export default function useAdminState(): Payload {
       onNext: () => {
         const nextUrl = `/api/albums?page=${
           page + 2
-        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
+        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}&studio=${studio}`;
         prefetch(nextUrl);
 
         const nextPage = page + 1;
@@ -153,7 +156,7 @@ export default function useAdminState(): Payload {
         const lastPage = Math.ceil(total / perPage);
         const prevUrl = `/api/albums?page=${
           lastPage - 1
-        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
+        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}&studio=${studio}`;
         prefetch(prevUrl);
 
         updateQueryParams({ page: lastPage.toString() });
@@ -166,12 +169,10 @@ export default function useAdminState(): Payload {
 
         setArtistSearch(value);
       },
-      onClear: () => {
-        artistSearchRef?.current?.focus();
+      onTitleChange: (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
 
-        setArtistSearch('');
-        setTitleSearch('');
-        updateQueryParams({ artist: '', page: '1', title: '' });
+        setTitleSearch(value);
       },
       onSort: (value: SORT_VALUE) => {
         const { ASC, DESC } = SORT_DIRECTION;
@@ -183,10 +184,15 @@ export default function useAdminState(): Payload {
 
         updateQueryParams({ page: '1', sort: value, direction: newDirection });
       },
-      onTitleChange: (event: ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
+      onStudio: () => {
+        updateQueryParams({ studio: studio === 'true' ? '' : 'true' });
+      },
+      onClear: () => {
+        artistSearchRef?.current?.focus();
 
-        setTitleSearch(value);
+        setArtistSearch('');
+        setTitleSearch('');
+        updateQueryParams({ artist: '', page: '1', title: '' });
       },
     };
   }, [
@@ -197,6 +203,7 @@ export default function useAdminState(): Payload {
     perPage,
     prefetch,
     sort,
+    studio,
     total,
     updateQueryParams,
   ]);
@@ -214,6 +221,7 @@ export default function useAdminState(): Payload {
     mutate,
     page,
     perPage,
+    studio,
     titleSearch,
     titleSearchRef,
     sort,

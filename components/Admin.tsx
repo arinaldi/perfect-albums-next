@@ -7,6 +7,7 @@ import useAdminState from 'hooks/useAdminState';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
+import StudioFilter from 'components/StudioFilter';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
@@ -30,6 +31,7 @@ const Admin: FC = () => {
     page,
     perPage,
     sort,
+    studio,
     titleSearch,
     titleSearchRef,
     total,
@@ -43,6 +45,7 @@ const Admin: FC = () => {
     onPerPageChange,
     onPrevious,
     onSort,
+    onStudio,
     onTitleChange,
   } = handlers;
 
@@ -95,12 +98,17 @@ const Admin: FC = () => {
           type="text"
           value={titleSearch}
         />
-        <div className="block mt-2 sm:flex sm:mt-0 sm:ml-4">
-          <Button onClick={onClear}>Clear</Button>
-          <span className="ml-1" />
-          <Button onClick={() => handleRouteChange(ROUTES_ADMIN.create.href)}>
-            New
-          </Button>
+        <div className="flex justify-between mt-2 sm:mt-0 sm:ml-4">
+          <div className="flex">
+            <Button onClick={onClear}>Clear</Button>
+            <span className="ml-1" />
+            <Button onClick={() => handleRouteChange(ROUTES_ADMIN.create.href)}>
+              New
+            </Button>
+          </div>
+          <div className="inline sm:hidden">
+            <StudioFilter onStudio={onStudio} studio={studio} />
+          </div>
         </div>
       </div>
 
@@ -116,6 +124,10 @@ const Admin: FC = () => {
         />
         <div className="mx-2" />
         <PerPage onPerPageChange={onPerPageChange} perPage={perPage} />
+        <div className="mx-2" />
+        <div className="hidden sm:block">
+          <StudioFilter onStudio={onStudio} studio={studio} />
+        </div>
       </div>
 
       {albums.length === 0 && !isLoading ? (
