@@ -111,24 +111,6 @@ export default function useAdminState(): Payload {
     artistSearchRef?.current?.focus();
   }, []);
 
-  useEffect(() => {
-    const shouldUpdate =
-      artistSearch === debouncedArtist && artist !== debouncedArtist;
-
-    if (shouldUpdate) {
-      updateQueryParams({ artist: debouncedArtist, page: '1' });
-    }
-  }, [artist, artistSearch, debouncedArtist, updateQueryParams]);
-
-  useEffect(() => {
-    const shouldUpdate =
-      titleSearch === debouncedTitle && title !== debouncedTitle;
-
-    if (shouldUpdate) {
-      updateQueryParams({ page: '1', title: debouncedTitle });
-    }
-  }, [debouncedTitle, updateQueryParams, title, titleSearch]);
-
   const handlers = useMemo(() => {
     return {
       onPrevious: () => {
@@ -168,11 +150,13 @@ export default function useAdminState(): Payload {
         const { value } = event.target;
 
         setArtistSearch(value);
+        updateQueryParams({ artist: value, page: '1' });
       },
       onTitleChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
 
         setTitleSearch(value);
+        updateQueryParams({ title: value, page: '1' });
       },
       onSort: (value: SORT_VALUE) => {
         const { ASC, DESC } = SORT_DIRECTION;
