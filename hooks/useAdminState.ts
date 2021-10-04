@@ -89,13 +89,17 @@ export default function useAdminState(): Payload {
 
   const updateQueryParams = useCallback(
     (query: Record<string, string>) => {
-      router.replace({
-        pathname: ROUTES_ADMIN.base.href,
-        query: {
-          ...router.query,
-          ...query,
+      router.replace(
+        {
+          pathname: ROUTES_ADMIN.base.href,
+          query: {
+            ...router.query,
+            ...query,
+          },
         },
-      });
+        undefined,
+        { shallow: true },
+      );
     },
     [router],
   );

@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { AppProps } from 'next/app';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 
 import { AuthProvider } from 'hooks/useAuth';
@@ -9,11 +9,35 @@ import PageWrapper from 'components/PageWrapper';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
 
-router.events.on('routeChangeStart', () => nProgress.start());
-router.events.on('routeChangeComplete', () => nProgress.done());
-router.events.on('routeChangeError', () => nProgress.done());
+interface Options {
+  shallow: boolean;
+}
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+  const router = useRouter();
+
+  function onStart(_: string, { shallow }: Options) {
+    if (!shallow) {
+      nProgress.start();
+    }
+  }
+
+  function onDone() {
+    nProgress.done();
+  }
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', onStart);
+    router.events.on('routeChangeComplete', onDone);
+    router.events.on('routeChangeError', onDone);
+
+    return () => {
+      router.events.off('routeChangeStart', onStart);
+      router.events.off('routeChangeComplete', onDone);
+      router.events.off('routeChangeError', onDone);
+    };
+  }, [router]);
+
   return (
     <AuthProvider>
       <SWRProvider>
