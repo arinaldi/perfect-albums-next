@@ -39,7 +39,7 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
-  const { handleSubmit, isSubmitting } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <>
@@ -49,7 +49,7 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
       <DeleteAlbum
         album={album}
         isSubmitting={isSubmitting}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       />
     </>
   );

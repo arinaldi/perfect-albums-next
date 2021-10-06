@@ -1,30 +1,30 @@
 import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
+import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { MESSAGES } from 'constants/index';
 import { Callback } from 'utils/types';
 
 export interface Options {
   callbacks: Callback[];
-  submitFn: () => Promise<void>;
+  handleSubmit?: UseFormHandleSubmit<any>;
+  submitFn: (data?: any) => Promise<void>;
   successMessage?: string;
 }
 
 interface Payload {
-  handleSubmit: (event: FormEvent) => Promise<void>;
   isSubmitting: boolean;
+  onSubmit: (event: FormEvent) => Promise<void>;
 }
 
 export default function useSubmit(options: Options): Payload {
-  const { callbacks, submitFn, successMessage } = options;
+  const { callbacks, handleSubmit, submitFn, successMessage } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
+  async function handler(data?: any) {
     try {
       setIsSubmitting(true);
-      await submitFn();
+      await submitFn(data);
       setIsSubmitting(false);
       callbacks.forEach((callback: Callback) => {
         callback();
@@ -41,7 +41,15 @@ export default function useSubmit(options: Options): Payload {
 
       toast.error(MESSAGES.ERROR);
     }
-  };
+  }
 
-  return { handleSubmit, isSubmitting };
+  async function formSubmit(event: FormEvent) {
+    event.preventDefault();
+    await handler();
+  }
+
+  return {
+    isSubmitting,
+    onSubmit: handleSubmit ? handleSubmit(handler) : formSubmit,
+  };
 }

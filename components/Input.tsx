@@ -1,14 +1,14 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
+import { RefCallBack } from 'react-hook-form';
 
 interface Props {
   id: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  inputRef: RefCallBack;
   required?: boolean;
   type: 'text' | 'date' | 'email' | 'password';
-  value: string;
 }
 
-const Input: FC<Props> = ({ id, onChange, required, type, value }) => {
+const Input: FC<Props> = ({ id, inputRef, required, type, ...rest }) => {
   return (
     <>
       <label
@@ -23,10 +23,10 @@ const Input: FC<Props> = ({ id, onChange, required, type, value }) => {
         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
         id={id}
         name={id}
-        onChange={onChange}
+        ref={(e) => inputRef(e)}
         required={required}
         type={type}
-        value={value}
+        {...rest}
       />
     </>
   );

@@ -1,28 +1,26 @@
 import { FC } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import useAdminState from 'hooks/useAdminState';
-import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
 import api from 'utils/api';
 import { AlbumInput } from 'utils/types';
-import CreateAlbum from 'components/CreateAlbum';
+import Layout from 'components/Layout';
+import AlbumForm from 'components/AlbumForm';
 
 const CreateAlbumPage: FC = () => {
   const router = useRouter();
-  const { values, handleChange } = useForm<AlbumInput>({
-    artist: '',
-    title: '',
-    year: new Date().getFullYear().toString(),
-    cd: false,
-    aotd: false,
-    favorite: false,
-    studio: false,
+  const { handleSubmit, register } = useForm<AlbumInput>({
+    defaultValues: {
+      year: new Date().getFullYear().toString(),
+    },
   });
   const { mutate } = useAdminState();
+
   const options = {
     callbacks: [
       mutate,
@@ -32,24 +30,26 @@ const CreateAlbumPage: FC = () => {
           query: router.query,
         }),
     ],
-    submitFn: async () => {
-      await api('/api/albums', { body: values, method: METHODS.POST });
+    handleSubmit,
+    submitFn: async (data: AlbumInput) => {
+      await api('/api/albums', { body: data, method: METHODS.POST });
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
-  const { handleSubmit, isSubmitting } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <>
       <Head>
         <title>{getTitle('Create Album')}</title>
       </Head>
-      <CreateAlbum
-        isSubmitting={isSubmitting}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        values={values as AlbumInput}
-      />
+      <Layout title="Create Album">
+        <AlbumForm
+          isSubmitting={isSubmitting}
+          register={register}
+          onSubmit={onSubmit}
+        />
+      </Layout>
     </>
   );
 };

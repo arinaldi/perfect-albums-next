@@ -1,22 +1,33 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { FC, FormEvent } from 'react';
 import { useRouter } from 'next/router';
+import { UseFormRegister } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'constants/index';
 import { AlbumInput } from 'utils/types';
 import Input from 'components/Input';
-import RadioFieldset from 'components/RadioFieldset';
+import Checkbox from 'components/Checkbox';
 import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   isSubmitting: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<AlbumInput>;
   onSubmit: (event: FormEvent<Element>) => void;
-  values: AlbumInput;
 }
 
-const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
+const AlbumForm: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
   const router = useRouter();
+  const { ref: artistRef, ...artistRest } = register('artist', {
+    required: true,
+  });
+  const { ref: titleRef, ...titleRest } = register('title', {
+    required: true,
+  });
+  const { ref: yearRef, ...yearRest } = register('year', { required: true });
+  const { ref: cdRef, ...cdRest } = register('cd');
+  const { ref: aotdRef, ...aotdRest } = register('aotd');
+  const { ref: favoriteRef, ...favoriteRest } = register('favorite');
+  const { ref: studioRef, ...studioRest } = register('studio');
 
   function handleCancel() {
     const query = { ...router.query };
@@ -36,55 +47,50 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onChange, onSubmit, values }) => {
             <div className="mb-4">
               <Input
                 id="artist"
-                onChange={onChange}
+                inputRef={artistRef}
                 required
                 type="text"
-                value={values.artist}
+                {...artistRest}
               />
             </div>
             <div className="mb-4">
               <Input
                 id="title"
-                onChange={onChange}
+                inputRef={titleRef}
                 required
                 type="text"
-                value={values.title}
+                {...titleRest}
               />
             </div>
             <div className="mb-4">
               <Input
                 id="year"
-                onChange={onChange}
+                inputRef={yearRef}
                 required
                 type="text"
-                value={values.year}
+                {...yearRest}
               />
             </div>
           </div>
           <div className="col-span-6 sm:col-span-2">
-            <RadioFieldset
-              id="cd"
-              label="CD"
-              onChange={onChange}
-              value={values.cd}
-            />
-            <RadioFieldset
+            <Checkbox id="cd" inputRef={cdRef} label="CD" {...cdRest} />
+            <Checkbox
               id="aotd"
+              inputRef={aotdRef}
               label="Album of the Day"
-              onChange={onChange}
-              value={values.aotd}
+              {...aotdRest}
             />
-            <RadioFieldset
+            <Checkbox
               id="favorite"
+              inputRef={favoriteRef}
               label="Favorite"
-              onChange={onChange}
-              value={values.favorite}
+              {...favoriteRest}
             />
-            <RadioFieldset
+            <Checkbox
               id="studio"
+              inputRef={studioRef}
               label="Studio Album"
-              onChange={onChange}
-              value={values.studio}
+              {...studioRest}
             />
           </div>
         </div>

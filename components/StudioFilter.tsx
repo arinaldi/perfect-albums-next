@@ -25,7 +25,7 @@ const StudioFilter: FC = () => {
         onClick={onFilter}
       >
         <span className="sr-only">On</span>
-        On
+        On*
       </button>
     </nav>
   );

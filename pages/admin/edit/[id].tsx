@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { GetServerSideProps, NextApiRequest } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
@@ -12,9 +13,9 @@ import api from 'utils/api';
 import { Album as AlbumType, AlbumInput } from 'utils/types';
 import Album from 'models/Album';
 import useAdminState from 'hooks/useAdminState';
-import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
-import EditAlbum from 'components/EditAlbum';
+import Layout from 'components/Layout';
+import AlbumForm from 'components/AlbumForm';
 
 interface Props {
   album: AlbumType;
@@ -22,16 +23,19 @@ interface Props {
 
 const EditAlbumPage: FC<Props> = ({ album }) => {
   const router = useRouter();
-  const { values, handleChange } = useForm<AlbumInput>({
-    artist: album.artist,
-    title: album.title,
-    year: album.year,
-    cd: album.cd,
-    aotd: album.aotd,
-    favorite: album.favorite,
-    studio: album.studio,
+  const { handleSubmit, register } = useForm<AlbumInput>({
+    defaultValues: {
+      artist: album.artist,
+      title: album.title,
+      year: album.year,
+      cd: album.cd,
+      aotd: album.aotd,
+      favorite: album.favorite,
+      studio: album.studio,
+    },
   });
   const { mutate } = useAdminState();
+
   const options = {
     callbacks: [
       mutate,
@@ -45,27 +49,29 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
         });
       },
     ],
-    submitFn: async () => {
+    handleSubmit,
+    submitFn: async (data: AlbumInput) => {
       await api(`/api/albums/${album.id}`, {
-        body: values,
+        body: data,
         method: METHODS.PUT,
       });
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
-  const { handleSubmit, isSubmitting } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <>
       <Head>
         <title>{getTitle('Edit Album')}</title>
       </Head>
-      <EditAlbum
-        isSubmitting={isSubmitting}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        values={values as AlbumInput}
-      />
+      <Layout title="Edit Album">
+        <AlbumForm
+          isSubmitting={isSubmitting}
+          register={register}
+          onSubmit={onSubmit}
+        />
+      </Layout>
     </>
   );
 };

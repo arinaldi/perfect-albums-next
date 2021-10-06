@@ -1,20 +1,25 @@
-import { FC, Fragment } from 'react';
+import { FC, FormEvent, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import useSubmit, { Options } from 'hooks/useSubmit';
 import useStore from 'hooks/useStore';
 import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
+  isSubmitting: boolean;
   onClose: () => void;
-  options: Options;
+  onSubmit: (event: FormEvent<Element>) => void;
   title: string;
 }
 
-const Modal: FC<Props> = ({ children, onClose, options, title }) => {
+const Modal: FC<Props> = ({
+  children,
+  isSubmitting,
+  onClose,
+  onSubmit,
+  title,
+}) => {
   const isOpen = useStore((state) => state.isOpen);
-  const { handleSubmit, isSubmitting } = useSubmit(options);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -54,7 +59,7 @@ const Modal: FC<Props> = ({ children, onClose, options, title }) => {
               >
                 {title}
               </Dialog.Title>
-              <form method="POST" onSubmit={handleSubmit}>
+              <form method="POST" onSubmit={onSubmit}>
                 {children}
                 <div className="flex items-center justify-end p-6 pt-0">
                   <CancelButton onClick={onClose} />
