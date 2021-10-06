@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useForm } from 'react-hook-form';
 
-import useForm from 'hooks/useForm';
 import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
@@ -12,42 +12,44 @@ import SubmitButton from 'components/SubmitButton';
 const SignIn: FC = () => {
   const router = useRouter();
   const auth = getAuth();
-  const { values, handleChange, resetForm } = useForm<SignInInput>({
-    email: '',
-    password: '',
-  });
+  const { handleSubmit, register } = useForm<SignInInput>();
   const [showPassword, setShowPassword] = useState(false);
+  const { ref: emailRef, ...emailRest } = register('email', { required: true });
+  const { ref: passwordRef, ...passwordRest } = register('password', {
+    required: true,
+  });
 
   const options = {
     callbacks: [() => router.push('/new-releases')],
-    submitFn: async () => {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+    handleSubmit,
+    submitFn: async (data: SignInInput) => {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
     },
   };
-  const { handleSubmit, isSubmitting } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <Layout maxWidth="max-w-sm" title="Sign In">
-      <form method="POST" onSubmit={handleSubmit}>
+      <form method="POST" onSubmit={onSubmit}>
         <div className="bg-white dark:bg-gray-800">
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6">
               <div className="mb-4">
                 <Input
                   id="email"
-                  onChange={handleChange}
+                  inputRef={emailRef}
                   required
                   type="email"
-                  value={values.email}
+                  {...emailRest}
                 />
               </div>
               <div className="mb-4">
                 <Input
                   id="password"
-                  onChange={handleChange}
+                  inputRef={passwordRef}
                   required
                   type={showPassword ? 'text' : 'password'}
-                  value={values.password}
+                  {...passwordRest}
                 />
               </div>
             </div>
