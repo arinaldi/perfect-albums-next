@@ -105,13 +105,6 @@ export default function useAdminState(): Payload {
   );
 
   useEffect(() => {
-    if (!artist || !title) {
-      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=&studio=${studio}`;
-      prefetch(nextUrl);
-    }
-  }, [artist, prefetch, studio, title]);
-
-  useEffect(() => {
     artistSearchRef?.current?.focus();
   }, []);
 
