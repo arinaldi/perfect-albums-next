@@ -5,7 +5,7 @@ interface Props {
 }
 
 const AppMessage: FC<Props> = ({ message = 'Something went wrong' }) => (
-  <div className="mt-8 flex justify-center min-h-screen">
+  <div className="mt-8 flex justify-center">
     <div
       className="px-6 py-4 bg-red-200 border-l-4 border-red-700 rounded-sm"
       style={{ height: 'fit-content' }}

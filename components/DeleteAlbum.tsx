@@ -26,7 +26,7 @@ const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
   }
 
   return (
-    <div className="min-h-screen max-w-7xl mx-auto p-4 dark:bg-gray-800">
+    <div className="max-w-7xl mx-auto p-4 dark:bg-gray-800">
       <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
         Delete Album
       </h1>

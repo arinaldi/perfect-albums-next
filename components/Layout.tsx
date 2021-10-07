@@ -8,7 +8,7 @@ interface Props {
 
 const Layout: FC<Props> = ({ children, maxWidth, title, titleAction }) => {
   return (
-    <div className={`min-h-screen mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
+    <div className={`mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
           {title}

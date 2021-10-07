@@ -173,7 +173,7 @@ const Admin: FC = () => {
                       {albums.map((album) => (
                         <tr
                           key={album.id}
-                          className="odd:bg-gray-50 dark:odd:bg-gray-400"
+                          className="odd:bg-gray-100 even:bg-gray-0 dark:odd:bg-gray-700 dark:even:bg-gray-800"
                         >
                           <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
                             {album.artist}
