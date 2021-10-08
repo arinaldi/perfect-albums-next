@@ -36,6 +36,11 @@ export enum MODAL_TYPES {
   NEW_RELEASE_DELETE = 'Delete New Release',
 }
 
+export enum APP_MESSAGE_TYPES {
+  ERROR = 'error',
+  INFO = 'info',
+}
+
 export enum METHODS {
   GET = 'GET',
   POST = 'POST',

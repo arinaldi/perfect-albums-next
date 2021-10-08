@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
+import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import { getSortIcon } from 'utils';
 import useAdminState from 'hooks/useAdminState';
 import Layout from 'components/Layout';
@@ -107,7 +107,7 @@ const Admin: FC = () => {
       </div>
 
       {albums.length === 0 && !isLoading ? (
-        <AppMessage message="No results found" />
+        <AppMessage message="No results found" type={APP_MESSAGE_TYPES.INFO} />
       ) : (
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
