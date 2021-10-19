@@ -17,17 +17,6 @@ interface Props {
 
 const AlbumForm: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
   const router = useRouter();
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: yearRef, ...yearRest } = register('year', { required: true });
-  const { ref: cdRef, ...cdRest } = register('cd');
-  const { ref: aotdRef, ...aotdRest } = register('aotd');
-  const { ref: favoriteRef, ...favoriteRest } = register('favorite');
-  const { ref: studioRef, ...studioRest } = register('studio');
 
   function handleCancel() {
     const query = { ...router.query };
@@ -47,50 +36,44 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
             <div className="mb-4">
               <Input
                 id="artist"
-                inputRef={artistRef}
                 required
                 type="text"
-                {...artistRest}
+                {...register('artist', { required: true })}
               />
             </div>
             <div className="mb-4">
               <Input
                 id="title"
-                inputRef={titleRef}
                 required
                 type="text"
-                {...titleRest}
+                {...register('title', { required: true })}
               />
             </div>
             <div className="mb-4">
               <Input
                 id="year"
-                inputRef={yearRef}
                 required
                 type="text"
-                {...yearRest}
+                {...register('year', { required: true })}
               />
             </div>
           </div>
           <div className="col-span-6 sm:col-span-2">
-            <Checkbox id="cd" inputRef={cdRef} label="CD" {...cdRest} />
+            <Checkbox id="cd" label="CD" {...register('cd')} />
             <Checkbox
               id="aotd"
-              inputRef={aotdRef}
               label="Album of the Day"
-              {...aotdRest}
+              {...register('aotd')}
             />
             <Checkbox
               id="favorite"
-              inputRef={favoriteRef}
               label="Favorite"
-              {...favoriteRest}
+              {...register('favorite')}
             />
             <Checkbox
               id="studio"
-              inputRef={studioRef}
               label="Studio Album"
-              {...studioRest}
+              {...register('studio')}
             />
           </div>
         </div>

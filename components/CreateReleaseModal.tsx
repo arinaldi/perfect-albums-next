@@ -15,13 +15,6 @@ const CreateReleaseModal: FC = () => {
   const closeModal = useStore((state) => state.closeModal);
   const { mutate } = useSWR(isOpen ? '/api/releases' : null);
   const { handleSubmit, register, reset } = useForm<ReleaseInput>();
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: dateRef, ...dateRest } = register('date');
 
   function handleClose() {
     closeModal();
@@ -50,23 +43,21 @@ const CreateReleaseModal: FC = () => {
           <div className="col-span-6">
             <Input
               id="artist"
-              inputRef={artistRef}
               required
               type="text"
-              {...artistRest}
+              {...register('artist', { required: true })}
             />
           </div>
           <div className="col-span-6">
             <Input
               id="title"
-              inputRef={titleRef}
               required
               type="text"
-              {...titleRest}
+              {...register('title', { required: true })}
             />
           </div>
           <div className="col-span-6">
-            <Input id="date" inputRef={dateRef} type="date" {...dateRest} />
+            <Input id="date" type="date" {...register('date')} />
           </div>
         </div>
       </div>

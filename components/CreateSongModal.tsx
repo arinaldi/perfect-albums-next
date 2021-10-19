@@ -15,15 +15,6 @@ const CreateSongModal: FC = () => {
   const closeModal = useStore((state) => state.closeModal);
   const { mutate } = useSWR(isOpen ? '/api/songs' : null);
   const { handleSubmit, register, reset } = useForm<SongInput>();
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: linkRef, ...linkRest } = register('link', {
-    required: true,
-  });
 
   function handleClose() {
     closeModal();
@@ -52,28 +43,25 @@ const CreateSongModal: FC = () => {
           <div className="col-span-6">
             <Input
               id="artist"
-              inputRef={artistRef}
               required
               type="text"
-              {...artistRest}
+              {...register('artist', { required: true })}
             />
           </div>
           <div className="col-span-6">
             <Input
               id="title"
-              inputRef={titleRef}
               required
               type="text"
-              {...titleRest}
+              {...register('title', { required: true })}
             />
           </div>
           <div className="col-span-6">
             <Input
               id="link"
-              inputRef={linkRef}
               required
               type="text"
-              {...linkRest}
+              {...register('link', { required: true })}
             />
           </div>
         </div>

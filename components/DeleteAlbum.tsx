@@ -40,7 +40,11 @@ const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
           onSubmit={onSubmit}
         >
           <CancelButton onClick={handleCancel} />
-          <SubmitButton isSubmitting={isSubmitting} />
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            label="Delete"
+            loadingLabel="Deleting..."
+          />
         </form>
       </div>
     </div>

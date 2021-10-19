@@ -14,10 +14,6 @@ const SignIn: FC = () => {
   const auth = getAuth();
   const { handleSubmit, register } = useForm<SignInInput>();
   const [showPassword, setShowPassword] = useState(false);
-  const { ref: emailRef, ...emailRest } = register('email', { required: true });
-  const { ref: passwordRef, ...passwordRest } = register('password', {
-    required: true,
-  });
 
   const options = {
     callbacks: [() => router.push('/new-releases')],
@@ -37,19 +33,17 @@ const SignIn: FC = () => {
               <div className="mb-4">
                 <Input
                   id="email"
-                  inputRef={emailRef}
                   required
                   type="email"
-                  {...emailRest}
+                  {...register('email', { required: true })}
                 />
               </div>
               <div className="mb-4">
                 <Input
                   id="password"
-                  inputRef={passwordRef}
                   required
                   type={showPassword ? 'text' : 'password'}
-                  {...passwordRest}
+                  {...register('password', { required: true })}
                 />
               </div>
             </div>
