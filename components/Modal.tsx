@@ -20,6 +20,7 @@ const Modal: FC<Props> = ({
   title,
 }) => {
   const isOpen = useStore((state) => state.isOpen);
+  const isDeleteModal = title.toLowerCase().includes('delete');
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -63,7 +64,11 @@ const Modal: FC<Props> = ({
                 {children}
                 <div className="flex items-center justify-end p-6 pt-0">
                   <CancelButton onClick={onClose} />
-                  <SubmitButton isSubmitting={isSubmitting} />
+                  <SubmitButton
+                    isSubmitting={isSubmitting}
+                    label={isDeleteModal ? 'Delete' : undefined}
+                    loadingLabel={isDeleteModal ? 'Deleting...' : undefined}
+                  />
                 </div>
               </form>
             </div>
