@@ -1,12 +1,12 @@
-import { ForwardedRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 interface Props {
   id: string;
   label: string;
 }
 
-const Checkbox = forwardRef(
-  ({ id, label, ...rest }: Props, ref: ForwardedRef<any>) => {
+const Checkbox = forwardRef<HTMLInputElement, Props>(
+  ({ id, label, ...rest }, ref) => {
     return (
       <fieldset className="mb-10">
         <div className="mb-2">

@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 interface Props {
   id: string;
@@ -6,8 +6,8 @@ interface Props {
   type: 'text' | 'date' | 'email' | 'password';
 }
 
-const Input = forwardRef(
-  ({ id, required, type, ...rest }: Props, ref: ForwardedRef<any>) => {
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ id, required, type, ...rest }, ref) => {
     return (
       <>
         <label
