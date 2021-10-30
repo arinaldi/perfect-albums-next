@@ -77,8 +77,7 @@ export async function fetcher(url: string): Promise<any> {
   };
 
   if (supabaseSession) {
-    const token = supabaseSession.access_token;
-    headers.authorization = `Bearer ${token}`;
+    headers.authorization = `Bearer ${supabaseSession.access_token}`;
   }
 
   return window.fetch(url, { headers }).then((res) => res.json());
