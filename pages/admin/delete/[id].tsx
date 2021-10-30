@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
-import { loadIdToken } from 'auth/firebaseAdmin';
 import formatAlbum from 'lib/formatAlbum';
 import { getTitle } from 'utils';
 import api from 'utils/api';
@@ -57,19 +56,21 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
 
 export default DeleteAlbumPage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  req,
-}) => {
-  const uid = await loadIdToken(req as NextApiRequest);
-  const payload = {
-    props: { album: {} },
-  };
-
-  if (!uid || !params?.id) return payload;
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  if (!params?.id) {
+    return {
+      redirect: {
+        destination: '/top-albums',
+        permanent: false,
+      },
+    };
+  }
 
   await dbConnect();
   const data = await Album.findById(params.id);
+  const payload = {
+    props: { album: {} },
+  };
 
   if (data) {
     payload.props.album = formatAlbum(data);

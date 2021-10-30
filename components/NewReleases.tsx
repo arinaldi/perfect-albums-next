@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { formatReleases, ListItem, sortByDate } from 'utils';
-import { useAuth } from 'hooks/useAuth';
+import useAuthStore from 'hooks/useAuthStore';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
@@ -22,7 +22,7 @@ const NewReleases: FC<Props> = ({
   onDeleteOpen,
   onEditOpen,
 }) => {
-  const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
 
   const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
 

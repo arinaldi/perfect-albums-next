@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { GetServerSideProps, NextApiRequest } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
-import { loadIdToken } from 'auth/firebaseAdmin';
 import { getTitle } from 'utils';
 import api from 'utils/api';
 import { Album as AlbumType, AlbumInput } from 'utils/types';
@@ -78,19 +77,21 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
 
 export default EditAlbumPage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  req,
-}) => {
-  const uid = await loadIdToken(req as NextApiRequest);
-  const payload = {
-    props: { album: {} },
-  };
-
-  if (!uid || !params?.id) return payload;
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  if (!params?.id) {
+    return {
+      redirect: {
+        destination: '/top-albums',
+        permanent: false,
+      },
+    };
+  }
 
   await dbConnect();
   const data = await Album.findById(params.id);
+  const payload = {
+    props: { album: {} },
+  };
 
   if (data) {
     payload.props.album = formatAlbum(data);

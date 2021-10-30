@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useAuth } from 'hooks/useAuth';
+import useAuthStore from 'hooks/useAuthStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
-  const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
 
   const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
 

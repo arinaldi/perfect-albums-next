@@ -24,7 +24,9 @@ const store = (set: SetState<ModalState>) => ({
 });
 
 const useStore = create<ModalState>(
-  process.env.NODE_ENV === 'development' ? devtools(store) : store,
+  process.env.NODE_ENV === 'development'
+    ? devtools(store, 'Modal store')
+    : store,
 );
 
 export default useStore;

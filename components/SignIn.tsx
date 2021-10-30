@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 
+import useAuthStore from 'hooks/useAuthStore';
 import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
@@ -11,7 +11,7 @@ import SubmitButton from 'components/SubmitButton';
 
 const SignIn: FC = () => {
   const router = useRouter();
-  const auth = getAuth();
+  const signIn = useAuthStore((state) => state.signIn);
   const { handleSubmit, register } = useForm<SignInInput>();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +19,9 @@ const SignIn: FC = () => {
     callbacks: [() => router.push('/new-releases')],
     handleSubmit,
     submitFn: async (data: SignInInput) => {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      const { error } = await signIn(data.email, data.password);
+
+      if (error) throw error;
     },
   };
   const { isSubmitting, onSubmit } = useSubmit(options);
