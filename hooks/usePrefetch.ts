@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSWRConfig } from 'swr';
 
-import { fetcher } from 'utils/api';
+import { fetcher } from 'hooks/useAuthStore';
 
 type Prefetch = (key: string) => void;
 

@@ -3,8 +3,7 @@ import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 
-import { AuthProvider } from 'hooks/useAuth';
-import { SWRProvider } from 'utils/api';
+import { SWRProvider } from 'hooks/useAuthStore';
 import PageWrapper from 'components/PageWrapper';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
@@ -39,13 +38,11 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   }, [router]);
 
   return (
-    <AuthProvider>
-      <SWRProvider>
-        <PageWrapper>
-          <Component {...pageProps} />
-        </PageWrapper>
-      </SWRProvider>
-    </AuthProvider>
+    <SWRProvider>
+      <PageWrapper>
+        <Component {...pageProps} />
+      </PageWrapper>
+    </SWRProvider>
   );
 };
 
