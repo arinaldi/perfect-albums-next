@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+import router from 'next/router';
 import create, { SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
@@ -24,21 +25,26 @@ interface AuthState {
   getSessionToken: () => string;
   setUser: (user: User | null) => void;
   signIn: (email: string, password: string) => Promise<Response>;
-  signOut: () => Promise<any>;
+  signOut: () => Promise<void>;
   user: User | null | undefined;
 }
 
-const { auth } = supabase;
 let supabaseSession: Session | null;
 
 const store = (set: SetState<AuthState>) => ({
-  getSessionToken: () => auth.session()?.access_token || '',
+  getSessionToken: () => supabase.auth.session()?.access_token || '',
   setUser: (user: User | null) => {
     set({ user });
   },
   signIn: async (email: string, password: string) =>
-    await auth.signIn({ email, password }),
-  signOut: async () => await auth.signOut(), // TODO: if path.startsWith /admin, push to top-albums
+    await supabase.auth.signIn({ email, password }),
+  signOut: async () => {
+    await supabase.auth.signOut();
+
+    if (router.pathname.startsWith('/admin')) {
+      router.push('/top-albums');
+    }
+  },
   user: undefined,
 });
 
@@ -62,7 +68,7 @@ async function handleAuthChange(
   });
 }
 
-auth.onAuthStateChange((event, session) => {
+supabase.auth.onAuthStateChange((event, session) => {
   handleAuthChange(event, session);
 
   const user = session?.user || null;
@@ -88,7 +94,7 @@ export const SWRProvider: FC = ({ children }) => {
   const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
-    if (user === undefined && auth.session() === null) {
+    if (user === undefined && supabase.auth.user() === null) {
       setUser(null);
     }
   }, [setUser, user]);

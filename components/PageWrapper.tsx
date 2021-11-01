@@ -18,10 +18,12 @@ const PageWrapper: FC<Props> = ({ children }) => {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-            if (localStorage.theme === 'dark') {
-              document.documentElement.classList.add('dark');
-            } else {
-              document.documentElement.classList.remove('dark');
+            if (window !== undefined) {
+              if (window.localStorage.theme === 'dark') {
+                document.documentElement.classList.add('dark');
+              } else {
+                document.documentElement.classList.remove('dark');
+              }
             }
           `,
           }}
