@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { getTitle } from 'utils';
 import SignIn from 'components/SignIn';
 
-function SigninPage() {
+export default function SigninPage() {
   return (
     <>
       <Head>
@@ -13,5 +13,3 @@ function SigninPage() {
     </>
   );
 }
-
-export default SigninPage;

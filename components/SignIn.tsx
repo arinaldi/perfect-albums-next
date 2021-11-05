@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
+import { ROUTES_ADMIN } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
 import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
@@ -9,14 +10,14 @@ import Layout from 'components/Layout';
 import Input from 'components/Input';
 import SubmitButton from 'components/SubmitButton';
 
-const SignIn: FC = () => {
+export default function SignIn() {
   const router = useRouter();
   const signIn = useAuthStore((state) => state.signIn);
   const { handleSubmit, register } = useForm<SignInInput>();
   const [showPassword, setShowPassword] = useState(false);
 
   const options = {
-    callbacks: [() => router.push('/new-releases')],
+    callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
     handleSubmit,
     submitFn: async (data: SignInInput) => {
       const { error } = await signIn(data.email, data.password);
@@ -68,6 +69,4 @@ const SignIn: FC = () => {
       </form>
     </Layout>
   );
-};
-
-export default SignIn;
+}
