@@ -1,15 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from '@tsndr/cloudflare-worker-jwt';
 
-export async function middleware(req: NextRequest) {
-  const token = req.cookies['sb:token'];
-  const url = '/top-albums';
+import { ROUTES_ADMIN } from 'constants/index';
 
-  if (!token) return NextResponse.redirect(url, 302);
+export async function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname !== '/signin') {
+    return NextResponse.next();
+  }
+
+  const token = req.cookies['sb:token'];
+
+  if (!token) {
+    return NextResponse.next();
+  }
 
   const isValid = await jwt.verify(token, process.env.SUPABASE_JWT_SECRET!);
 
-  if (!isValid) return NextResponse.redirect(url, 302);
+  if (isValid) {
+    return NextResponse.redirect(ROUTES_ADMIN.base.href, 302);
+  }
 
   return NextResponse.next();
 }
