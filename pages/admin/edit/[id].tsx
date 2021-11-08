@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -20,7 +19,7 @@ interface Props {
   album: AlbumType;
 }
 
-const EditAlbumPage: FC<Props> = ({ album }) => {
+export default function EditAlbumPage({ album }: Props) {
   const router = useRouter();
   const { handleSubmit, register } = useForm<AlbumInput>({
     defaultValues: {
@@ -73,9 +72,7 @@ const EditAlbumPage: FC<Props> = ({ album }) => {
       </Layout>
     </>
   );
-};
-
-export default EditAlbumPage;
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {

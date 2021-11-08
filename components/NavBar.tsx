@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { ROUTES, ROUTES_ADMIN } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
@@ -6,7 +6,7 @@ import useDarkMode from 'hooks/useDarkMode';
 import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
 import LinkWrapper from 'components/LinkWrapper';
 
-const NavBar: FC = () => {
+export default function NavBar() {
   const user = useAuthStore((state) => state.user);
   const signOut = useAuthStore((state) => state.signOut);
   const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -129,6 +129,4 @@ const NavBar: FC = () => {
       </div>
     </nav>
   );
-};
-
-export default NavBar;
+}

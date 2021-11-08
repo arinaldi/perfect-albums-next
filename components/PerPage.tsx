@@ -1,11 +1,9 @@
-import { FC } from 'react';
-
 import { PER_PAGE } from 'constants/index';
 import useAdminState from 'hooks/useAdminState';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 
-const PerPage: FC = () => {
+export default function PerPage() {
   const { handlers, perPage } = useAdminState();
   const { onPerPageChange } = handlers;
 
@@ -40,6 +38,4 @@ const PerPage: FC = () => {
       </button>
     </nav>
   );
-};
-
-export default PerPage;
+}

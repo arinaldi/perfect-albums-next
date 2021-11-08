@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
 import { ROUTES_ADMIN } from 'constants/index';
@@ -12,7 +12,7 @@ interface Props {
   onSubmit: (event: FormEvent) => void;
 }
 
-const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
+export default function DeleteAlbum({ album, isSubmitting, onSubmit }: Props) {
   const router = useRouter();
 
   function handleCancel() {
@@ -49,6 +49,4 @@ const DeleteAlbum: FC<Props> = ({ album, isSubmitting, onSubmit }) => {
       </div>
     </div>
   );
-};
-
-export default DeleteAlbum;
+}

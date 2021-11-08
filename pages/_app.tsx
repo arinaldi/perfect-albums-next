@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
@@ -12,7 +12,7 @@ interface Options {
   shallow: boolean;
 }
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   function onStart(_: string, { shallow }: Options) {
@@ -44,6 +44,4 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
       </PageWrapper>
     </SWRProvider>
   );
-};
-
-export default MyApp;
+}

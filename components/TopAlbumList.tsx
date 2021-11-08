@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { ListItem } from 'utils';
 
 interface Props {
@@ -8,7 +6,7 @@ interface Props {
   total: number;
 }
 
-const TopAlbumList: FC<Props> = ({ data, year, total }) => {
+export default function TopAlbumList({ data, year, total }: Props) {
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -28,6 +26,4 @@ const TopAlbumList: FC<Props> = ({ data, year, total }) => {
       </ul>
     </div>
   );
-};
-
-export default TopAlbumList;
+}

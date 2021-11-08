@@ -4,7 +4,13 @@ import jwt from '@tsndr/cloudflare-worker-jwt';
 import { ROUTES_ADMIN } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname !== '/signin') {
+  const { pathname } = req.nextUrl;
+
+  if (pathname === '/') {
+    return NextResponse.redirect('/top-albums', 302);
+  }
+
+  if (pathname !== '/signin') {
     return NextResponse.next();
   }
 

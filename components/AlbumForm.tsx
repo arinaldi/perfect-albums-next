@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { UseFormRegister } from 'react-hook-form';
 
@@ -15,7 +15,7 @@ interface Props {
   onSubmit: (event: FormEvent<Element>) => void;
 }
 
-const AlbumForm: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
+export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
   const router = useRouter();
 
   function handleCancel() {
@@ -84,6 +84,4 @@ const AlbumForm: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
       </div>
     </form>
   );
-};
-
-export default AlbumForm;
+}

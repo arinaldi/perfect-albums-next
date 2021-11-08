@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import router from 'next/router';
 import create, { SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -27,6 +27,10 @@ interface AuthState {
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<void>;
   user: User | null | undefined;
+}
+
+interface Props {
+  children: ReactNode;
 }
 
 let supabaseSession: Session | null;
@@ -89,7 +93,7 @@ export async function fetcher(url: string): Promise<any> {
   return window.fetch(url, { headers }).then((res) => res.json());
 }
 
-export const SWRProvider: FC = ({ children }) => {
+export function SWRProvider({ children }: Props) {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
@@ -102,4 +106,4 @@ export const SWRProvider: FC = ({ children }) => {
   if (user === undefined) return null;
 
   return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
-};
+}

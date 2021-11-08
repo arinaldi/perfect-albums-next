@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
@@ -11,7 +11,7 @@ import useSubmit from 'hooks/useSubmit';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-const EditReleaseModal: FC = () => {
+export default function EditReleaseModal() {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
@@ -75,6 +75,4 @@ const EditReleaseModal: FC = () => {
       </div>
     </Modal>
   );
-};
-
-export default EditReleaseModal;
+}

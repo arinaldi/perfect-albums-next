@@ -1,12 +1,18 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface Props {
+  children: ReactNode;
   maxWidth?: string;
   title: ReactNode;
   titleAction?: ReactNode;
 }
 
-const Layout: FC<Props> = ({ children, maxWidth, title, titleAction }) => {
+export default function Layout({
+  children,
+  maxWidth,
+  title,
+  titleAction,
+}: Props) {
   return (
     <div className={`mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
       <div className="flex justify-between items-center mb-4">
@@ -18,6 +24,4 @@ const Layout: FC<Props> = ({ children, maxWidth, title, titleAction }) => {
       <div className="relative flex-auto">{children}</div>
     </div>
   );
-};
-
-export default Layout;
+}

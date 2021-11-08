@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -11,7 +11,7 @@ import {
 import { getTitle, isEmptyObject } from 'utils';
 import Admin from 'components/Admin';
 
-const AdminPage: FC = () => {
+export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
@@ -39,6 +39,4 @@ const AdminPage: FC = () => {
       <Admin />
     </>
   );
-};
-
-export default AdminPage;
+}

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -15,7 +15,7 @@ interface Props {
   favorites: Favorite[];
 }
 
-const TopAlbumsPage: FC<Props> = ({ favorites }) => {
+export default function TopAlbumsPage({ favorites }: Props) {
   const router = useRouter();
   const { data, error } = useSWR('/api/favorites', {
     fallbackData: { favorites },
@@ -38,9 +38,7 @@ const TopAlbumsPage: FC<Props> = ({ favorites }) => {
       <TopAlbums data={data} onChange={handleChange} value={value} />
     </>
   );
-};
-
-export default TopAlbumsPage;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();

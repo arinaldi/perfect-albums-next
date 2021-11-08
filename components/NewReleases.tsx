@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { formatReleases, ListItem, sortByDate } from 'utils';
 import useAuthStore from 'hooks/useAuthStore';
 import { Release } from 'utils/types';
@@ -16,12 +14,12 @@ interface Props {
   onEditOpen: (release: ListItem) => void;
 }
 
-const NewReleases: FC<Props> = ({
+export default function NewReleases({
   data,
   onCreateOpen,
   onDeleteOpen,
   onEditOpen,
-}) => {
+}: Props) {
   const user = useAuthStore((state) => state.user);
 
   const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
@@ -43,6 +41,4 @@ const NewReleases: FC<Props> = ({
       </div>
     </Layout>
   );
-};
-
-export default NewReleases;
+}

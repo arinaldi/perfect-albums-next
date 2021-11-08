@@ -1,4 +1,4 @@
-import { FC, FormEvent, Fragment } from 'react';
+import { FormEvent, Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import useStore from 'hooks/useStore';
@@ -6,19 +6,20 @@ import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
+  children: ReactNode;
   isSubmitting: boolean;
   onClose: () => void;
   onSubmit: (event: FormEvent<Element>) => void;
   title: string;
 }
 
-const Modal: FC<Props> = ({
+export default function Modal({
   children,
   isSubmitting,
   onClose,
   onSubmit,
   title,
-}) => {
+}: Props) {
   const isOpen = useStore((state) => state.isOpen);
   const isDeleteModal = title.toLowerCase().includes('delete');
 
@@ -77,6 +78,4 @@ const Modal: FC<Props> = ({
       </Dialog>
     </Transition>
   );
-};
-
-export default Modal;
+}

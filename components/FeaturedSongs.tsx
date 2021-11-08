@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import useAuthStore from 'hooks/useAuthStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
@@ -14,7 +12,11 @@ interface Props {
   onDeleteOpen: (song: Song) => void;
 }
 
-const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
+export default function FeaturedSongs({
+  data,
+  onCreateOpen,
+  onDeleteOpen,
+}: Props) {
   const user = useAuthStore((state) => state.user);
 
   const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
@@ -56,6 +58,4 @@ const FeaturedSongs: FC<Props> = ({ data, onCreateOpen, onDeleteOpen }) => {
       </div>
     </Layout>
   );
-};
-
-export default FeaturedSongs;
+}

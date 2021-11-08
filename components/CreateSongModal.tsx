@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
@@ -10,7 +9,7 @@ import useStore from 'hooks/useStore';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-const CreateSongModal: FC = () => {
+export default function CreateSongModal() {
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
   const { mutate } = useSWR(isOpen ? '/api/songs' : null);
@@ -68,6 +67,4 @@ const CreateSongModal: FC = () => {
       </div>
     </Modal>
   );
-};
-
-export default CreateSongModal;
+}

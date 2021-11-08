@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
@@ -16,7 +15,7 @@ interface Props {
   songs: Song[];
 }
 
-const FeaturedSongsPage: FC<Props> = ({ songs }) => {
+export default function FeaturedSongsPage({ songs }: Props) {
   const openModal = useStore((state) => state.openModal);
   const { data, error } = useSWR('/api/songs', {
     fallbackData: { songs },
@@ -44,9 +43,7 @@ const FeaturedSongsPage: FC<Props> = ({ songs }) => {
       />
     </>
   );
-};
-
-export default FeaturedSongsPage;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useRouter } from 'next/router';
 
 import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
@@ -16,7 +15,7 @@ import { CheckIcon } from 'components/Icons';
 
 const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
-const Admin: FC = () => {
+export default function Admin() {
   const router = useRouter();
   const {
     albums,
@@ -227,6 +226,4 @@ const Admin: FC = () => {
       )}
     </Layout>
   );
-};
-
-export default Admin;
+}

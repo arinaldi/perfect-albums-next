@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -12,7 +11,7 @@ import { AlbumInput } from 'utils/types';
 import Layout from 'components/Layout';
 import AlbumForm from 'components/AlbumForm';
 
-const CreateAlbumPage: FC = () => {
+export default function CreateAlbumPage() {
   const router = useRouter();
   const { handleSubmit, register } = useForm<AlbumInput>({
     defaultValues: {
@@ -52,6 +51,4 @@ const CreateAlbumPage: FC = () => {
       </Layout>
     </>
   );
-};
-
-export default CreateAlbumPage;
+}

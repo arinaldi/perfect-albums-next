@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { GetServerSideProps, NextApiRequest } from 'next';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -18,7 +17,7 @@ interface Props {
   album: AlbumType;
 }
 
-const DeleteAlbumPage: FC<Props> = ({ album }) => {
+export default function DeleteAlbumPage({ album }: Props) {
   const router = useRouter();
   const { mutate } = useAdminState();
   const options = {
@@ -52,9 +51,7 @@ const DeleteAlbumPage: FC<Props> = ({ album }) => {
       />
     </>
   );
-};
-
-export default DeleteAlbumPage;
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {

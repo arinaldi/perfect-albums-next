@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { ListItem } from 'utils';
 import useAuthStore from 'hooks/useAuthStore';
 import { DeleteIcon, EditIcon } from 'components/Icons';
@@ -11,7 +9,12 @@ interface Props {
   onEdit: (release: ListItem) => void;
 }
 
-const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
+export default function NewReleaseList({
+  data,
+  date,
+  onDelete,
+  onEdit,
+}: Props) {
   const user = useAuthStore((state) => state.user);
 
   return (
@@ -44,6 +47,4 @@ const NewReleaseList: FC<Props> = ({ data, date, onDelete, onEdit }) => {
       </ul>
     </div>
   );
-};
-
-export default NewReleaseList;
+}

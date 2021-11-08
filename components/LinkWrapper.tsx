@@ -1,14 +1,20 @@
-import { FC } from 'react';
+import { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 interface Props {
+  children: ReactNode;
   classNames?: string;
   href: string;
   onClick?: () => void;
 }
 
-const LinkWrapper: FC<Props> = ({ children, classNames, href, onClick }) => {
+export default function LinkWrapper({
+  children,
+  classNames,
+  href,
+  onClick,
+}: Props) {
   const { pathname } = useRouter();
   const isActive = href === pathname;
 
@@ -26,6 +32,4 @@ const LinkWrapper: FC<Props> = ({ children, classNames, href, onClick }) => {
       </a>
     </Link>
   );
-};
-
-export default LinkWrapper;
+}

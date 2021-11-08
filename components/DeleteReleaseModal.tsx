@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import useSWR from 'swr';
 
 import { MESSAGES, METHODS } from 'constants/index';
@@ -7,7 +6,7 @@ import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import Modal from 'components/Modal';
 
-const DeleteReleaseModal: FC = () => {
+export default function DeleteReleaseModal() {
   const data = useStore((state) => state.data);
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
@@ -41,6 +40,4 @@ const DeleteReleaseModal: FC = () => {
       </div>
     </Modal>
   );
-};
-
-export default DeleteReleaseModal;
+}

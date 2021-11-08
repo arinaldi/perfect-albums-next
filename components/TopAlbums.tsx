@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent } from 'react';
 
 import { DECADES } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
@@ -15,7 +15,7 @@ interface Props {
   value: string;
 }
 
-const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
+export default function TopAlbums({ data, onChange, value }: Props) {
   const Title = (
     <>
       Top Albums
@@ -66,6 +66,4 @@ const TopAlbums: FC<Props> = ({ data, onChange, value }) => {
       </a>
     </Layout>
   );
-};
-
-export default TopAlbums;
+}

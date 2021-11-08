@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 
@@ -9,7 +9,7 @@ interface Props {
   children: ReactNode;
 }
 
-const PageWrapper: FC<Props> = ({ children }) => {
+function PageWrapper({ children }: Props) {
   return (
     <div className="min-h-screen dark:bg-gray-800">
       <Head>
@@ -52,6 +52,6 @@ const PageWrapper: FC<Props> = ({ children }) => {
       />
     </div>
   );
-};
+}
 
 export default memo(PageWrapper);

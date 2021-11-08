@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
@@ -16,7 +15,7 @@ interface Props {
   releases: Release[];
 }
 
-const NewReleasesPage: FC<Props> = ({ releases }) => {
+export default function NewReleasesPage({ releases }: Props) {
   const openModal = useStore((state) => state.openModal);
   const { data, error } = useSWR('/api/releases', {
     fallbackData: { releases },
@@ -49,9 +48,7 @@ const NewReleasesPage: FC<Props> = ({ releases }) => {
       />
     </>
   );
-};
-
-export default NewReleasesPage;
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   await dbConnect();

@@ -1,8 +1,6 @@
-import { FC } from 'react';
-
 import useAdminState from 'hooks/useAdminState';
 
-const StudioFilter: FC = () => {
+export default function StudioFilter() {
   const { handlers, studio } = useAdminState();
   const { onFilter } = handlers;
 
@@ -29,6 +27,4 @@ const StudioFilter: FC = () => {
       </button>
     </nav>
   );
-};
-
-export default StudioFilter;
+}

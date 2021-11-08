@@ -1,8 +1,6 @@
-import { FC } from 'react';
-
 import useAdminState from 'hooks/useAdminState';
 
-const Pagination: FC = () => {
+export default function Pagination() {
   const { handlers, isFirstPage, isLastPage, page } = useAdminState();
   const { onFirst, onLast, onNext, onPrevious } = handlers;
 
@@ -44,6 +42,4 @@ const Pagination: FC = () => {
       </button>
     </nav>
   );
-};
-
-export default Pagination;
+}

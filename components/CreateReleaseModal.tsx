@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
@@ -10,7 +9,7 @@ import useSubmit from 'hooks/useSubmit';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-const CreateReleaseModal: FC = () => {
+export default function CreateReleaseModal() {
   const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
   const { mutate } = useSWR(isOpen ? '/api/releases' : null);
@@ -63,6 +62,4 @@ const CreateReleaseModal: FC = () => {
       </div>
     </Modal>
   );
-};
-
-export default CreateReleaseModal;
+}

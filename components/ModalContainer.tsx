@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { MODAL_TYPES } from 'constants/index';
 import useStore from 'hooks/useStore';
 import CreateSongModal from 'components/CreateSongModal';
@@ -8,7 +6,7 @@ import CreateReleaseModal from 'components/CreateReleaseModal';
 import EditReleaseModal from 'components/EditReleaseModal';
 import DeleteReleaseModal from 'components/DeleteReleaseModal';
 
-const ModalContainer: FC = () => {
+export default function ModalContainer() {
   const type = useStore((state) => state.type);
 
   switch (type) {
@@ -25,6 +23,4 @@ const ModalContainer: FC = () => {
     default:
       return null;
   }
-};
-
-export default ModalContainer;
+}
