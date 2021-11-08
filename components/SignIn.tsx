@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
-import { ROUTES_ADMIN } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
 import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
@@ -17,7 +16,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
 
   const options = {
-    callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
+    callbacks: [() => router.push('/new-releases')],
     handleSubmit,
     submitFn: async (data: SignInInput) => {
       const { error } = await signIn(data.email, data.password);
