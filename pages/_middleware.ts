@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from '@tsndr/cloudflare-worker-jwt';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname === '/') {
-    return NextResponse.redirect('/top-albums', 302);
+    return NextResponse.redirect(ROUTE_HREF.TOP_ALBUMS, 302);
   }
 
-  if (pathname !== '/signin') {
+  if (pathname !== ROUTE_HREF.SIGNIN) {
     return NextResponse.next();
   }
 

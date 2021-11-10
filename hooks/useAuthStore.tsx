@@ -10,6 +10,7 @@ import {
 } from '@supabase/supabase-js';
 import { SWRConfig } from 'swr';
 
+import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import supabase from 'utils/supabase';
 
 interface Response {
@@ -37,8 +38,8 @@ const store = (set: SetState<AuthState>) => ({
   signOut: async () => {
     await supabase.auth.signOut();
 
-    if (router.pathname.startsWith('/admin')) {
-      router.push('/top-albums');
+    if (router.pathname.startsWith(ROUTES_ADMIN.base.href)) {
+      router.push(ROUTE_HREF.TOP_ALBUMS);
     }
   },
   user: undefined,

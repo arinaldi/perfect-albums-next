@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ROUTES, ROUTES_ADMIN } from 'constants/index';
+import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
 import useDarkMode from 'hooks/useDarkMode';
 import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
@@ -79,7 +79,7 @@ export default function NavBar() {
                 Sign Out
               </div>
             ) : (
-              <LinkWrapper href="/signin">Sign In</LinkWrapper>
+              <LinkWrapper href={ROUTE_HREF.SIGNIN}>Sign In</LinkWrapper>
             )}
           </div>
         </div>
@@ -119,7 +119,7 @@ export default function NavBar() {
           ) : (
             <LinkWrapper
               classNames="block text-base"
-              href="/signin"
+              href={ROUTE_HREF.SIGNIN}
               onClick={closeMenu}
             >
               Sign In

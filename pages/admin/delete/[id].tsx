@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, METHODS, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { getTitle } from 'utils';
@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!params?.id) {
     return {
       redirect: {
-        destination: '/top-albums',
+        destination: ROUTE_HREF.TOP_ALBUMS,
         permanent: false,
       },
     };

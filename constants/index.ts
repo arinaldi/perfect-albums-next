@@ -86,10 +86,17 @@ export const MONTHS = [
   'Dec',
 ];
 
+export enum ROUTE_HREF {
+  TOP_ALBUMS = '/top-albums',
+  FEATURED_SONGS = '/featured-songs',
+  NEW_RELEASES = '/new-releases',
+  SIGNIN = '/signin',
+}
+
 export const ROUTES = [
-  { href: '/top-albums', label: 'Top Albums' },
-  { href: '/featured-songs', label: 'Featured Songs' },
-  { href: '/new-releases', label: 'New Releases' },
+  { href: ROUTE_HREF.TOP_ALBUMS, label: 'Top Albums' },
+  { href: ROUTE_HREF.FEATURED_SONGS, label: 'Featured Songs' },
+  { href: ROUTE_HREF.NEW_RELEASES, label: 'New Releases' },
 ];
 
 export const ROUTES_ADMIN = {
