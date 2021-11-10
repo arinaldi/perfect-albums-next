@@ -22,9 +22,3 @@ export async function decodeSupabaseToken(token: string) {
     return null;
   }
 }
-
-export function getToken(authHeader = '') {
-  const headers = authHeader.split(' ');
-  const tokenIndex = headers.indexOf('Bearer');
-  return tokenIndex === -1 ? '' : headers[tokenIndex + 1];
-}

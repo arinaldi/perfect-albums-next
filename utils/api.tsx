@@ -52,8 +52,6 @@ export default async function api(
   options: Options = defaultOptions,
 ): Promise<ResponseObject> {
   const { body, method, ...customConfig } = options;
-  const token = useAuthStore.getState().getSessionToken();
-
   const config = {
     body,
     method,
@@ -63,10 +61,6 @@ export default async function api(
       ...customConfig.headers,
     },
   };
-
-  if (token) {
-    config.headers.authorization = `Bearer ${token}`;
-  }
 
   if (body) {
     config.body = JSON.stringify(body);

@@ -22,8 +22,6 @@ interface Response {
 }
 
 interface AuthState {
-  getSessionToken: () => string;
-  setUser: (user: User | null) => void;
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<void>;
   user: User | null | undefined;
@@ -33,13 +31,7 @@ interface Props {
   children: ReactNode;
 }
 
-let supabaseSession: Session | null;
-
 const store = (set: SetState<AuthState>) => ({
-  getSessionToken: () => supabase.auth.session()?.access_token || '',
-  setUser: (user: User | null) => {
-    set({ user });
-  },
   signIn: async (email: string, password: string) =>
     await supabase.auth.signIn({ email, password }),
   signOut: async () => {
@@ -74,34 +66,23 @@ async function handleAuthChange(
 
 supabase.auth.onAuthStateChange((event, session) => {
   handleAuthChange(event, session);
-
-  const user = session?.user || null;
-  supabaseSession = session;
-
-  useAuthStore.setState({ user });
+  useAuthStore.setState({ user: session?.user || null });
 });
 
 export async function fetcher(url: string): Promise<any> {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-
-  if (supabaseSession) {
-    headers.authorization = `Bearer ${supabaseSession.access_token}`;
-  }
-
-  return window.fetch(url, { headers }).then((res) => res.json());
+  return window
+    .fetch(url, { headers: { 'Content-Type': 'application/json' } })
+    .then((res) => res.json());
 }
 
 export function SWRProvider({ children }: Props) {
   const user = useAuthStore((state) => state.user);
-  const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
     if (user === undefined && supabase.auth.user() === null) {
-      setUser(null);
+      useAuthStore.setState({ user: null });
     }
-  }, [setUser, user]);
+  }, [user]);
 
   if (user === undefined) return null;
 
