@@ -7,10 +7,9 @@ import { MESSAGES, METHODS, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { getTitle } from 'utils';
-import api from 'utils/api';
 import { Album as AlbumType, AlbumInput } from 'utils/types';
 import Album from 'models/Album';
-import useAdminState from 'hooks/useAdminState';
+import useMutation from 'hooks/useMutation';
 import useSubmit from 'hooks/useSubmit';
 import Layout from 'components/Layout';
 import AlbumForm from 'components/AlbumForm';
@@ -32,11 +31,10 @@ export default function EditAlbumPage({ album }: Props) {
       studio: album.studio,
     },
   });
-  const { mutate } = useAdminState();
+  const editAlbum = useMutation(`/api/albums/${album.id}`);
 
   const options = {
     callbacks: [
-      mutate,
       () => {
         const query = { ...router.query };
         delete query.id;
@@ -49,7 +47,7 @@ export default function EditAlbumPage({ album }: Props) {
     ],
     handleSubmit,
     submitFn: async (data: AlbumInput) => {
-      await api(`/api/albums/${album.id}`, {
+      await editAlbum({
         body: data,
         method: METHODS.PUT,
       });

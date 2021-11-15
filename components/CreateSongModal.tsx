@@ -1,18 +1,16 @@
-import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import api from 'utils/api';
 import { SongInput } from 'utils/types';
+import useMutation from 'hooks/useMutation';
 import useSubmit from 'hooks/useSubmit';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 export default function CreateSongModal() {
-  const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const { mutate } = useSWR(isOpen ? '/api/songs' : null);
+  const createSong = useMutation('/api/songs');
   const { handleSubmit, register, reset } = useForm<SongInput>();
 
   function handleClose() {
@@ -21,10 +19,10 @@ export default function CreateSongModal() {
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
     handleSubmit,
-    submitFn: async (data: SongInput) => {
-      await api('/api/songs', { body: data, method: METHODS.POST });
+    submitFn: async (song: SongInput) => {
+      await createSong({ body: song, method: METHODS.POST });
     },
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };

@@ -1,18 +1,16 @@
-import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import api from 'utils/api';
-import { ReleaseInput } from 'utils/types';
+import useMutation from 'hooks/useMutation';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
+import { ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 export default function CreateReleaseModal() {
-  const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const { mutate } = useSWR(isOpen ? '/api/releases' : null);
+  const createRelease = useMutation('/api/releases');
   const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   function handleClose() {
@@ -21,10 +19,10 @@ export default function CreateReleaseModal() {
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
     handleSubmit,
-    submitFn: async (data: ReleaseInput) => {
-      await api('/api/releases', { body: data, method: METHODS.POST });
+    submitFn: async (release: ReleaseInput) => {
+      await createRelease({ body: release, method: METHODS.POST });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };

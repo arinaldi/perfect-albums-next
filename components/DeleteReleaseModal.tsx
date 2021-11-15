@@ -1,24 +1,18 @@
-import useSWR from 'swr';
-
 import { MESSAGES, METHODS } from 'constants/index';
-import api from 'utils/api';
+import useMutation from 'hooks/useMutation';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import Modal from 'components/Modal';
 
 export default function DeleteReleaseModal() {
   const data = useStore((state) => state.data);
-  const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const { mutate } = useSWR(isOpen ? '/api/releases' : null);
+  const deleteRelease = useMutation('/api/releases');
 
   const options = {
-    callbacks: [closeModal, mutate],
+    callbacks: [closeModal],
     submitFn: async () => {
-      await api('/api/releases', {
-        body: { id: data.id },
-        method: METHODS.DELETE,
-      });
+      await deleteRelease({ body: { id: data.id }, method: METHODS.DELETE });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };

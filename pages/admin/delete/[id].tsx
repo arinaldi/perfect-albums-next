@@ -6,10 +6,9 @@ import { MESSAGES, METHODS, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import dbConnect from 'lib/dbConnect';
 import formatAlbum from 'lib/formatAlbum';
 import { getTitle } from 'utils';
-import api from 'utils/api';
 import { Album as AlbumType } from 'utils/types';
 import Album from 'models/Album';
-import useAdminState from 'hooks/useAdminState';
+import useMutation from 'hooks/useMutation';
 import useSubmit from 'hooks/useSubmit';
 import DeleteAlbum from 'components/DeleteAlbum';
 
@@ -19,18 +18,22 @@ interface Props {
 
 export default function DeleteAlbumPage({ album }: Props) {
   const router = useRouter();
-  const { mutate } = useAdminState();
+  const deleteAlbum = useMutation(`/api/albums/${album.id}`);
+
   const options = {
     callbacks: [
-      mutate,
-      () =>
+      () => {
+        const query = { ...router.query };
+        delete query.id;
+
         router.push({
           pathname: ROUTES_ADMIN.base.href,
-          query: router.query,
-        }),
+          query,
+        });
+      },
     ],
     submitFn: async () => {
-      await api(`/api/albums/${album.id}`, {
+      await deleteAlbum({
         body: null,
         method: METHODS.DELETE,
       });

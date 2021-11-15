@@ -1,24 +1,18 @@
-import useSWR from 'swr';
-
 import { MESSAGES, METHODS } from 'constants/index';
-import api from 'utils/api';
+import useMutation from 'hooks/useMutation';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import Modal from 'components/Modal';
 
 export default function DeleteSongModal() {
   const data = useStore((state) => state.data);
-  const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const { mutate } = useSWR(isOpen ? '/api/songs' : null);
+  const deleteSong = useMutation('/api/songs');
 
   const options = {
-    callbacks: [closeModal, mutate],
+    callbacks: [closeModal],
     submitFn: async () => {
-      await api('/api/songs', {
-        body: { id: data.id },
-        method: METHODS.DELETE,
-      });
+      await deleteSong({ body: { id: data.id }, method: METHODS.DELETE });
     },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };

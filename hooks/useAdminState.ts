@@ -50,7 +50,6 @@ interface Payload {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
-  mutate: () => void;
   page: number;
   perPage: PER_PAGE;
   sort: SORT_VALUE;
@@ -80,7 +79,7 @@ export default function useAdminState(): Payload {
   const preventFetch =
     (!debouncedArtist && Boolean(artistSearch)) ||
     (!debouncedTitle && Boolean(titleSearch));
-  const { albums, cdTotal, total, isLoading, mutate } = useAdminAlbums(
+  const { albums, cdTotal, total, isLoading } = useAdminAlbums(
     url,
     preventFetch,
   );
@@ -199,7 +198,6 @@ export default function useAdminState(): Payload {
     isFirstPage,
     isLastPage,
     isLoading,
-    mutate,
     page,
     perPage,
     studio,

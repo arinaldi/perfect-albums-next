@@ -8,7 +8,7 @@ import {
   Session,
   User,
 } from '@supabase/supabase-js';
-import { SWRConfig } from 'swr';
+import { Fetcher, Key, mutate, SWRConfig } from 'swr';
 
 import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import supabase from 'utils/supabase';
@@ -76,6 +76,30 @@ export async function fetcher(url: string): Promise<any> {
     .then((res) => res.json());
 }
 
+const liveQueries = new Set();
+
+function trackLiveQueries(useSWRNext: any) {
+  return (key: Key, fetcher: Fetcher<any> | null, config: any) => {
+    const swr = useSWRNext(key, fetcher, config);
+
+    useEffect(() => {
+      liveQueries.add(key);
+
+      return () => {
+        liveQueries.delete(key);
+      };
+    }, [key]);
+
+    return swr;
+  };
+}
+
+export async function revalidateLiveQueries() {
+  const promises = [...liveQueries.values()].map((key) => mutate(key as Key));
+
+  return Promise.all(promises);
+}
+
 export function SWRProvider({ children }: Props) {
   const user = useAuthStore((state) => state.user);
 
@@ -87,5 +111,9 @@ export function SWRProvider({ children }: Props) {
 
   if (user === undefined) return null;
 
-  return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
+  return (
+    <SWRConfig value={{ fetcher, use: [trackLiveQueries] }}>
+      {children}
+    </SWRConfig>
+  );
 }

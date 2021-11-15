@@ -1,21 +1,19 @@
 import { useEffect } from 'react';
-import useSWR from 'swr';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS } from 'constants/index';
-import { formatDate } from 'utils';
-import api from 'utils/api';
-import { ReleaseInput } from 'utils/types';
+import useMutation from 'hooks/useMutation';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
+import { formatDate } from 'utils';
+import { ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
 export default function EditReleaseModal() {
   const data = useStore((state) => state.data);
-  const isOpen = useStore((state) => state.isOpen);
   const closeModal = useStore((state) => state.closeModal);
-  const { mutate } = useSWR(isOpen ? '/api/releases' : null);
+  const editRelease = useMutation('/api/releases');
   const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
   useEffect(() => {
@@ -31,10 +29,10 @@ export default function EditReleaseModal() {
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
     handleSubmit,
     submitFn: async (release: ReleaseInput) => {
-      await api('/api/releases', {
+      await editRelease({
         body: { ...release, id: data.id },
         method: METHODS.PUT,
       });
