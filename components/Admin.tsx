@@ -178,8 +178,8 @@ export default function Admin() {
                             {album.artist}
                           </td>
                           <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
-                            <span>{album.title}</span>
                             {album.studio ? <span>*</span> : null}
+                            <span>{album.title}</span>
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                             {album.year}
