@@ -2,8 +2,6 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN } from 'constants/index';
-
 interface Props {
   children: ReactNode;
   classNames?: string;
@@ -21,7 +19,7 @@ export default function LinkWrapper({
   const isActive = href === pathname;
 
   return (
-    <Link key={href} href={href} prefetch={href !== ROUTES_ADMIN.base.href}>
+    <Link key={href} href={href}>
       <a
         className={`${isActive ? 'text-white' : 'text-gray-300'} ${
           classNames || ''
