@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, METHODS } from 'constants/index';
+import { MESSAGES } from 'constants/index';
 import { SongInput } from 'utils/types';
-import useMutation from 'hooks/useMutation';
+import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import useStore from 'hooks/useStore';
 import Input from 'components/Input';
@@ -10,7 +10,7 @@ import Modal from 'components/Modal';
 
 export default function CreateSongModal() {
   const closeModal = useStore((state) => state.closeModal);
-  const createSong = useMutation('/api/songs');
+  const createSong = useInsert('songs');
   const { handleSubmit, register, reset } = useForm<SongInput>();
 
   function handleClose() {
@@ -22,7 +22,7 @@ export default function CreateSongModal() {
     callbacks: [handleClose],
     handleSubmit,
     submitFn: async (song: SongInput) => {
-      await createSong({ body: song, method: METHODS.POST });
+      await createSong(song);
     },
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };

@@ -1,54 +1,24 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import nextConnect from 'next-connect';
 
-import dbConnect from 'lib/dbConnect';
-import formatSong from 'lib/formatSong';
-import { Song as SongType, SongData } from 'utils/types';
-import Song from 'models/Song';
-import auth from 'middleware/auth';
+import supabase from 'utils/supabase';
+import { Song } from 'utils/types';
 
-export async function getSongs(): Promise<SongType[]> {
-  const data = await Song.find({}).sort({ createdAt: 'desc' });
-  const songs = data.map((item: SongData) => {
-    return formatSong(item);
-  });
+export async function getSongs(): Promise<Song[]> {
+  const { data: songs, error } = await supabase
+    .from('songs')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-  return songs;
+  if (error) throw error;
+  if (songs) return songs;
+  return [];
 }
 
-const handler = nextConnect();
-
-handler
-  .get(async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect();
-
-    try {
-      const songs = await getSongs();
-      res.status(200).json({ success: true, songs });
-    } catch (error) {
-      res.status(400).json({ success: false });
-    }
-  })
-  .use(auth)
-  .post(async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect();
-
-    try {
-      const song = await Song.create(req.body);
-      res.status(200).json({ success: true, song });
-    } catch (error) {
-      res.status(400).json({ success: false });
-    }
-  })
-  .delete(async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect();
-
-    try {
-      await Song.findByIdAndDelete(req.body.id);
-      res.status(200).json({ success: true });
-    } catch (error) {
-      res.status(400).json({ success: false });
-    }
-  });
-
-export default handler;
+export default async function songs(_: NextApiRequest, res: NextApiResponse) {
+  try {
+    const songs = await getSongs();
+    res.status(200).json({ success: true, songs });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
+}
