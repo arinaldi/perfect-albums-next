@@ -4,7 +4,6 @@ import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
 import { getTitle } from 'utils';
-import dbConnect from 'lib/dbConnect';
 import { Song } from 'utils/types';
 import { getSongs } from 'pages/api/songs';
 import useStore from 'hooks/useStore';
@@ -46,7 +45,6 @@ export default function FeaturedSongsPage({ songs }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  await dbConnect();
   const songs = await getSongs();
 
   return {

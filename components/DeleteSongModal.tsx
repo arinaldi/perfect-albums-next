@@ -1,5 +1,5 @@
-import { MESSAGES, METHODS } from 'constants/index';
-import useMutation from 'hooks/useMutation';
+import { MESSAGES } from 'constants/index';
+import useDelete from 'hooks/useDelete';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import Modal from 'components/Modal';
@@ -7,12 +7,12 @@ import Modal from 'components/Modal';
 export default function DeleteSongModal() {
   const data = useStore((state) => state.data);
   const closeModal = useStore((state) => state.closeModal);
-  const deleteSong = useMutation('/api/songs');
+  const deleteSong = useDelete('songs');
 
   const options = {
     callbacks: [closeModal],
     submitFn: async () => {
-      await deleteSong({ body: { id: data.id }, method: METHODS.DELETE });
+      await deleteSong(data.id);
     },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
