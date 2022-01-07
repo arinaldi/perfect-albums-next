@@ -3,7 +3,6 @@ import Head from 'next/head';
 import useSWR from 'swr';
 
 import { MODAL_TYPES } from 'constants/index';
-import dbConnect from 'lib/dbConnect';
 import { getTitle, ListItem } from 'utils';
 import { Release } from 'utils/types';
 import { getReleases } from 'pages/api/releases';
@@ -51,7 +50,6 @@ export default function NewReleasesPage({ releases }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  await dbConnect();
   const releases = await getReleases();
 
   return {

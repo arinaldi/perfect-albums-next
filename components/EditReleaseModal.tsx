@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, METHODS } from 'constants/index';
-import useMutation from 'hooks/useMutation';
+import { MESSAGES } from 'constants/index';
+import useUpdate from 'hooks/useUpdate';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';
@@ -13,7 +13,7 @@ import Modal from 'components/Modal';
 export default function EditReleaseModal() {
   const data = useStore((state) => state.data);
   const closeModal = useStore((state) => state.closeModal);
-  const editRelease = useMutation('/api/releases');
+  const editRelease = useUpdate('releases');
   const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
   useEffect(() => {
@@ -32,10 +32,7 @@ export default function EditReleaseModal() {
     callbacks: [handleClose],
     handleSubmit,
     submitFn: async (release: ReleaseInput) => {
-      await editRelease({
-        body: { ...release, id: data.id },
-        method: METHODS.PUT,
-      });
+      await editRelease(data.id, { ...release, date: release.date || null });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
