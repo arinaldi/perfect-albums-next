@@ -1,5 +1,5 @@
-import { MESSAGES, METHODS } from 'constants/index';
-import useMutation from 'hooks/useMutation';
+import { MESSAGES } from 'constants/index';
+import useDelete from 'hooks/useDelete';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import Modal from 'components/Modal';
@@ -7,12 +7,12 @@ import Modal from 'components/Modal';
 export default function DeleteReleaseModal() {
   const data = useStore((state) => state.data);
   const closeModal = useStore((state) => state.closeModal);
-  const deleteRelease = useMutation('/api/releases');
+  const deleteRelease = useDelete('releases');
 
   const options = {
     callbacks: [closeModal],
     submitFn: async () => {
-      await deleteRelease({ body: { id: data.id }, method: METHODS.DELETE });
+      await deleteRelease(data.id);
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };

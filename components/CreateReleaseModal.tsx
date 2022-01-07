@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, METHODS } from 'constants/index';
-import useMutation from 'hooks/useMutation';
+import { MESSAGES } from 'constants/index';
+import useInsert from 'hooks/useInsert';
 import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import { ReleaseInput } from 'utils/types';
@@ -10,7 +10,7 @@ import Modal from 'components/Modal';
 
 export default function CreateReleaseModal() {
   const closeModal = useStore((state) => state.closeModal);
-  const createRelease = useMutation('/api/releases');
+  const createRelease = useInsert('releases');
   const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   function handleClose() {
@@ -22,7 +22,7 @@ export default function CreateReleaseModal() {
     callbacks: [handleClose],
     handleSubmit,
     submitFn: async (release: ReleaseInput) => {
-      await createRelease({ body: release, method: METHODS.POST });
+      await createRelease({ ...release, date: release.date || null });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
