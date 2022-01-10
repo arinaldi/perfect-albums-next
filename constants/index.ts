@@ -41,13 +41,6 @@ export enum APP_MESSAGE_TYPES {
   INFO = 'info',
 }
 
-export enum METHODS {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-}
-
 export const DECADES = [
   {
     label: '10s',

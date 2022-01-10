@@ -149,12 +149,6 @@ export default function Admin() {
                         className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
                         scope="col"
                       >
-                        AotD
-                      </th>
-                      <th
-                        className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
-                        scope="col"
-                      >
                         Favorite
                       </th>
                       <th
@@ -186,9 +180,6 @@ export default function Admin() {
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                             {album.cd ? <CheckIcon /> : null}
-                          </td>
-                          <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.aotd ? <CheckIcon /> : null}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
                             {album.favorite ? <CheckIcon /> : null}

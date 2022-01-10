@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import nextConnect from 'next-connect';
 
-import dbConnect from 'lib/dbConnect';
-import formatAlbum from 'lib/formatAlbum';
-import { Album as AlbumType, AlbumData } from 'utils/types';
-import Album from 'models/Album';
-import auth from 'middleware/auth';
+import { SORT_DIRECTION } from 'constants/index';
+import supabase from 'utils/supabase';
+import { Album } from 'utils/types';
+
+const { ASC } = SORT_DIRECTION;
 
 interface Payload {
-  albums: AlbumType[];
+  albums: Album[];
   count: number;
 }
 
@@ -17,96 +16,66 @@ function parseQuery(query: string | string[]): string {
 }
 
 async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
-  return new Promise((resolve, reject) => {
-    let {
-      artist,
-      direction,
-      page,
-      per_page: perPage,
-      sort,
-      studio,
-      title,
-    } = queries;
-    artist = parseQuery(artist);
-    direction = parseQuery(direction) || 'asc';
-    page = parseQuery(page);
-    perPage = parseQuery(perPage);
-    sort = parseQuery(sort);
-    studio = parseQuery(studio);
-    title = parseQuery(title);
-    const artistRegex = new RegExp(artist, 'i');
-    const titleRegex = new RegExp(title, 'i');
-    const pageNumber = Math.abs(parseInt(page)) - 1;
-    const limit = Math.abs(parseInt(perPage)) || 25;
+  let {
+    artist,
+    direction,
+    page,
+    per_page: perPage,
+    sort,
+    studio,
+    title,
+  } = queries;
+  artist = parseQuery(artist);
+  direction = parseQuery(direction) || ASC;
+  page = parseQuery(page);
+  perPage = parseQuery(perPage);
+  sort = parseQuery(sort);
+  studio = parseQuery(studio);
+  title = parseQuery(title);
+  const pageNumber = Math.abs(parseInt(page));
+  const limit = Math.abs(parseInt(perPage)) || 25;
+  const start = (pageNumber - 1) * limit;
+  const end = pageNumber * limit - 1;
 
-    const query = Album.find({});
+  let query = supabase
+    .from('albums')
+    .select('*', { count: 'exact' })
+    .ilike('artist', `%${artist}%`)
+    .ilike('title', `%${title}%`)
+    .range(start, end);
 
-    if (artist) {
-      query.find({ artist: artistRegex });
-    }
+  if (studio === 'true') {
+    query = query.eq('studio', true);
+  }
 
-    if (title) {
-      query.find({ title: titleRegex });
-    }
+  if (sort) {
+    query = query.order(sort, { ascending: direction === ASC });
+  } else {
+    query = query
+      .order('artist', { ascending: true })
+      .order('title', { ascending: true });
+  }
 
-    if (studio === 'true') {
-      query.find({ studio: true });
-    }
+  if (sort === 'artist') {
+    query = query.order('title', { ascending: true });
+  } else {
+    query = query.order('artist', { ascending: direction === ASC });
+  }
 
-    const sortParams = sort
-      ? { [sort]: direction }
-      : { artist: 'asc', title: 'asc' };
+  const { data: albums, count, error } = await query;
 
-    if (sort === 'artist') {
-      sortParams.title = 'asc';
-    } else {
-      sortParams.artist = direction;
-    }
-
-    query.countDocuments((_, count) => {
-      query
-        .sort(sortParams)
-        .limit(limit)
-        .skip(limit * pageNumber)
-        // @ts-ignore
-        .exec('find', (err: Error, data: AlbumData[]) => {
-          if (err) reject(err);
-          if (data) {
-            const albums = data.map((item: AlbumData) => {
-              return formatAlbum(item);
-            });
-            resolve({ count, albums });
-          } else {
-            resolve({ count: 0, albums: [] });
-          }
-        });
-    });
-  });
+  if (error) throw error;
+  return { albums: albums || [], count: count || 0 };
 }
 
-const handler = nextConnect();
-
-handler
-  .use(auth)
-  .get('/api/albums', async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect();
-
-    try {
-      const { albums, count } = await getAlbums(req.query);
-      res.status(200).json({ success: true, albums, count });
-    } catch (error) {
-      res.status(400).json({ success: false });
-    }
-  })
-  .post('/api/albums', async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect();
-
-    try {
-      const album = await Album.create(req.body);
-      res.status(200).json({ success: true, album });
-    } catch (error) {
-      res.status(400).json({ success: false });
-    }
-  });
-
-export default handler;
+export default async function albums(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  try {
+    const { albums, count } = await getAlbums(req.query);
+    res.status(200).json({ success: true, albums, count });
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
+}

@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, METHODS, ROUTES_ADMIN } from 'constants/index';
-import useMutation from 'hooks/useMutation';
+import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
 import { AlbumInput } from 'utils/types';
@@ -17,7 +17,7 @@ export default function CreateAlbumPage() {
       year: new Date().getFullYear().toString(),
     },
   });
-  const createAlbum = useMutation('/api/albums');
+  const createAlbum = useInsert('albums');
 
   const options = {
     callbacks: [
@@ -29,7 +29,7 @@ export default function CreateAlbumPage() {
     ],
     handleSubmit,
     submitFn: async (album: AlbumInput) => {
-      await createAlbum({ body: album, method: METHODS.POST });
+      await createAlbum(album);
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };

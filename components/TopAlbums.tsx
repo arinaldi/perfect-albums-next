@@ -2,14 +2,14 @@ import { ChangeEvent } from 'react';
 
 import { DECADES } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
-import { Favorite } from 'utils/types';
+import { Album } from 'utils/types';
 import Layout from 'components/Layout';
 import TopAlbumList from 'components/TopAlbumList';
 import { ArrowUpIcon } from 'components/Icons';
 
 interface Props {
   data: {
-    favorites: Favorite[];
+    favorites: Album[];
   };
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   value: string;
