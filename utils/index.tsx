@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { MONTHS, PER_PAGE, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
-import { Favorite, Release } from 'utils/types';
+import { Album, Release } from 'utils/types';
 import { ArrowDownIcon, ArrowUpIcon } from 'components/Icons';
 
 function addZeroPrefix(value: number) {
@@ -22,7 +22,7 @@ export function formatDate(isoString: string): string {
 export interface ListItem {
   artist: string;
   title: string;
-  id?: string;
+  id?: number;
 }
 
 interface Results {
@@ -31,7 +31,7 @@ interface Results {
 
 type Tuple = [string, ListItem[]];
 
-export function formatFavorites(favorites: Favorite[]): Results {
+export function formatFavorites(favorites: Album[]): Results {
   const results: Results = {};
 
   favorites.forEach(({ artist, title, year }) => {

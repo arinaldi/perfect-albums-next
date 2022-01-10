@@ -1,20 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'lib/dbConnect';
-import Album from 'models/Album';
+import supabase from 'utils/supabase';
 
 export async function getCdCount(): Promise<number> {
-  const count = await Album.countDocuments({ cd: true });
+  const { count, error } = await supabase
+    .from('albums')
+    .select('*', { count: 'exact', head: true })
+    .eq('cd', true);
 
-  return count;
+  if (error) throw error;
+  if (count) return count;
+  return 0;
 }
 
 export default async function cds(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
-  await dbConnect();
-
   try {
     const count = await getCdCount();
     res.status(200).json({ success: true, count });

@@ -1,29 +1,24 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'lib/dbConnect';
-import formatFavorite from 'lib/formatFavorite';
-import { AlbumData, Favorite } from 'utils/types';
-import Album from 'models/Album';
+import supabase from 'utils/supabase';
+import { Album } from 'utils/types';
 
-export async function getFavorites(): Promise<Favorite[]> {
-  const albums = await Album.find({ favorite: true }).sort({
-    year: 'desc',
-    artist: 'asc',
-    title: 'asc',
-  });
-  const favorites = albums.map((item: AlbumData) => {
-    return formatFavorite(item);
-  });
+export async function getFavorites(): Promise<Album[]> {
+  const { data: favorites, error } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('favorite', true)
+    .order('artist', { ascending: true });
 
-  return favorites;
+  if (error) throw error;
+  if (favorites) return favorites;
+  return [];
 }
 
 export default async function favorites(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
-  await dbConnect();
-
   try {
     const favorites = await getFavorites();
     res.status(200).json({ success: true, favorites });

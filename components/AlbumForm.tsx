@@ -61,11 +61,6 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
           <div className="col-span-6 sm:col-span-2">
             <Checkbox id="cd" label="CD" {...register('cd')} />
             <Checkbox
-              id="aotd"
-              label="Album of the Day"
-              {...register('aotd')}
-            />
-            <Checkbox
               id="favorite"
               label="Favorite"
               {...register('favorite')}

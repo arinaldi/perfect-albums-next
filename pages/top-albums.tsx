@@ -5,14 +5,13 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 import { getTitle } from 'utils';
-import dbConnect from 'lib/dbConnect';
-import { Favorite } from 'utils/types';
+import { Album } from 'utils/types';
 import { getFavorites } from 'pages/api/favorites';
 import TopAlbums from 'components/TopAlbums';
 import AppMessage from 'components/AppMessage';
 
 interface Props {
-  favorites: Favorite[];
+  favorites: Album[];
 }
 
 export default function TopAlbumsPage({ favorites }: Props) {
@@ -41,7 +40,6 @@ export default function TopAlbumsPage({ favorites }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  await dbConnect();
   const favorites = await getFavorites();
 
   return {

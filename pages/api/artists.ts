@@ -1,20 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import dbConnect from 'lib/dbConnect';
-import Album from 'models/Album';
+import supabase from 'utils/supabase';
 
 async function getArtists(): Promise<string[]> {
-  const artists = await Album.distinct('artist');
+  // https://www.jeffreyknox.dev/blog/postgresql-functions-in-supabase/
+  const { data: artists, error } = await supabase.rpc('get_artists');
 
-  return artists;
+  if (error) throw error;
+  if (artists) return artists.map((a) => a.artist);
+  return [];
 }
 
 export default async function artists(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
-  await dbConnect();
-
   try {
     const artists = await getArtists();
     res.status(200).json({ success: true, artists });

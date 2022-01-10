@@ -1,58 +1,25 @@
-import { Document } from 'mongoose';
-
-interface AlbumBase {
-  aotd: boolean;
+export interface Album {
+  id: number;
   artist: string;
+  title: string;
+  year: string;
   cd: boolean;
   favorite: boolean;
-  title: string;
   studio: boolean;
-  year: string;
 }
 
-export interface AlbumData extends AlbumBase, Document {
-  _id: string;
-  updatedAt: Date;
-}
-
-export interface Album extends AlbumBase {
-  id: string;
-  updatedAt: string;
-}
-
-export interface Favorite {
+export interface Release {
+  id: number;
   artist: string;
   title: string;
-  year: string;
-}
-
-interface ReleaseBase {
-  artist: string;
-  title: string;
-}
-
-export interface ReleaseData extends ReleaseBase, Document {
-  _id: string;
-  date: Date | null;
-}
-
-export interface Release extends ReleaseBase {
-  id: string;
   date: string | null;
 }
 
-interface SongBase {
+export interface Song {
+  id: number;
   artist: string;
   title: string;
   link: string;
-}
-
-export interface SongData extends SongBase, Document {
-  _id: string;
-}
-
-export interface Song extends SongBase {
-  id: string;
 }
 
 export interface AlbumInput {
@@ -60,7 +27,6 @@ export interface AlbumInput {
   title: string;
   year: string;
   cd: boolean;
-  aotd: boolean;
   favorite: boolean;
   studio: boolean;
 }

@@ -1,6 +1,6 @@
 {
   "name": "perfect-albums-next",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next dev",
@@ -10,14 +10,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
-    "@supabase/supabase-js": "^1.25.2",
+    "@supabase/supabase-js": "^1.29.1",
     "@tailwindcss/forms": "^0.4.0",
     "@tsndr/cloudflare-worker-jwt": "^1.1.4",
     "autoprefixer": "^10.4.0",
     "cookie": "^0.4.1",
-    "mongoose": "^5.13.3",
     "next": "^12.0.1",
-    "next-connect": "^0.10.2",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.5",
     "react": "^17.0.2",

@@ -2,23 +2,21 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { MESSAGES, METHODS, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
-import dbConnect from 'lib/dbConnect';
-import formatAlbum from 'lib/formatAlbum';
+import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import { getTitle } from 'utils';
-import { Album as AlbumType } from 'utils/types';
-import Album from 'models/Album';
-import useMutation from 'hooks/useMutation';
+import supabase from 'utils/supabase';
+import { Album } from 'utils/types';
+import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
 import DeleteAlbum from 'components/DeleteAlbum';
 
 interface Props {
-  album: AlbumType;
+  album: Album;
 }
 
 export default function DeleteAlbumPage({ album }: Props) {
   const router = useRouter();
-  const deleteAlbum = useMutation(`/api/albums/${album.id}`);
+  const deleteAlbum = useDelete('albums');
 
   const options = {
     callbacks: [
@@ -33,10 +31,7 @@ export default function DeleteAlbumPage({ album }: Props) {
       },
     ],
     submitFn: async () => {
-      await deleteAlbum({
-        body: null,
-        method: METHODS.DELETE,
-      });
+      await deleteAlbum(album.id);
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
@@ -66,15 +61,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     };
   }
 
-  await dbConnect();
-  const data = await Album.findById(params.id);
-  const payload = {
-    props: { album: {} },
+  const { data: album } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('id', params.id)
+    .single();
+
+  return {
+    props: { album },
   };
-
-  if (data) {
-    payload.props.album = formatAlbum(data);
-  }
-
-  return payload;
 };
