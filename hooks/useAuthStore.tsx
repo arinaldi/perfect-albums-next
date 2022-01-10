@@ -1,8 +1,9 @@
 import { ReactNode, useEffect } from 'react';
 import router from 'next/router';
-import create, { SetState } from 'zustand';
+import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import {
+  ApiError,
   AuthChangeEvent,
   Provider,
   Session,
@@ -14,8 +15,7 @@ import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import supabase from 'utils/supabase';
 
 interface Response {
-  data: Session | null;
-  error: any;
+  error: ApiError | null;
   provider?: Provider | undefined;
   session: Session | null;
   url?: string | null | undefined;
@@ -25,14 +25,14 @@ interface Response {
 interface AuthState {
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<void>;
-  user: User | null | undefined;
+  user: any; // TODO: fix typing: User | null | undefined;
 }
 
 interface Props {
   children: ReactNode;
 }
 
-const store = (set: SetState<AuthState>) => ({
+const store = () => ({
   signIn: async (email: string, password: string) =>
     await supabase.auth.signIn({ email, password }),
   signOut: async () => {
