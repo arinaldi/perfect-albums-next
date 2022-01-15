@@ -5,7 +5,7 @@ import { Release } from 'utils/types';
 
 export async function getReleases(): Promise<Release[]> {
   const { data: releases, error } = await supabase
-    .from('releases')
+    .from<Release>('releases')
     .select('*')
     .order('artist', { ascending: true });
 

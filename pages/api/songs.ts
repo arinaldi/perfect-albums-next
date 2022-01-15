@@ -5,7 +5,7 @@ import { Song } from 'utils/types';
 
 export async function getSongs(): Promise<Song[]> {
   const { data: songs, error } = await supabase
-    .from('songs')
+    .from<Song>('songs')
     .select('*')
     .order('created_at', { ascending: false });
 

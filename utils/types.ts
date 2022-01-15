@@ -1,5 +1,6 @@
 export interface Album {
   id: number;
+  created_at: string;
   artist: string;
   title: string;
   year: string;
@@ -10,6 +11,7 @@ export interface Album {
 
 export interface Release {
   id: number;
+  created_at: string;
   artist: string;
   title: string;
   date: string | null;
@@ -17,10 +19,13 @@ export interface Release {
 
 export interface Song {
   id: number;
+  created_at: string;
   artist: string;
   title: string;
   link: string;
 }
+
+export type Table = 'albums' | 'releases' | 'songs';
 
 export interface AlbumInput {
   artist: string;

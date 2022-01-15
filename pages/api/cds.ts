@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import supabase from 'utils/supabase';
+import { Album } from 'utils/types';
 
 export async function getCdCount(): Promise<number> {
   const { count, error } = await supabase
-    .from('albums')
+    .from<Album>('albums')
     .select('*', { count: 'exact', head: true })
     .eq('cd', true);
 

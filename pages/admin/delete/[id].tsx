@@ -62,9 +62,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 
   const { data: album } = await supabase
-    .from('albums')
+    .from<Album>('albums')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', params.id as string)
     .single();
 
   return {

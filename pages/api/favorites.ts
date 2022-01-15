@@ -5,7 +5,7 @@ import { Album } from 'utils/types';
 
 export async function getFavorites(): Promise<Album[]> {
   const { data: favorites, error } = await supabase
-    .from('albums')
+    .from<Album>('albums')
     .select('*')
     .eq('favorite', true)
     .order('artist', { ascending: true });
