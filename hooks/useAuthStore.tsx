@@ -53,22 +53,18 @@ const useAuthStore = create<AuthState>(
 
 export default useAuthStore;
 
-async function handleAuthChange(
-  event: AuthChangeEvent,
-  session: Session | null,
-) {
-  await fetch('/api/auth', {
-    method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json' }),
-    credentials: 'same-origin',
-    body: JSON.stringify({ event, session }),
-  });
-}
+supabase.auth.onAuthStateChange(
+  async (event: AuthChangeEvent, session: Session | null) => {
+    await fetch('/api/auth', {
+      method: 'POST',
+      headers: new Headers({ 'Content-Type': 'application/json' }),
+      credentials: 'same-origin',
+      body: JSON.stringify({ event, session }),
+    });
 
-supabase.auth.onAuthStateChange((event, session) => {
-  handleAuthChange(event, session);
-  useAuthStore.setState({ user: session?.user || null });
-});
+    useAuthStore.setState({ user: supabase.auth.user() });
+  },
+);
 
 export async function fetcher(url: string): Promise<any> {
   return window
@@ -104,6 +100,9 @@ export function SWRProvider({ children }: Props) {
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
+    // TODO: try
+    // const { data: listener } = supabase.auth.onAuthStateChange();
+    // return () => { listener?.unsubscribe() }
     if (user === undefined && supabase.auth.user() === null) {
       useAuthStore.setState({ user: null });
     }

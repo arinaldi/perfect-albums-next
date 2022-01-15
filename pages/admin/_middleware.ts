@@ -14,3 +14,18 @@ export async function middleware(req: NextRequest) {
 
   return NextResponse.next();
 }
+
+/*
+  https://github.com/jitsucom/supabase-nextjs-middleware/blob/main/pages/app/_middleware.ts
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL as string}/auth/v1/user`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        APIKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+      },
+    },
+  );
+  const data = await response.json();
+*/
