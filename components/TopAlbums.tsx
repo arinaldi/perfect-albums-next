@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
+import { ArrowUpIcon } from '@heroicons/react/outline';
 
 import { DECADES } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
 import { Album } from 'utils/types';
 import Layout from 'components/Layout';
 import TopAlbumList from 'components/TopAlbumList';
-import { ArrowUpIcon } from 'components/Icons';
 
 interface Props {
   data: {
@@ -61,8 +61,8 @@ export default function TopAlbums({ data, onChange, value }: Props) {
         className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200"
         href="#top"
       >
-        <ArrowUpIcon />
-        <span>&nbsp;Top</span>
+        <ArrowUpIcon className="inline w-4 h-4 mr-1" />
+        <span>Top</span>
       </a>
     </Layout>
   );

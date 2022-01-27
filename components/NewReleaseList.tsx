@@ -1,6 +1,7 @@
+import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+
 import { ListItem } from 'utils';
 import useAuthStore from 'hooks/useAuthStore';
-import { DeleteIcon, EditIcon } from 'components/Icons';
 
 interface Props {
   data: ListItem[];
@@ -32,13 +33,13 @@ export default function NewReleaseList({
                   className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onEdit(release)}
                 >
-                  <EditIcon />
+                  <PencilIcon className="inline w-4 h-4" />
                 </span>
                 <span
                   className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onDelete(release)}
                 >
-                  <DeleteIcon />
+                  <TrashIcon className="inline w-4 h-4" />
                 </span>
               </>
             )}

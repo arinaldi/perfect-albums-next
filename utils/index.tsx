@@ -1,8 +1,11 @@
 import { ReactNode } from 'react';
+import {
+  ArrowNarrowDownIcon,
+  ArrowNarrowUpIcon,
+} from '@heroicons/react/outline';
 
 import { MONTHS, PER_PAGE, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
 import { Album, Release } from 'utils/types';
-import { ArrowDownIcon, ArrowUpIcon } from 'components/Icons';
 
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
@@ -76,8 +79,10 @@ export function getSortIcon(direction: SORT_DIRECTION): ReactNode {
   const { ASC, DESC } = SORT_DIRECTION;
 
   if (!direction) return null;
-  if (direction === ASC) return <ArrowUpIcon />;
-  if (direction === DESC) return <ArrowDownIcon />;
+  if (direction === ASC)
+    return <ArrowNarrowUpIcon className="inline w-4 h-4 mr-1" />;
+  if (direction === DESC)
+    return <ArrowNarrowDownIcon className="inline w-4 h-4 mr-1" />;
 
   return null;
 }

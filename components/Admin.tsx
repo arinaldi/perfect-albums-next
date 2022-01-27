@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { CheckIcon } from '@heroicons/react/outline';
 
 import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import { getSortIcon } from 'utils';
@@ -11,7 +12,6 @@ import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
 import TableButton from 'components/TableButton';
-import { CheckIcon } from 'components/Icons';
 
 const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
@@ -179,10 +179,14 @@ export default function Admin() {
                             {album.year}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.cd ? <CheckIcon /> : null}
+                            {album.cd ? (
+                              <CheckIcon className="inline w-5 h-5" />
+                            ) : null}
                           </td>
                           <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
-                            {album.favorite ? <CheckIcon /> : null}
+                            {album.favorite ? (
+                              <CheckIcon className="inline w-5 h-5" />
+                            ) : null}
                           </td>
                           <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                             <TableButton

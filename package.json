@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
+    "@heroicons/react": "^1.0.5",
     "@supabase/supabase-js": "^1.29.1",
     "@tailwindcss/forms": "^0.4.0",
     "@tsndr/cloudflare-worker-jwt": "^1.1.4",

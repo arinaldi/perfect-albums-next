@@ -1,8 +1,9 @@
+import { TrashIcon } from '@heroicons/react/outline';
+
 import useAuthStore from 'hooks/useAuthStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
-import { DeleteIcon } from 'components/Icons';
 
 interface Props {
   data: {
@@ -49,7 +50,7 @@ export default function FeaturedSongs({
                   className="cursor-pointer ml-2 dark:text-white"
                   onClick={() => onDeleteOpen(song)}
                 >
-                  <DeleteIcon />
+                  <TrashIcon className="inline w-4 h-4" />
                 </span>
               ) : null}
             </div>

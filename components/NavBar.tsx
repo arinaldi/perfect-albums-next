@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { MenuIcon, MoonIcon, SunIcon, XIcon } from '@heroicons/react/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
 import useDarkMode from 'hooks/useDarkMode';
-import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from 'components/Icons';
 import LinkWrapper from 'components/LinkWrapper';
 
 export default function NavBar() {
@@ -35,9 +35,7 @@ export default function NavBar() {
               <MenuIcon
                 className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
               />
-              <CloseIcon
-                className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
-              />
+              <XIcon className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`} />
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -68,7 +66,11 @@ export default function NavBar() {
             type="button"
           >
             <span className="sr-only">Toggle dark mode</span>
-            {isDarkMode ? <SunIcon /> : <MoonIcon />}
+            {isDarkMode ? (
+              <SunIcon className="w-5 h-5" />
+            ) : (
+              <MoonIcon className="w-5 h-5" />
+            )}
           </button>
           <div className="hidden absolute inset-y-0 right-0 sm:flex sm:items-center pr-2 sm:static sm:inset-auto sm:ml-0 sm:pr-0">
             {user ? (
