@@ -19,14 +19,7 @@ interface Props {
 export default function EditAlbumPage({ album }: Props) {
   const router = useRouter();
   const { handleSubmit, register } = useForm<AlbumInput>({
-    defaultValues: {
-      artist: album.artist,
-      title: album.title,
-      year: album.year,
-      cd: album.cd,
-      favorite: album.favorite,
-      studio: album.studio,
-    },
+    defaultValues: album,
   });
   const editAlbum = useUpdate('albums');
 
