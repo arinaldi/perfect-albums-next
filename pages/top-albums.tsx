@@ -34,7 +34,7 @@ export default function TopAlbumsPage({ favorites }: Props) {
       <Head>
         <title>{getTitle('Top Albums')}</title>
       </Head>
-      <TopAlbums data={data} onChange={handleChange} value={value} />
+      <TopAlbums data={data.favorites} onChange={handleChange} value={value} />
     </>
   );
 }

@@ -1,5 +1,5 @@
 const threeRows = Array.from({ length: 3 }, (_, i) => i);
-const sevenCols = Array.from({ length: 7 }, (_, i) => i);
+const sevenCols = Array.from({ length: 6 }, (_, i) => i);
 
 export default function TableSkeleton() {
   return (

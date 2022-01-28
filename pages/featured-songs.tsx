@@ -36,7 +36,7 @@ export default function FeaturedSongsPage({ songs }: Props) {
         <title>{getTitle('Featured Songs')}</title>
       </Head>
       <FeaturedSongs
-        data={data}
+        data={data.songs}
         onCreateOpen={handleCreateOpen}
         onDeleteOpen={handleDeleteOpen}
       />

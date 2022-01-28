@@ -40,7 +40,7 @@ export default function NewReleasesPage({ releases }: Props) {
         <title>{getTitle('New Releases')}</title>
       </Head>
       <NewReleases
-        data={data}
+        data={data.releases}
         onCreateOpen={handleCreateOpen}
         onDeleteOpen={handleDeleteOpen}
         onEditOpen={handleEditOpen}

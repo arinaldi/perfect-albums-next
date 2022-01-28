@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { CheckIcon } from '@heroicons/react/outline';
+import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import { getSortIcon } from 'utils';
@@ -11,7 +11,6 @@ import StudioFilter from 'components/StudioFilter';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
-import TableButton from 'components/TableButton';
 
 const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
@@ -152,7 +151,7 @@ export default function Admin() {
                         Favorite
                       </th>
                       <th
-                        className="sm:w-auto px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
+                        className="sm:w-[1%] px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider whitespace-nowrap dark:text-white"
                         scope="col"
                       >
                         Actions
@@ -189,25 +188,22 @@ export default function Admin() {
                             ) : null}
                           </td>
                           <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                            <TableButton
+                            <PencilIcon
+                              className="inline w-4 h-4 cursor-pointer dark:text-white"
                               onClick={() =>
                                 handleRouteChange(
                                   `${ROUTES_ADMIN.edit.href}/${album.id}`,
                                 )
                               }
-                            >
-                              Edit
-                            </TableButton>
-                            <span className="ml-1" />
-                            <TableButton
+                            />
+                            <TrashIcon
+                              className="inline w-4 h-4 cursor-pointer ml-4 dark:text-white"
                               onClick={() =>
                                 handleRouteChange(
                                   `${ROUTES_ADMIN.delete.href}/${album.id}`,
                                 )
                               }
-                            >
-                              Delete
-                            </TableButton>
+                            />
                           </td>
                         </tr>
                       ))}
