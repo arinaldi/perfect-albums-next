@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 interface Props {
   id: string;
   required?: boolean;
-  type: 'text' | 'date' | 'email' | 'password';
+  type: 'text' | 'date' | 'email';
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
@@ -17,7 +17,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           {id}
         </label>
         <input
-          autoCapitalize={id === 'password' ? 'off' : 'on'}
+          autoCapitalize={id === 'email' ? 'off' : 'on'}
           autoComplete={id}
           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
           id={id}

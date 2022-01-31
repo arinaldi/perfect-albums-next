@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
@@ -8,13 +7,13 @@ import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
 import Input from 'components/Input';
+import PasswordInput from 'components/PasswordInput';
 import SubmitButton from 'components/SubmitButton';
 
 export default function SignIn() {
   const router = useRouter();
   const signIn = useAuthStore((state) => state.signIn);
   const { handleSubmit, register } = useForm<SignInInput>();
-  const [showPassword, setShowPassword] = useState(false);
 
   const options = {
     callbacks: [() => router.push(ROUTE_HREF.NEW_RELEASES)],
@@ -42,24 +41,12 @@ export default function SignIn() {
                 />
               </div>
               <div className="mb-4">
-                <Input
-                  id="password"
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password', { required: true })}
-                />
+                <PasswordInput {...register('password', { required: true })} />
               </div>
             </div>
           </div>
         </div>
         <div className="flex items-center justify-end">
-          <button
-            className="text-gray-500 background-transparent font-bold uppercase px-6 py-3 rounded text-sm outline-none focus:outline-none mr-1 mb-1 hover:bg-gray-200"
-            onClick={() => setShowPassword((show) => !show)}
-            type="button"
-          >
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
           <SubmitButton
             isSubmitting={isSubmitting}
             label="Submit"
