@@ -100,9 +100,6 @@ export function SWRProvider({ children }: Props) {
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    // TODO: try
-    // const { data: listener } = supabase.auth.onAuthStateChange();
-    // return () => { listener?.unsubscribe() }
     if (user === undefined && supabase.auth.user() === null) {
       useAuthStore.setState({ user: null });
     }

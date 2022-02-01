@@ -5,18 +5,13 @@ import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const token = req.cookies['sb:token'];
 
   if (pathname === '/') {
     return NextResponse.redirect(ROUTE_HREF.TOP_ALBUMS, 302);
   }
 
-  if (pathname !== ROUTE_HREF.SIGNIN) {
-    return NextResponse.next();
-  }
-
-  const token = req.cookies['sb:token'];
-
-  if (!token) {
+  if (pathname !== ROUTE_HREF.SIGNIN || !token) {
     return NextResponse.next();
   }
 
