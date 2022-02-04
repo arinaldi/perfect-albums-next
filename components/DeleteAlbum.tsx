@@ -26,8 +26,8 @@ export default function DeleteAlbum({ album, isSubmitting, onSubmit }: Props) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-4 dark:bg-gray-800">
-      <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
+    <div className="mx-auto max-w-7xl p-4 dark:bg-gray-800">
+      <h1 className="text-2xl font-semibold dark:text-white sm:text-3xl">
         Delete Album
       </h1>
       <div className="relative flex-auto">

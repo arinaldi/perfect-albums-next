@@ -12,14 +12,14 @@ const Input = forwardRef<HTMLInputElement, Props>(
       <>
         <label
           htmlFor={id}
-          className="capitalize block text-sm font-medium text-gray-700 dark:text-white"
+          className="block text-sm font-medium capitalize text-gray-700 dark:text-white"
         >
           {id}
         </label>
         <input
           autoCapitalize={id === 'email' ? 'off' : 'on'}
           autoComplete={id}
-          className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
           id={id}
           ref={ref}
           required={required}

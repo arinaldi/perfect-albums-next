@@ -11,7 +11,7 @@ export default function SubmitButton({
 }: Props) {
   return (
     <button
-      className="bg-gray-600 text-white active:bg-gray-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-900"
+      className="mr-1 mb-1 rounded bg-gray-600 px-6 py-3 text-sm font-bold uppercase text-white shadow outline-none hover:bg-gray-900 hover:shadow-lg focus:outline-none active:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
       disabled={isSubmitting}
       type="submit"
     >

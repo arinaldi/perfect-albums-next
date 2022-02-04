@@ -25,13 +25,13 @@ export default function NewReleases({
 
   return (
     <Layout title="New Releases" titleAction={NewButton}>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(formatReleases(data))
           .sort(sortByDate)
           .map(([date, releases]) => (
             <div key={date}>
               <h4 className="text-xl font-semibold dark:text-white">{date}</h4>
-              <ul data-testid={`list-${date}`} className="list-disc ml-6 p-1">
+              <ul data-testid={`list-${date}`} className="ml-6 list-disc p-1">
                 {releases.map((release) => (
                   <li key={release.id} className="dark:text-white">
                     <span>
@@ -40,11 +40,11 @@ export default function NewReleases({
                     {user && (
                       <>
                         <PencilIcon
-                          className="inline w-4 h-4 cursor-pointer ml-2 dark:text-white"
+                          className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
                           onClick={() => onEditOpen(release)}
                         />
                         <TrashIcon
-                          className="inline w-4 h-4 cursor-pointer ml-2 dark:text-white"
+                          className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
                           onClick={() => onDeleteOpen(release)}
                         />
                       </>

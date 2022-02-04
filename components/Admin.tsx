@@ -41,7 +41,7 @@ export default function Admin() {
   const Title = (
     <>
       Admin
-      <span className="ml-3 px-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
+      <span className="ml-3 rounded-md bg-gray-100 px-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
         {isLoading ? '—' : total.toLocaleString()}
       </span>
     </>
@@ -50,7 +50,7 @@ export default function Admin() {
   const AppVersion = (
     <div className="dark:text-white">
       <code className="mr-3">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
-      <span className="mr-1 px-1 rounded-md bg-gray-100 text-md sm:text-lg font-semibold dark:bg-gray-700">
+      <span className="text-md mr-1 rounded-md bg-gray-100 px-1 font-semibold dark:bg-gray-700 sm:text-lg">
         {cdTotal === 0 ? '—' : cdTotal}
       </span>
       CDs
@@ -59,9 +59,9 @@ export default function Admin() {
 
   return (
     <Layout title={Title} titleAction={AppVersion}>
-      <div className="block sm:flex sm:justify-between sm:items-center mb-4">
+      <div className="mb-4 block sm:flex sm:items-center sm:justify-between">
         <input
-          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
           id="artist-search"
           name="artist"
           onChange={onArtistChange}
@@ -71,7 +71,7 @@ export default function Admin() {
           value={artistSearch}
         />
         <input
-          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm sm:ml-4 mt-2 sm:mt-0 border-gray-300 rounded-md dark:border-black dark:bg-gray-700 dark:text-white"
+          className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:ml-4 sm:mt-0 sm:text-sm"
           id="title-search"
           name="title"
           onChange={onTitleChange}
@@ -80,7 +80,7 @@ export default function Admin() {
           type="text"
           value={titleSearch}
         />
-        <div className="flex justify-between mt-2 sm:mt-0 sm:ml-4">
+        <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">
           <div className="flex">
             <Button onClick={onClear}>Clear</Button>
             <span className="ml-1" />
@@ -94,7 +94,7 @@ export default function Admin() {
         </div>
       </div>
 
-      <div className="flex justify-center mb-4">
+      <div className="mb-4 flex justify-center">
         <Pagination />
         <div className="mx-2" />
         <PerPage />
@@ -109,13 +109,13 @@ export default function Admin() {
       ) : (
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg dark:border-black">
-                <table className="min-w-full divide-y divide-gray-200 table-auto sm:table-fixed dark:divide-black">
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <div className="overflow-hidden border-b border-gray-200 dark:border-black sm:rounded-lg">
+                <table className="min-w-full table-auto divide-y divide-gray-200 dark:divide-black sm:table-fixed">
                   <thead>
                     <tr>
                       <th
-                        className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
+                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/4"
                         onClick={() => onSort(ARTIST)}
                         scope="col"
                       >
@@ -123,7 +123,7 @@ export default function Admin() {
                         Artist
                       </th>
                       <th
-                        className="sm:w-1/4 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
+                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/4"
                         onClick={() => onSort(TITLE)}
                         scope="col"
                       >
@@ -131,7 +131,7 @@ export default function Admin() {
                         Title
                       </th>
                       <th
-                        className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider cursor-pointer dark:text-white"
+                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
                         onClick={() => onSort(YEAR)}
                         scope="col"
                       >
@@ -139,19 +139,19 @@ export default function Admin() {
                         Year
                       </th>
                       <th
-                        className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
+                        className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
                         scope="col"
                       >
                         CD
                       </th>
                       <th
-                        className="sm:w-1/12 px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider dark:text-white"
+                        className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
                         scope="col"
                       >
                         Favorite
                       </th>
                       <th
-                        className="sm:w-[1%] px-3 py-3 text-left text-xs font-extrabold text-gray-700 uppercase tracking-wider whitespace-nowrap dark:text-white"
+                        className="whitespace-nowrap px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-[1%]"
                         scope="col"
                       >
                         Actions
@@ -161,35 +161,35 @@ export default function Admin() {
                   {isLoading ? (
                     <TableSkeleton />
                   ) : (
-                    <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-500 dark:divide-black">
+                    <tbody className="divide-y divide-gray-200 bg-white dark:divide-black dark:bg-gray-500">
                       {albums.map((album) => (
                         <tr
                           key={album.id}
-                          className="odd:bg-gray-100 even:bg-gray-0 dark:odd:bg-gray-700 dark:even:bg-gray-800"
+                          className="even:bg-gray-0 odd:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-gray-800"
                         >
-                          <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
+                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
                             {album.artist}
                           </td>
-                          <td className="sm:max-w-0 sm:w-1/4 px-3 py-2 sm:truncate text-sm text-gray-900 dark:text-white">
+                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
                             {album.studio ? <span>*</span> : null}
                             <span>{album.title}</span>
                           </td>
-                          <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
+                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
                             {album.year}
                           </td>
-                          <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
+                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
                             {album.cd ? (
-                              <CheckIcon className="inline w-5 h-5" />
+                              <CheckIcon className="inline h-5 w-5" />
                             ) : null}
                           </td>
-                          <td className="sm:w-1/12 px-3 py-2 text-sm text-gray-900 dark:text-white">
+                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
                             {album.favorite ? (
-                              <CheckIcon className="inline w-5 h-5" />
+                              <CheckIcon className="inline h-5 w-5" />
                             ) : null}
                           </td>
-                          <td className="sm:w-auto px-3 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                          <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-auto">
                             <PencilIcon
-                              className="inline w-4 h-4 cursor-pointer dark:text-white"
+                              className="inline h-4 w-4 cursor-pointer dark:text-white"
                               onClick={() =>
                                 handleRouteChange(
                                   `${ROUTES_ADMIN.edit.href}/${album.id}`,
@@ -197,7 +197,7 @@ export default function Admin() {
                               }
                             />
                             <TrashIcon
-                              className="inline w-4 h-4 cursor-pointer ml-4 dark:text-white"
+                              className="ml-4 inline h-4 w-4 cursor-pointer dark:text-white"
                               onClick={() =>
                                 handleRouteChange(
                                   `${ROUTES_ADMIN.delete.href}/${album.id}`,

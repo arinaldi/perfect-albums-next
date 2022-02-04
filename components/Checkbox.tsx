@@ -14,7 +14,7 @@ const Checkbox = forwardRef<HTMLInputElement, Props>(
             {label}
           </p>
         </div>
-        <div className="flex items-center mr-4">
+        <div className="mr-4 flex items-center">
           <input ref={ref} type="checkbox" {...rest} />
         </div>
       </fieldset>

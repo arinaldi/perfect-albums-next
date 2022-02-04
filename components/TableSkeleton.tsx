@@ -3,15 +3,15 @@ const sevenCols = Array.from({ length: 6 }, (_, i) => i);
 
 export default function TableSkeleton() {
   return (
-    <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-500 dark:divide-black">
+    <tbody className="divide-y divide-gray-200 bg-white dark:divide-black dark:bg-gray-500">
       {threeRows.map((row) => (
         <tr
-          className="odd:bg-gray-100 even:bg-gray-0 dark:odd:bg-gray-700 dark:even:bg-gray-800"
+          className="even:bg-gray-0 odd:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-gray-800"
           key={row}
         >
           {sevenCols.map((cell) => (
-            <td className="animate-pulse h-12 px-3 py-2" key={cell}>
-              <div className="h-3 bg-gray-300 rounded w-2/3" />
+            <td className="h-12 animate-pulse px-3 py-2" key={cell}>
+              <div className="h-3 w-2/3 rounded bg-gray-300" />
             </td>
           ))}
         </tr>

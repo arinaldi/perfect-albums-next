@@ -15,8 +15,8 @@ export default function Layout({
 }: Props) {
   return (
     <div className={`mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl sm:text-3xl font-semibold dark:text-white">
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold dark:text-white sm:text-3xl">
           {title}
         </h1>
         {titleAction}

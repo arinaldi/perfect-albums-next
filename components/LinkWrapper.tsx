@@ -23,7 +23,7 @@ export default function LinkWrapper({
       <a
         className={`${isActive ? 'text-white' : 'text-gray-300'} ${
           classNames || ''
-        } font-medium px-3 py-2 rounded-md hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800`}
+        } rounded-md px-3 py-2 font-medium hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800`}
         onClick={onClick}
       >
         <span className={`${isActive ? 'border-b-2' : ''} pb-1`}>

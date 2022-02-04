@@ -80,9 +80,9 @@ export function getSortIcon(direction: SORT_DIRECTION): ReactNode {
 
   if (!direction) return null;
   if (direction === ASC)
-    return <ArrowNarrowUpIcon className="inline w-4 h-4 mr-1" />;
+    return <ArrowNarrowUpIcon className="mr-1 inline h-4 w-4" />;
   if (direction === DESC)
-    return <ArrowNarrowDownIcon className="inline w-4 h-4 mr-1" />;
+    return <ArrowNarrowDownIcon className="mr-1 inline h-4 w-4" />;
 
   return null;
 }

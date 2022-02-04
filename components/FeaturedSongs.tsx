@@ -22,16 +22,16 @@ export default function FeaturedSongs({
 
   return (
     <Layout title="Featured Songs" titleAction={NewButton}>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8">
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {data.map((song) => (
           <div
-            className="border border-gray-200 bg-white rounded-md shadow-sm p-4 dark:bg-gray-700 dark:border-black"
+            className="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-black dark:bg-gray-700"
             key={song.id}
           >
-            <div className="text-xl font-semibold mb-1 dark:text-white">
+            <div className="mb-1 text-xl font-semibold dark:text-white">
               {song.title}
             </div>
-            <div className="text-gray-500 mb-2 dark:text-white">
+            <div className="mb-2 text-gray-500 dark:text-white">
               {song.artist}
             </div>
             <div>
@@ -45,10 +45,10 @@ export default function FeaturedSongs({
               </a>
               {user ? (
                 <span
-                  className="cursor-pointer ml-2 dark:text-white"
+                  className="ml-2 cursor-pointer dark:text-white"
                   onClick={() => onDeleteOpen(song)}
                 >
-                  <TrashIcon className="inline w-4 h-4" />
+                  <TrashIcon className="inline h-4 w-4" />
                 </span>
               ) : null}
             </div>

@@ -14,10 +14,10 @@ export default function AppMessage({
   return (
     <div className="mt-8 flex justify-center">
       <div
-        className={`px-6 py-4 border-l-4 rounded-sm ${
+        className={`rounded-sm border-l-4 px-6 py-4 ${
           type === ERROR
-            ? 'bg-red-200 border-red-700'
-            : 'bg-blue-200 border-blue-700'
+            ? 'border-red-700 bg-red-200'
+            : 'border-blue-700 bg-blue-200'
         }`}
         style={{ height: 'fit-content' }}
       >

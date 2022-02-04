@@ -54,10 +54,10 @@ export default function Modal({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block w-full max-w-lg my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl dark:bg-gray-800">
+            <div className="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all dark:bg-gray-800">
               <Dialog.Title
                 as="h3"
-                className="text-2xl p-6 pb-0 font-semibold dark:text-white"
+                className="p-6 pb-0 text-2xl font-semibold dark:text-white"
               >
                 {title}
               </Dialog.Title>

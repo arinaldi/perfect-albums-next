@@ -16,7 +16,7 @@ export default function TopAlbums({ data, onChange, value }: Props) {
   const Title = (
     <>
       Top Albums
-      <span className="ml-3 p-1 rounded-md bg-gray-100 text-xl sm:text-2xl font-semibold dark:bg-gray-700">
+      <span className="ml-3 rounded-md bg-gray-100 p-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
         {data.length.toLocaleString()}
       </span>
     </>
@@ -24,7 +24,7 @@ export default function TopAlbums({ data, onChange, value }: Props) {
 
   const DecadeSelect = (
     <select
-      className="py-2 pl-3 pr-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-black dark:text-white"
+      className="rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
       name="decade"
       onChange={onChange}
       value={value}
@@ -42,20 +42,20 @@ export default function TopAlbums({ data, onChange, value }: Props) {
 
   return (
     <Layout title={Title} titleAction={DecadeSelect}>
-      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Object.entries(formatFavorites(data))
           .sort(sortDesc)
           .map(([year, favorites]) => (
             <div key={year}>
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <h4 id={year} className="text-xl font-semibold dark:text-white">
                   {year}
                 </h4>
-                <div className="px-2 py-1 mr-4 rounded-md bg-gray-100 text-xl font-semibold dark:text-white dark:bg-gray-700">
+                <div className="mr-4 rounded-md bg-gray-100 px-2 py-1 text-xl font-semibold dark:bg-gray-700 dark:text-white">
                   {favorites.length.toLocaleString()}
                 </div>
               </div>
-              <ul data-testid={`list-${year}`} className="list-disc ml-6 p-1">
+              <ul data-testid={`list-${year}`} className="ml-6 list-disc p-1">
                 {favorites.map((album, index) => (
                   <li key={index} className="dark:text-white">
                     {album.artist} &ndash; {album.title}
@@ -69,7 +69,7 @@ export default function TopAlbums({ data, onChange, value }: Props) {
         className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200"
         href="#top"
       >
-        <ArrowUpIcon className="inline w-4 h-4 mr-1" />
+        <ArrowUpIcon className="mr-1 inline h-4 w-4" />
         <span>Top</span>
       </a>
     </Layout>
