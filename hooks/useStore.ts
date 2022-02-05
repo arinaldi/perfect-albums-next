@@ -11,12 +11,12 @@ interface State {
 }
 
 let resolve: Resolve;
-const initialCurrentUser = new Promise((r) => {
+const initialUser = new Promise((r) => {
   resolve = r;
 });
 
 const state = proxy<State>({
-  user: initialCurrentUser,
+  user: initialUser,
 });
 
 if (process.env.NODE_ENV === 'development') {
