@@ -2,19 +2,22 @@ import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from 'constants/index';
 import useInsert from 'hooks/useInsert';
-import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import { ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-export default function CreateReleaseModal() {
-  const closeModal = useStore((state) => state.closeModal);
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function CreateReleaseModal({ isOpen, onClose }: Props) {
   const createRelease = useInsert('releases');
   const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   function handleClose() {
-    closeModal();
+    onClose();
     reset();
   }
 
@@ -30,6 +33,7 @@ export default function CreateReleaseModal() {
 
   return (
     <Modal
+      isOpen={isOpen}
       isSubmitting={isSubmitting}
       onClose={handleClose}
       onSubmit={onSubmit}

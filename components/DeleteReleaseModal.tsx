@@ -1,18 +1,22 @@
 import { MESSAGES } from 'constants/index';
 import useDelete from 'hooks/useDelete';
-import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
+import { Release } from 'utils/types';
 import Modal from 'components/Modal';
 
-export default function DeleteReleaseModal() {
-  const data = useStore((state) => state.data);
-  const closeModal = useStore((state) => state.closeModal);
+interface Props {
+  data: Release | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function DeleteReleaseModal({ data, isOpen, onClose }: Props) {
   const deleteRelease = useDelete('releases');
 
   const options = {
-    callbacks: [closeModal],
+    callbacks: [onClose],
     submitFn: async () => {
-      await deleteRelease(data.id);
+      await deleteRelease(data?.id || 0);
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
@@ -20,15 +24,17 @@ export default function DeleteReleaseModal() {
 
   return (
     <Modal
+      isOpen={isOpen}
       isSubmitting={isSubmitting}
-      onClose={closeModal}
+      onClose={onClose}
       onSubmit={onSubmit}
       title="Delete Release"
     >
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6 dark:text-white">
-            Are you sure you want to delete {data.artist} &ndash; {data.title}?
+            Are you sure you want to delete {data?.artist} &ndash; {data?.title}
+            ?
           </div>
         </div>
       </div>

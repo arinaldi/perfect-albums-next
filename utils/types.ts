@@ -1,3 +1,5 @@
+import { MODAL_TYPES } from 'constants/index';
+
 export interface Album {
   id: number;
   created_at: string;

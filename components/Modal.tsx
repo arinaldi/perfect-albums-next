@@ -1,12 +1,12 @@
 import { FormEvent, Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import useStore from 'hooks/useStore';
 import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   children: ReactNode;
+  isOpen: boolean;
   isSubmitting: boolean;
   onClose: () => void;
   onSubmit: (event: FormEvent<Element>) => void;
@@ -15,12 +15,12 @@ interface Props {
 
 export default function Modal({
   children,
+  isOpen,
   isSubmitting,
   onClose,
   onSubmit,
   title,
 }: Props) {
-  const isOpen = useStore((state) => state.isOpen);
   const isDeleteModal = title.toLowerCase().includes('delete');
 
   return (

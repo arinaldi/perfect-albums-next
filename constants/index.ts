@@ -36,6 +36,11 @@ export enum MODAL_TYPES {
   NEW_RELEASE_DELETE = 'Delete New Release',
 }
 
+export const modalInitialState = {
+  data: null,
+  type: MODAL_TYPES.INITIAL,
+};
+
 export enum APP_MESSAGE_TYPES {
   ERROR = 'error',
   INFO = 'info',
