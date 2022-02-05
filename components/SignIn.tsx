@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { ROUTE_HREF } from 'constants/index';
-import useAuthStore from 'hooks/useAuthStore';
 import useSubmit from 'hooks/useSubmit';
+import supabase from 'utils/supabase';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
 import Input from 'components/Input';
@@ -12,14 +12,13 @@ import SubmitButton from 'components/SubmitButton';
 
 export default function SignIn() {
   const router = useRouter();
-  const signIn = useAuthStore((state) => state.signIn);
   const { handleSubmit, register } = useForm<SignInInput>();
 
   const options = {
     callbacks: [() => router.push(ROUTE_HREF.NEW_RELEASES)],
     handleSubmit,
-    submitFn: async (data: SignInInput) => {
-      const { error } = await signIn(data.email, data.password);
+    submitFn: async ({ email, password }: SignInInput) => {
+      const { error } = await supabase.auth.signIn({ email, password });
 
       if (error) throw error;
     },

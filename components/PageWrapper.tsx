@@ -31,7 +31,7 @@ function PageWrapper({ children }: Props) {
       <NavBar />
       {children}
       <Toaster
-        position="top-right"
+        position="top-center"
         toastOptions={{
           duration: 4000,
           success: {

@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { MenuIcon, MoonIcon, SunIcon, XIcon } from '@heroicons/react/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
-import useAuthStore from 'hooks/useAuthStore';
+import useStore from 'hooks/useStore';
 import useDarkMode from 'hooks/useDarkMode';
+import supabase from 'utils/supabase';
 import LinkWrapper from 'components/LinkWrapper';
 
 export default function NavBar() {
-  const user = useAuthStore((state) => state.user);
-  const signOut = useAuthStore((state) => state.signOut);
+  const { user } = useStore();
+  const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -18,6 +20,14 @@ export default function NavBar() {
 
   function closeMenu() {
     setIsMenuOpen(false);
+  }
+
+  async function signOut() {
+    await supabase.auth.signOut();
+
+    if (router.pathname.startsWith(ROUTES_ADMIN.base.href)) {
+      router.push(ROUTE_HREF.TOP_ALBUMS);
+    }
   }
 
   return (
