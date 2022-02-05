@@ -1,6 +1,6 @@
-import { revalidateLiveQueries } from 'hooks/useAuthStore';
 import supabase from 'utils/supabase';
 import { Table } from 'utils/types';
+import { revalidateLiveQueries } from 'components/SWRProvider';
 
 export default function useInsert(table: Table) {
   return async function (data: any) {

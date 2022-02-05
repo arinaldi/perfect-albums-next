@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TrashIcon } from '@heroicons/react/outline';
 
 import { modalInitialState, MODAL_TYPES } from 'constants/index';
-import useAuthStore from 'hooks/useAuthStore';
+import useStore from 'hooks/useStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
@@ -19,7 +19,7 @@ interface ModalState {
 }
 
 export default function FeaturedSongs({ data }: Props) {
-  const user = useAuthStore((state) => state.user);
+  const { user } = useStore();
   const [modal, setModal] = useState<ModalState>(modalInitialState);
 
   function onClose() {

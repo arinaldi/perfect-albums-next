@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface Album {
   id: number;
   created_at: string;
@@ -54,3 +56,7 @@ export interface SignInInput {
 }
 
 export type Callback = () => void;
+
+export interface Children {
+  children: ReactNode;
+}

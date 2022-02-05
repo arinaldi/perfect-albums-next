@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { MODAL_TYPES, modalInitialState } from 'constants/index';
-import useAuthStore from 'hooks/useAuthStore';
+import useStore from 'hooks/useStore';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';
@@ -21,7 +21,7 @@ interface ModalState {
 }
 
 export default function NewReleases({ data }: Props) {
-  const user = useAuthStore((state) => state.user);
+  const { user } = useStore();
   const [modal, setModal] = useState<ModalState>(modalInitialState);
 
   function onClose() {

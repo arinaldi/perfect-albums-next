@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import nProgress from 'nprogress';
 
-import { SWRProvider } from 'hooks/useAuthStore';
+import useIsMounted from 'hooks/useIsMounted';
 import PageWrapper from 'components/PageWrapper';
+import Spinner from 'components/Spinner';
+import SWRProvider from 'components/SWRProvider';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
 
@@ -12,7 +14,13 @@ interface Options {
   shallow: boolean;
 }
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function Wrapper(props: any) {
+  const isMounted = useIsMounted();
+
+  return isMounted ? <App {...props} /> : null;
+}
+
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   function onStart(_: string, { shallow }: Options) {
@@ -40,7 +48,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRProvider>
       <PageWrapper>
-        <Component {...pageProps} />
+        <Suspense fallback={<Spinner />}>
+          <Component {...pageProps} />
+        </Suspense>
       </PageWrapper>
     </SWRProvider>
   );
