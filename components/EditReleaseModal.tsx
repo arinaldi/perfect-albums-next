@@ -3,16 +3,19 @@ import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from 'constants/index';
 import useUpdate from 'hooks/useUpdate';
-import useStore from 'hooks/useStore';
 import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';
-import { ReleaseInput } from 'utils/types';
+import { Release, ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-export default function EditReleaseModal() {
-  const data = useStore((state) => state.data);
-  const closeModal = useStore((state) => state.closeModal);
+interface Props {
+  data: Release | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
   const editRelease = useUpdate('releases');
   const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
@@ -20,19 +23,18 @@ export default function EditReleaseModal() {
     if (data) {
       setValue('artist', data.artist);
       setValue('title', data.title);
-      setValue('date', formatDate(data.date));
+      setValue('date', formatDate(data.date || ''));
     }
   }, [data, setValue]);
 
-  function handleClose() {
-    closeModal();
-  }
-
   const options = {
-    callbacks: [handleClose],
+    callbacks: [onClose],
     handleSubmit,
     submitFn: async (release: ReleaseInput) => {
-      await editRelease(data.id, { ...release, date: release.date || null });
+      await editRelease(data?.id || 0, {
+        ...release,
+        date: release.date || null,
+      });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
@@ -40,8 +42,9 @@ export default function EditReleaseModal() {
 
   return (
     <Modal
+      isOpen={isOpen}
       isSubmitting={isSubmitting}
-      onClose={handleClose}
+      onClose={onClose}
       onSubmit={onSubmit}
       title="Edit Release"
     >

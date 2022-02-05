@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
-import ModalContainer from 'components/ModalContainer';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +30,6 @@ function PageWrapper({ children }: Props) {
       </Head>
       <NavBar />
       {children}
-      <ModalContainer />
       <Toaster
         position="top-right"
         toastOptions={{

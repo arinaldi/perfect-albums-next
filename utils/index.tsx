@@ -59,8 +59,12 @@ function formatReleaseDate(isoString: string) {
   return `${date} ${MONTHS[month]} ${year}`;
 }
 
-export function formatReleases(releases: Release[]): Results {
-  const results: Results = {};
+interface ReleaseResults {
+  [key: string]: Release[];
+}
+
+export function formatReleases(releases: Release[]): ReleaseResults {
+  const results: ReleaseResults = {};
 
   releases.forEach((release) => {
     const releaseDate = release.date ? formatReleaseDate(release.date) : 'TBD';

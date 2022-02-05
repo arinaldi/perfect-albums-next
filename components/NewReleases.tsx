@@ -1,27 +1,45 @@
+import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
-import { formatReleases, ListItem, sortByDate } from 'utils';
+import { MODAL_TYPES, modalInitialState } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
+import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
+import CreateReleaseModal from 'components/CreateReleaseModal';
+import DeleteReleaseModal from 'components/DeleteReleaseModal';
+import EditReleaseModal from 'components/EditReleaseModal';
 
 interface Props {
   data: Release[];
-  onCreateOpen: () => void;
-  onDeleteOpen: (release: ListItem) => void;
-  onEditOpen: (release: ListItem) => void;
 }
 
-export default function NewReleases({
-  data,
-  onCreateOpen,
-  onDeleteOpen,
-  onEditOpen,
-}: Props) {
-  const user = useAuthStore((state) => state.user);
+interface ModalState {
+  data: Release | null;
+  type: MODAL_TYPES;
+}
 
-  const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
+export default function NewReleases({ data }: Props) {
+  const user = useAuthStore((state) => state.user);
+  const [modal, setModal] = useState<ModalState>(modalInitialState);
+
+  function onClose() {
+    setModal(modalInitialState);
+  }
+
+  const NewButton = user ? (
+    <Button
+      onClick={() =>
+        setModal({
+          data: null,
+          type: MODAL_TYPES.NEW_RELEASE_CREATE,
+        })
+      }
+    >
+      New
+    </Button>
+  ) : null;
 
   return (
     <Layout title="New Releases" titleAction={NewButton}>
@@ -41,11 +59,21 @@ export default function NewReleases({
                       <>
                         <PencilIcon
                           className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
-                          onClick={() => onEditOpen(release)}
+                          onClick={() =>
+                            setModal({
+                              data: release,
+                              type: MODAL_TYPES.NEW_RELEASE_EDIT,
+                            })
+                          }
                         />
                         <TrashIcon
                           className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
-                          onClick={() => onDeleteOpen(release)}
+                          onClick={() =>
+                            setModal({
+                              data: release,
+                              type: MODAL_TYPES.NEW_RELEASE_DELETE,
+                            })
+                          }
                         />
                       </>
                     )}
@@ -55,6 +83,20 @@ export default function NewReleases({
             </div>
           ))}
       </div>
+      <CreateReleaseModal
+        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_CREATE}
+        onClose={onClose}
+      />
+      <EditReleaseModal
+        data={modal.data}
+        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_EDIT}
+        onClose={onClose}
+      />
+      <DeleteReleaseModal
+        data={modal.data}
+        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_DELETE}
+        onClose={onClose}
+      />
     </Layout>
   );
 }

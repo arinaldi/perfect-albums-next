@@ -1,20 +1,23 @@
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from 'constants/index';
-import { SongInput } from 'utils/types';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
-import useStore from 'hooks/useStore';
+import { SongInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 
-export default function CreateSongModal() {
-  const closeModal = useStore((state) => state.closeModal);
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function CreateSongModal({ isOpen, onClose }: Props) {
   const createSong = useInsert('songs');
   const { handleSubmit, register, reset } = useForm<SongInput>();
 
   function handleClose() {
-    closeModal();
+    onClose();
     reset();
   }
 
@@ -30,6 +33,7 @@ export default function CreateSongModal() {
 
   return (
     <Modal
+      isOpen={isOpen}
       isSubmitting={isSubmitting}
       onClose={handleClose}
       onSubmit={onSubmit}

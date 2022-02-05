@@ -1,24 +1,40 @@
+import { useState } from 'react';
 import { TrashIcon } from '@heroicons/react/outline';
 
+import { modalInitialState, MODAL_TYPES } from 'constants/index';
 import useAuthStore from 'hooks/useAuthStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
+import CreateSongModal from 'components/CreateSongModal';
+import DeleteSongModal from 'components/DeleteSongModal';
 
 interface Props {
   data: Song[];
-  onCreateOpen: () => void;
-  onDeleteOpen: (song: Song) => void;
 }
 
-export default function FeaturedSongs({
-  data,
-  onCreateOpen,
-  onDeleteOpen,
-}: Props) {
-  const user = useAuthStore((state) => state.user);
+interface ModalState {
+  data: Song | null;
+  type: MODAL_TYPES;
+}
 
-  const NewButton = user ? <Button onClick={onCreateOpen}>New</Button> : null;
+export default function FeaturedSongs({ data }: Props) {
+  const user = useAuthStore((state) => state.user);
+  const [modal, setModal] = useState<ModalState>(modalInitialState);
+
+  function onClose() {
+    setModal(modalInitialState);
+  }
+
+  const NewButton = user ? (
+    <Button
+      onClick={() =>
+        setModal({ data: null, type: MODAL_TYPES.FEATURED_SONGS_CREATE })
+      }
+    >
+      New
+    </Button>
+  ) : null;
 
   return (
     <Layout title="Featured Songs" titleAction={NewButton}>
@@ -46,7 +62,12 @@ export default function FeaturedSongs({
               {user ? (
                 <span
                   className="ml-2 cursor-pointer dark:text-white"
-                  onClick={() => onDeleteOpen(song)}
+                  onClick={() =>
+                    setModal({
+                      data: song,
+                      type: MODAL_TYPES.FEATURED_SONGS_DELETE,
+                    })
+                  }
                 >
                   <TrashIcon className="inline h-4 w-4" />
                 </span>
@@ -55,6 +76,15 @@ export default function FeaturedSongs({
           </div>
         ))}
       </div>
+      <CreateSongModal
+        isOpen={modal.type === MODAL_TYPES.FEATURED_SONGS_CREATE}
+        onClose={onClose}
+      />
+      <DeleteSongModal
+        data={modal.data}
+        isOpen={modal.type === MODAL_TYPES.FEATURED_SONGS_DELETE}
+        onClose={onClose}
+      />
     </Layout>
   );
 }
