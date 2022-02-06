@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TrashIcon } from '@heroicons/react/outline';
 
-import { modalInitialState, MODAL_TYPES } from 'constants/index';
+import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
 import useStore from 'hooks/useStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
@@ -20,10 +20,10 @@ interface ModalState {
 
 export default function FeaturedSongs({ data }: Props) {
   const { user } = useStore();
-  const [modal, setModal] = useState<ModalState>(modalInitialState);
+  const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
-    setModal(modalInitialState);
+    setModal(MODAL_INITIAL_STATE);
   }
 
   const NewButton = user ? (

@@ -60,3 +60,8 @@ export type Callback = () => void;
 export interface Children {
   children: ReactNode;
 }
+
+export interface SupaError {
+  message: string;
+  status: number;
+}

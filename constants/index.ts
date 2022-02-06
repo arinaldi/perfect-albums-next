@@ -21,7 +21,6 @@ export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
   SONG_PREFIX = 'Song successfully',
   RELEASE_PREFIX = 'Release successfully',
-  UNAUTHORIZED = 'You are unauthorized to perform this operation',
   SIGNIN = 'Invalid username or password',
   ERROR = 'Something went wrong',
   NO_DATA = 'No Data',
@@ -36,7 +35,7 @@ export enum MODAL_TYPES {
   NEW_RELEASE_DELETE = 'Delete New Release',
 }
 
-export const modalInitialState = {
+export const MODAL_INITIAL_STATE = {
   data: null,
   type: MODAL_TYPES.INITIAL,
 };

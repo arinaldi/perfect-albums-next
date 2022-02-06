@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
 import { MESSAGES } from 'constants/index';
-import { Callback } from 'utils/types';
+import { Callback, SupaError } from 'utils/types';
 
 export interface Options {
   callbacks: Callback[];
@@ -35,11 +35,8 @@ export default function useSubmit(options: Options): Payload {
       }
     } catch (error) {
       setIsSubmitting(false);
-      if (error instanceof Error && error.message === MESSAGES.UNAUTHORIZED) {
-        return;
-      }
-
-      toast.error(MESSAGES.ERROR);
+      const message = (error as SupaError).message || MESSAGES.ERROR;
+      toast.error(message);
     }
   }
 

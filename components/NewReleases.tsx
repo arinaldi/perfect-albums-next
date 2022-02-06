@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
-import { MODAL_TYPES, modalInitialState } from 'constants/index';
+import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
 import useStore from 'hooks/useStore';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
@@ -22,10 +22,10 @@ interface ModalState {
 
 export default function NewReleases({ data }: Props) {
   const { user } = useStore();
-  const [modal, setModal] = useState<ModalState>(modalInitialState);
+  const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
-    setModal(modalInitialState);
+    setModal(MODAL_INITIAL_STATE);
   }
 
   const NewButton = user ? (
