@@ -23,25 +23,26 @@ if (process.env.NODE_ENV === 'development') {
   devtools(state, 'Auth store');
 }
 
-function resolveUser(user: User | null) {
+async function handleAuth(event: AuthChangeEvent, session: Session | null) {
+  await fetch('/api/auth', {
+    method: 'POST',
+    headers: new Headers({ 'Content-Type': 'application/json' }),
+    credentials: 'same-origin',
+    body: JSON.stringify({ event, session }),
+  });
+
   resolve();
-  state.user = user;
+  state.user = supabase.auth.user();
 }
 
 supabase.auth.onAuthStateChange(
   async (event: AuthChangeEvent, session: Session | null) => {
-    await fetch('/api/auth', {
-      method: 'POST',
-      headers: new Headers({ 'Content-Type': 'application/json' }),
-      credentials: 'same-origin',
-      body: JSON.stringify({ event, session }),
-    });
-
-    resolveUser(supabase.auth.user());
+    await handleAuth(event, session);
   },
 );
 
-resolveUser(supabase.auth.user());
+const event = supabase.auth.user() ? 'SIGNED_IN' : 'SIGNED_OUT';
+handleAuth(event, supabase.auth.session());
 
 export default function useStore() {
   return useSnapshot(state);
