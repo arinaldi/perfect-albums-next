@@ -1,12 +1,11 @@
-export default function Spinner() {
+interface Props {
+  className?: string;
+}
+
+export default function Spinner({ className = '' }: Props) {
   return (
-    <div className="flex justify-center pt-8">
-      <svg
-        className="text-slate-800 dark:text-white"
-        viewBox="0 0 2400 2400"
-        width={32}
-        height={32}
-      >
+    <div className={className}>
+      <svg viewBox="0 0 2400 2400">
         <g
           strokeWidth={200}
           strokeLinecap="round"

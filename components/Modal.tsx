@@ -68,7 +68,7 @@ export default function Modal({
                   <SubmitButton
                     isSubmitting={isSubmitting}
                     label={isDeleteModal ? 'Delete' : undefined}
-                    loadingLabel={isDeleteModal ? 'Deleting...' : undefined}
+                    loadingLabel={isDeleteModal ? 'Deleting' : undefined}
                   />
                 </div>
               </form>

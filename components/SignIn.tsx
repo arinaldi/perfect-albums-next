@@ -49,7 +49,7 @@ export default function SignIn() {
           <SubmitButton
             isSubmitting={isSubmitting}
             label="Submit"
-            loadingLabel="Submitting..."
+            loadingLabel="Submitting"
           />
         </div>
       </form>
