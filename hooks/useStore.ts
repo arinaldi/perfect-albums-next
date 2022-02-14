@@ -1,31 +1,26 @@
-import { proxy, useSnapshot } from 'valtio';
-import { devtools } from 'valtio/utils';
-import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
+import create from 'zustand';
+import { devtools } from 'zustand/middleware';
+import { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
 import supabase from 'utils/supabase';
 
-type Resolve = (value?: unknown) => void;
-
-interface State {
-  user: Promise<unknown> | User | null | undefined;
+interface AuthState {
+  user: any;
 }
 
-let resolve: Resolve;
-const initialUser = new Promise((r) => {
-  resolve = r;
+const store = () => ({
+  user: undefined,
 });
 
-const state = proxy<State>({
-  user: initialUser,
-});
+const useStore = create<AuthState>(
+  process.env.NODE_ENV === 'development'
+    ? devtools(store, { name: 'Auth store' })
+    : store,
+);
 
-if (process.env.NODE_ENV === 'development') {
-  devtools(state, 'Auth store');
-}
-
-function resolveUser(user: User | null) {
-  resolve();
-  state.user = user;
+export default useStore;
+export function useUser() {
+  return useStore((state) => state.user);
 }
 
 supabase.auth.onAuthStateChange(
@@ -37,12 +32,6 @@ supabase.auth.onAuthStateChange(
       body: JSON.stringify({ event, session }),
     });
 
-    resolveUser(supabase.auth.user());
+    useStore.setState({ user: session?.user });
   },
 );
-
-resolveUser(supabase.auth.user());
-
-export default function useStore() {
-  return useSnapshot(state);
-}
