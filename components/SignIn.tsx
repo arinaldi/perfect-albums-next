@@ -17,8 +17,8 @@ export default function SignIn() {
   const options = {
     callbacks: [() => router.push(ROUTE_HREF.NEW_RELEASES)],
     handleSubmit,
-    submitFn: async ({ email, password }: SignInInput) => {
-      const { error } = await supabase.auth.signIn({ email, password });
+    submitFn: async (data: SignInInput) => {
+      const { error } = await supabase.auth.signIn(data);
 
       if (error) throw error;
     },

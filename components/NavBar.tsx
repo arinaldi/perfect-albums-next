@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { MenuIcon, MoonIcon, SunIcon, XIcon } from '@heroicons/react/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
-import useStore from 'hooks/useStore';
+import { useUser } from 'hooks/useStore';
 import useDarkMode from 'hooks/useDarkMode';
 import supabase from 'utils/supabase';
 import LinkWrapper from 'components/LinkWrapper';
 
 export default function NavBar() {
-  const { user } = useStore();
+  const user = useUser();
   const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);

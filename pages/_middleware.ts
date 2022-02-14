@@ -5,7 +5,7 @@ import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies['sb:token'];
+  const token = req.cookies['sb-access-token'];
 
   if (pathname === '/') {
     return NextResponse.redirect(ROUTE_HREF.TOP_ALBUMS, 302);
