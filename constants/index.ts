@@ -84,9 +84,9 @@ export const MONTHS = [
 ];
 
 export enum ROUTE_HREF {
-  TOP_ALBUMS = '/top-albums',
-  FEATURED_SONGS = '/featured-songs',
-  NEW_RELEASES = '/new-releases',
+  TOP_ALBUMS = '/albums',
+  FEATURED_SONGS = '/songs',
+  NEW_RELEASES = '/releases',
   SIGNIN = '/signin',
 }
 
