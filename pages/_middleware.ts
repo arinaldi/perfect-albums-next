@@ -4,11 +4,13 @@ import jwt from '@tsndr/cloudflare-worker-jwt';
 import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
   const token = req.cookies['sb-access-token'];
+  const { pathname } = req.nextUrl;
+  const url = req.nextUrl.clone();
 
   if (pathname === '/') {
-    return NextResponse.redirect(ROUTE_HREF.TOP_ALBUMS, 302);
+    url.pathname = ROUTE_HREF.TOP_ALBUMS;
+    return NextResponse.redirect(url, 302);
   }
 
   if (pathname !== ROUTE_HREF.SIGNIN || !token) {
@@ -18,7 +20,8 @@ export async function middleware(req: NextRequest) {
   const isValid = await jwt.verify(token, process.env.SUPABASE_JWT_SECRET!);
 
   if (isValid) {
-    return NextResponse.redirect(ROUTES_ADMIN.base.href, 302);
+    url.pathname = ROUTES_ADMIN.base.href;
+    return NextResponse.redirect(url, 302);
   }
 
   return NextResponse.next();
