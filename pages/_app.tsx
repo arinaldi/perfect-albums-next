@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import nProgress from 'nprogress';
 
 import PageWrapper from 'components/PageWrapper';
@@ -38,10 +39,28 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <SWRProvider>
-      <PageWrapper>
-        <Component {...pageProps} />
-      </PageWrapper>
-    </SWRProvider>
+    <>
+      <Script
+        id="dark-mode"
+        dangerouslySetInnerHTML={{
+          __html: `
+            const root = window.document.documentElement;
+            const prefersDark = !('theme' in localStorage) &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (localStorage.theme === 'dark' || prefersDark) {
+              root.classList.add('dark');
+            } else {
+              root.classList.remove('dark');
+            }
+          `,
+        }}
+      />
+      <SWRProvider>
+        <PageWrapper>
+          <Component {...pageProps} />
+        </PageWrapper>
+      </SWRProvider>
+    </>
   );
 }

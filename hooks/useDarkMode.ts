@@ -13,24 +13,25 @@ enum THEME {
 const { DARK, LIGHT } = THEME;
 
 export default function useDarkMode(): Payload {
-  const [theme, setTheme] = useState(
-    typeof window !== 'undefined' ? localStorage.theme : LIGHT,
-  );
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove(theme === DARK ? LIGHT : DARK);
-    root.classList.add(theme);
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme', theme);
-    }
-  }, [theme]);
+    setIsDarkMode(document.documentElement.classList.contains(DARK));
+  }, []);
 
   function toggleDarkMode() {
-    setTheme(theme === DARK ? LIGHT : DARK);
+    const root = window.document.documentElement;
+
+    if (isDarkMode) {
+      setIsDarkMode(false);
+      root.classList.remove(DARK);
+      localStorage.theme = LIGHT;
+    } else {
+      setIsDarkMode(true);
+      root.classList.add(DARK);
+      localStorage.theme = DARK;
+    }
   }
 
-  return { isDarkMode: theme === DARK, toggleDarkMode };
+  return { isDarkMode, toggleDarkMode };
 }
