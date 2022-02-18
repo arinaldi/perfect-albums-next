@@ -5,26 +5,32 @@ interface Payload {
   toggleDarkMode: () => void;
 }
 
+enum THEME {
+  DARK = 'dark',
+  LIGHT = 'light',
+}
+
+const { DARK, LIGHT } = THEME;
+
 export default function useDarkMode(): Payload {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [theme, setTheme] = useState(
+    typeof window !== 'undefined' ? localStorage.theme : LIGHT,
+  );
 
   useEffect(() => {
-    if (localStorage.theme === 'dark') {
-      setIsDarkMode(true);
+    const root = window.document.documentElement;
+
+    root.classList.remove(theme === DARK ? LIGHT : DARK);
+    root.classList.add(theme);
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme);
     }
-  }, []);
+  }, [theme]);
 
   function toggleDarkMode() {
-    if (isDarkMode) {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove('dark');
-      localStorage.theme = 'light';
-    } else {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-      localStorage.theme = 'dark';
-    }
+    setTheme(theme === DARK ? LIGHT : DARK);
   }
 
-  return { isDarkMode, toggleDarkMode };
+  return { isDarkMode: theme === DARK, toggleDarkMode };
 }

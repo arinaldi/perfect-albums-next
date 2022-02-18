@@ -14,19 +14,6 @@ function PageWrapper({ children }: Props) {
       <Head>
         <title>Perfect Albums</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            if (window !== undefined) {
-              if (window.localStorage.theme === 'dark') {
-                document.documentElement.classList.add('dark');
-              } else {
-                document.documentElement.classList.remove('dark');
-              }
-            }
-          `,
-          }}
-        />
       </Head>
       <NavBar />
       {children}
