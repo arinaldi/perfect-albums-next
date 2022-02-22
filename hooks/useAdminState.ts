@@ -83,8 +83,6 @@ export default function useAdminState(): Payload {
     url,
     preventFetch,
   );
-  const isFirstPage = page === 1;
-  const isLastPage = page === Math.ceil(total / perPage);
 
   const updateQueryParams = useCallback(
     (query: Record<string, string>) => {
@@ -146,7 +144,12 @@ export default function useAdminState(): Payload {
         const { value } = event.target;
 
         setArtistSearch(value);
-        updateQueryParams({ artist: value, page: '1' });
+        updateQueryParams({
+          artist: value,
+          page: '1',
+          sort: SORT_VALUE.YEAR,
+          direction: SORT_DIRECTION.ASC,
+        });
       },
       onTitleChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -195,8 +198,8 @@ export default function useAdminState(): Payload {
     cdTotal,
     direction,
     handlers,
-    isFirstPage,
-    isLastPage,
+    isFirstPage: page === 1,
+    isLastPage: page === Math.ceil(total / perPage),
     isLoading,
     page,
     perPage,
