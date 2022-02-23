@@ -36,7 +36,6 @@ export default function Admin() {
     title: debouncedTitle,
   });
   const { albums, cdTotal, total, isLoading } = useAdminAlbums(url);
-  const lastPage = Math.ceil(total / perPage);
 
   useEffect(() => {
     if (debouncedArtist || debouncedTitle) {
@@ -114,7 +113,7 @@ export default function Admin() {
       </div>
 
       <div className="mb-4 flex justify-center">
-        <Pagination lastPage={lastPage} />
+        <Pagination lastPage={Math.ceil(total / perPage)} />
         <div className="mx-2" />
         <PerPage />
         <div className="mx-2" />

@@ -104,10 +104,6 @@ export function sortDesc(a: Tuple, b: Tuple): number {
   return Number(b[0]) - Number(a[0]);
 }
 
-export function isEmptyObject(obj: Record<string, unknown>): boolean {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
-
 export function getTitle(title: string): string {
   return `Perfect Albums | ${title}`;
 }

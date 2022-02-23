@@ -63,8 +63,6 @@ const useAdminStore = create<AdminState>(
     : store,
 );
 
-export default useAdminStore;
-
 export function useAdmin() {
   const direction = useAdminStore((state) => state.direction);
   const page = useAdminStore((state) => state.page);
