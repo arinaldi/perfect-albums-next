@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
-import { generateAlbumQueryString, getSortIcon } from 'utils';
+import { generateAlbumsUrl, getSortIcon } from 'utils';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import { useAdmin } from 'hooks/useAdminStore';
 import useDebounce from 'hooks/useDebounce';
@@ -20,13 +20,23 @@ const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 export default function Admin() {
   const router = useRouter();
   const artistRef = useRef<HTMLInputElement | null>(null);
-  const [artist, setArtist] = useState('');
-  const [title, setTitle] = useState('');
+  const {
+    artist,
+    direction,
+    page,
+    perPage,
+    sort,
+    studio,
+    title,
+    onClear,
+    onSearch,
+    onSort,
+    setArtist,
+    setTitle,
+  } = useAdmin();
   const debouncedArtist = useDebounce(artist);
   const debouncedTitle = useDebounce(title);
-  const { direction, page, perPage, sort, studio, onClear, onSearch, onSort } =
-    useAdmin();
-  const url = generateAlbumQueryString({
+  const url = generateAlbumsUrl({
     artist: debouncedArtist,
     direction,
     page,
@@ -45,8 +55,6 @@ export default function Admin() {
 
   function handleClear() {
     artistRef?.current?.focus();
-    setArtist('');
-    setTitle('');
     onClear();
   }
 

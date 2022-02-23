@@ -118,7 +118,7 @@ export interface AlbumParams {
   title: string;
 }
 
-export function generateAlbumQueryString({
+export function generateAlbumsUrl({
   artist,
   direction,
   page,

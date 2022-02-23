@@ -5,7 +5,11 @@ interface Props {
 }
 
 export default function Pagination({ lastPage }: Props) {
-  const { page, onPageChange } = usePagination();
+  const {
+    handlers: { onPrevious, onNext },
+    page,
+    onPageChange,
+  } = usePagination();
   const isFirstPage = page === 1;
   const isLastPage = page === lastPage;
 
@@ -24,7 +28,7 @@ export default function Pagination({ lastPage }: Props) {
       <button
         className="relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isFirstPage}
-        onClick={() => onPageChange(page - 1)}
+        onClick={onPrevious}
       >
         <span className="sr-only">Previous page</span>‹
       </button>
@@ -34,7 +38,7 @@ export default function Pagination({ lastPage }: Props) {
       <button
         className="relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isLastPage}
-        onClick={() => onPageChange(page + 1)}
+        onClick={onNext}
       >
         <span className="sr-only">Next page</span>›
       </button>

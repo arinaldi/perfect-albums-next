@@ -1,11 +1,17 @@
+import { useMemo } from 'react';
 import create, { GetState, SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import shallow from 'zustand/shallow';
 
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
+import usePrefetch from 'hooks/usePrefetch';
+import { generateAlbumsUrl } from 'utils';
 
 const { ASC, DESC } = SORT_DIRECTION;
 
 export interface AdminState {
+  artist: string;
+  title: string;
   page: number;
   perPage: PER_PAGE;
   sort: SORT_VALUE;
@@ -17,9 +23,13 @@ export interface AdminState {
   onFilter: () => void;
   onSearch: () => void;
   onClear: () => void;
+  setArtist: (value: string) => void;
+  setTitle: (value: string) => void;
 }
 
 const initialState = {
+  artist: '',
+  title: '',
   page: 1,
   perPage: PER_PAGE.SMALL,
   sort: SORT_VALUE.NONE,
@@ -55,6 +65,12 @@ const store = (set: SetState<AdminState>, get: GetState<AdminState>) => ({
   onClear: () => {
     set(initialState);
   },
+  setArtist: (value: string) => {
+    set({ artist: value });
+  },
+  setTitle: (value: string) => {
+    set({ title: value });
+  },
 });
 
 const useAdminStore = create<AdminState>(
@@ -64,35 +80,115 @@ const useAdminStore = create<AdminState>(
 );
 
 export function useAdmin() {
+  return useAdminStore(
+    ({
+      artist,
+      direction,
+      page,
+      perPage,
+      sort,
+      studio,
+      title,
+      onClear,
+      onSearch,
+      onSort,
+      setArtist,
+      setTitle,
+    }) => ({
+      artist,
+      direction,
+      page,
+      perPage,
+      sort,
+      studio,
+      title,
+      onClear,
+      onSearch,
+      onSort,
+      setArtist,
+      setTitle,
+    }),
+    shallow,
+  );
+}
+
+export function usePagination() {
+  const prefetch = usePrefetch();
+  const artist = useAdminStore((state) => state.artist);
   const direction = useAdminStore((state) => state.direction);
   const page = useAdminStore((state) => state.page);
   const perPage = useAdminStore((state) => state.perPage);
   const sort = useAdminStore((state) => state.sort);
   const studio = useAdminStore((state) => state.studio);
-  const onClear = useAdminStore((state) => state.onClear);
-  const onSearch = useAdminStore((state) => state.onSearch);
-  const onSort = useAdminStore((state) => state.onSort);
-
-  return { direction, page, perPage, sort, studio, onClear, onSearch, onSort };
-}
-
-export function usePagination() {
-  const page = useAdminStore((state) => state.page);
+  const title = useAdminStore((state) => state.title);
   const onPageChange = useAdminStore((state) => state.onPageChange);
 
-  return { page, onPageChange };
+  const handlers = useMemo(() => {
+    return {
+      onPrevious: () => {
+        const newPage = page - 2;
+        const previousUrl = generateAlbumsUrl({
+          artist,
+          direction,
+          page: newPage,
+          perPage,
+          sort,
+          studio,
+          title,
+        });
+
+        if (newPage !== 0) {
+          prefetch(previousUrl);
+        }
+
+        onPageChange(page - 1);
+      },
+      onNext: () => {
+        const nextUrl = generateAlbumsUrl({
+          artist,
+          direction,
+          page: page + 2,
+          perPage,
+          sort,
+          studio,
+          title,
+        });
+        prefetch(nextUrl);
+
+        onPageChange(page + 1);
+      },
+    };
+  }, [
+    artist,
+    direction,
+    page,
+    perPage,
+    prefetch,
+    sort,
+    studio,
+    title,
+    onPageChange,
+  ]);
+
+  return { handlers, page, onPageChange };
 }
 
 export function usePerPage() {
-  const perPage = useAdminStore((state) => state.perPage);
-  const onPerPageChange = useAdminStore((state) => state.onPerPageChange);
-
-  return { perPage, onPerPageChange };
+  return useAdminStore(
+    ({ perPage, onPerPageChange }) => ({
+      perPage,
+      onPerPageChange,
+    }),
+    shallow,
+  );
 }
 
 export function useStudioFilter() {
-  const studio = useAdminStore((state) => state.studio);
-  const onFilter = useAdminStore((state) => state.onFilter);
-
-  return { studio, onFilter };
+  return useAdminStore(
+    ({ studio, onFilter }) => ({
+      studio,
+      onFilter,
+    }),
+    shallow,
+  );
 }
