@@ -17,7 +17,7 @@ interface Props {
 
 export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
   const editRelease = useUpdate('releases');
-  const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
+  const { handleSubmit, register, setValue } = useForm<ReleaseInput>();
 
   useEffect(() => {
     if (data) {

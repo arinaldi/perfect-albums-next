@@ -13,7 +13,7 @@ interface Payload {
 
 export default function useAdminAlbums(
   url: string,
-  preventFetch: boolean,
+  preventFetch = false,
 ): Payload {
   const key = preventFetch ? null : url;
   const { data, error, mutate } = useSWR(key, { dedupingInterval: 5000 });

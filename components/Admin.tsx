@@ -1,9 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
-import { getSortIcon } from 'utils';
-import useAdminState from 'hooks/useAdminState';
+import { generateAlbumQueryString, getSortIcon } from 'utils';
+import useAdminAlbums from 'hooks/useAdminAlbums';
+import { useAdmin } from 'hooks/useAdminStore';
+import useDebounce from 'hooks/useDebounce';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
@@ -16,20 +19,37 @@ const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
 export default function Admin() {
   const router = useRouter();
-  const {
-    albums,
-    artistSearch,
-    artistSearchRef,
-    cdTotal,
+  const artistRef = useRef<HTMLInputElement | null>(null);
+  const [artist, setArtist] = useState('');
+  const [title, setTitle] = useState('');
+  const debouncedArtist = useDebounce(artist);
+  const debouncedTitle = useDebounce(title);
+  const { direction, page, perPage, sort, studio, onClear, onSearch, onSort } =
+    useAdmin();
+  const url = generateAlbumQueryString({
+    artist: debouncedArtist,
     direction,
-    handlers,
-    isLoading,
+    page,
+    perPage,
     sort,
-    titleSearch,
-    titleSearchRef,
-    total,
-  } = useAdminState();
-  const { onArtistChange, onClear, onSort, onTitleChange } = handlers;
+    studio,
+    title: debouncedTitle,
+  });
+  const { albums, cdTotal, total, isLoading } = useAdminAlbums(url);
+  const lastPage = Math.ceil(total / perPage);
+
+  useEffect(() => {
+    if (debouncedArtist || debouncedTitle) {
+      onSearch();
+    }
+  }, [debouncedArtist, debouncedTitle, onSearch]);
+
+  function handleClear() {
+    artistRef?.current?.focus();
+    setArtist('');
+    setTitle('');
+    onClear();
+  }
 
   function handleRouteChange(pathname: string) {
     router.push({
@@ -64,25 +84,24 @@ export default function Admin() {
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
           id="artist-search"
           name="artist"
-          onChange={onArtistChange}
+          onChange={(event) => setArtist(event.target.value)}
           placeholder="Search artist"
-          ref={artistSearchRef}
+          ref={artistRef}
           type="text"
-          value={artistSearch}
+          value={artist}
         />
         <input
           className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:ml-4 sm:mt-0 sm:text-sm"
           id="title-search"
           name="title"
-          onChange={onTitleChange}
+          onChange={(event) => setTitle(event.target.value)}
           placeholder="Search title"
-          ref={titleSearchRef}
           type="text"
-          value={titleSearch}
+          value={title}
         />
         <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">
           <div className="flex">
-            <Button onClick={onClear}>Clear</Button>
+            <Button onClick={handleClear}>Clear</Button>
             <span className="ml-1" />
             <Button onClick={() => handleRouteChange(ROUTES_ADMIN.create.href)}>
               New
@@ -95,7 +114,7 @@ export default function Admin() {
       </div>
 
       <div className="mb-4 flex justify-center">
-        <Pagination />
+        <Pagination lastPage={lastPage} />
         <div className="mx-2" />
         <PerPage />
         <div className="mx-2" />
