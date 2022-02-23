@@ -1,8 +1,13 @@
-import useAdminState from 'hooks/useAdminState';
+import { usePagination } from 'hooks/useAdminStore';
 
-export default function Pagination() {
-  const { handlers, isFirstPage, isLastPage, page } = useAdminState();
-  const { onFirst, onLast, onNext, onPrevious } = handlers;
+interface Props {
+  lastPage: number;
+}
+
+export default function Pagination({ lastPage }: Props) {
+  const { page, onPageChange } = usePagination();
+  const isFirstPage = page === 1;
+  const isLastPage = page === lastPage;
 
   return (
     <nav
@@ -12,14 +17,14 @@ export default function Pagination() {
       <button
         className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isFirstPage}
-        onClick={onFirst}
+        onClick={() => onPageChange(1)}
       >
         <span className="sr-only">First page</span>«
       </button>
       <button
         className="relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isFirstPage}
-        onClick={onPrevious}
+        onClick={() => onPageChange(page - 1)}
       >
         <span className="sr-only">Previous page</span>‹
       </button>
@@ -29,14 +34,14 @@ export default function Pagination() {
       <button
         className="relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isLastPage}
-        onClick={onNext}
+        onClick={() => onPageChange(page + 1)}
       >
         <span className="sr-only">Next page</span>›
       </button>
       <button
         className="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white"
         disabled={isLastPage}
-        onClick={onLast}
+        onClick={() => onPageChange(lastPage)}
       >
         <span className="sr-only">Last page</span>»
       </button>

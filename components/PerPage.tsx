@@ -1,11 +1,10 @@
 import { PER_PAGE } from 'constants/index';
-import useAdminState from 'hooks/useAdminState';
+import { usePerPage } from 'hooks/useAdminStore';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 
 export default function PerPage() {
-  const { handlers, perPage } = useAdminState();
-  const { onPerPageChange } = handlers;
+  const { perPage, onPerPageChange } = usePerPage();
 
   return (
     <nav

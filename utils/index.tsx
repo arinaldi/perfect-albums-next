@@ -4,7 +4,7 @@ import {
   ArrowNarrowUpIcon,
 } from '@heroicons/react/outline';
 
-import { MONTHS, PER_PAGE, SORT_DIRECTION, SORT_VALUE } from 'constants/index';
+import { MONTHS, PER_PAGE, SORT_DIRECTION } from 'constants/index';
 import { Album, Release } from 'utils/types';
 
 function addZeroPrefix(value: number) {
@@ -104,47 +104,30 @@ export function sortDesc(a: Tuple, b: Tuple): number {
   return Number(b[0]) - Number(a[0]);
 }
 
-type QueryValue = string | string[] | undefined;
-
-export function parseQuery(value: QueryValue): string {
-  return typeof value === 'string' ? value : '';
-}
-
-export function parsePageQuery(value: QueryValue): number {
-  return typeof value === 'string' ? parseInt(value) : 1;
-}
-
-export function parsePerPageQuery(value: QueryValue): PER_PAGE {
-  const { SMALL, MEDIUM, LARGE } = PER_PAGE;
-  const perPage = typeof value === 'string' ? parseInt(value) : PER_PAGE.SMALL;
-
-  if (perPage === SMALL) return SMALL;
-  if (perPage === MEDIUM) return MEDIUM;
-  if (perPage === LARGE) return LARGE;
-  return SMALL;
-}
-
-export function parseDirectionQuery(value: QueryValue): SORT_DIRECTION {
-  const { ASC, DESC, NONE } = SORT_DIRECTION;
-
-  if (value === ASC) return ASC;
-  if (value === DESC) return DESC;
-  return NONE;
-}
-
-export function parseSortQuery(value: QueryValue): SORT_VALUE {
-  const { ARTIST, TITLE, YEAR, NONE } = SORT_VALUE;
-
-  if (value === ARTIST) return ARTIST;
-  if (value === TITLE) return TITLE;
-  if (value === YEAR) return YEAR;
-  return NONE;
-}
-
-export function isEmptyObject(obj: Record<string, unknown>): boolean {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
-}
-
 export function getTitle(title: string): string {
   return `Perfect Albums | ${title}`;
+}
+
+export interface AlbumParams {
+  artist: string;
+  direction: string;
+  page: number;
+  perPage: PER_PAGE;
+  sort: string;
+  studio: boolean;
+  title: string;
+}
+
+export function generateAlbumQueryString({
+  artist,
+  direction,
+  page,
+  perPage,
+  sort,
+  studio,
+  title,
+}: AlbumParams) {
+  return `/api/albums?page=${page}&per_page=${perPage}&artist=${artist}&title=${title}&sort=${sort}&direction=${direction}&studio=${
+    studio ? 'true' : ''
+  }`;
 }
