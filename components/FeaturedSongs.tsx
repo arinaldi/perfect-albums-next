@@ -23,7 +23,7 @@ export default function FeaturedSongs({ data }: Props) {
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
-    setModal(MODAL_INITIAL_STATE);
+    setModal((modal) => ({ ...modal, type: MODAL_TYPES.INITIAL }));
   }
 
   const NewButton = user ? (

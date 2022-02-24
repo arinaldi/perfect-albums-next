@@ -24,7 +24,7 @@ export default function Modal({
   const isDeleteModal = title.toLowerCase().includes('delete');
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition appear as={Fragment} show={isOpen}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
