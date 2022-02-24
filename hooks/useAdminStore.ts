@@ -57,7 +57,7 @@ const store = (set: SetState<AdminState>, get: GetState<AdminState>) => ({
     set({ page: 1, sort: value, direction: newDirection });
   },
   onFilter: () => {
-    set({ studio: !get().studio });
+    set({ page: 1, studio: !get().studio });
   },
   onSearch: () => {
     set({ page: 1, sort: SORT_VALUE.YEAR, direction: SORT_DIRECTION.ASC });
