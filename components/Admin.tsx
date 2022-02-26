@@ -48,6 +48,12 @@ export default function Admin() {
   const { albums, cdTotal, total, isLoading } = useAdminAlbums(url);
 
   useEffect(() => {
+    artistRef?.current?.focus();
+
+    return onClear;
+  }, [onClear]);
+
+  useEffect(() => {
     if (debouncedArtist || debouncedTitle) {
       onSearch();
     }
