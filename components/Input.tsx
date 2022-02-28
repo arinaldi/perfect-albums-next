@@ -4,12 +4,13 @@ interface Props {
   id: string;
   required?: boolean;
   type: 'text' | 'date' | 'email';
+  wrapperClassName?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ id, required, type, ...rest }, ref) => {
+  ({ id, required, type, wrapperClassName = '', ...rest }, ref) => {
     return (
-      <>
+      <div className={wrapperClassName}>
         <label
           htmlFor={id}
           className="block text-sm font-medium capitalize text-gray-700 dark:text-white"
@@ -26,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
           type={type}
           {...rest}
         />
-      </>
+      </div>
     );
   },
 );
