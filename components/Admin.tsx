@@ -49,15 +49,27 @@ export default function Admin() {
 
   useEffect(() => {
     artistRef?.current?.focus();
-
-    return onClear;
-  }, [onClear]);
+  }, []);
 
   useEffect(() => {
     if (debouncedArtist || debouncedTitle) {
       onSearch();
     }
   }, [debouncedArtist, debouncedTitle, onSearch]);
+
+  useEffect(() => {
+    function onStart(url: string) {
+      if (!url.startsWith(ROUTES_ADMIN.base.href)) {
+        onClear();
+      }
+    }
+
+    router.events.on('routeChangeStart', onStart);
+
+    return () => {
+      router.events.off('routeChangeStart', onStart);
+    };
+  }, [onClear, router]);
 
   function handleClear() {
     artistRef?.current?.focus();
