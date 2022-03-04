@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import nProgress from 'nprogress';
 
+import ErrorBoundary from 'components/ErrorBoundary';
 import PageWrapper from 'components/PageWrapper';
 import SWRProvider from 'components/SWRProvider';
 import 'styles/globals.css';
@@ -39,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router]);
 
   return (
-    <>
+    <ErrorBoundary>
       <Script
         id="dark-mode"
         dangerouslySetInnerHTML={{
@@ -61,6 +62,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </PageWrapper>
       </SWRProvider>
-    </>
+    </ErrorBoundary>
   );
 }
