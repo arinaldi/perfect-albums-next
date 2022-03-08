@@ -4,6 +4,7 @@ import { Fetcher, Key, mutate, SWRConfig } from 'swr';
 import useStore, { useUser } from 'hooks/useStore';
 import supabase from 'utils/supabase';
 import { Children } from 'utils/types';
+import Spinner from 'components/Spinner';
 
 export async function fetcher(url: string): Promise<any> {
   return window
@@ -44,7 +45,13 @@ export default function SWRProvider({ children }: Children) {
     }
   }, [user]);
 
-  if (user === undefined) return null;
+  if (user === undefined) {
+    return (
+      <div className="mt-8 flex justify-center">
+        <Spinner className="h-8 w-8" />
+      </div>
+    );
+  }
 
   return (
     <SWRConfig value={{ fetcher, use: [trackLiveQueries] }}>
