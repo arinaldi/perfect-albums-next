@@ -46,11 +46,7 @@ export default function SignIn() {
           </div>
         </div>
         <div className="flex items-center justify-end">
-          <SubmitButton
-            isSubmitting={isSubmitting}
-            label="Submit"
-            loadingLabel="Submitting"
-          />
+          <SubmitButton isSubmitting={isSubmitting} />
         </div>
       </form>
     </Layout>

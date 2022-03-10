@@ -1,24 +1,24 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { AuthChangeEvent, Session } from '@supabase/supabase-js';
+import { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 
 import supabase from 'utils/supabase';
 
 interface AuthState {
-  user: any;
+  user: User | null | undefined;
 }
 
-const store = () => ({
-  user: undefined,
-});
-
 const useStore = create<AuthState>(
-  process.env.NODE_ENV === 'development'
-    ? devtools(store, { name: 'Auth store' })
-    : store,
+  devtools(
+    (_) => ({
+      user: undefined,
+    }),
+    { name: 'Auth store' },
+  ),
 );
 
 export default useStore;
+
 export function useUser() {
   return useStore((state) => state.user);
 }
