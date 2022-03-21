@@ -7,7 +7,8 @@
     "build": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next build",
     "lint": "eslint --ignore-path .gitignore .; exit 0",
     "start": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next start",
-    "ts": "tsc"
+    "tsc": "tsc",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
@@ -35,10 +36,16 @@
     "eslint": "^7.31.0",
     "eslint-config-next": "^11.0.1",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.5",
     "tailwindcss": "^3.0.18",
     "typescript": "^4.3.5"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.{js,ts,tsx,css,md}": "prettier --write"
   }
 }
