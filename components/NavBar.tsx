@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { MenuIcon, MoonIcon, SunIcon, XIcon } from '@heroicons/react/outline';
+import {
+  LoginIcon,
+  LogoutIcon,
+  MenuIcon,
+  MoonIcon,
+  SunIcon,
+  XIcon,
+} from '@heroicons/react/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useUser } from 'hooks/useStore';
@@ -88,10 +95,12 @@ export default function NavBar() {
                 onClick={signOut}
                 className="text-md cursor-pointer rounded-md px-3 py-2 font-medium text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
-                Sign Out
+                <LogoutIcon className="h-5 w-5" />
               </div>
             ) : (
-              <LinkWrapper href={ROUTE_HREF.SIGNIN}>Sign In</LinkWrapper>
+              <LinkWrapper href={ROUTE_HREF.SIGNIN}>
+                <LoginIcon className="h-5 w-5" />
+              </LinkWrapper>
             )}
           </div>
         </div>
