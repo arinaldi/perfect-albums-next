@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 
 import { ROUTE_HREF } from 'constants/index';
 import useSubmit from 'hooks/useSubmit';
-import supabase from 'utils/supabase';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
 import Input from 'components/Input';
@@ -18,7 +18,7 @@ export default function SignIn() {
     callbacks: [() => router.push(ROUTE_HREF.NEW_RELEASES)],
     handleSubmit,
     submitFn: async (data: SignInInput) => {
-      const { error } = await supabase.auth.signIn(data);
+      const { error } = await supabaseClient.auth.signIn(data);
 
       if (error) throw error;
     },

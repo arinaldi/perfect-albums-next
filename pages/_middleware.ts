@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from '@tsndr/cloudflare-worker-jwt';
+import { COOKIE_OPTIONS } from '@supabase/supabase-auth-helpers/shared/utils/constants';
 
-import { ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN, ROUTE_HREF } from 'constants/index';
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies['sb-access-token'];
+  const token = req.cookies[`${COOKIE_OPTIONS.name}-access-token`];
   const { pathname } = req.nextUrl;
   const url = req.nextUrl.clone();
 
@@ -13,13 +13,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url, 302);
   }
 
-  if (pathname !== ROUTE_HREF.SIGNIN || !token) {
-    return NextResponse.next();
-  }
-
-  const isValid = await jwt.verify(token, process.env.SUPABASE_JWT_SECRET!);
-
-  if (isValid) {
+  if (pathname === ROUTE_HREF.SIGNIN && token) {
     url.pathname = ROUTES_ADMIN.base.href;
     return NextResponse.redirect(url, 302);
   }
