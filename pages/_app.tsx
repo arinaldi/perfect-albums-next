@@ -3,6 +3,8 @@ import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import nProgress from 'nprogress';
+import { UserProvider } from '@supabase/supabase-auth-helpers/react';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 
 import ErrorBoundary from 'components/ErrorBoundary';
 import PageWrapper from 'components/PageWrapper';
@@ -57,11 +59,13 @@ export default function App({ Component, pageProps }: AppProps) {
           `,
         }}
       />
-      <SWRProvider>
-        <PageWrapper>
-          <Component {...pageProps} />
-        </PageWrapper>
-      </SWRProvider>
+      <UserProvider supabaseClient={supabaseClient}>
+        <SWRProvider>
+          <PageWrapper>
+            <Component {...pageProps} />
+          </PageWrapper>
+        </SWRProvider>
+      </UserProvider>
     </ErrorBoundary>
   );
 }

@@ -1,10 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  supabaseServerClient,
+  withAuthRequired,
+} from '@supabase/supabase-auth-helpers/nextjs';
 
-import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
-export async function getCdCount(): Promise<number> {
-  const { count, error } = await supabase
+async function getCdCount(
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<number> {
+  const { count, error } = await supabaseServerClient({ req, res })
     .from<Album>('albums')
     .select('*', { count: 'exact', head: true })
     .eq('cd', true);
@@ -14,14 +20,14 @@ export async function getCdCount(): Promise<number> {
   return 0;
 }
 
-export default async function cds(
-  _: NextApiRequest,
+export default withAuthRequired(async function cds(
+  req: NextApiRequest,
   res: NextApiResponse,
-): Promise<void> {
+) {
   try {
-    const count = await getCdCount();
+    const count = await getCdCount(req, res);
     res.status(200).json({ success: true, count });
   } catch (error) {
     res.status(400).json({ success: false });
   }
-}
+});

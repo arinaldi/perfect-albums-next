@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 
-import supabase from 'utils/supabase';
 import { Song } from 'utils/types';
 
 export async function getSongs(): Promise<Song[]> {
-  const { data: songs, error } = await supabase
+  const { data: songs, error } = await supabaseClient
     .from<Song>('songs')
     .select('*')
     .order('created_at', { ascending: false });
@@ -14,7 +14,7 @@ export async function getSongs(): Promise<Song[]> {
   return [];
 }
 
-export default async function songs(_: NextApiRequest, res: NextApiResponse) {
+export default async function songs(req: NextApiRequest, res: NextApiResponse) {
   try {
     const songs = await getSongs();
     res.status(200).json({ success: true, songs });
