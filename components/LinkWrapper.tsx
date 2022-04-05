@@ -16,7 +16,7 @@ export default function LinkWrapper({
   onClick,
 }: Props) {
   const { pathname } = useRouter();
-  const isActive = href === pathname;
+  const isActive = pathname.startsWith(href);
 
   return (
     <Link key={href} href={href}>
