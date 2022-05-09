@@ -1,6 +1,7 @@
 import { memo, ReactNode } from 'react';
 import Head from 'next/head';
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster, ToastBar } from 'react-hot-toast';
+import { XIcon } from '@heroicons/react/solid';
 
 import NavBar from 'components/NavBar';
 
@@ -34,7 +35,22 @@ function PageWrapper({ children }: Props) {
             },
           },
         }}
-      />
+      >
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                {message}
+                <XIcon
+                  className="ml-2 mr-1 h-5 w-5 cursor-pointer"
+                  onClick={() => toast.dismiss(t.id)}
+                />
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
     </div>
   );
 }

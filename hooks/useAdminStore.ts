@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import create, { GetState, SetState } from 'zustand';
+import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import shallow from 'zustand/shallow';
 
@@ -9,7 +9,7 @@ import { generateAlbumsUrl } from 'utils';
 
 const { ASC, DESC } = SORT_DIRECTION;
 
-export interface AdminState {
+interface AdminState {
   artist: string;
   title: string;
   page: number;
@@ -37,46 +37,45 @@ const initialState = {
   studio: false,
 };
 
-const store = (set: SetState<AdminState>, get: GetState<AdminState>) => ({
-  ...initialState,
-  onPageChange: (value: number) => {
-    set({ page: value });
-  },
-  onPerPageChange: (value: PER_PAGE) => {
-    set({ page: 1, perPage: value });
-  },
-  onSort: (value: SORT_VALUE) => {
-    const sort = get().sort;
-    const direction = get().direction;
-    let newDirection = DESC;
+const useAdminStore = create<AdminState>()(
+  devtools(
+    (set, get) => ({
+      ...initialState,
+      onPageChange: (value: number) => {
+        set({ page: value });
+      },
+      onPerPageChange: (value: PER_PAGE) => {
+        set({ page: 1, perPage: value });
+      },
+      onSort: (value: SORT_VALUE) => {
+        const sort = get().sort;
+        const direction = get().direction;
+        let newDirection = DESC;
 
-    if (sort !== value || !direction || direction === DESC) {
-      newDirection = ASC;
-    }
+        if (sort !== value || !direction || direction === DESC) {
+          newDirection = ASC;
+        }
 
-    set({ page: 1, sort: value, direction: newDirection });
-  },
-  onFilter: () => {
-    set({ page: 1, studio: !get().studio });
-  },
-  onSearch: () => {
-    set({ page: 1, sort: SORT_VALUE.YEAR, direction: SORT_DIRECTION.ASC });
-  },
-  onClear: () => {
-    set(initialState);
-  },
-  setArtist: (value: string) => {
-    set({ artist: value });
-  },
-  setTitle: (value: string) => {
-    set({ title: value });
-  },
-});
-
-const useAdminStore = create<AdminState>(
-  process.env.NODE_ENV === 'development'
-    ? devtools(store, { name: 'Admin store' })
-    : store,
+        set({ page: 1, sort: value, direction: newDirection });
+      },
+      onFilter: () => {
+        set({ page: 1, studio: !get().studio });
+      },
+      onSearch: () => {
+        set({ page: 1, sort: SORT_VALUE.YEAR, direction: SORT_DIRECTION.ASC });
+      },
+      onClear: () => {
+        set(initialState);
+      },
+      setArtist: (value: string) => {
+        set({ artist: value });
+      },
+      setTitle: (value: string) => {
+        set({ title: value });
+      },
+    }),
+    { name: 'Admin store' },
+  ),
 );
 
 export function useAdmin() {
