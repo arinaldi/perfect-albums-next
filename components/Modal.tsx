@@ -65,6 +65,7 @@ export default function Modal({
                 {children}
                 <div className="flex items-center justify-end p-6 pt-0">
                   <CancelButton onClick={onClose} />
+                  <span className="ml-1" />
                   <SubmitButton isSubmitting={isSubmitting} />
                 </div>
               </form>

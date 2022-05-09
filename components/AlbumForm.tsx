@@ -75,6 +75,7 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
       </div>
       <div className="flex items-center justify-end p-6">
         <CancelButton onClick={handleCancel} />
+        <span className="ml-1" />
         <SubmitButton isSubmitting={isSubmitting} />
       </div>
     </form>

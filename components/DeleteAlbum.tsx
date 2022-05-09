@@ -40,6 +40,7 @@ export default function DeleteAlbum({ album, isSubmitting, onSubmit }: Props) {
           onSubmit={onSubmit}
         >
           <CancelButton onClick={handleCancel} />
+          <span className="ml-1" />
           <SubmitButton isSubmitting={isSubmitting} />
         </form>
       </div>
