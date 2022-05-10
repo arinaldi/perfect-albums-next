@@ -148,7 +148,7 @@ export default function Admin() {
         </div>
       </div>
 
-      {albums.length === 0 && !isLoading ? (
+      {albums?.length === 0 && !isLoading ? (
         <AppMessage message="No results found" type={APP_MESSAGE_TYPES.INFO} />
       ) : (
         <div className="flex flex-col">
