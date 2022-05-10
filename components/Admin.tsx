@@ -87,7 +87,7 @@ export default function Admin() {
     <>
       Admin
       <span className="ml-3 rounded-md bg-gray-100 px-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
-        {isLoading ? '—' : total?.toLocaleString()}
+        {isLoading ? '—' : total.toLocaleString()}
       </span>
     </>
   );
@@ -148,7 +148,7 @@ export default function Admin() {
         </div>
       </div>
 
-      {albums?.length === 0 && !isLoading ? (
+      {albums.length === 0 && !isLoading ? (
         <AppMessage message="No results found" type={APP_MESSAGE_TYPES.INFO} />
       ) : (
         <div className="flex flex-col">
