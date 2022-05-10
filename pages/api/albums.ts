@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
   supabaseServerClient,
-  withAuthRequired,
+  withApiAuth,
 } from '@supabase/supabase-auth-helpers/nextjs';
 
 import { SORT_DIRECTION } from 'constants/index';
@@ -74,7 +74,7 @@ async function getAlbums(
   return { albums: albums || [], count: count || 0 };
 }
 
-export default withAuthRequired(async function albums(
+export default withApiAuth(async function albums(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
