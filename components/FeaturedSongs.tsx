@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { TrashIcon } from '@heroicons/react/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
+import { useUser } from 'hooks/useAuthStore';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';
@@ -19,7 +19,7 @@ interface ModalState {
 }
 
 export default function FeaturedSongs({ data }: Props) {
-  const { user } = useUser();
+  const user = useUser();
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {

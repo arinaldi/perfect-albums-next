@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { Fetcher, Key, mutate, SWRConfig } from 'swr';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
 
+import useAuthStore, { useUser } from 'hooks/useAuthStore';
 import useIsMounted from 'hooks/useIsMounted';
+import supabase from 'utils/supabase';
 import { Children } from 'utils/types';
 import Spinner from 'components/Spinner';
 
@@ -37,10 +38,16 @@ function trackLiveQueries(useSWRNext: any) {
 }
 
 export default function SWRProvider({ children }: Children) {
-  const { isLoading, user } = useUser();
+  const user = useUser();
   const isMounted = useIsMounted();
 
-  if (!isMounted() && isLoading && user === null) {
+  useEffect(() => {
+    if (user === undefined && supabase.auth.user() === null) {
+      useAuthStore.setState({ user: null });
+    }
+  }, [user]);
+
+  if (!isMounted() && user === undefined) {
     return (
       <div className="mt-8 flex justify-center">
         <Spinner className="h-8 w-8" />

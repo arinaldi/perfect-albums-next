@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
+
+import supabase from 'utils/supabase';
 
 async function getArtists(): Promise<string[]> {
   // https://www.jeffreyknox.dev/blog/postgresql-functions-in-supabase/
-  const { data: artists, error } = await supabaseClient.rpc('get_artists');
+  const { data: artists, error } = await supabase.rpc('get_artists');
 
   if (error) throw error;
   if (artists) return artists.map((a) => a.artist);
@@ -11,7 +12,7 @@ async function getArtists(): Promise<string[]> {
 }
 
 export default async function artists(
-  req: NextApiRequest,
+  _: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
   try {

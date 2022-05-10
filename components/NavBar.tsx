@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs';
 import {
   LoginIcon,
   LogoutIcon,
@@ -12,11 +10,13 @@ import {
 } from '@heroicons/react/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
+import { useUser } from 'hooks/useAuthStore';
 import useDarkMode from 'hooks/useDarkMode';
+import supabase from 'utils/supabase';
 import LinkWrapper from 'components/LinkWrapper';
 
 export default function NavBar() {
-  const { user } = useUser();
+  const user = useUser();
   const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function NavBar() {
   }
 
   async function signOut() {
-    await supabaseClient.auth.signOut();
+    await supabase.auth.signOut();
 
     if (router.pathname.startsWith(ROUTES_ADMIN.base.href)) {
       router.push(ROUTE_HREF.TOP_ALBUMS);

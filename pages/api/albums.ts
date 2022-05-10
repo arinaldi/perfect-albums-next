@@ -1,10 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  supabaseServerClient,
-  withApiAuth,
-} from '@supabase/supabase-auth-helpers/nextjs';
 
 import { SORT_DIRECTION } from 'constants/index';
+import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
 const { ASC } = SORT_DIRECTION;
@@ -18,10 +15,7 @@ function parseQuery(query: string | string[]): string {
   return typeof query === 'string' ? query : query[0];
 }
 
-async function getAlbums(
-  req: NextApiRequest,
-  res: NextApiResponse,
-): Promise<Payload> {
+async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
   let {
     artist,
     direction,
@@ -30,7 +24,7 @@ async function getAlbums(
     sort,
     studio,
     title,
-  } = req.query;
+  } = queries;
   artist = parseQuery(artist);
   direction = parseQuery(direction) || ASC;
   page = parseQuery(page);
@@ -43,7 +37,7 @@ async function getAlbums(
   const start = (pageNumber - 1) * limit;
   const end = pageNumber * limit - 1;
 
-  let query = supabaseServerClient({ req, res })
+  let query = supabase
     .from('albums')
     .select('*', { count: 'exact' })
     .ilike('artist', `%${artist}%`)
@@ -74,14 +68,14 @@ async function getAlbums(
   return { albums: albums || [], count: count || 0 };
 }
 
-export default withApiAuth(async function albums(
+export default async function albums(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   try {
-    const { albums, count } = await getAlbums(req, res);
+    const { albums, count } = await getAlbums(req.query);
     res.status(200).json({ success: true, albums, count });
   } catch (error) {
     res.status(400).json({ success: false });
   }
-});
+}

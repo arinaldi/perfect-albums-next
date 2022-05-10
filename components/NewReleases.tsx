@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useUser } from '@supabase/supabase-auth-helpers/react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
+import { useUser } from 'hooks/useAuthStore';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';
@@ -21,7 +21,7 @@ interface ModalState {
 }
 
 export default function NewReleases({ data }: Props) {
-  const { user } = useUser();
+  const user = useUser();
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {

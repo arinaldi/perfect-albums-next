@@ -13,8 +13,9 @@
   "dependencies": {
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
-    "@supabase/supabase-auth-helpers": "^1.4.0",
     "@supabase/supabase-js": "^1.35.3",
+    "@tsndr/cloudflare-worker-jwt": "^1.1.7",
+    "cookie": "^0.5.0",
     "next": "^12.1.6",
     "nprogress": "^0.2.0",
     "react": "^18.1.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.1",
+    "@types/cookie": "^0.5.1",
     "@types/node": "^17.0.31",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.9",
