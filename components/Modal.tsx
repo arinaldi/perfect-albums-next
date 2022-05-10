@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, ReactNode } from 'react';
+import { FormEvent, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import CancelButton from 'components/CancelButton';
@@ -21,56 +21,41 @@ export default function Modal({
   onSubmit,
   title,
 }: Props) {
-  const isDeleteModal = title.toLowerCase().includes('delete');
+  const cancelButtonRef = useRef(null);
 
   return (
-    <Transition appear as={Fragment} show={isOpen}>
+    <Transition
+      show={isOpen}
+      enter="transition duration-100 ease-out"
+      enterFrom="transform scale-95 opacity-0"
+      enterTo="transform scale-100 opacity-100"
+      leave="transition duration-75 ease-out"
+      leaveFrom="transform scale-100 opacity-100"
+      leaveTo="transform scale-95 opacity-0"
+    >
       <Dialog
-        as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
+        className="relative z-50"
+        initialFocus={cancelButtonRef}
         onClose={onClose}
       >
-        <div className="px-4 text-center">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 bg-black opacity-50" />
-          </Transition.Child>
-          <span className="inline-block h-screen" aria-hidden="true">
-            &#8203;
-          </span>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 scale-100"
-            leaveTo="opacity-0 scale-95"
-          >
-            <div className="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all dark:bg-gray-800">
-              <Dialog.Title
-                as="h3"
-                className="p-6 pb-0 text-2xl font-semibold dark:text-white"
-              >
-                {title}
-              </Dialog.Title>
-              <form method="POST" onSubmit={onSubmit}>
-                {children}
-                <div className="flex items-center justify-end p-6 pt-0">
-                  <CancelButton onClick={onClose} />
-                  <span className="ml-1" />
-                  <SubmitButton isSubmitting={isSubmitting} />
-                </div>
-              </form>
-            </div>
-          </Transition.Child>
+        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+        <div className="fixed inset-0 mt-2 transform p-4 transition-all">
+          <Dialog.Panel className="mx-auto w-full max-w-lg rounded-2xl bg-white text-left shadow-xl dark:bg-gray-800">
+            <Dialog.Title
+              as="h3"
+              className="p-6 pb-0 text-2xl font-semibold dark:text-white"
+            >
+              {title}
+            </Dialog.Title>
+            <form method="POST" onSubmit={onSubmit}>
+              {children}
+              <div className="flex items-center justify-end p-6 pt-0">
+                <CancelButton onClick={onClose} ref={cancelButtonRef} />
+                <span className="ml-1" />
+                <SubmitButton isSubmitting={isSubmitting} />
+              </div>
+            </form>
+          </Dialog.Panel>
         </div>
       </Dialog>
     </Transition>

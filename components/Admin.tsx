@@ -87,7 +87,7 @@ export default function Admin() {
     <>
       Admin
       <span className="ml-3 rounded-md bg-gray-100 px-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
-        {isLoading ? '—' : total.toLocaleString()}
+        {isLoading ? '—' : total?.toLocaleString()}
       </span>
     </>
   );

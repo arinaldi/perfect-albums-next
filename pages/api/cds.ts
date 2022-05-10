@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
   supabaseServerClient,
-  withAuthRequired,
+  withApiAuth,
 } from '@supabase/supabase-auth-helpers/nextjs';
 
 import { Album } from 'utils/types';
@@ -20,7 +20,7 @@ async function getCdCount(
   return 0;
 }
 
-export default withAuthRequired(async function cds(
+export default withApiAuth(async function cds(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {

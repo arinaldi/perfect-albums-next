@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import {
   supabaseServerClient,
-  withAuthRequired,
+  withPageAuth,
 } from '@supabase/supabase-auth-helpers/nextjs';
 
 import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
@@ -61,7 +61,7 @@ export default function EditAlbumPage({ album }: Props) {
   );
 }
 
-export const getServerSideProps = withAuthRequired({
+export const getServerSideProps = withPageAuth({
   redirectTo: ROUTE_HREF.TOP_ALBUMS,
   async getServerSideProps(ctx) {
     const { data: album } = await supabaseServerClient(ctx)
