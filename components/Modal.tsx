@@ -34,8 +34,6 @@ export default function Modal({
       leaveTo="transform scale-95 opacity-0"
     >
       <Dialog
-        // as="div"
-        // className="fixed inset-0 z-10 overflow-y-auto"
         className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={onClose}
