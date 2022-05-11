@@ -5,7 +5,18 @@
     "eol-last": "error",
     "import/order": [
       "error",
-      { "groups": ["builtin", "external", "parent", "sibling", "index"] }
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
     ],
     "no-console": "warn",
     "quotes": ["error", "single"],
