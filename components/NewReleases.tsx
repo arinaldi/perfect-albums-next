@@ -28,21 +28,24 @@ export default function NewReleases({ data }: Props) {
     setModal((modal) => ({ ...modal, type: MODAL_TYPES.INITIAL }));
   }
 
-  const NewButton = user ? (
-    <Button
-      onClick={() =>
-        setModal({
-          data: null,
-          type: MODAL_TYPES.NEW_RELEASE_CREATE,
-        })
+  return (
+    <Layout
+      title="New Releases"
+      titleAction={
+        user ? (
+          <Button
+            onClick={() => {
+              setModal({
+                data: null,
+                type: MODAL_TYPES.NEW_RELEASE_CREATE,
+              });
+            }}
+          >
+            New
+          </Button>
+        ) : null
       }
     >
-      New
-    </Button>
-  ) : null;
-
-  return (
-    <Layout title="New Releases" titleAction={NewButton}>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(formatReleases(data))
           .sort(sortByDate)

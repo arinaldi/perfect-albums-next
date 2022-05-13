@@ -26,18 +26,24 @@ export default function FeaturedSongs({ data }: Props) {
     setModal((modal) => ({ ...modal, type: MODAL_TYPES.INITIAL }));
   }
 
-  const NewButton = user ? (
-    <Button
-      onClick={() =>
-        setModal({ data: null, type: MODAL_TYPES.FEATURED_SONGS_CREATE })
+  return (
+    <Layout
+      title="Featured Songs"
+      titleAction={
+        user ? (
+          <Button
+            onClick={() => {
+              setModal({
+                data: null,
+                type: MODAL_TYPES.FEATURED_SONGS_CREATE,
+              });
+            }}
+          >
+            New
+          </Button>
+        ) : null
       }
     >
-      New
-    </Button>
-  ) : null;
-
-  return (
-    <Layout title="Featured Songs" titleAction={NewButton}>
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {data.map((song) => (
           <div
