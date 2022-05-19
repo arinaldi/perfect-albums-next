@@ -56,7 +56,7 @@ export default function Admin() {
     artistRef?.current?.focus();
   }, []);
 
-  function onSearch(key: string, value: string) {
+  function onSearch(key: 'artist' | 'title', value: string) {
     router.replace(
       {
         pathname: ROUTES_ADMIN.base.href,
