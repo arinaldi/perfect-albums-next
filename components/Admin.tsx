@@ -2,46 +2,50 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
-import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
-import { generateAlbumsUrl, getSortIcon } from 'utils';
+import {
+  APP_MESSAGE_TYPES,
+  ROUTES_ADMIN,
+  SORT_DIRECTION,
+} from 'constants/index';
 import useAdminAlbums from 'hooks/useAdminAlbums';
-import { useAdmin } from 'hooks/useAdminStore';
 import useDebounce from 'hooks/useDebounce';
+import { generateAlbumsUrl, parseAdminQuery } from 'utils';
+import { Children } from 'utils/types';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
+import SortableColumn from 'components/SortableColumn';
 import StudioFilter from 'components/StudioFilter';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
 
-const { ARTIST, TITLE, YEAR } = SORT_VALUE;
+function Column({ children }: Children) {
+  return (
+    <th
+      className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
+      scope="col"
+    >
+      {children}
+    </th>
+  );
+}
 
 export default function Admin() {
   const router = useRouter();
+  const { artist, page, perPage, sort, studio, title } = parseAdminQuery(
+    router.query,
+  );
   const artistRef = useRef<HTMLInputElement | null>(null);
-  const {
-    artist,
-    direction,
-    page,
-    perPage,
-    sort,
-    studio,
-    title,
-    onClear,
-    onSearch,
-    onSort,
-    setArtist,
-    setTitle,
-  } = useAdmin();
   const debouncedArtist = useDebounce(artist);
   const debouncedTitle = useDebounce(title);
+  const [sortProp, desc] = sort.split(':') ?? [];
   const url = generateAlbumsUrl({
     artist: debouncedArtist,
-    direction,
+    direction: desc ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC,
     page,
     perPage,
-    sort,
+    sort: sortProp,
     studio,
     title: debouncedTitle,
   });
@@ -51,32 +55,30 @@ export default function Admin() {
     artistRef?.current?.focus();
   }, []);
 
-  useEffect(() => {
-    if (debouncedArtist || debouncedTitle) {
-      onSearch();
-    }
-  }, [debouncedArtist, debouncedTitle, onSearch]);
-
-  useEffect(() => {
-    function onStart(url: string) {
-      if (!url.startsWith(ROUTES_ADMIN.base.href)) {
-        onClear();
-      }
-    }
-
-    router.events.on('routeChangeStart', onStart);
-
-    return () => {
-      router.events.off('routeChangeStart', onStart);
-    };
-  }, [onClear, router]);
-
-  function handleClear() {
-    artistRef?.current?.focus();
-    onClear();
+  function setValue(key: string, value: string) {
+    router.replace(
+      {
+        pathname: ROUTES_ADMIN.base.href,
+        query: { ...router.query, [key]: value },
+      },
+      undefined,
+      { shallow: true },
+    );
   }
 
-  function handleRouteChange(pathname: string) {
+  function onClear() {
+    artistRef?.current?.focus();
+    router.replace(
+      {
+        pathname: ROUTES_ADMIN.base.href,
+        query: { page: 1 },
+      },
+      undefined,
+      { shallow: true },
+    );
+  }
+
+  function onRouteChange(pathname: string) {
     router.push({
       pathname,
       query: router.query,
@@ -109,7 +111,7 @@ export default function Admin() {
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
           id="artist-search"
           name="artist"
-          onChange={(event) => setArtist(event.target.value)}
+          onChange={(event) => setValue('artist', event.target.value)}
           placeholder="Search artist"
           ref={artistRef}
           type="text"
@@ -119,16 +121,16 @@ export default function Admin() {
           className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:ml-4 sm:mt-0 sm:text-sm"
           id="title-search"
           name="title"
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(event) => setValue('title', event.target.value)}
           placeholder="Search title"
           type="text"
           value={title}
         />
         <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">
           <div className="flex">
-            <Button onClick={handleClear}>Clear</Button>
+            <Button onClick={onClear}>Clear</Button>
             <span className="ml-1" />
-            <Button onClick={() => handleRouteChange(ROUTES_ADMIN.create.href)}>
+            <Button onClick={() => onRouteChange(ROUTES_ADMIN.create.href)}>
               New
             </Button>
           </div>
@@ -158,48 +160,12 @@ export default function Admin() {
                 <table className="min-w-full table-auto divide-y divide-gray-200 dark:divide-black sm:table-fixed">
                   <thead>
                     <tr>
-                      <th
-                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/4"
-                        onClick={() => onSort(ARTIST)}
-                        scope="col"
-                      >
-                        {sort === ARTIST ? getSortIcon(direction) : null}
-                        Artist
-                      </th>
-                      <th
-                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/4"
-                        onClick={() => onSort(TITLE)}
-                        scope="col"
-                      >
-                        {sort === TITLE ? getSortIcon(direction) : null}
-                        Title
-                      </th>
-                      <th
-                        className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
-                        onClick={() => onSort(YEAR)}
-                        scope="col"
-                      >
-                        {sort === YEAR ? getSortIcon(direction) : null}
-                        Year
-                      </th>
-                      <th
-                        className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
-                        scope="col"
-                      >
-                        CD
-                      </th>
-                      <th
-                        className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
-                        scope="col"
-                      >
-                        Favorite
-                      </th>
-                      <th
-                        className="whitespace-nowrap px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-[1%]"
-                        scope="col"
-                      >
-                        Actions
-                      </th>
+                      <SortableColumn prop="artist">Artist</SortableColumn>
+                      <SortableColumn prop="title">Title</SortableColumn>
+                      <SortableColumn prop="year">Year</SortableColumn>
+                      <Column>CD</Column>
+                      <Column>Favorite</Column>
+                      <Column>Actions</Column>
                     </tr>
                   </thead>
                   {isLoading ? (
@@ -235,7 +201,7 @@ export default function Admin() {
                             <PencilIcon
                               className="inline h-4 w-4 cursor-pointer dark:text-white"
                               onClick={() =>
-                                handleRouteChange(
+                                onRouteChange(
                                   `${ROUTES_ADMIN.edit.href}/${album.id}`,
                                 )
                               }
@@ -243,7 +209,7 @@ export default function Admin() {
                             <TrashIcon
                               className="ml-4 inline h-4 w-4 cursor-pointer dark:text-white"
                               onClick={() =>
-                                handleRouteChange(
+                                onRouteChange(
                                   `${ROUTES_ADMIN.delete.href}/${album.id}`,
                                 )
                               }
