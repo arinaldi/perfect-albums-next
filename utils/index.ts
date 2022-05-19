@@ -1,10 +1,4 @@
-import { ReactNode } from 'react';
-import {
-  ArrowNarrowDownIcon,
-  ArrowNarrowUpIcon,
-} from '@heroicons/react/outline';
-
-import { MONTHS, PER_PAGE, SORT_DIRECTION } from 'constants/index';
+import { MONTHS, PER_PAGE } from 'constants/index';
 import { Album, Release } from 'utils/types';
 
 function addZeroPrefix(value: number) {
@@ -79,18 +73,6 @@ export function formatReleases(releases: Release[]): ReleaseResults {
   return results;
 }
 
-export function getSortIcon(direction: SORT_DIRECTION): ReactNode {
-  const { ASC, DESC } = SORT_DIRECTION;
-
-  if (!direction) return null;
-  if (direction === ASC)
-    return <ArrowNarrowUpIcon className="mr-1 inline h-4 w-4" />;
-  if (direction === DESC)
-    return <ArrowNarrowDownIcon className="mr-1 inline h-4 w-4" />;
-
-  return null;
-}
-
 export function sortByDate(a: Tuple, b: Tuple): number {
   const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
   const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
@@ -114,7 +96,7 @@ export interface AlbumParams {
   page: number;
   perPage: PER_PAGE;
   sort: string;
-  studio: boolean;
+  studio: string;
   title: string;
 }
 
@@ -127,7 +109,36 @@ export function generateAlbumsUrl({
   studio,
   title,
 }: AlbumParams) {
-  return `/api/albums?page=${page}&per_page=${perPage}&artist=${artist}&title=${title}&sort=${sort}&direction=${direction}&studio=${
-    studio ? 'true' : ''
-  }`;
+  return `/api/albums?page=${page}&per_page=${perPage}&artist=${artist}&title=${title}&sort=${sort}&direction=${direction}&studio=${studio}`;
+}
+
+type QueryValue = string | string[] | undefined;
+
+export function parseQuery(value: QueryValue) {
+  return typeof value === 'string' ? value : '';
+}
+
+export function parsePageQuery(value: QueryValue) {
+  return typeof value === 'string' ? parseInt(value) : 1;
+}
+
+export function parsePerPageQuery(value: QueryValue) {
+  const { SMALL, MEDIUM, LARGE } = PER_PAGE;
+  const perPage = typeof value === 'string' ? parseInt(value) : PER_PAGE.SMALL;
+
+  if (perPage === SMALL) return SMALL;
+  if (perPage === MEDIUM) return MEDIUM;
+  if (perPage === LARGE) return LARGE;
+  return SMALL;
+}
+
+export function parseAdminQuery(query: Record<string, QueryValue>) {
+  return {
+    artist: parseQuery(query.artist),
+    page: parsePageQuery(query.page),
+    perPage: parsePerPageQuery(query.perPage),
+    sort: parseQuery(query.sort),
+    studio: parseQuery(query.studio),
+    title: parseQuery(query.title),
+  };
 }

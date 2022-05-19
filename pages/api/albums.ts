@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { SORT_DIRECTION } from 'constants/index';
+import { parseQuery } from 'utils';
 import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
@@ -9,10 +10,6 @@ const { ASC } = SORT_DIRECTION;
 interface Payload {
   albums: Album[];
   count: number;
-}
-
-function parseQuery(query: string | string[]): string {
-  return typeof query === 'string' ? query : query[0];
 }
 
 async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
