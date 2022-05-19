@@ -6,6 +6,7 @@ import {
   APP_MESSAGE_TYPES,
   ROUTES_ADMIN,
   SORT_DIRECTION,
+  SORT_VALUE,
 } from 'constants/index';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import useDebounce from 'hooks/useDebounce';
@@ -55,11 +56,16 @@ export default function Admin() {
     artistRef?.current?.focus();
   }, []);
 
-  function setValue(key: string, value: string) {
+  function onSearch(key: string, value: string) {
     router.replace(
       {
         pathname: ROUTES_ADMIN.base.href,
-        query: { ...router.query, [key]: value },
+        query: {
+          ...router.query,
+          page: 1,
+          sort: SORT_VALUE.YEAR,
+          [key]: value,
+        },
       },
       undefined,
       { shallow: true },
@@ -111,7 +117,7 @@ export default function Admin() {
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
           id="artist-search"
           name="artist"
-          onChange={(event) => setValue('artist', event.target.value)}
+          onChange={(event) => onSearch('artist', event.target.value)}
           placeholder="Search artist"
           ref={artistRef}
           type="text"
@@ -121,7 +127,7 @@ export default function Admin() {
           className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:ml-4 sm:mt-0 sm:text-sm"
           id="title-search"
           name="title"
-          onChange={(event) => setValue('title', event.target.value)}
+          onChange={(event) => onSearch('title', event.target.value)}
           placeholder="Search title"
           type="text"
           value={title}

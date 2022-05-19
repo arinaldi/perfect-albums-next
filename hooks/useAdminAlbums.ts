@@ -11,12 +11,8 @@ interface Payload {
   mutate: () => void;
 }
 
-export default function useAdminAlbums(
-  url: string,
-  preventFetch = false,
-): Payload {
-  const key = preventFetch ? null : url;
-  const { data, error, mutate } = useSWR(key, { dedupingInterval: 5000 });
+export default function useAdminAlbums(url: string): Payload {
+  const { data, error, mutate } = useSWR(url, { dedupingInterval: 5000 });
   const { data: cdData, error: cdError } = useSWR('/api/cds');
 
   const payload = {
