@@ -74,23 +74,26 @@ export default function Pagination({ lastPage }: PaginationProps) {
       title,
     });
 
-    if (newPage !== 0) {
+    if (newPage > 0) {
       prefetch(url);
     }
   }
 
   function onNext() {
+    const newPage = page + 2;
     const url = generateAlbumsUrl({
       artist,
       direction: desc ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC,
-      page: page + 2,
+      page: newPage,
       perPage,
       sort: sortProp,
       studio,
       title,
     });
 
-    prefetch(url);
+    if (newPage <= lastPage) {
+      prefetch(url);
+    }
   }
 
   return (
