@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { SORT_DIRECTION } from 'constants/index';
-import { parseQuery } from 'utils';
+import { parseQuery, parseAdminQuery } from 'utils';
 import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
-const { ASC } = SORT_DIRECTION;
+const { ASC, DESC } = SORT_DIRECTION;
 
 interface Payload {
   albums: Album[];
@@ -13,26 +13,12 @@ interface Payload {
 }
 
 async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
-  let {
-    artist,
-    direction,
-    page,
-    per_page: perPage,
-    sort,
-    studio,
-    title,
-  } = queries;
-  artist = parseQuery(artist);
-  direction = parseQuery(direction) || ASC;
-  page = parseQuery(page);
-  perPage = parseQuery(perPage);
-  sort = parseQuery(sort);
-  studio = parseQuery(studio);
-  title = parseQuery(title);
-  const pageNumber = Math.abs(parseInt(page));
-  const limit = Math.abs(parseInt(perPage)) || 25;
-  const start = (pageNumber - 1) * limit;
-  const end = pageNumber * limit - 1;
+  const { artist, page, perPage, sort, studio, title } =
+    parseAdminQuery(queries);
+  const [sortProp, desc] = sort.split(':') ?? [];
+  const direction = desc ? DESC : ASC;
+  const start = (page - 1) * perPage;
+  const end = page * perPage - 1;
 
   let query = supabase
     .from('albums')
@@ -45,15 +31,15 @@ async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
     query = query.eq('studio', true);
   }
 
-  if (sort) {
-    query = query.order(sort, { ascending: direction === ASC });
+  if (sortProp) {
+    query = query.order(sortProp, { ascending: direction === ASC });
   } else {
     query = query
       .order('artist', { ascending: true })
       .order('title', { ascending: true });
   }
 
-  if (sort === 'artist') {
+  if (sortProp === 'artist') {
     query = query.order('title', { ascending: true });
   } else {
     query = query.order('artist', { ascending: direction === ASC });
@@ -62,6 +48,7 @@ async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
   const { data: albums, count, error } = await query;
 
   if (error) throw error;
+
   return { albums: albums || [], count: count || 0 };
 }
 

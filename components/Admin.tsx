@@ -2,12 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
-import {
-  APP_MESSAGE_TYPES,
-  ROUTES_ADMIN,
-  SORT_DIRECTION,
-  SORT_VALUE,
-} from 'constants/index';
+import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import useDebounce from 'hooks/useDebounce';
 import { generateAlbumsUrl, parseAdminQuery } from 'utils';
@@ -40,13 +35,11 @@ export default function Admin() {
   const artistRef = useRef<HTMLInputElement | null>(null);
   const debouncedArtist = useDebounce(artist);
   const debouncedTitle = useDebounce(title);
-  const [sortProp, desc] = sort.split(':') ?? [];
   const url = generateAlbumsUrl({
     artist: debouncedArtist,
-    direction: desc ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC,
     page,
     perPage,
-    sort: sortProp,
+    sort,
     studio,
     title: debouncedTitle,
   });

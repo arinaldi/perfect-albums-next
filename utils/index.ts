@@ -92,7 +92,6 @@ export function getTitle(title: string): string {
 
 export interface AlbumParams {
   artist: string;
-  direction: string;
   page: number;
   perPage: PER_PAGE;
   sort: string;
@@ -102,14 +101,13 @@ export interface AlbumParams {
 
 export function generateAlbumsUrl({
   artist,
-  direction,
   page,
   perPage,
   sort,
   studio,
   title,
 }: AlbumParams) {
-  return `/api/albums?page=${page}&per_page=${perPage}&artist=${artist}&title=${title}&sort=${sort}&direction=${direction}&studio=${studio}`;
+  return `/api/albums?page=${page}&perPage=${perPage}&artist=${artist}&title=${title}&sort=${sort}&studio=${studio}`;
 }
 
 type QueryValue = string | string[] | undefined;

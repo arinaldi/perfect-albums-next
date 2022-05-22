@@ -1,9 +1,16 @@
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN, SORT_DIRECTION } from 'constants/index';
+import { ROUTES_ADMIN } from 'constants/index';
 import usePrefetch from 'hooks/usePrefetch';
 import { generateAlbumsUrl, parseAdminQuery } from 'utils';
 import { Children } from 'utils/types';
+
+enum PAGE {
+  FIRST = 'First page',
+  LAST = 'Last page',
+  NEXT = 'Next page',
+  PREVIOUS = 'Previous page',
+}
 
 interface PaginationProps {
   lastPage: number;
@@ -11,7 +18,7 @@ interface PaginationProps {
 
 interface ButtonProps extends Children {
   isDisabled: boolean;
-  label: 'First page' | 'Previous page' | 'Next page' | 'Last page';
+  label: PAGE;
   pageValue: number;
   prefetch?: () => void;
 }
@@ -40,8 +47,8 @@ function Button({
 
   return (
     <button
-      className={`${label === 'First page' ? 'rounded-l-md' : ''} ${
-        label === 'Last page' ? 'rounded-r-md' : ''
+      className={`${label === PAGE.FIRST ? 'rounded-l-md' : ''} ${
+        label === PAGE.LAST ? 'rounded-r-md' : ''
       } relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white`}
       disabled={isDisabled}
       onClick={onClick}
@@ -58,7 +65,6 @@ export default function Pagination({ lastPage }: PaginationProps) {
   const { artist, page, perPage, sort, studio, title } = parseAdminQuery(
     router.query,
   );
-  const [sortProp, desc] = sort.split(':') ?? [];
   const isFirstPage = page === 1;
   const isLastPage = page === lastPage;
 
@@ -66,10 +72,9 @@ export default function Pagination({ lastPage }: PaginationProps) {
     const newPage = page - 2;
     const url = generateAlbumsUrl({
       artist,
-      direction: desc ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC,
       page: newPage,
       perPage,
-      sort: sortProp,
+      sort,
       studio,
       title,
     });
@@ -83,10 +88,9 @@ export default function Pagination({ lastPage }: PaginationProps) {
     const newPage = page + 2;
     const url = generateAlbumsUrl({
       artist,
-      direction: desc ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC,
       page: newPage,
       perPage,
-      sort: sortProp,
+      sort,
       studio,
       title,
     });
@@ -101,12 +105,12 @@ export default function Pagination({ lastPage }: PaginationProps) {
       className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
       aria-label="Pagination"
     >
-      <Button isDisabled={isFirstPage} label="First page" pageValue={1}>
+      <Button isDisabled={isFirstPage} label={PAGE.FIRST} pageValue={1}>
         «
       </Button>
       <Button
         isDisabled={isFirstPage}
-        label="Previous page"
+        label={PAGE.PREVIOUS}
         pageValue={page - 1}
         prefetch={onPrevious}
       >
@@ -117,13 +121,13 @@ export default function Pagination({ lastPage }: PaginationProps) {
       </span>
       <Button
         isDisabled={isLastPage}
-        label="Next page"
+        label={PAGE.NEXT}
         pageValue={page + 1}
         prefetch={onNext}
       >
         ›
       </Button>
-      <Button isDisabled={isLastPage} label="Last page" pageValue={lastPage}>
+      <Button isDisabled={isLastPage} label={PAGE.LAST} pageValue={lastPage}>
         »
       </Button>
     </nav>
