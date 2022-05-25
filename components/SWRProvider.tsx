@@ -49,8 +49,8 @@ export default function SWRProvider({ children }: Children) {
 
   if (!isMounted() && user === undefined) {
     return (
-      <div className="mt-8 flex justify-center">
-        <Spinner className="h-8 w-8" />
+      <div className="flex min-h-screen justify-center dark:bg-gray-800">
+        <Spinner className="mt-8 h-8 w-8 dark:text-white" />
       </div>
     );
   }
