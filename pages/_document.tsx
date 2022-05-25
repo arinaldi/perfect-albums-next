@@ -3,7 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 
 // https://github.com/vercel/next.js/issues/18557
 function getCsp(nonce: string) {
-  const isProd = process.env.NODE_ENV == 'production';
+  const isProd = process.env.NODE_ENV === 'production';
   let csp = ``;
 
   csp += `base-uri 'self';`;
