@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, ReactNode, useRef } from 'react';
+import { FormEvent, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import CancelButton from 'components/CancelButton';
