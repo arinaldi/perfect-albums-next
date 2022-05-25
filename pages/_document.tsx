@@ -14,7 +14,7 @@ function getCsp(nonce: string) {
   csp += `img-src 'self' data:;`;
   csp += `prefetch-src 'self';`;
   csp += `script-src 'self' ${isProd ? '' : "'unsafe-eval'"};`;
-  csp += `script-src-elem 'nonce-${nonce}';`;
+  csp += `script-src-elem 'self' 'nonce-${nonce}';`;
   csp += `style-src 'self' 'unsafe-inline';`;
 
   return csp;
