@@ -19,7 +19,7 @@
       }
     ],
     "no-console": "warn",
-    "quotes": ["error", "single"],
+    "object-shorthand": "error",
     "semi": ["error", "always"]
   }
 }
