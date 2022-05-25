@@ -2,6 +2,10 @@
 
 const securityHeaders = [
   {
+    key: 'Content-Security-Policy',
+    value: `frame-ancestors 'self';`,
+  },
+  {
     key: 'Permissions-Policy',
     value: 'geolocation=()',
   },

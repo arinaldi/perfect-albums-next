@@ -8,7 +8,7 @@ function getCsp(nonce: string) {
 
   csp += `base-uri 'self';`;
   csp += `connect-src 'self' ${process.env.NEXT_PUBLIC_SUPABASE_URL};`;
-  csp += `default-src 'self';`;
+  csp += `default-src 'none';`;
   csp += `form-action 'self';`;
   csp += `frame-src 'self';`;
   csp += `img-src 'self' data:;`;
