@@ -49,7 +49,6 @@ export default function PerPage() {
       <Button prop={SMALL} />
       <Button prop={MEDIUM} />
       <Button prop={LARGE} />
-      {}
     </nav>
   );
 }
