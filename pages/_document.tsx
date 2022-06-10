@@ -11,7 +11,7 @@ function getCsp(nonce: string) {
   csp += `default-src 'none';`;
   csp += `form-action 'self';`;
   csp += `frame-src 'self';`;
-  csp += `img-src 'self' data:;`;
+  csp += `img-src 'self' https://fav.farm data:;`;
   csp += `prefetch-src 'self';`;
   csp += `script-src 'self' ${isProd ? '' : "'unsafe-eval'"};`;
   csp += `script-src-elem 'self' 'nonce-${nonce}';`;
@@ -27,6 +27,7 @@ export default function Document() {
     <Html>
       <Head nonce={nonce}>
         <meta httpEquiv="Content-Security-Policy" content={getCsp(nonce)} />
+        <link rel="icon" href="https://fav.farm/🎧" />
       </Head>
       <body>
         <Main />
