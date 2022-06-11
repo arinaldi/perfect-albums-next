@@ -7,9 +7,14 @@ import { Children } from 'utils/types';
 
 interface Props extends Children {
   prop: string;
+  wrapperClassName?: string;
 }
 
-export default function SortableColumn({ children, prop }: Props) {
+export default function SortableColumn({
+  children,
+  prop,
+  wrapperClassName = '',
+}: Props) {
   const { query } = useRouter();
   const sort = parseQuery(query.sort);
   let [sortProp, desc] = sort.split(':') ?? [];
@@ -28,7 +33,7 @@ export default function SortableColumn({ children, prop }: Props) {
 
   return (
     <th
-      className="cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/4"
+      className={`cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white ${wrapperClassName}`}
       scope="col"
     >
       <Link

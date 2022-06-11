@@ -29,26 +29,9 @@ export interface Song {
 
 export type Table = 'albums' | 'releases' | 'songs';
 
-export interface AlbumInput {
-  artist: string;
-  title: string;
-  year: string;
-  cd: boolean;
-  favorite: boolean;
-  studio: boolean;
-}
-
-export interface ReleaseInput {
-  artist: string;
-  title: string;
-  date: string;
-}
-
-export interface SongInput {
-  artist: string;
-  title: string;
-  link: string;
-}
+export type AlbumInput = Omit<Album, 'id' | 'created_at'>;
+export type ReleaseInput = Omit<Release, 'id' | 'created_at'>;
+export type SongInput = Omit<Song, 'id' | 'created_at'>;
 
 export interface SignInInput {
   email: string;

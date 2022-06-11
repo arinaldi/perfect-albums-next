@@ -6,7 +6,7 @@ import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import useDebounce from 'hooks/useDebounce';
 import { generateAlbumsUrl, parseAdminQuery } from 'utils';
-import { Children } from 'utils/types';
+import Column from 'components/Column';
 import Layout from 'components/Layout';
 import Pagination from 'components/Pagination';
 import PerPage from 'components/PerPage';
@@ -15,17 +15,6 @@ import StudioFilter from 'components/StudioFilter';
 import TableSkeleton from 'components/TableSkeleton';
 import AppMessage from 'components/AppMessage';
 import Button from 'components/Button';
-
-function Column({ children }: Children) {
-  return (
-    <th
-      className="px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white sm:w-1/12"
-      scope="col"
-    >
-      {children}
-    </th>
-  );
-}
 
 export default function Admin() {
   const router = useRouter();
@@ -159,63 +148,77 @@ export default function Admin() {
                 <table className="min-w-full table-auto divide-y divide-gray-200 dark:divide-black sm:table-fixed">
                   <thead>
                     <tr>
-                      <SortableColumn prop="artist">Artist</SortableColumn>
-                      <SortableColumn prop="title">Title</SortableColumn>
-                      <SortableColumn prop="year">Year</SortableColumn>
-                      <Column>CD</Column>
-                      <Column>Favorite</Column>
-                      <Column>Actions</Column>
+                      <SortableColumn
+                        prop="artist"
+                        wrapperClassName="sm:w-1/4 sm:max-w-0"
+                      >
+                        Artist
+                      </SortableColumn>
+                      <SortableColumn
+                        prop="title"
+                        wrapperClassName="sm:w-1/3 sm:max-w-0"
+                      >
+                        Title
+                      </SortableColumn>
+                      <SortableColumn prop="year" wrapperClassName="sm:w-1/12">
+                        Year
+                      </SortableColumn>
+                      <Column wrapperClassName="sm:w-1/12">Favorite</Column>
+                      <Column wrapperClassName="sm:w-1/12">Actions</Column>
                     </tr>
                   </thead>
                   {isLoading ? (
                     <TableSkeleton />
                   ) : (
                     <tbody className="divide-y divide-gray-200 bg-white dark:divide-black dark:bg-gray-500">
-                      {albums.map((album) => (
-                        <tr
-                          key={album.id}
-                          className="even:bg-gray-0 odd:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-gray-800"
-                        >
-                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
-                            {album.artist}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
-                            {album.studio ? <span>*</span> : null}
-                            <span>{album.title}</span>
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
-                            {album.year}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
-                            {album.cd ? (
-                              <CheckIcon className="inline h-5 w-5" />
-                            ) : null}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
-                            {album.favorite ? (
-                              <CheckIcon className="inline h-5 w-5" />
-                            ) : null}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-auto">
-                            <PencilIcon
-                              className="inline h-4 w-4 cursor-pointer dark:text-white"
-                              onClick={() =>
-                                onRouteChange(
-                                  `${ROUTES_ADMIN.edit.href}/${album.id}`,
-                                )
-                              }
-                            />
-                            <TrashIcon
-                              className="ml-4 inline h-4 w-4 cursor-pointer dark:text-white"
-                              onClick={() =>
-                                onRouteChange(
-                                  `${ROUTES_ADMIN.delete.href}/${album.id}`,
-                                )
-                              }
-                            />
-                          </td>
-                        </tr>
-                      ))}
+                      {albums.map(
+                        ({ artist, cd, favorite, id, studio, title, year }) => (
+                          <tr
+                            key={id}
+                            className="even:bg-gray-0 odd:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-gray-800"
+                          >
+                            <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
+                              {artist}
+                            </td>
+                            <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/3 sm:max-w-0 sm:truncate">
+                              {cd ? <span className="mr-1">💿</span> : null}
+                              <span
+                                className={
+                                  studio ? 'font-medium italic' : 'font-light'
+                                }
+                              >
+                                {title}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
+                              {year}
+                            </td>
+                            <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
+                              {favorite ? (
+                                <CheckIcon className="inline h-5 w-5" />
+                              ) : null}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
+                              <PencilIcon
+                                className="inline h-4 w-4 cursor-pointer dark:text-white"
+                                onClick={() =>
+                                  onRouteChange(
+                                    `${ROUTES_ADMIN.edit.href}/${id}`,
+                                  )
+                                }
+                              />
+                              <TrashIcon
+                                className="ml-4 inline h-4 w-4 cursor-pointer dark:text-white"
+                                onClick={() =>
+                                  onRouteChange(
+                                    `${ROUTES_ADMIN.delete.href}/${id}`,
+                                  )
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ),
+                      )}
                     </tbody>
                   )}
                 </table>
