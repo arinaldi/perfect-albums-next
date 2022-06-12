@@ -181,7 +181,9 @@ export default function Admin() {
                               {artist}
                             </td>
                             <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/3 sm:max-w-0 sm:truncate">
-                              {cd ? <span className="mr-1">💿</span> : null}
+                              {cd ? (
+                                <span className="mr-1 text-xs">💿</span>
+                              ) : null}
                               <span
                                 className={
                                   studio ? 'font-medium italic' : 'font-light'
