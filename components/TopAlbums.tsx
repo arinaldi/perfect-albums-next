@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/outline';
 
-import { DECADES } from 'constants/index';
+import { DECADES, SPOTIFY_URL } from 'constants/index';
 import { formatFavorites, sortDesc } from 'utils';
 import { Album } from 'utils/types';
 import Layout from 'components/Layout';
@@ -56,11 +56,24 @@ export default function TopAlbums({ data, onChange, value }: Props) {
                 </div>
               </div>
               <ul data-testid={`list-${year}`} className="ml-6 list-disc p-1">
-                {favorites.map((album, index) => (
-                  <li key={index} className="dark:text-white">
-                    {album.artist} &ndash; {album.title}
-                  </li>
-                ))}
+                {favorites.map(({ artist, title }, index) => {
+                  const query = encodeURI(`${artist} ${title}`);
+                  const url = `${SPOTIFY_URL}/${query}`;
+
+                  return (
+                    <li key={index} className="dark:text-white">
+                      {artist} &ndash;{' '}
+                      <a
+                        className="text-blue-600 dark:text-blue-500"
+                        href={url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {title}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

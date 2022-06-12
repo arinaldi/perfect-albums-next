@@ -102,3 +102,5 @@ export const ROUTES_ADMIN = {
   edit: { href: '/admin/edit', label: 'Admin Edit' },
   delete: { href: '/admin/delete', label: 'Admin Delete' },
 };
+
+export const SPOTIFY_URL = 'https://open.spotify.com/search';
