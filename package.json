@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.0",
-    "@heroicons/react": "^1.0.6",
+    "@heroicons/react": "^2.0.10",
     "@supabase/supabase-js": "^1.35.3",
     "@tsndr/cloudflare-worker-jwt": "^1.1.7",
-    "next": "^12.2.0",
+    "next": "^12.3.0",
     "nprogress": "^0.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

@@ -1,13 +1,13 @@
 import { useReducer } from 'react';
 import { useRouter } from 'next/router';
 import {
-  LoginIcon,
-  LogoutIcon,
-  MenuIcon,
+  ArrowLeftOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
+  Bars3Icon,
   MoonIcon,
   SunIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
 import { useUser } from 'hooks/useAuthStore';
@@ -44,8 +44,8 @@ export default function NavBar() {
               type="button"
             >
               <span className="sr-only">Open main menu</span>
-              <MenuIcon className={`${open ? 'hidden' : 'block'} h-6 w-6`} />
-              <XIcon className={`${open ? 'block' : 'hidden'} h-6 w-6`} />
+              <Bars3Icon className={`${open ? 'hidden' : 'block'} h-6 w-6`} />
+              <XMarkIcon className={`${open ? 'block' : 'hidden'} h-6 w-6`} />
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -88,11 +88,11 @@ export default function NavBar() {
                 onClick={signOut}
                 className="text-md cursor-pointer rounded-md px-3 py-2 font-medium text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
-                <LogoutIcon className="h-5 w-5" />
+                <ArrowRightOnRectangleIcon className="h-5 w-5" />
               </div>
             ) : (
               <LinkWrapper href={ROUTE_HREF.SIGNIN}>
-                <LoginIcon className="h-5 w-5" />
+                <ArrowLeftOnRectangleIcon className="h-5 w-5" />
               </LinkWrapper>
             )}
           </div>

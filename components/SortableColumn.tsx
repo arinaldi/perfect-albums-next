@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ArrowNarrowDownIcon } from '@heroicons/react/outline';
+import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
 
 import { parseQuery } from 'utils';
 import { Children } from 'utils/types';
@@ -51,7 +51,7 @@ export default function SortableColumn({
                 : 'invisible text-gray-400 group-hover:visible'
             } ml-1 flex-none`}
           >
-            <ArrowNarrowDownIcon
+            <ArrowLongDownIcon
               aria-hidden="true"
               className={`${desc ? 'rotate-180' : ''} inline h-4 w-4`}
             />

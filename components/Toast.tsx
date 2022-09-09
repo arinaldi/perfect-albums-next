@@ -1,5 +1,5 @@
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
-import { XIcon } from '@heroicons/react/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 export default function Toast() {
   return (
@@ -27,7 +27,7 @@ export default function Toast() {
             <>
               {icon}
               {message}
-              <XIcon
+              <XMarkIcon
                 className="ml-2 mr-1 h-5 w-5 cursor-pointer"
                 onClick={() => toast.dismiss(t.id)}
               />

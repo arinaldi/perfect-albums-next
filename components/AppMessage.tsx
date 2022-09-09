@@ -1,7 +1,7 @@
 import {
   ExclamationCircleIcon,
   InformationCircleIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/solid';
 
 import { APP_MESSAGE_TYPES } from 'constants/index';
 
