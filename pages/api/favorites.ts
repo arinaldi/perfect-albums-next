@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  createServerSupabaseClient,
+  SupabaseClient,
+} from '@supabase/auth-helpers-nextjs';
 
-import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
-export async function getFavorites(): Promise<Album[]> {
+export async function getFavorites(supabase: SupabaseClient): Promise<Album[]> {
   const { data: favorites, error } = await supabase
-    .from<Album>('albums')
+    .from('albums')
     .select('*')
     .eq('favorite', true)
     .order('artist', { ascending: true });
@@ -16,11 +19,13 @@ export async function getFavorites(): Promise<Album[]> {
 }
 
 export default async function favorites(
-  _: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse,
 ): Promise<void> {
+  const supabase = createServerSupabaseClient({ req, res });
+
   try {
-    const favorites = await getFavorites();
+    const favorites = await getFavorites(supabase);
     res.status(200).json({ success: true, favorites });
   } catch (error) {
     res.status(400).json({ success: false });

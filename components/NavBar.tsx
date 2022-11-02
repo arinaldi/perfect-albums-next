@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import { useRouter } from 'next/router';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
@@ -10,13 +11,12 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
-import { useUser } from 'hooks/useAuthStore';
 import useDarkMode from 'hooks/useDarkMode';
-import supabase from 'utils/supabase';
 import LinkWrapper from 'components/LinkWrapper';
 
 export default function NavBar() {
   const user = useUser();
+  const supabase = useSupabaseClient();
   const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [open, toggle] = useReducer(

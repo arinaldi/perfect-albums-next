@@ -1,10 +1,10 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
 import { getTitle } from 'utils';
-import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
@@ -51,8 +51,10 @@ export default function DeleteAlbumPage({ album }: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  if (!params?.id) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerSupabaseClient(context);
+
+  if (!context.params?.id) {
     return {
       redirect: {
         destination: ROUTE_HREF.TOP_ALBUMS,
@@ -62,12 +64,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 
   const { data: album } = await supabase
-    .from<Album>('albums')
+    .from('albums')
     .select('*')
-    .eq('id', params.id as string)
+    .eq('id', context.params.id as string)
     .single();
 
   return {
     props: { album },
   };
-};
+}

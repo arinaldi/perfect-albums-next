@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { useUser } from '@supabase/auth-helpers-react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
-import { useUser } from 'hooks/useAuthStore';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import Layout from 'components/Layout';

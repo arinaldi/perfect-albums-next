@@ -1,6 +1,7 @@
-import { GetStaticProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { getTitle } from 'utils';
 import { Release } from 'utils/types';
@@ -29,11 +30,11 @@ export default function NewReleasesPage({ releases }: Props) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const releases = await getReleases();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerSupabaseClient(context);
+  const releases = await getReleases(supabase);
 
   return {
     props: { releases },
-    revalidate: 5,
   };
-};
+}

@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useForm } from 'react-hook-form';
 
-import { ROUTE_HREF } from 'constants/index';
+import { ROUTES_ADMIN } from 'constants/index';
 import useSubmit from 'hooks/useSubmit';
-import supabase from 'utils/supabase';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
 import Input from 'components/Input';
@@ -12,13 +12,15 @@ import SubmitButton from 'components/SubmitButton';
 
 export default function SignIn() {
   const router = useRouter();
+  const supabase = useSupabaseClient();
+  const user = useUser();
   const { handleSubmit, register } = useForm<SignInInput>();
 
   const options = {
-    callbacks: [() => router.push(ROUTE_HREF.NEW_RELEASES)],
+    callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
     handleSubmit,
     submitFn: async (data: SignInInput) => {
-      const { error } = await supabase.auth.signIn(data);
+      const { error } = await supabase.auth.signInWithPassword(data);
 
       if (error) throw error;
     },
@@ -28,26 +30,30 @@ export default function SignIn() {
   return (
     <Layout maxWidth="max-w-sm" title="Sign In">
       <form method="POST" onSubmit={onSubmit}>
-        <div className="bg-white dark:bg-gray-800">
-          <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6">
-              <div className="mb-4">
-                <Input
-                  id="email"
-                  required
-                  type="email"
-                  {...register('email', { required: true })}
-                />
-              </div>
-              <div className="mb-4">
-                <PasswordInput {...register('password', { required: true })} />
+        <fieldset disabled={Boolean(user)}>
+          <div className="bg-white dark:bg-gray-800">
+            <div className="grid grid-cols-6 gap-6">
+              <div className="col-span-6">
+                <div className="mb-4">
+                  <Input
+                    id="email"
+                    required
+                    type="email"
+                    {...register('email', { required: true })}
+                  />
+                </div>
+                <div className="mb-4">
+                  <PasswordInput
+                    {...register('password', { required: true })}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center justify-end">
-          <SubmitButton isSubmitting={isSubmitting} />
-        </div>
+          <div className="flex items-center justify-end">
+            <SubmitButton isSubmitting={isSubmitting} />
+          </div>
+        </fieldset>
       </form>
     </Layout>
   );

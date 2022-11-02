@@ -1,8 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  createServerSupabaseClient,
+  SupabaseClient,
+} from '@supabase/auth-helpers-nextjs';
 
 import { SORT_DIRECTION } from 'constants/index';
-import { parseQuery, parseAdminQuery } from 'utils';
-import supabase from 'utils/supabase';
+import { parseAdminQuery } from 'utils';
 import { Album } from 'utils/types';
 
 const { ASC, DESC } = SORT_DIRECTION;
@@ -12,7 +15,10 @@ interface Payload {
   count: number;
 }
 
-async function getAlbums(queries: NextApiRequest['query']): Promise<Payload> {
+async function getAlbums(
+  supabase: SupabaseClient,
+  queries: NextApiRequest['query'],
+): Promise<Payload> {
   const { artist, page, perPage, sort, studio, title } =
     parseAdminQuery(queries);
   const [sortProp, desc] = sort.split(':') ?? [];
@@ -56,8 +62,10 @@ export default async function albums(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const supabase = createServerSupabaseClient({ req, res });
+
   try {
-    const { albums, count } = await getAlbums(req.query);
+    const { albums, count } = await getAlbums(supabase, req.query);
     res.status(200).json({ success: true, albums, count });
   } catch (error) {
     res.status(400).json({ success: false });

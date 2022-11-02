@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { getTitle } from 'utils';
 import { Album } from 'utils/types';
@@ -39,11 +40,11 @@ export default function TopAlbumsPage({ favorites }: Props) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const favorites = await getFavorites();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerSupabaseClient(context);
+  const favorites = await getFavorites(supabase);
 
   return {
     props: { favorites },
-    revalidate: 5,
   };
-};
+}
