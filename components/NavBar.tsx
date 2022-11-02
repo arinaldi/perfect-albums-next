@@ -10,7 +10,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'constants/index';
+import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import useDarkMode from 'hooks/useDarkMode';
 import LinkWrapper from 'components/LinkWrapper';
 

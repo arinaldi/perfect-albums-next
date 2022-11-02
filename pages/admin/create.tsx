@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';

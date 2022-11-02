@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
-import { ROUTE_HREF } from 'constants/index';
+import { ROUTE_HREF } from 'utils/constants';
 
 export default function SignoutPage() {
   const router = useRouter();

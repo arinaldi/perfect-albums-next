@@ -1,4 +1,4 @@
-import { MESSAGES } from 'constants/index';
+import { MESSAGES } from 'utils/constants';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
 import { Release } from 'utils/types';

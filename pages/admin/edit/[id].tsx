@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 import { getTitle } from 'utils';
 import { Album, AlbumInput } from 'utils/types';
 import useUpdate from 'hooks/useUpdate';

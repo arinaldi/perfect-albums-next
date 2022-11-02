@@ -1,4 +1,4 @@
-import { MONTHS, PER_PAGE } from 'constants/index';
+import { MONTHS, PER_PAGE } from 'utils/constants';
 import { Album, Release } from 'utils/types';
 
 function addZeroPrefix(value: number) {

@@ -1,6 +1,6 @@
 import { withMiddlewareAuth } from '@supabase/auth-helpers-nextjs';
 
-import { ROUTE_HREF } from 'constants/index';
+import { ROUTE_HREF } from 'utils/constants';
 
 export const middleware = withMiddlewareAuth({
   redirectTo: ROUTE_HREF.TOP_ALBUMS,

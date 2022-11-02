@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES } from 'utils/constants';
 import useUpdate from 'hooks/useUpdate';
 import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';

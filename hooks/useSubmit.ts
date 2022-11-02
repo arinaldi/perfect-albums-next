@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES } from 'utils/constants';
 import { Callback, SupaError } from 'utils/types';
 
 export interface Options {

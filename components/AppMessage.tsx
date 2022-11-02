@@ -3,7 +3,7 @@ import {
   InformationCircleIcon,
 } from '@heroicons/react/24/solid';
 
-import { APP_MESSAGE_TYPES } from 'constants/index';
+import { APP_MESSAGE_TYPES } from 'utils/constants';
 
 const { ERROR, INFO } = APP_MESSAGE_TYPES;
 

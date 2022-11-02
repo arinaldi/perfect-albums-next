@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'utils/constants';
 import usePrefetch from 'hooks/usePrefetch';
 import { generateAlbumsUrl, parseAdminQuery } from 'utils';
 import { Children } from 'utils/types';

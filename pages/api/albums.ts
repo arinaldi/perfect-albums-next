@@ -4,7 +4,7 @@ import {
   SupabaseClient,
 } from '@supabase/auth-helpers-nextjs';
 
-import { SORT_DIRECTION } from 'constants/index';
+import { SORT_DIRECTION } from 'utils/constants';
 import { parseAdminQuery } from 'utils';
 import { Album } from 'utils/types';
 

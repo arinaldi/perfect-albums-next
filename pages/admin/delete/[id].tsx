@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'constants/index';
+import { MESSAGES, ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 import { getTitle } from 'utils';
 import { Album } from 'utils/types';
 import useDelete from 'hooks/useDelete';

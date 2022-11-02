@@ -1,4 +1,4 @@
-import { ROUTE_HREF } from 'constants/index';
+import { ROUTE_HREF } from 'utils/constants';
 
 export default function HomePage() {
   return null;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useUser } from '@supabase/auth-helpers-react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
-import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'constants/index';
+import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import Layout from 'components/Layout';
 import Button from 'components/Button';

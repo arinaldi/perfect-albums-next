@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useForm } from 'react-hook-form';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'utils/constants';
 import useSubmit from 'hooks/useSubmit';
 import { SignInInput } from 'utils/types';
 import Layout from 'components/Layout';
