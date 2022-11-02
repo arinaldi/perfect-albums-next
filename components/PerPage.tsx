@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { PER_PAGE, ROUTES_ADMIN } from 'constants/index';
+import { PER_PAGE, ROUTES_ADMIN } from 'utils/constants';
 import { parsePerPageQuery } from 'utils';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;

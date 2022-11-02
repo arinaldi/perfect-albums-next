@@ -1,6 +1,7 @@
-import { GetStaticProps } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { getTitle } from 'utils';
 import { Song } from 'utils/types';
@@ -29,11 +30,11 @@ export default function FeaturedSongsPage({ songs }: Props) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const songs = await getSongs();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const supabase = createServerSupabaseClient(context);
+  const songs = await getSongs(supabase);
 
   return {
     props: { songs },
-    revalidate: 5,
   };
-};
+}

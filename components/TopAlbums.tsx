@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
 
-import { DECADES, SPOTIFY_URL } from 'constants/index';
+import { DECADES, SPOTIFY_URL } from 'utils/constants';
 import { formatFavorites, sortDesc } from 'utils';
 import { Album } from 'utils/types';
 import Layout from 'components/Layout';

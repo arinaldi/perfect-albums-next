@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { Fetcher, Key, mutate, SWRConfig } from 'swr';
 
-import useAuthStore, { useUser } from 'hooks/useAuthStore';
-import useIsMounted from 'hooks/useIsMounted';
-import supabase from 'utils/supabase';
 import { Children } from 'utils/types';
-import Spinner from 'components/Spinner';
 
 export async function fetcher(url: string): Promise<any> {
   return window
@@ -38,23 +34,6 @@ function trackLiveQueries(useSWRNext: any) {
 }
 
 export default function SWRProvider({ children }: Children) {
-  const user = useUser();
-  const isMounted = useIsMounted();
-
-  useEffect(() => {
-    if (user === undefined && supabase.auth.user() === null) {
-      useAuthStore.setState({ user: null });
-    }
-  }, [user]);
-
-  if (!isMounted() && user === undefined) {
-    return (
-      <div className="flex min-h-screen justify-center dark:bg-gray-800">
-        <Spinner className="mt-8 h-8 w-8 dark:text-white" />
-      </div>
-    );
-  }
-
   return (
     <SWRConfig value={{ fetcher, use: [trackLiveQueries] }}>
       {children}

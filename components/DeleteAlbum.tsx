@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'utils/constants';
 import { Album } from 'utils/types';
 import CancelButton from 'components/CancelButton';
 import SubmitButton from 'components/SubmitButton';

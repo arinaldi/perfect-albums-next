@@ -1,11 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  createServerSupabaseClient,
+  SupabaseClient,
+} from '@supabase/auth-helpers-nextjs';
 
-import supabase from 'utils/supabase';
 import { Release } from 'utils/types';
 
-export async function getReleases(): Promise<Release[]> {
+export async function getReleases(
+  supabase: SupabaseClient,
+): Promise<Release[]> {
   const { data: releases, error } = await supabase
-    .from<Release>('releases')
+    .from('releases')
     .select('*')
     .order('artist', { ascending: true });
 
@@ -15,11 +20,13 @@ export async function getReleases(): Promise<Release[]> {
 }
 
 export default async function releases(
-  _: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const supabase = createServerSupabaseClient({ req, res });
+
   try {
-    const releases = await getReleases();
+    const releases = await getReleases(supabase);
     res.status(200).json({ success: true, releases });
   } catch (error) {
     res.status(400).json({ success: false });

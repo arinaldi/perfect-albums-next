@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { UseFormRegister } from 'react-hook-form';
 
-import { ROUTES_ADMIN } from 'constants/index';
+import { ROUTES_ADMIN } from 'utils/constants';
 import { AlbumInput } from 'utils/types';
 import Input from 'components/Input';
 import Checkbox from 'components/Checkbox';

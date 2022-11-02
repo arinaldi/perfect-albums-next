@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import { ReleaseInput } from 'utils/types';

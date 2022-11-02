@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
-import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'constants/index';
+import { APP_MESSAGE_TYPES, ROUTES_ADMIN, SORT_VALUE } from 'utils/constants';
 import useAdminAlbums from 'hooks/useAdminAlbums';
 import useDebounce from 'hooks/useDebounce';
 import { generateAlbumsUrl, parseAdminQuery } from 'utils';
