@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  createServerSupabaseClient,
-  SupabaseClient,
-} from '@supabase/auth-helpers-nextjs';
+import { SupabaseClient, withApiAuth } from '@supabase/auth-helpers-nextjs';
 
 async function getCdCount(supabase: SupabaseClient): Promise<number> {
   const { count, error } = await supabase
@@ -15,9 +12,11 @@ async function getCdCount(supabase: SupabaseClient): Promise<number> {
   return 0;
 }
 
-export default async function cds(req: NextApiRequest, res: NextApiResponse) {
-  const supabase = createServerSupabaseClient({ req, res });
-
+async function cds(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  supabase: SupabaseClient,
+) {
   try {
     const count = await getCdCount(supabase);
     res.status(200).json({ success: true, count });
@@ -25,3 +24,5 @@ export default async function cds(req: NextApiRequest, res: NextApiResponse) {
     res.status(400).json({ success: false });
   }
 }
+
+export default withApiAuth(cds);

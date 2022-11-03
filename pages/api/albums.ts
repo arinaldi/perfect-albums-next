@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  createServerSupabaseClient,
-  SupabaseClient,
-} from '@supabase/auth-helpers-nextjs';
+import { SupabaseClient, withApiAuth } from '@supabase/auth-helpers-nextjs';
 
 import { SORT_DIRECTION } from 'utils/constants';
 import { parseAdminQuery } from 'utils';
@@ -58,12 +55,11 @@ async function getAlbums(
   return { albums: albums || [], count: count || 0 };
 }
 
-export default async function albums(
+async function albums(
   req: NextApiRequest,
   res: NextApiResponse,
+  supabase: SupabaseClient,
 ) {
-  const supabase = createServerSupabaseClient({ req, res });
-
   try {
     const { albums, count } = await getAlbums(supabase, req.query);
     res.status(200).json({ success: true, albums, count });
@@ -71,3 +67,5 @@ export default async function albums(
     res.status(400).json({ success: false });
   }
 }
+
+export default withApiAuth(albums);
