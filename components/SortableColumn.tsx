@@ -42,21 +42,19 @@ export default function SortableColumn({
         replace
         shallow
       >
-        <a>
-          {children}
-          <span
-            className={`${
-              sortProp === prop
-                ? 'text-gray-700 group-hover:bg-gray-300'
-                : 'invisible text-gray-400 group-hover:visible'
-            } ml-1 flex-none`}
-          >
-            <ArrowLongDownIcon
-              aria-hidden="true"
-              className={`${desc ? 'rotate-180' : ''} inline h-4 w-4`}
-            />
-          </span>
-        </a>
+        {children}
+        <span
+          className={`${
+            sortProp === prop
+              ? 'text-gray-700 group-hover:bg-gray-300'
+              : 'invisible text-gray-400 group-hover:visible'
+          } ml-1 flex-none`}
+        >
+          <ArrowLongDownIcon
+            aria-hidden="true"
+            className={`${desc ? 'rotate-180' : ''} inline h-4 w-4`}
+          />
+        </span>
       </Link>
     </th>
   );
