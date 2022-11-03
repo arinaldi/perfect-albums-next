@@ -1,14 +1,11 @@
-import { memo, ReactNode } from 'react';
+import { memo } from 'react';
 import Head from 'next/head';
 
 import NavBar from 'components/NavBar';
 import Toast from 'components/Toast';
+import { Children } from 'utils/types';
 
-interface Props {
-  children: ReactNode;
-}
-
-function PageWrapper({ children }: Props) {
+function PageWrapper({ children }: Children) {
   return (
     <div className="min-h-screen dark:bg-gray-800">
       <Head>

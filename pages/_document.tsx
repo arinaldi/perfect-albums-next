@@ -24,7 +24,7 @@ export default function Document() {
   const nonce = randomBytes(16).toString('base64');
 
   return (
-    <Html>
+    <Html lang="en">
       <Head nonce={nonce}>
         <meta httpEquiv="Content-Security-Policy" content={getCsp(nonce)} />
         <link rel="icon" href="https://fav.farm/🎧" />
