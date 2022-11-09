@@ -9,7 +9,9 @@ const BASE_URL =
     : 'https://perfect-albums.vercel.app';
 
 async function getArtists(): Promise<Payload> {
-  const res = await fetch(`${BASE_URL}/api/artists`);
+  const res = await fetch(`${BASE_URL}/api/artists`, {
+    next: { revalidate: 10 },
+  });
   return res.json();
 }
 
