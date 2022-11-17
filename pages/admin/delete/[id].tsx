@@ -8,7 +8,7 @@ import { getTitle } from 'utils';
 import { Album } from 'utils/types';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
-import DeleteAlbum from 'components/DeleteAlbum';
+import DeleteAlbum from 'app/admin/DeleteAlbum';
 
 interface Props {
   album: Album;

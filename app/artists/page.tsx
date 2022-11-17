@@ -1,12 +1,9 @@
+import { BASE_URL } from 'utils/constants';
+
 interface Payload {
   artists: string[];
   success: boolean;
 }
-
-const BASE_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3006'
-    : 'https://perfect-albums.vercel.app';
 
 async function getArtists(): Promise<Payload> {
   const res = await fetch(`${BASE_URL}/api/artists`, {

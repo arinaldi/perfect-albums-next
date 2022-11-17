@@ -7,8 +7,8 @@ import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import { getTitle } from 'utils';
 import { AlbumInput } from 'utils/types';
-import Layout from 'components/Layout';
-import AlbumForm from 'components/AlbumForm';
+import Layout from 'app/components/AppLayout';
+import AlbumForm from 'app/admin/AlbumForm';
 
 export default function CreateAlbumPage() {
   const router = useRouter();

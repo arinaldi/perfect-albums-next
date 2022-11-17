@@ -1,0 +1,60 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+
+import { ROUTES_ADMIN } from 'utils/constants';
+import useSubmit from 'hooks/useSubmit';
+import supabase from 'utils/supabase';
+import { SignInInput } from 'utils/types';
+import AppLayout from 'app/components/AppLayout';
+import Input from 'app/components/Input';
+import PasswordInput from 'app/components/PasswordInput';
+import SubmitButton from 'app/components/SubmitButton';
+
+export default function SignIn() {
+  const router = useRouter();
+  const user = null; // TODO
+  const { handleSubmit, register } = useForm<SignInInput>();
+
+  const { isSubmitting, onSubmit } = useSubmit({
+    callbacks: [() => router.push(ROUTES_ADMIN.base.href)],
+    handleSubmit,
+    submitFn: async (data: SignInInput) => {
+      const { error } = await supabase.auth.signInWithPassword(data);
+
+      if (error) throw error;
+    },
+  });
+
+  return (
+    <AppLayout maxWidth="max-w-sm" title="Sign In">
+      <form method="POST" onSubmit={onSubmit}>
+        <fieldset disabled={Boolean(user)}>
+          <div className="bg-white dark:bg-gray-800">
+            <div className="grid grid-cols-6 gap-6">
+              <div className="col-span-6">
+                <div className="mb-4">
+                  <Input
+                    id="email"
+                    required
+                    type="email"
+                    {...register('email', { required: true })}
+                  />
+                </div>
+                <div className="mb-4">
+                  <PasswordInput
+                    {...register('password', { required: true })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-end">
+            <SubmitButton isSubmitting={isSubmitting} />
+          </div>
+        </fieldset>
+      </form>
+    </AppLayout>
+  );
+}

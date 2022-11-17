@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSWRConfig } from 'swr';
 
-import { fetcher } from 'components/SWRProvider';
+import { fetcher } from 'app/components/SWRProvider';
 
 type Prefetch = (key: string) => void;
 
