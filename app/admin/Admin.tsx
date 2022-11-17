@@ -58,7 +58,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
   }
 
   function onClear() {
-    router.push(`${pathname}?page=1&perPage=${PER_PAGE.SMALL}`);
+    router.replace(`${pathname}?page=1&perPage=${PER_PAGE.SMALL}`);
 
     if (artistRef?.current) {
       artistRef.current.value = '';

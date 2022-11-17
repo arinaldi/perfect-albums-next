@@ -1,3 +1,5 @@
+import 'server-only';
+
 import TopAlbums from 'app/albums/TopAlbums';
 import supabase from 'utils/supabase';
 import { Album } from 'utils/types';

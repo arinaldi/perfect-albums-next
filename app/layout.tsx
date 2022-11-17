@@ -4,7 +4,6 @@ import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-next
 
 import NavBar from 'app/components/NavBar';
 import SupabaseListener from 'app/components/SupabaseListener';
-// import SWRProvider from 'app/components/SWRProvider';
 import Toast from 'app/components/Toast';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
@@ -19,7 +18,6 @@ export default async function RootLayout({ children }: Children) {
   return (
     <html>
       <body className="min-h-screen dark:bg-gray-800">
-        {/* <SWRProvider> */}
         <SupabaseListener accessToken={session?.access_token} />
         <NavBar user={session?.user} />
         <Toast />
@@ -40,7 +38,6 @@ export default async function RootLayout({ children }: Children) {
           `,
           }}
         />
-        {/* </SWRProvider> */}
       </body>
     </html>
   );

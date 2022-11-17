@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { BASE_URL } from 'utils/constants';
 
 interface Payload {
