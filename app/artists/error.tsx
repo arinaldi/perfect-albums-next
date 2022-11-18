@@ -15,7 +15,7 @@ export default function Error({ error, reset }: Props) {
   }, [error]);
 
   return (
-    <div>
+    <div className="dark:text-white">
       <p className="mb-4">Something went wrong!</p>
       <Button onClick={reset}>Reset</Button>
     </div>

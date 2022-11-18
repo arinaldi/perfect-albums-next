@@ -1,3 +1,5 @@
+'use client';
+
 import { toast, Toaster, ToastBar } from 'react-hot-toast';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 

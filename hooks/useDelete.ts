@@ -1,16 +1,16 @@
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/navigation';
 
+import supabase from 'utils/supabase';
 import { Table } from 'utils/types';
-import { revalidateLiveQueries } from 'components/SWRProvider';
 
 export default function useDelete(table: Table) {
-  const supabase = useSupabaseClient();
+  const router = useRouter();
 
   return async function (id: number) {
     const { error } = await supabase.from(table).delete().eq('id', id);
 
     if (error) throw error;
 
-    await revalidateLiveQueries();
+    router.refresh();
   };
 }

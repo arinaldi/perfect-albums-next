@@ -1,11 +1,25 @@
-import { withMiddlewareAuth } from '@supabase/auth-helpers-nextjs';
-
+import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { NextRequest, NextResponse } from 'next/server';
 import { ROUTE_HREF } from 'utils/constants';
 
-export const middleware = withMiddlewareAuth({
-  redirectTo: ROUTE_HREF.TOP_ALBUMS,
-});
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareSupabaseClient({ req, res });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-export const config = {
-  matcher: ['/admin/:path*'],
-};
+  if (req.nextUrl.pathname === '/') {
+    const url = req.nextUrl.clone();
+    url.pathname = ROUTE_HREF.TOP_ALBUMS;
+    return NextResponse.redirect(url);
+  }
+
+  if (!session && req.nextUrl.pathname.startsWith('/admin')) {
+    const url = req.nextUrl.clone();
+    url.pathname = ROUTE_HREF.TOP_ALBUMS;
+    return NextResponse.redirect(url);
+  }
+
+  return res;
+}

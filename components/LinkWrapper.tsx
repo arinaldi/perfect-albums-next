@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   children: ReactNode;
@@ -15,8 +15,8 @@ export default function LinkWrapper({
   href,
   onClick,
 }: Props) {
-  const { pathname } = useRouter();
-  const isActive = pathname.startsWith(href);
+  const pathname = usePathname();
+  const isActive = pathname?.startsWith(href);
 
   return (
     <Link

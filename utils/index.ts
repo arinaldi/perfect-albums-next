@@ -99,18 +99,7 @@ export interface AlbumParams {
   title: string;
 }
 
-export function generateAlbumsUrl({
-  artist,
-  page,
-  perPage,
-  sort,
-  studio,
-  title,
-}: AlbumParams) {
-  return `/api/albums?page=${page}&perPage=${perPage}&artist=${artist}&title=${title}&sort=${sort}&studio=${studio}`;
-}
-
-type QueryValue = string | string[] | undefined;
+type QueryValue = string | string[] | undefined | null;
 
 export function parseQuery(value: QueryValue) {
   return typeof value === 'string' ? value : '';

@@ -1,6 +1,8 @@
+'use client';
+
 import { useReducer } from 'react';
-import { useRouter } from 'next/router';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { User } from '@supabase/auth-helpers-nextjs';
 import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
@@ -10,13 +12,17 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
-import useDarkMode from 'hooks/useDarkMode';
 import LinkWrapper from 'components/LinkWrapper';
+import useDarkMode from 'hooks/useDarkMode';
+import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
+import supabase from 'utils/supabase';
 
-export default function NavBar() {
-  const user = useUser();
-  const supabase = useSupabaseClient();
+interface Props {
+  user: User | undefined;
+}
+
+export default function NavBar({ user }: Props) {
+  const pathname = usePathname();
   const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [open, toggle] = useReducer(
@@ -27,7 +33,7 @@ export default function NavBar() {
   async function signOut() {
     await supabase.auth.signOut();
 
-    if (router.pathname.startsWith(ROUTES_ADMIN.base.href)) {
+    if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
       router.push(ROUTE_HREF.TOP_ALBUMS);
     }
   }
