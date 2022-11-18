@@ -18,7 +18,7 @@ export default async function ArtistsPage() {
   const { artists } = await getArtists();
 
   return (
-    <ul className="list-disc">
+    <ul className="list-disc dark:text-white">
       {artists.map((artist) => (
         <li key={artist}>{artist}</li>
       ))}
