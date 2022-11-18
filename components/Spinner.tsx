@@ -4,7 +4,7 @@ interface Props {
 
 export default function Spinner({ className = '' }: Props) {
   return (
-    <div className={className}>
+    <div className={`dark:text-white ${className}`}>
       <svg viewBox="0 0 2400 2400">
         <g
           strokeWidth={200}

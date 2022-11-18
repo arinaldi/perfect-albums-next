@@ -5,7 +5,7 @@ import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-next
 import FeaturedSongs from 'app/songs/FeaturedSongs';
 import { Song } from 'utils/types';
 
-export const revalidate = 60;
+export const revalidate = 10;
 
 export default async function FeaturedSongsPage() {
   const supabase = createServerComponentSupabaseClient({ cookies, headers });

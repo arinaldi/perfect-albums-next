@@ -3,9 +3,9 @@ import TopAlbums from 'app/albums/TopAlbums';
 import supabase from 'utils/supabase';
 import { Album } from 'utils/types';
 
-export const revalidate = 60;
+export const revalidate = 10;
 
-export default async function FeaturedSongsPage() {
+export default async function TopAlbumsPage() {
   const { data } = await supabase
     .from('albums')
     .select('*')

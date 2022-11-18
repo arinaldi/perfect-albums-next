@@ -44,6 +44,11 @@ export interface Children {
   children: ReactNode;
 }
 
+export interface ErrorProps {
+  error: Error;
+  reset: () => void;
+}
+
 export interface SupaError {
   message: string;
   status: number;

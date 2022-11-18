@@ -5,7 +5,7 @@ import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-next
 import NewReleases from 'app/releases/NewReleases';
 import { Release } from 'utils/types';
 
-export const revalidate = 60;
+export const revalidate = 10;
 
 export default async function NewReleasesPage() {
   const supabase = createServerComponentSupabaseClient({ cookies, headers });
