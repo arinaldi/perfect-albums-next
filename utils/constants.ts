@@ -1,22 +1,8 @@
 /* ENUM */
 
-export enum PER_PAGE {
-  SMALL = 25,
-  MEDIUM = 50,
-  LARGE = 100,
-}
-
-export enum SORT_VALUE {
-  ARTIST = 'artist',
-  NONE = '',
-  TITLE = 'title',
-  YEAR = 'year',
-}
-
-export enum SORT_DIRECTION {
-  ASC = 'asc',
-  DESC = 'desc',
-  NONE = '',
+export enum APP_MESSAGE_TYPES {
+  ERROR = 'error',
+  INFO = 'info',
 }
 
 export enum MESSAGES {
@@ -37,22 +23,31 @@ export enum MODAL_TYPES {
   NEW_RELEASE_DELETE = 'Delete New Release',
 }
 
+export enum PER_PAGE {
+  SMALL = 25,
+  MEDIUM = 50,
+  LARGE = 100,
+}
+
+export enum SORT_DIRECTION {
+  ASC = 'asc',
+  DESC = 'desc',
+  NONE = '',
+}
+
+export enum SORT_VALUE {
+  ARTIST = 'artist',
+  NONE = '',
+  TITLE = 'title',
+  YEAR = 'year',
+}
+
 /* CONST */
 
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3006'
     : 'https://perfect-albums.vercel.app';
-
-export const MODAL_INITIAL_STATE = {
-  data: null,
-  type: MODAL_TYPES.INITIAL,
-};
-
-export enum APP_MESSAGE_TYPES {
-  ERROR = 'error',
-  INFO = 'info',
-}
 
 export const DECADES = [
   {
@@ -76,6 +71,11 @@ export const DECADES = [
     link: '#1976',
   },
 ];
+
+export const MODAL_INITIAL_STATE = {
+  data: null,
+  type: MODAL_TYPES.INITIAL,
+};
 
 export const MONTHS = [
   'Jan',
