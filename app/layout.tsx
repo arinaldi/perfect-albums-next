@@ -2,9 +2,9 @@ import 'server-only';
 import { cookies, headers } from 'next/headers';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-import NavBar from 'app/components/NavBar';
-import SupabaseListener from 'app/components/SupabaseListener';
-import Toast from 'app/components/Toast';
+import NavBar from 'components/NavBar';
+import SupabaseListener from 'components/SupabaseListener';
+import Toast from 'components/Toast';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
 import 'styles/nprogress.css';

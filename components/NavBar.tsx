@@ -2,7 +2,7 @@
 
 import { useReducer } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { User } from '@supabase/supabase-js';
+import { User } from '@supabase/auth-helpers-nextjs';
 import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
@@ -12,7 +12,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-import LinkWrapper from 'app/components/LinkWrapper';
+import LinkWrapper from 'components/LinkWrapper';
 import useDarkMode from 'hooks/useDarkMode';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import supabase from 'utils/supabase';

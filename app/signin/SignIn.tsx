@@ -7,10 +7,10 @@ import { ROUTES_ADMIN } from 'utils/constants';
 import useSubmit from 'hooks/useSubmit';
 import supabase from 'utils/supabase';
 import { SignInInput } from 'utils/types';
-import AppLayout from 'app/components/AppLayout';
-import Input from 'app/components/Input';
-import PasswordInput from 'app/components/PasswordInput';
-import SubmitButton from 'app/components/SubmitButton';
+import AppLayout from 'components/AppLayout';
+import Input from 'components/Input';
+import PasswordInput from 'components/PasswordInput';
+import SubmitButton from 'components/SubmitButton';
 
 export default function SignIn() {
   const router = useRouter();

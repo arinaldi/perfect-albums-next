@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useEffect, useRef } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import {
@@ -13,14 +13,14 @@ import {
 import { parsePerPageQuery, parseQuery } from 'utils';
 import { Album } from 'utils/types';
 import Column from 'app/admin/Column';
-import Layout from 'app/components/AppLayout';
+import Layout from 'components/AppLayout';
 import Pagination from 'app/admin/Pagination';
 import PerPage from 'app/admin/PerPage';
 import SortableColumn from 'app/admin/SortableColumn';
 import StudioFilter from 'app/admin/StudioFilter';
-import AppMessage from 'app/components/AppMessage';
-import Button from 'app/components/Button';
-import SubmitButton from 'app/components/SubmitButton';
+import AppMessage from 'components/AppMessage';
+import Button from 'components/Button';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   albums: Album[];
@@ -29,7 +29,6 @@ interface Props {
 }
 
 export default function Admin({ albums, cdTotal, total }: Props) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const perPage = parsePerPageQuery(searchParams.get('perPage'));
@@ -54,11 +53,13 @@ export default function Admin({ albums, cdTotal, total }: Props) {
     if (artist) query.set('artist', artist);
     if (title) query.set('title', title);
 
-    router.replace(`${pathname}?${query.toString()}`);
+    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
   }
 
   function onClear() {
-    router.replace(`${pathname}?page=1&perPage=${PER_PAGE.SMALL}`);
+    router.replace(
+      `${ROUTES_ADMIN.base.href}?page=1&perPage=${PER_PAGE.SMALL}`,
+    );
 
     if (artistRef?.current) {
       artistRef.current.value = '';
@@ -141,7 +142,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
         </div>
       </div>
 
-      {albums.length === 0 ? (
+      {albums?.length === 0 ? (
         <AppMessage message="No results found" type={APP_MESSAGE_TYPES.INFO} />
       ) : (
         <div className="flex flex-col">
@@ -171,7 +172,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white dark:divide-black dark:bg-gray-500">
-                    {albums.map(
+                    {albums?.map(
                       ({ artist, cd, favorite, id, studio, title, year }) => (
                         <tr
                           key={id}

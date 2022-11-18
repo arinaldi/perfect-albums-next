@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import Button from 'app/components/Button';
+import Button from 'components/Button';
 
 interface Props {
   error: Error;

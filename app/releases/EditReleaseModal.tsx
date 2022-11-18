@@ -8,8 +8,8 @@ import useUpdate from 'hooks/useUpdate';
 import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { Release, ReleaseInput } from 'utils/types';
-import Input from 'app/components/Input';
-import Modal from 'app/components/Modal';
+import Input from 'components/Input';
+import Modal from 'components/Modal';
 
 interface Props {
   data: Release | null;

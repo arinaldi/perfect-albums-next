@@ -64,7 +64,7 @@ async function getAlbums(
   const albums = data as Album[];
 
   return {
-    albums,
+    albums: albums ?? [],
     total: albumCount ?? 0,
   };
 }

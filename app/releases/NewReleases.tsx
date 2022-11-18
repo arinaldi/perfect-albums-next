@@ -1,14 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import { User } from '@supabase/auth-helpers-nextjs';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
-import AppLayout from 'app/components/AppLayout';
-import Button from 'app/components/Button';
+import AppLayout from 'components/AppLayout';
+import Button from 'components/Button';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';

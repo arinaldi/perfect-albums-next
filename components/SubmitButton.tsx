@@ -1,4 +1,4 @@
-import Spinner from 'app/components/Spinner';
+import Spinner from 'components/Spinner';
 
 interface Props {
   isSubmitting: boolean;

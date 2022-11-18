@@ -1,26 +1,25 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
 
-import { DECADES, SPOTIFY_URL } from 'utils/constants';
 import { formatFavorites, sortDesc } from 'utils';
+import { DECADES, ROUTE_HREF, SPOTIFY_URL } from 'utils/constants';
 import { Album } from 'utils/types';
-import AppLayout from 'app/components/AppLayout';
+import AppLayout from 'components/AppLayout';
 
 interface Props {
   albums: Album[];
 }
 
 export default function TopAlbums({ albums }: Props) {
-  const pathname = usePathname();
   const router = useRouter();
   const [value, setValue] = useState('label');
 
   function onChange({ target: { value } }: ChangeEvent<HTMLSelectElement>) {
     setValue(value);
-    router.push(`${pathname}${value}`);
+    router.push(`${ROUTE_HREF.TOP_ALBUMS}${value}`);
   }
 
   const DecadeSelect = (

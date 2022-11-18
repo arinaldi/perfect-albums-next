@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
 
 import { parseQuery } from 'utils';
+import {
+  APP_MESSAGE_TYPES,
+  PER_PAGE,
+  ROUTES_ADMIN,
+  SORT_VALUE,
+} from 'utils/constants';
 import { Children } from 'utils/types';
 
 interface Props extends Children {
@@ -17,7 +23,6 @@ export default function SortableColumn({
   prop,
   wrapperClassName = '',
 }: Props) {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const sort = parseQuery(searchParams.get('sort'));
   let [sortProp, desc] = sort.split(':') ?? [];
@@ -38,7 +43,11 @@ export default function SortableColumn({
       scope="col"
     >
       <Link
-        href={newSort ? `${pathname}?${query.toString()}` : pathname!}
+        href={
+          newSort
+            ? `${ROUTES_ADMIN.base.href}?${query.toString()}`
+            : ROUTES_ADMIN.base.href
+        }
         passHref
         replace
         shallow

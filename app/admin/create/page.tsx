@@ -1,17 +1,18 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
-import { getTitle } from 'utils';
 import { AlbumInput } from 'utils/types';
-import Layout from 'app/components/AppLayout';
+import AppLayout from 'components/AppLayout';
 import AlbumForm from 'app/admin/AlbumForm';
 
 export default function CreateAlbumPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { handleSubmit, register } = useForm<AlbumInput>({
     defaultValues: {
       year: new Date().getFullYear().toString(),
@@ -19,34 +20,24 @@ export default function CreateAlbumPage() {
   });
   const createAlbum = useInsert('albums');
 
-  const options = {
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [
-      () =>
-        router.push({
-          pathname: ROUTES_ADMIN.base.href,
-          query: router.query,
-        }),
+      () => router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`),
     ],
     handleSubmit,
     submitFn: async (album: AlbumInput) => {
       await createAlbum(album);
     },
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
-  };
-  const { isSubmitting, onSubmit } = useSubmit(options);
+  });
 
   return (
-    <>
-      <Head>
-        <title>{getTitle('Create Album')}</title>
-      </Head>
-      <Layout title="Create Album">
-        <AlbumForm
-          isSubmitting={isSubmitting}
-          register={register}
-          onSubmit={onSubmit}
-        />
-      </Layout>
-    </>
+    <AppLayout title="Create Album">
+      <AlbumForm
+        isSubmitting={isSubmitting}
+        register={register}
+        onSubmit={onSubmit}
+      />
+    </AppLayout>
   );
 }

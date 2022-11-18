@@ -1,8 +1,8 @@
 import { FormEvent, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import CancelButton from 'app/components/CancelButton';
-import SubmitButton from 'app/components/SubmitButton';
+import CancelButton from 'components/CancelButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   children: ReactNode;

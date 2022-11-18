@@ -6,8 +6,8 @@ import { MESSAGES } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
 import { SongInput } from 'utils/types';
-import Input from 'app/components/Input';
-import Modal from 'app/components/Modal';
+import Input from 'components/Input';
+import Modal from 'components/Modal';
 
 interface Props {
   isOpen: boolean;

@@ -1,8 +1,8 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { PER_PAGE } from 'utils/constants';
+import { PER_PAGE, ROUTES_ADMIN } from 'utils/constants';
 import { parsePerPageQuery } from 'utils';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
@@ -12,16 +12,16 @@ interface Props {
 }
 
 function Button({ prop }: Props) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const perPage = parsePerPageQuery(searchParams.get('perPage'));
 
   function onClick() {
     const query = new URLSearchParams(searchParams);
+    query.set('page', '1');
     query.set('perPage', prop.toString());
 
-    router.replace(`${pathname}?${query.toString()}`);
+    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
   }
 
   return (

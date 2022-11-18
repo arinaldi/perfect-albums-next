@@ -1,8 +1,9 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { parsePageQuery } from 'utils';
+import { ROUTES_ADMIN } from 'utils/constants';
 import { Children } from 'utils/types';
 
 enum PAGE {
@@ -23,7 +24,6 @@ interface ButtonProps extends Children {
 }
 
 function Button({ children, isDisabled, label, pageValue }: ButtonProps) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -31,7 +31,7 @@ function Button({ children, isDisabled, label, pageValue }: ButtonProps) {
     const query = new URLSearchParams(searchParams);
     query.set('page', pageValue.toString());
 
-    router.replace(`${pathname}?${query.toString()}`);
+    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
   }
 
   return (

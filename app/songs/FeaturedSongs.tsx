@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import { User } from '@supabase/auth-helpers-nextjs';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
-import AppLayout from 'app/components/AppLayout';
-import Button from 'app/components/Button';
+import AppLayout from 'components/AppLayout';
+import Button from 'components/Button';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
 

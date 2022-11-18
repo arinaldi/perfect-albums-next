@@ -1,8 +1,9 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { parseQuery } from 'utils';
+import { ROUTES_ADMIN } from 'utils/constants';
 
 enum FILTER {
   OFF = 'Off',
@@ -14,7 +15,6 @@ interface Props {
 }
 
 function Button({ prop }: Props) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const studio = parseQuery(searchParams.get('studio'));
@@ -24,7 +24,7 @@ function Button({ prop }: Props) {
     const query = new URLSearchParams(searchParams);
     query.set('studio', value.toString());
 
-    router.replace(`${pathname}?${query.toString()}`);
+    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
   }
 
   return (

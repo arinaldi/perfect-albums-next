@@ -1,15 +1,15 @@
 'use client';
 
 import { FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { UseFormRegister } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'utils/constants';
 import { AlbumInput } from 'utils/types';
-import Input from 'app/components/Input';
-import Checkbox from 'app/components/Checkbox';
-import CancelButton from 'app/components/CancelButton';
-import SubmitButton from 'app/components/SubmitButton';
+import Input from 'components/Input';
+import Checkbox from 'components/Checkbox';
+import CancelButton from 'components/CancelButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   isSubmitting: boolean;
@@ -19,15 +19,7 @@ interface Props {
 
 export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
   const router = useRouter();
-
-  function handleCancel() {
-    // const query = { ...router.query };
-    // delete query.id;
-    // router.push({
-    //   pathname: ROUTES_ADMIN.base.href,
-    //   query,
-    // });
-  }
+  const searchParams = useSearchParams();
 
   return (
     <form method="POST" onSubmit={onSubmit}>
@@ -75,7 +67,11 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
         </div>
       </div>
       <div className="flex items-center justify-end p-6">
-        <CancelButton onClick={handleCancel} />
+        <CancelButton
+          onClick={() => {
+            router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`);
+          }}
+        />
         <span className="ml-1" />
         <SubmitButton isSubmitting={isSubmitting} />
       </div>

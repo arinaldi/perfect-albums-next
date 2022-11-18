@@ -4,7 +4,7 @@ import { MESSAGES } from 'utils/constants';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
 import { Release } from 'utils/types';
-import Modal from 'app/components/Modal';
+import Modal from 'components/Modal';
 
 interface Props {
   data: Release | null;
