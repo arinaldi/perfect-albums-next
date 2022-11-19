@@ -25,7 +25,7 @@ const PasswordInput = forwardRef<HTMLInputElement>(({ ...rest }, ref) => {
         />
         <div
           aria-label="Show or hide password"
-          className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
+          className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 dark:text-white"
           onClick={toggle}
         >
           {on ? (
