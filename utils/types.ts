@@ -1,31 +1,10 @@
 import { ReactNode } from 'react';
 
-export interface Album {
-  id: number;
-  created_at: string;
-  artist: string;
-  title: string;
-  year: string;
-  cd: boolean;
-  favorite: boolean;
-  studio: boolean;
-}
+import { Database } from 'utils/db-types';
 
-export interface Release {
-  id: number;
-  created_at: string;
-  artist: string;
-  title: string;
-  date: string | null;
-}
-
-export interface Song {
-  id: number;
-  created_at: string;
-  artist: string;
-  title: string;
-  link: string;
-}
+export type Album = Database['public']['Tables']['albums']['Row'];
+export type Release = Database['public']['Tables']['releases']['Row'];
+export type Song = Database['public']['Tables']['songs']['Row'];
 
 export type Table = 'albums' | 'releases' | 'songs';
 

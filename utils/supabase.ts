@@ -1,3 +1,5 @@
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-export default createBrowserSupabaseClient();
+import { Database } from 'utils/db-types';
+
+export default createBrowserSupabaseClient<Database>();

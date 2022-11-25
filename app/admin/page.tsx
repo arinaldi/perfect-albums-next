@@ -9,6 +9,7 @@ import Admin from 'app/admin/Admin';
 import { parseAdminQuery } from 'utils';
 import { SORT_DIRECTION } from 'utils/constants';
 import { Album } from 'utils/types';
+import { Database } from 'utils/db-types';
 
 export const revalidate = 0;
 const { ASC, DESC } = SORT_DIRECTION;
@@ -61,10 +62,9 @@ async function getAlbums(
   }
 
   const { data, count: albumCount } = await query;
-  const albums = data as Album[];
 
   return {
-    albums: albums ?? [],
+    albums: data ?? [],
     total: albumCount ?? 0,
   };
 }
@@ -79,7 +79,10 @@ async function getCdCount(supabase: SupabaseClient): Promise<number> {
 }
 
 export default async function AdminPage({ searchParams }: Props) {
-  const supabase = createServerComponentSupabaseClient({ cookies, headers });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    cookies,
+    headers,
+  });
 
   const { albums, total } = await getAlbums(supabase, searchParams);
   const cdTotal = await getCdCount(supabase);

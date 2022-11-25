@@ -17,8 +17,8 @@ export function formatDate(isoString: string): string {
 }
 
 export interface ListItem {
-  artist: string;
-  title: string;
+  artist: string | null;
+  title: string | null;
   id?: number;
 }
 
@@ -33,6 +33,8 @@ export function formatFavorites(favorites: Album[]): Results {
 
   favorites.forEach(({ artist, title, year }) => {
     const data = { artist, title };
+
+    if (!year) return;
 
     if (results[year]) {
       results[year].push(data);

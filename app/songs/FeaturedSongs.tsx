@@ -61,7 +61,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
             <div>
               <a
                 className="text-blue-700 hover:underline dark:text-blue-500"
-                href={song.link}
+                href={song.link!}
                 rel="noopener noreferrer"
                 target="_blank"
               >

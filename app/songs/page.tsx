@@ -1,14 +1,18 @@
 import 'server-only';
 import { cookies, headers } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import FeaturedSongs from 'app/songs/FeaturedSongs';
-import { Song } from 'utils/types';
+import { Database } from 'utils/db-types';
 
 export const revalidate = 10;
 
 export default async function FeaturedSongsPage() {
-  const supabase = createServerComponentSupabaseClient({ cookies, headers });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    cookies,
+    headers,
+  });
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -16,7 +20,6 @@ export default async function FeaturedSongsPage() {
     .from('songs')
     .select('*')
     .order('created_at', { ascending: false });
-  const songs = data as Song[];
 
-  return <FeaturedSongs songs={songs} user={user} />;
+  return <FeaturedSongs songs={data ?? []} user={user} />;
 }

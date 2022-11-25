@@ -5,12 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
 
 import { parseQuery } from 'utils';
-import {
-  APP_MESSAGE_TYPES,
-  PER_PAGE,
-  ROUTES_ADMIN,
-  SORT_VALUE,
-} from 'utils/constants';
+import { ROUTES_ADMIN } from 'utils/constants';
 import { Children } from 'utils/types';
 
 interface Props extends Children {

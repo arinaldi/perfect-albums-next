@@ -1,9 +1,10 @@
 import 'server-only';
 import { cookies, headers } from 'next/headers';
+import { notFound } from 'next/navigation';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import DeleteAlbum from 'app/admin/delete/[id]/DeleteAlbum';
-import { Album } from 'utils/types';
+import { Database } from 'utils/db-types';
 
 interface Props {
   params: {
@@ -14,13 +15,19 @@ interface Props {
 export const revalidate = 0;
 
 export default async function DeleteAlbumPage({ params }: Props) {
-  const supabase = createServerComponentSupabaseClient({ cookies, headers });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    cookies,
+    headers,
+  });
   const { data } = await supabase
     .from('albums')
     .select('*')
     .eq('id', params.id)
     .single();
-  const album = data as Album;
 
-  return <DeleteAlbum album={album} />;
+  if (!data) {
+    notFound();
+  }
+
+  return <DeleteAlbum album={data} />;
 }

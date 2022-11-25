@@ -3,12 +3,15 @@ import { cookies, headers } from 'next/headers';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import NewReleases from 'app/releases/NewReleases';
-import { Release } from 'utils/types';
+import { Database } from 'utils/db-types';
 
 export const revalidate = 10;
 
 export default async function NewReleasesPage() {
-  const supabase = createServerComponentSupabaseClient({ cookies, headers });
+  const supabase = createServerComponentSupabaseClient<Database>({
+    cookies,
+    headers,
+  });
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -16,7 +19,6 @@ export default async function NewReleasesPage() {
     .from('releases')
     .select('*')
     .order('artist', { ascending: true });
-  const releases = data as Release[];
 
-  return <NewReleases releases={releases} user={user} />;
+  return <NewReleases releases={data ?? []} user={user} />;
 }
