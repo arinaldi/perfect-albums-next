@@ -42,7 +42,7 @@ export default function Modal({
         onClose={onClose}
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 mt-2 p-4">
+        <div className="fixed inset-0 p-4">
           <Dialog.Panel className="mx-auto w-full max-w-lg rounded-2xl bg-white text-left shadow-xl dark:bg-gray-800">
             <Dialog.Title
               as="h3"
