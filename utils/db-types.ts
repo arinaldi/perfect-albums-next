@@ -12,79 +12,79 @@ export interface Database {
       albums: {
         Row: {
           id: number;
-          created_at: string | null;
-          artist: string | null;
-          title: string | null;
-          year: string | null;
-          cd: boolean | null;
-          favorite: boolean | null;
-          studio: boolean | null;
+          created_at: string;
+          artist: string;
+          title: string;
+          year: string;
+          cd: boolean;
+          favorite: boolean;
+          studio: boolean;
         };
         Insert: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
-          year?: string | null;
-          cd?: boolean | null;
-          favorite?: boolean | null;
-          studio?: boolean | null;
+          created_at?: string;
+          artist?: string;
+          title?: string;
+          year?: string;
+          cd?: boolean;
+          favorite?: boolean;
+          studio?: boolean;
         };
         Update: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
-          year?: string | null;
-          cd?: boolean | null;
-          favorite?: boolean | null;
-          studio?: boolean | null;
+          created_at?: string;
+          artist?: string;
+          title?: string;
+          year?: string;
+          cd?: boolean;
+          favorite?: boolean;
+          studio?: boolean;
         };
       };
       releases: {
         Row: {
           id: number;
-          created_at: string | null;
-          artist: string | null;
-          title: string | null;
           date: string | null;
+          created_at: string;
+          artist: string;
+          title: string;
         };
         Insert: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
           date?: string | null;
+          created_at?: string;
+          artist?: string;
+          title?: string;
         };
         Update: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
           date?: string | null;
+          created_at?: string;
+          artist?: string;
+          title?: string;
         };
       };
       songs: {
         Row: {
           id: number;
-          created_at: string | null;
-          artist: string | null;
-          title: string | null;
-          link: string | null;
+          link: string;
+          artist: string;
+          created_at: string;
+          title: string;
         };
         Insert: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
-          link?: string | null;
+          link?: string;
+          artist?: string;
+          created_at?: string;
+          title?: string;
         };
         Update: {
           id?: number;
-          created_at?: string | null;
-          artist?: string | null;
-          title?: string | null;
-          link?: string | null;
+          link?: string;
+          artist?: string;
+          created_at?: string;
+          title?: string;
         };
       };
     };

@@ -19,15 +19,17 @@ interface Props {
 
 export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
   const editRelease = useUpdate('releases');
-  const { handleSubmit, register, setValue } = useForm<ReleaseInput>();
+  const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   useEffect(() => {
-    if (data) {
-      setValue('artist', data.artist);
-      setValue('title', data.title);
-      setValue('date', formatDate(data.date || ''));
-    }
-  }, [data, setValue]);
+    if (!data) return;
+
+    reset({
+      artist: data.artist,
+      title: data.title,
+      date: data.date ? formatDate(data.date) : '',
+    });
+  }, [data, reset]);
 
   const options = {
     callbacks: [onClose],

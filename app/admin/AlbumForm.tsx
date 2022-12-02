@@ -41,6 +41,8 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
           />
           <Input
             id="year"
+            maxLength={4}
+            minLength={4}
             required
             type="text"
             wrapperClassName="order-3 sm:order-5"
