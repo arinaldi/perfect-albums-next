@@ -1,4 +1,6 @@
-import { FormEvent, ReactNode, useRef } from 'react';
+'use client';
+
+import { FormEvent, Fragment, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import CancelButton from 'components/CancelButton';
@@ -27,19 +29,20 @@ export default function Modal({
     <Transition
       show={isOpen}
       enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
+      enterFrom="transform opacity-0"
+      enterTo="transform opacity-100"
       leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
+      leaveFrom="transform opacity-100"
+      leaveTo="transform opacity-0"
+      as={Fragment}
     >
       <Dialog
-        className="relative z-50"
+        className="fixed inset-0"
         initialFocus={cancelButtonRef}
         onClose={onClose}
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 mt-2 transform p-4 transition-all">
+        <div className="fixed inset-0 mt-2 p-4">
           <Dialog.Panel className="mx-auto w-full max-w-lg rounded-2xl bg-white text-left shadow-xl dark:bg-gray-800">
             <Dialog.Title
               as="h3"
