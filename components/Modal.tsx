@@ -2,6 +2,7 @@
 
 import { FormEvent, Fragment, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import OutlineButton from 'components/OutlineButton';
 import SubmitButton from 'components/SubmitButton';
@@ -46,9 +47,12 @@ export default function Modal({
           <Dialog.Panel className="mx-auto w-full max-w-lg rounded-2xl bg-white text-left shadow-xl dark:bg-gray-800">
             <Dialog.Title
               as="h3"
-              className="p-6 pb-0 text-2xl font-semibold dark:text-white"
+              className="flex items-center justify-between p-6 pb-0 text-2xl font-semibold dark:text-white"
             >
               {title}
+              <span className="-mr-2 -mt-1 h-10 w-10 cursor-pointer rounded-full p-2 transition hover:bg-gray-100">
+                <XMarkIcon onClick={onClose} />
+              </span>
             </Dialog.Title>
             <form method="POST" onSubmit={onSubmit}>
               {children}
