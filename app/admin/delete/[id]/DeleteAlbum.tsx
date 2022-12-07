@@ -7,7 +7,7 @@ import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
 import { Album } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import CancelButton from 'components/CancelButton';
+import OutlineButton from 'components/OutlineButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
@@ -40,13 +40,15 @@ export default function DeleteAlbum({ album }: Props) {
           method="POST"
           onSubmit={onSubmit}
         >
-          <CancelButton
+          <OutlineButton
             onClick={() => {
               router.push(
                 `${ROUTES_ADMIN.base.href}?${searchParams.toString()}`,
               );
             }}
-          />
+          >
+            Cancel
+          </OutlineButton>
           <span className="ml-1" />
           <SubmitButton isSubmitting={isSubmitting} />
         </form>

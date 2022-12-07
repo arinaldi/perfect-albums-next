@@ -2,7 +2,13 @@
 
 import { FormEvent, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CheckIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  BackspaceIcon,
+  CheckIcon,
+  PencilIcon,
+  PlusSmallIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 
 import {
   APP_MESSAGE_TYPES,
@@ -19,7 +25,7 @@ import PerPage from 'app/admin/PerPage';
 import SortableColumn from 'app/admin/SortableColumn';
 import StudioFilter from 'app/admin/StudioFilter';
 import AppMessage from 'components/AppMessage';
-import Button from 'components/Button';
+import ButtonWithIcon from 'components/ButtonWithIcon';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
@@ -121,18 +127,20 @@ export default function Admin({ albums, cdTotal, total }: Props) {
         <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">
           <div className="flex gap-1">
             <SubmitButton isSubmitting={false} />
-            <Button onClick={onClear}>Clear</Button>
-            <Button onClick={() => onRouteChange(ROUTES_ADMIN.create.href)}>
+            <ButtonWithIcon icon={<BackspaceIcon />} onClick={onClear}>
+              Clear
+            </ButtonWithIcon>
+            <ButtonWithIcon
+              icon={<PlusSmallIcon />}
+              onClick={() => onRouteChange(ROUTES_ADMIN.create.href)}
+            >
               New
-            </Button>
-          </div>
-          <div className="inline sm:hidden">
-            <StudioFilter />
+            </ButtonWithIcon>
           </div>
         </div>
       </form>
 
-      <div className="mb-4 flex justify-center">
+      <div className="mb-2 flex justify-center sm:mb-4">
         <Pagination lastPage={Math.ceil(total / perPage)} />
         <div className="mx-2" />
         <PerPage />
@@ -140,6 +148,10 @@ export default function Admin({ albums, cdTotal, total }: Props) {
         <div className="hidden sm:block">
           <StudioFilter />
         </div>
+      </div>
+
+      <div className="mb-4 flex justify-center sm:mb-0 sm:hidden">
+        <StudioFilter />
       </div>
 
       {albums?.length === 0 ? (

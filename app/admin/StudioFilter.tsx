@@ -14,7 +14,7 @@ interface Props {
   prop: FILTER;
 }
 
-function Button({ prop }: Props) {
+function FilterButton({ prop }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const studio = parseQuery(searchParams.get('studio'));
@@ -47,8 +47,8 @@ export default function StudioFilter() {
       className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
       aria-label="Studio filter"
     >
-      <Button prop={FILTER.OFF} />
-      <Button prop={FILTER.ON} />
+      <FilterButton prop={FILTER.OFF} />
+      <FilterButton prop={FILTER.ON} />
     </nav>
   );
 }

@@ -8,7 +8,7 @@ import { ROUTES_ADMIN } from 'utils/constants';
 import { AlbumInput } from 'utils/types';
 import Input from 'components/Input';
 import Checkbox from 'components/Checkbox';
-import CancelButton from 'components/CancelButton';
+import OutlineButton from 'components/OutlineButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
@@ -69,11 +69,13 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
         </div>
       </div>
       <div className="flex items-center justify-end p-6">
-        <CancelButton
+        <OutlineButton
           onClick={() => {
             router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`);
           }}
-        />
+        >
+          Cancel
+        </OutlineButton>
         <span className="ml-1" />
         <SubmitButton isSubmitting={isSubmitting} />
       </div>

@@ -23,7 +23,12 @@ interface ButtonProps extends Children {
   pageValue: number;
 }
 
-function Button({ children, isDisabled, label, pageValue }: ButtonProps) {
+function PaginationButton({
+  children,
+  isDisabled,
+  label,
+  pageValue,
+}: ButtonProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -59,25 +64,37 @@ export default function Pagination({ lastPage }: PaginationProps) {
       className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
       aria-label="Pagination"
     >
-      <Button isDisabled={isFirstPage} label={PAGE.FIRST} pageValue={1}>
+      <PaginationButton
+        isDisabled={isFirstPage}
+        label={PAGE.FIRST}
+        pageValue={1}
+      >
         «
-      </Button>
-      <Button
+      </PaginationButton>
+      <PaginationButton
         isDisabled={isFirstPage}
         label={PAGE.PREVIOUS}
         pageValue={page - 1}
       >
         ‹
-      </Button>
+      </PaginationButton>
       <span className="relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 dark:border-black dark:bg-gray-700 dark:text-white">
         {page}
       </span>
-      <Button isDisabled={isLastPage} label={PAGE.NEXT} pageValue={page + 1}>
+      <PaginationButton
+        isDisabled={isLastPage}
+        label={PAGE.NEXT}
+        pageValue={page + 1}
+      >
         ›
-      </Button>
-      <Button isDisabled={isLastPage} label={PAGE.LAST} pageValue={lastPage}>
+      </PaginationButton>
+      <PaginationButton
+        isDisabled={isLastPage}
+        label={PAGE.LAST}
+        pageValue={lastPage}
+      >
         »
-      </Button>
+      </PaginationButton>
     </nav>
   );
 }

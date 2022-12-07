@@ -3,7 +3,7 @@
 import { FormEvent, Fragment, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-import CancelButton from 'components/CancelButton';
+import OutlineButton from 'components/OutlineButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
@@ -53,7 +53,9 @@ export default function Modal({
             <form method="POST" onSubmit={onSubmit}>
               {children}
               <div className="flex items-center justify-end p-6 pt-0">
-                <CancelButton onClick={onClose} ref={cancelButtonRef} />
+                <OutlineButton onClick={onClose} ref={cancelButtonRef}>
+                  Cancel
+                </OutlineButton>
                 <span className="ml-1" />
                 <SubmitButton isSubmitting={isSubmitting} />
               </div>

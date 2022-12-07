@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 * {
-  transition: color 0.2s ease-out, background 0.2s ease-out;
+  transition: color 0.15s ease-out, background 0.15s ease-out;
 }

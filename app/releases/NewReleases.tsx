@@ -2,13 +2,17 @@
 
 import { useState } from 'react';
 import { User } from '@supabase/auth-helpers-nextjs';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {
+  PencilIcon,
+  PlusSmallIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import Button from 'components/Button';
+import ButtonWithIcon from 'components/ButtonWithIcon';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
@@ -35,7 +39,8 @@ export default function NewReleases({ releases, user }: Props) {
       title="New Releases"
       titleAction={
         user ? (
-          <Button
+          <ButtonWithIcon
+            icon={<PlusSmallIcon />}
             onClick={() => {
               setModal({
                 data: null,
@@ -44,7 +49,7 @@ export default function NewReleases({ releases, user }: Props) {
             }}
           >
             New
-          </Button>
+          </ButtonWithIcon>
         ) : null
       }
     >
@@ -62,24 +67,28 @@ export default function NewReleases({ releases, user }: Props) {
                     </span>
                     {user && (
                       <>
-                        <PencilIcon
-                          className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
+                        <span
+                          className="ml-1 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white"
                           onClick={() =>
                             setModal({
                               data: release,
                               type: MODAL_TYPES.NEW_RELEASE_EDIT,
                             })
                           }
-                        />
-                        <TrashIcon
-                          className="ml-2 inline h-4 w-4 cursor-pointer dark:text-white"
-                          onClick={() =>
-                            setModal({
-                              data: release,
-                              type: MODAL_TYPES.NEW_RELEASE_DELETE,
-                            })
-                          }
-                        />
+                        >
+                          <PencilIcon className="inline h-4 w-4" />
+                        </span>
+                        <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white">
+                          <TrashIcon
+                            className="inline h-4 w-4"
+                            onClick={() =>
+                              setModal({
+                                data: release,
+                                type: MODAL_TYPES.NEW_RELEASE_DELETE,
+                              })
+                            }
+                          />
+                        </span>
                       </>
                     )}
                   </li>

@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import { User } from '@supabase/auth-helpers-nextjs';
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { PlusSmallIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import Button from 'components/Button';
+import ButtonWithIcon from 'components/ButtonWithIcon';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
 
@@ -33,7 +33,8 @@ export default function FeaturedSongs({ songs, user }: Props) {
       title="Featured Songs"
       titleAction={
         user ? (
-          <Button
+          <ButtonWithIcon
+            icon={<PlusSmallIcon />}
             onClick={() => {
               setModal({
                 data: null,
@@ -42,7 +43,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
             }}
           >
             New
-          </Button>
+          </ButtonWithIcon>
         ) : null
       }
     >
@@ -69,7 +70,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
               </a>
               {user ? (
                 <span
-                  className="ml-2 cursor-pointer dark:text-white"
+                  className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white"
                   onClick={() =>
                     setModal({
                       data: song,

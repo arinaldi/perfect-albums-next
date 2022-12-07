@@ -11,7 +11,7 @@ interface Props {
   prop: PER_PAGE;
 }
 
-function Button({ prop }: Props) {
+function PerPageButton({ prop }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const perPage = parsePerPageQuery(searchParams.get('perPage'));
@@ -44,9 +44,9 @@ export default function PerPage() {
       className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
       aria-label="Pagination"
     >
-      <Button prop={SMALL} />
-      <Button prop={MEDIUM} />
-      <Button prop={LARGE} />
+      <PerPageButton prop={SMALL} />
+      <PerPageButton prop={MEDIUM} />
+      <PerPageButton prop={LARGE} />
     </nav>
   );
 }
