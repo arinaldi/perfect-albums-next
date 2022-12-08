@@ -1,6 +1,5 @@
 import 'server-only';
 import { cookies, headers } from 'next/headers';
-import { notFound } from 'next/navigation';
 import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import FeaturedSongs from 'app/songs/FeaturedSongs';
