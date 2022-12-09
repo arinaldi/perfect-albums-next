@@ -188,7 +188,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                       ({ artist, cd, favorite, id, studio, title, year }) => (
                         <tr
                           key={id}
-                          className="even:bg-gray-0 odd:bg-gray-100 dark:odd:bg-gray-700 dark:even:bg-gray-800"
+                          className="even:bg-gray-0 odd:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800"
                         >
                           <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/4 sm:max-w-0 sm:truncate">
                             {artist}
@@ -214,20 +214,26 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                             ) : null}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
-                            <PencilIcon
-                              className="inline h-4 w-4 cursor-pointer dark:text-white"
-                              onClick={() =>
-                                onRouteChange(`${ROUTES_ADMIN.edit.href}/${id}`)
-                              }
-                            />
-                            <TrashIcon
-                              className="ml-4 inline h-4 w-4 cursor-pointer dark:text-white"
-                              onClick={() =>
-                                onRouteChange(
-                                  `${ROUTES_ADMIN.delete.href}/${id}`,
-                                )
-                              }
-                            />
+                            <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+                              <PencilIcon
+                                className="inline h-4 w-4"
+                                onClick={() =>
+                                  onRouteChange(
+                                    `${ROUTES_ADMIN.edit.href}/${id}`,
+                                  )
+                                }
+                              />
+                            </span>
+                            <span className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+                              <TrashIcon
+                                className="inline h-4 w-4"
+                                onClick={() =>
+                                  onRouteChange(
+                                    `${ROUTES_ADMIN.delete.href}/${id}`,
+                                  )
+                                }
+                              />
+                            </span>
                           </td>
                         </tr>
                       ),

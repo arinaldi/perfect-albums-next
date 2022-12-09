@@ -68,7 +68,7 @@ export default function NewReleases({ releases, user }: Props) {
                     {user && (
                       <>
                         <span
-                          className="ml-1 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white"
+                          className="ml-1 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"
                           onClick={() =>
                             setModal({
                               data: release,
@@ -78,7 +78,7 @@ export default function NewReleases({ releases, user }: Props) {
                         >
                           <PencilIcon className="inline h-4 w-4" />
                         </span>
-                        <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white">
+                        <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
                           <TrashIcon
                             className="inline h-4 w-4"
                             onClick={() =>

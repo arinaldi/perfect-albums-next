@@ -50,7 +50,7 @@ export default function Modal({
               className="flex items-center justify-between p-6 pb-0 text-2xl font-semibold dark:text-white"
             >
               {title}
-              <span className="-mr-2 -mt-1 h-10 w-10 cursor-pointer rounded-full p-2 transition hover:bg-gray-100">
+              <span className="-mr-2 -mt-1 h-10 w-10 cursor-pointer rounded-full p-2 transition hover:bg-gray-100 dark:hover:bg-gray-900">
                 <XMarkIcon onClick={onClose} />
               </span>
             </Dialog.Title>

@@ -70,7 +70,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
               </a>
               {user ? (
                 <span
-                  className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white"
+                  className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
                   onClick={() =>
                     setModal({
                       data: song,
