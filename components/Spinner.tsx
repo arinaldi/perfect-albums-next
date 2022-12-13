@@ -2,7 +2,7 @@ interface Props {
   className?: string;
 }
 
-export default function Spinner({ className = '' }: Props) {
+export default function Spinner({ className = 'h-6 w-6' }: Props) {
   return (
     <div className={`dark:text-white ${className}`}>
       <svg viewBox="0 0 2400 2400">

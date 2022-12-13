@@ -16,12 +16,14 @@ import LinkWrapper from 'components/LinkWrapper';
 import useDarkMode from 'hooks/useDarkMode';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import supabase from 'utils/supabase';
+import useNProgress from 'hooks/useNProgress';
 
 interface Props {
   user: User | undefined;
 }
 
 export default function NavBar({ user }: Props) {
+  useNProgress();
   const pathname = usePathname();
   const router = useRouter();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
