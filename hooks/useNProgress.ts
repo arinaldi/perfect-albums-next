@@ -11,7 +11,7 @@ export default function useNProgress() {
   const previousPathname = usePrevious(pathname);
 
   useEffect(() => {
-    if (pathname !== previousPathname) {
+    if (previousPathname && pathname !== previousPathname) {
       nProgress.start();
       nProgress.done();
     }
