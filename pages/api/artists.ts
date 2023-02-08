@@ -4,9 +4,14 @@ import {
   SupabaseClient,
 } from '@supabase/auth-helpers-nextjs';
 
+interface Artist {
+  artist: string;
+}
+
 async function getArtists(supabase: SupabaseClient): Promise<string[]> {
   // https://www.jeffreyknox.dev/blog/postgresql-functions-in-supabase/
-  const { data: artists, error } = await supabase.rpc('get_artists');
+  const { data, error } = await supabase.rpc('get_artists');
+  const artists: Artist[] = data;
 
   if (error) throw error;
   if (artists) return artists.map((a) => a.artist);

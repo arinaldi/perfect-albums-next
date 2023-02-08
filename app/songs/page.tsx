@@ -6,6 +6,9 @@ import FeaturedSongs from 'app/songs/FeaturedSongs';
 import { Database } from 'utils/db-types';
 
 export const revalidate = 10;
+export const metadata = {
+  title: 'Perfect Albums | Featured Songs',
+};
 
 export default async function FeaturedSongsPage() {
   const supabase = createServerComponentSupabaseClient<Database>({

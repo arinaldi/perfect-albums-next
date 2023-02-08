@@ -12,6 +12,9 @@ import { Album } from 'utils/types';
 import { Database } from 'utils/db-types';
 
 export const revalidate = 0;
+export const metadata = {
+  title: 'Perfect Albums | Admin',
+};
 const { ASC, DESC } = SORT_DIRECTION;
 
 interface Props {

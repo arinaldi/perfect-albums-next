@@ -6,6 +6,9 @@ import NewReleases from 'app/releases/NewReleases';
 import { Database } from 'utils/db-types';
 
 export const revalidate = 10;
+export const metadata = {
+  title: 'Perfect Albums | New Releases',
+};
 
 export default async function NewReleasesPage() {
   const supabase = createServerComponentSupabaseClient<Database>({

@@ -7,6 +7,10 @@ interface Payload {
   success: boolean;
 }
 
+export const metadata = {
+  title: 'Perfect Albums | Artists',
+};
+
 async function getArtists(): Promise<Payload> {
   const res = await fetch(`${BASE_URL}/api/artists`, {
     next: { revalidate: 10 },
@@ -18,7 +22,7 @@ export default async function ArtistsPage() {
   const { artists } = await getArtists();
 
   return (
-    <ul className="list-disc dark:text-white">
+    <ul className="list-disc p-4 dark:text-white">
       {artists.map((artist) => (
         <li key={artist}>{artist}</li>
       ))}

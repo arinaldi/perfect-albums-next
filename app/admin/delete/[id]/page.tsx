@@ -13,6 +13,9 @@ interface Props {
 }
 
 export const revalidate = 0;
+export const metadata = {
+  title: 'Perfect Albums | Delete Album',
+};
 
 export default async function DeleteAlbumPage({ params }: Props) {
   const supabase = createServerComponentSupabaseClient<Database>({

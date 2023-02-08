@@ -13,6 +13,9 @@ interface Props {
 }
 
 export const revalidate = 0;
+export const metadata = {
+  title: 'Perfect Albums | Edit Album',
+};
 
 export default async function EditAlbumPage({ params }: Props) {
   const supabase = createServerComponentSupabaseClient<Database>({

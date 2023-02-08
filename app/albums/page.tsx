@@ -3,6 +3,9 @@ import TopAlbums from 'app/albums/TopAlbums';
 import supabase from 'utils/supabase';
 
 export const revalidate = 10;
+export const metadata = {
+  title: 'Perfect Albums | Top Albums',
+};
 
 export default async function TopAlbumsPage() {
   const { data } = await supabase
