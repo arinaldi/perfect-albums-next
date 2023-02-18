@@ -22,7 +22,8 @@ export default function CreateAlbum() {
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [
-      () => router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`),
+      () =>
+        router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
     ],
     handleSubmit,
     submitFn: async (album: AlbumInput) => {

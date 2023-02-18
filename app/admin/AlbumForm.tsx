@@ -71,7 +71,9 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
       <div className="flex items-center justify-end p-6">
         <OutlineButton
           onClick={() => {
-            router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`);
+            router.push(
+              `${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`,
+            );
           }}
         >
           Cancel
