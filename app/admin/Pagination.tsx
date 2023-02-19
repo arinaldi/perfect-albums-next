@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { parsePageQuery } from 'utils';
+import { parsePageQuery, parsePerPageQuery } from 'utils';
 import { ROUTES_ADMIN } from 'utils/constants';
 import { Children } from 'utils/types';
 
@@ -14,7 +14,7 @@ enum PAGE {
 }
 
 interface PaginationProps {
-  lastPage: number;
+  total: number;
 }
 
 interface ButtonProps extends Children {
@@ -33,7 +33,7 @@ function PaginationButton({
   const searchParams = useSearchParams();
 
   function onClick() {
-    const query = new URLSearchParams(searchParams);
+    const query = new URLSearchParams(searchParams || '');
     query.set('page', pageValue.toString());
 
     router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
@@ -53,9 +53,11 @@ function PaginationButton({
   );
 }
 
-export default function Pagination({ lastPage }: PaginationProps) {
+export default function Pagination({ total }: PaginationProps) {
   const searchParams = useSearchParams();
-  const page = parsePageQuery(searchParams.get('page'));
+  const page = parsePageQuery(searchParams?.get('page'));
+  const perPage = parsePerPageQuery(searchParams?.get('perPage'));
+  const lastPage = Math.ceil(total / perPage);
   const isFirstPage = page === 1;
   const isLastPage = page === lastPage;
 

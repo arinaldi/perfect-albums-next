@@ -14,10 +14,10 @@ interface Props {
 function PerPageButton({ prop }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const perPage = parsePerPageQuery(searchParams.get('perPage'));
+  const perPage = parsePerPageQuery(searchParams?.get('perPage'));
 
   function onClick() {
-    const query = new URLSearchParams(searchParams);
+    const query = new URLSearchParams(searchParams ?? '');
     query.set('page', '1');
     query.set('perPage', prop.toString());
 

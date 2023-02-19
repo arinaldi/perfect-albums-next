@@ -21,7 +21,8 @@ export default function DeleteAlbum({ album }: Props) {
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [
-      () => router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`),
+      () =>
+        router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
     ],
     submitFn: async () => {
       await deleteAlbum(album.id);
@@ -43,7 +44,7 @@ export default function DeleteAlbum({ album }: Props) {
           <OutlineButton
             onClick={() => {
               router.push(
-                `${ROUTES_ADMIN.base.href}?${searchParams.toString()}`,
+                `${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`,
               );
             }}
           >

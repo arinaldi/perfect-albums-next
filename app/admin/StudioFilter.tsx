@@ -17,11 +17,11 @@ interface Props {
 function FilterButton({ prop }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const studio = parseQuery(searchParams.get('studio'));
+  const studio = parseQuery(searchParams?.get('studio'));
   const value = prop === FILTER.ON;
 
   function onClick() {
-    const query = new URLSearchParams(searchParams);
+    const query = new URLSearchParams(searchParams ?? '');
     query.set('studio', value.toString());
 
     router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);

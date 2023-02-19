@@ -24,7 +24,8 @@ export default function EditAlbum({ album }: Props) {
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [
-      () => router.push(`${ROUTES_ADMIN.base.href}?${searchParams.toString()}`),
+      () =>
+        router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
     ],
     handleSubmit,
     submitFn: async (data: AlbumInput) => {

@@ -1,32 +1,17 @@
-'use client';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
-import { FormEvent, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  BackspaceIcon,
-  CheckIcon,
-  PencilIcon,
-  PlusSmallIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-
-import {
-  APP_MESSAGE_TYPES,
-  PER_PAGE,
-  ROUTES_ADMIN,
-  SORT_VALUE,
-} from 'utils/constants';
-import { parsePerPageQuery, parseQuery } from 'utils';
+import { APP_MESSAGE_TYPES } from 'utils/constants';
 import { Album } from 'utils/types';
+import AppMessage from 'components/AppMessage';
+import AlbumActions from 'app/admin/AlbumActions';
 import Column from 'app/admin/Column';
 import Layout from 'components/AppLayout';
+import NewAlbumButton from 'app/admin/NewAlbumButton';
 import Pagination from 'app/admin/Pagination';
 import PerPage from 'app/admin/PerPage';
+import Search from 'app/admin/Search';
 import SortableColumn from 'app/admin/SortableColumn';
 import StudioFilter from 'app/admin/StudioFilter';
-import AppMessage from 'components/AppMessage';
-import ButtonWithIcon from 'components/ButtonWithIcon';
-import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   albums: Album[];
@@ -35,52 +20,6 @@ interface Props {
 }
 
 export default function Admin({ albums, cdTotal, total }: Props) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const perPage = parsePerPageQuery(searchParams.get('perPage'));
-  const artistQuery = parseQuery(searchParams.get('artist'));
-  const titleQuery = parseQuery(searchParams.get('title'));
-  const artistRef = useRef<HTMLInputElement | null>(null);
-  const titleRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    artistRef?.current?.focus();
-  }, []);
-
-  function onSubmit(event: FormEvent) {
-    event.preventDefault();
-
-    const artist = artistRef?.current?.value;
-    const title = titleRef?.current?.value;
-    const query = new URLSearchParams(searchParams);
-    query.set('page', '1');
-    query.set('sort', SORT_VALUE.YEAR);
-
-    if (artist) query.set('artist', artist);
-    if (title) query.set('title', title);
-
-    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
-  }
-
-  function onClear() {
-    router.replace(
-      `${ROUTES_ADMIN.base.href}?page=1&perPage=${PER_PAGE.SMALL}`,
-    );
-
-    if (artistRef?.current) {
-      artistRef.current.value = '';
-      artistRef.current.focus();
-    }
-
-    if (titleRef?.current) {
-      titleRef.current.value = '';
-    }
-  }
-
-  function onRouteChange(pathname: string) {
-    router.push(`${pathname}?${searchParams.toString()}`);
-  }
-
   const Title = (
     <>
       Admin
@@ -102,46 +41,17 @@ export default function Admin({ albums, cdTotal, total }: Props) {
 
   return (
     <Layout title={Title} titleAction={AppVersion}>
-      <form
-        className="mb-4 block sm:flex sm:items-center sm:justify-between"
-        onSubmit={onSubmit}
-      >
-        <input
-          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
-          defaultValue={artistQuery}
-          id="artist-search"
-          name="artist"
-          placeholder="Search artist"
-          ref={artistRef}
-          type="text"
-        />
-        <input
-          className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:ml-4 sm:mt-0 sm:text-sm"
-          defaultValue={titleQuery}
-          id="title-search"
-          name="title"
-          placeholder="Search title"
-          ref={titleRef}
-          type="text"
-        />
+      <div className="mb-4 block sm:flex sm:items-center sm:justify-between">
+        <Search />
         <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">
           <div className="flex gap-1">
-            <SubmitButton isSubmitting={false} />
-            <ButtonWithIcon icon={<BackspaceIcon />} onClick={onClear}>
-              Clear
-            </ButtonWithIcon>
-            <ButtonWithIcon
-              icon={<PlusSmallIcon />}
-              onClick={() => onRouteChange(ROUTES_ADMIN.create.href)}
-            >
-              New
-            </ButtonWithIcon>
+            <NewAlbumButton />
           </div>
         </div>
-      </form>
+      </div>
 
       <div className="mb-2 flex justify-center sm:mb-4">
-        <Pagination lastPage={Math.ceil(total / perPage)} />
+        <Pagination total={total} />
         <div className="mx-2" />
         <PerPage />
         <div className="mx-2" />
@@ -214,26 +124,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                             ) : null}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
-                            <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
-                              <PencilIcon
-                                className="inline h-4 w-4"
-                                onClick={() =>
-                                  onRouteChange(
-                                    `${ROUTES_ADMIN.edit.href}/${id}`,
-                                  )
-                                }
-                              />
-                            </span>
-                            <span className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
-                              <TrashIcon
-                                className="inline h-4 w-4"
-                                onClick={() =>
-                                  onRouteChange(
-                                    `${ROUTES_ADMIN.delete.href}/${id}`,
-                                  )
-                                }
-                              />
-                            </span>
+                            <AlbumActions id={id} />
                           </td>
                         </tr>
                       ),

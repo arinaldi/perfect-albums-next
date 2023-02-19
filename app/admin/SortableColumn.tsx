@@ -19,7 +19,7 @@ export default function SortableColumn({
   wrapperClassName = '',
 }: Props) {
   const searchParams = useSearchParams();
-  const sort = parseQuery(searchParams.get('sort'));
+  const sort = parseQuery(searchParams?.get('sort'));
   let [sortProp, desc] = sort.split(':') ?? [];
   let newSort = null;
 
@@ -29,7 +29,7 @@ export default function SortableColumn({
     newSort = `${prop}:desc`;
   }
 
-  const query = new URLSearchParams(searchParams);
+  const query = new URLSearchParams(searchParams ?? '');
   query.set('sort', newSort as string);
 
   return (
