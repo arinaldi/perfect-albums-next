@@ -59,20 +59,17 @@ export default function Search() {
           ref={artistRef}
           type="text"
         />
-        {!isPending && artistRef?.current?.value ? (
-          <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
-            <XMarkIcon
-              className="mr-2 h-4 w-4 cursor-pointer"
-              onClick={() => {
-                onSearch('artist', '');
+        {!isPending && artistQuery ? (
+          <ClearButton
+            onClick={() => {
+              onSearch('artist', '');
 
-                if (artistRef?.current) {
-                  artistRef.current.value = '';
-                  artistRef.current.focus();
-                }
-              }}
-            />
-          </div>
+              if (artistRef?.current) {
+                artistRef.current.value = '';
+                artistRef.current.focus();
+              }
+            }}
+          />
         ) : null}
         {isPending && focused === 'artist' ? <InputSpinner /> : null}
       </div>
@@ -92,20 +89,17 @@ export default function Search() {
           ref={titleRef}
           type="text"
         />
-        {!isPending && titleRef?.current?.value ? (
-          <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
-            <XMarkIcon
-              className="mr-2 h-4 w-4 cursor-pointer"
-              onClick={() => {
-                onSearch('title', '');
+        {!isPending && titleQuery ? (
+          <ClearButton
+            onClick={() => {
+              onSearch('title', '');
 
-                if (titleRef?.current) {
-                  titleRef.current.value = '';
-                  titleRef.current.focus();
-                }
-              }}
-            />
-          </div>
+              if (titleRef?.current) {
+                titleRef.current.value = '';
+                titleRef.current.focus();
+              }
+            }}
+          />
         ) : null}
         {isPending && focused === 'title' ? <InputSpinner /> : null}
       </div>
@@ -117,6 +111,20 @@ function InputSpinner() {
   return (
     <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
       <Spinner className="mr-2 h-4 w-4" />
+    </div>
+  );
+}
+
+interface ButtonProps {
+  onClick: () => void;
+}
+
+function ClearButton({ onClick }: ButtonProps) {
+  return (
+    <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
+      <span className="mr-1.5 h-6 w-6 cursor-pointer rounded-full p-1 transition hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
+        <XMarkIcon onClick={onClick} />
+      </span>
     </div>
   );
 }
