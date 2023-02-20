@@ -9,6 +9,12 @@ import { Children } from 'utils/types';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
 
+export const metadata = {
+  icons: {
+    icon: 'https://fav.farm/🎧',
+  },
+};
+
 export default async function RootLayout({ children }: Children) {
   const supabase = createServerComponentSupabaseClient({ cookies, headers });
   const {

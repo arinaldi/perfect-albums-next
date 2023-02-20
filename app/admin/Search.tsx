@@ -110,7 +110,7 @@ export default function Search() {
 function InputSpinner() {
   return (
     <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
-      <Spinner className="mr-2 h-4 w-4" />
+      <Spinner className="mr-1.5 h-6 w-6 cursor-none p-1" />
     </div>
   );
 }
