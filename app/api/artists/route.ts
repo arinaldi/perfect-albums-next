@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import {
-  createServerSupabaseClient,
+  createMiddlewareSupabaseClient,
   SupabaseClient,
 } from '@supabase/auth-helpers-nextjs';
 
@@ -18,16 +18,16 @@ async function getArtists(supabase: SupabaseClient): Promise<string[]> {
   return [];
 }
 
-export default async function artists(
-  req: NextApiRequest,
-  res: NextApiResponse,
-): Promise<void> {
-  const supabase = createServerSupabaseClient({ req, res });
+export async function GET(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareSupabaseClient({ req, res });
 
   try {
     const artists = await getArtists(supabase);
-    res.status(200).json({ success: true, artists });
+    return NextResponse.json({ success: true, artists });
   } catch (error) {
-    res.status(400).json({ success: false });
+    const message =
+      error instanceof Error ? error.message : 'Something went wrong';
+    return NextResponse.json({ success: false, message }, { status: 400 });
   }
 }
