@@ -13,9 +13,9 @@ import {
 } from '@heroicons/react/24/outline';
 
 import LinkWrapper from 'components/LinkWrapper';
+import { useSupabase } from 'components/SupabaseProvider';
 import useDarkMode from 'hooks/useDarkMode';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
-import supabase from 'utils/supabase';
 import useNProgress from 'hooks/useNProgress';
 
 interface Props {
@@ -26,6 +26,7 @@ export default function NavBar({ user }: Props) {
   useNProgress();
   const pathname = usePathname();
   const router = useRouter();
+  const { supabase } = useSupabase();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [open, toggle] = useReducer(
     (flag: boolean, next: boolean | null) => (next == null ? !flag : next),

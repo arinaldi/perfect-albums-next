@@ -2,22 +2,30 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import supabase from 'utils/supabase';
+
+import { useSupabase } from 'components/SupabaseProvider';
 
 interface Props {
-  accessToken?: string;
+  serverAccessToken?: string;
 }
 
-export default function SupabaseListener({ accessToken }: Props) {
+export default function SupabaseListener({ serverAccessToken }: Props) {
   const router = useRouter();
+  const { supabase } = useSupabase();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((_, session) => {
-      if (session?.access_token !== accessToken) {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_, session) => {
+      if (session?.access_token !== serverAccessToken) {
         router.refresh();
       }
     });
-  }, [accessToken, router]);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router, supabase, serverAccessToken]);
 
   return null;
 }

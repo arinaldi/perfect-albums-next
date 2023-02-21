@@ -5,15 +5,16 @@ import { useForm } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'utils/constants';
 import useSubmit from 'hooks/useSubmit';
-import supabase from 'utils/supabase';
 import { SignInInput } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import Input from 'components/Input';
 import PasswordInput from 'components/PasswordInput';
 import SubmitButton from 'components/SubmitButton';
+import { useSupabase } from 'components/SupabaseProvider';
 
 export default function SignIn() {
   const router = useRouter();
+  const { supabase } = useSupabase();
   const user = null; // TODO
   const { handleSubmit, register } = useForm<SignInInput>();
 

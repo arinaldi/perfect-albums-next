@@ -1,6 +1,7 @@
 import 'server-only';
+
 import TopAlbums from 'app/albums/TopAlbums';
-import supabase from 'utils/supabase';
+import { createClient } from 'utils/supabase-server';
 
 export const revalidate = 10;
 export const metadata = {
@@ -8,6 +9,7 @@ export const metadata = {
 };
 
 export default async function TopAlbumsPage() {
+  const supabase = createClient();
   const { data } = await supabase
     .from('albums')
     .select('*')

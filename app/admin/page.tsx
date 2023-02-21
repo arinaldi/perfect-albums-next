@@ -1,15 +1,11 @@
 import 'server-only';
-import { cookies, headers } from 'next/headers';
-import {
-  createServerComponentSupabaseClient,
-  SupabaseClient,
-} from '@supabase/auth-helpers-nextjs';
+import { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import Admin from 'app/admin/Admin';
 import { parseAdminQuery } from 'utils';
 import { SORT_DIRECTION } from 'utils/constants';
+import { createClient } from 'utils/supabase-server';
 import { Album } from 'utils/types';
-import { Database } from 'utils/db-types';
 
 export const revalidate = 0;
 export const metadata = {
@@ -82,11 +78,7 @@ async function getCdCount(supabase: SupabaseClient): Promise<number> {
 }
 
 export default async function AdminPage({ searchParams }: Props) {
-  const supabase = createServerComponentSupabaseClient<Database>({
-    cookies,
-    headers,
-  });
-
+  const supabase = createClient();
   const { albums, total } = await getAlbums(supabase, searchParams);
   const cdTotal = await getCdCount(supabase);
 

@@ -1,14 +1,15 @@
 import 'server-only';
-import { cookies, headers } from 'next/headers';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import NavBar from 'components/NavBar';
 import SupabaseListener from 'components/SupabaseListener';
 import Toast from 'components/Toast';
+import { createClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
+import SupabaseProvider from 'components/SupabaseProvider';
 
+export const revalidate = 0;
 export const metadata = {
   icons: {
     icon: 'https://fav.farm/🎧',
@@ -16,7 +17,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = createServerComponentSupabaseClient({ cookies, headers });
+  const supabase = createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -24,10 +25,12 @@ export default async function RootLayout({ children }: Children) {
   return (
     <html>
       <body className="min-h-screen dark:bg-gray-800">
-        <SupabaseListener accessToken={session?.access_token} />
-        <NavBar user={session?.user} />
-        <Toast />
-        <main>{children}</main>
+        <SupabaseProvider>
+          <SupabaseListener serverAccessToken={session?.access_token} />
+          <NavBar user={session?.user} />
+          <Toast />
+          <main>{children}</main>
+        </SupabaseProvider>
         <script
           id="dark-mode"
           dangerouslySetInnerHTML={{

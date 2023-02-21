@@ -1,10 +1,8 @@
 import 'server-only';
-import { cookies, headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import DeleteAlbum from 'app/admin/delete/[id]/DeleteAlbum';
-import { Database } from 'utils/db-types';
+import { createClient } from 'utils/supabase-server';
 
 interface Props {
   params: {
@@ -18,10 +16,7 @@ export const metadata = {
 };
 
 export default async function DeleteAlbumPage({ params }: Props) {
-  const supabase = createServerComponentSupabaseClient<Database>({
-    cookies,
-    headers,
-  });
+  const supabase = createClient();
   const { data } = await supabase
     .from('albums')
     .select('*')

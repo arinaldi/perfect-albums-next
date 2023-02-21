@@ -1,9 +1,7 @@
 import 'server-only';
-import { cookies, headers } from 'next/headers';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import FeaturedSongs from 'app/songs/FeaturedSongs';
-import { Database } from 'utils/db-types';
+import { createClient } from 'utils/supabase-server';
 
 export const revalidate = 10;
 export const metadata = {
@@ -11,10 +9,7 @@ export const metadata = {
 };
 
 export default async function FeaturedSongsPage() {
-  const supabase = createServerComponentSupabaseClient<Database>({
-    cookies,
-    headers,
-  });
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
