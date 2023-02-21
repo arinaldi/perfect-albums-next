@@ -5,37 +5,25 @@ interface Props {
 export default function Spinner({ className = 'h-6 w-6' }: Props) {
   return (
     <div className={`dark:text-white ${className}`}>
-      <svg viewBox="0 0 2400 2400">
-        <g
-          strokeWidth={200}
-          strokeLinecap="round"
+      <svg
+        className="animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
           stroke="currentColor"
-          fill="none"
-        >
-          <path d="M1200 600L1200 100" />
-          <path opacity={0.5} d="M1200 2300L1200 1800" />
-          <path opacity={0.917} d="M900 680.4L650 247.4" />
-          <path opacity={0.417} d="M1750 2152.6L1500 1719.6" />
-          <path opacity={0.833} d="M680.4 900L247.4 650" />
-          <path opacity={0.333} d="M2152.6 1750L1719.6 1500" />
-          <path opacity={0.75} d="M600 1200L100 1200" />
-          <path opacity={0.25} d="M2300 1200L1800 1200" />
-          <path opacity={0.667} d="M680.4 1500L247.4 1750" />
-          <path opacity={0.167} d="M2152.6 650L1719.6 900" />
-          <path opacity={0.583} d="M900 1719.6L650 2152.6" />
-          <path opacity={0.083} d="M1750 247.4L1500 680.4" />
-          <animateTransform
-            attributeName="transform"
-            attributeType="XML"
-            type="rotate"
-            keyTimes="0;0.08333;0.16667;0.25;0.33333;0.41667;0.5;0.58333;0.66667;0.75;0.83333;0.91667"
-            values="0 1199 1199;30 1199 1199;60 1199 1199;90 1199 1199;120 1199 1199;150 1199 1199;180 1199 1199;210 1199 1199;240 1199 1199;270 1199 1199;300 1199 1199;330 1199 1199"
-            dur="0.83333s"
-            begin="0s"
-            repeatCount="indefinite"
-            calcMode="discrete"
-          />
-        </g>
+          strokeWidth="4"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
       </svg>
     </div>
   );
