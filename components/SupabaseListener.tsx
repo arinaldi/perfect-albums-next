@@ -25,7 +25,7 @@ export default function SupabaseListener({ serverAccessToken }: Props) {
     return () => {
       subscription.unsubscribe();
     };
-  }, [router, supabase, serverAccessToken]);
+  }, [router, serverAccessToken, supabase]);
 
   return null;
 }

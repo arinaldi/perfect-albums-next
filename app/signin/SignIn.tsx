@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { User } from '@supabase/auth-helpers-nextjs';
 import { useForm } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'utils/constants';
@@ -13,13 +12,9 @@ import PasswordInput from 'components/PasswordInput';
 import SubmitButton from 'components/SubmitButton';
 import { useSupabase } from 'components/SupabaseProvider';
 
-interface Props {
-  user: User | null;
-}
-
-export default function SignIn({ user }: Props) {
+export default function SignIn() {
   const router = useRouter();
-  const { supabase } = useSupabase();
+  const { session, supabase } = useSupabase();
   const { handleSubmit, register } = useForm<SignInInput>();
 
   const { isSubmitting, onSubmit } = useSubmit({
@@ -35,7 +30,7 @@ export default function SignIn({ user }: Props) {
   return (
     <AppLayout maxWidth="max-w-sm" title="Sign In">
       <form method="POST" onSubmit={onSubmit}>
-        <fieldset disabled={Boolean(user)}>
+        <fieldset disabled={Boolean(session)}>
           <div className="bg-white dark:bg-gray-800">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">

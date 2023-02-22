@@ -17,7 +17,7 @@ export default function Random({ artists }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-start gap-2 sm:items-center">
+    <div className="flex flex-col items-start gap-2">
       <OutlineButton onClick={onClick}>Get Random Artist</OutlineButton>
       <p>{value}</p>
     </div>
