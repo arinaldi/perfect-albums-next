@@ -9,7 +9,7 @@ import { Album } from 'utils/types';
 
 export const revalidate = 0;
 export const metadata = {
-  title: 'Perfect Albums | Admin',
+  title: 'Admin | Perfect Albums',
 };
 const { ASC, DESC } = SORT_DIRECTION;
 

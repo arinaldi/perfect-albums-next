@@ -42,6 +42,13 @@ export enum SORT_VALUE {
   YEAR = 'year',
 }
 
+export enum ROUTE_HREF {
+  TOP_ALBUMS = '/albums',
+  FEATURED_SONGS = '/songs',
+  NEW_RELEASES = '/releases',
+  SIGNIN = '/signin',
+}
+
 /* CONST */
 
 export const BASE_URL =
@@ -91,13 +98,6 @@ export const MONTHS = [
   'Nov',
   'Dec',
 ];
-
-export enum ROUTE_HREF {
-  TOP_ALBUMS = '/albums',
-  FEATURED_SONGS = '/songs',
-  NEW_RELEASES = '/releases',
-  SIGNIN = '/signin',
-}
 
 export const ROUTES = [
   { href: ROUTE_HREF.TOP_ALBUMS, label: 'Top Albums' },

@@ -12,7 +12,7 @@ interface Props {
 
 export const revalidate = 0;
 export const metadata = {
-  title: 'Perfect Albums | Delete Album',
+  title: 'Delete Album | Perfect Albums',
 };
 
 export default async function DeleteAlbumPage({ params }: Props) {

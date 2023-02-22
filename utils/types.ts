@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Database } from 'utils/db-types';
+import type { Database } from 'utils/db-types';
 
 export type Album = Database['public']['Tables']['albums']['Row'];
 export type Release = Database['public']['Tables']['releases']['Row'];

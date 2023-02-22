@@ -5,7 +5,7 @@ import { createClient } from 'utils/supabase-server';
 
 export const revalidate = 10;
 export const metadata = {
-  title: 'Perfect Albums | Featured Songs',
+  title: 'Featured Songs | Perfect Albums',
 };
 
 export default async function FeaturedSongsPage() {
