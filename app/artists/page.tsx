@@ -8,7 +8,6 @@ interface Payload {
   success: boolean;
 }
 
-export const revalidate = 10;
 export const metadata = {
   title: 'Artists | Perfect Albums',
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
 
 import { formatFavorites, sortDesc } from 'utils';
@@ -14,12 +13,11 @@ interface Props {
 }
 
 export default function TopAlbums({ albums }: Props) {
-  const router = useRouter();
-  const [value, setValue] = useState('label');
+  const [decade, setDecade] = useState('jump');
 
   function onChange({ target: { value } }: ChangeEvent<HTMLSelectElement>) {
-    setValue(value);
-    router.push(`${ROUTE_HREF.TOP_ALBUMS}${value}`);
+    setDecade(value);
+    window.location.href = `${ROUTE_HREF.TOP_ALBUMS}#${value}`;
   }
 
   const DecadeSelect = (
@@ -27,13 +25,13 @@ export default function TopAlbums({ albums }: Props) {
       className="rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
       name="decade"
       onChange={onChange}
-      value={value}
+      value={decade}
     >
-      <option disabled value="label">
+      <option disabled value="jump">
         Jump to decade
       </option>
-      {DECADES.map(({ label, link }) => (
-        <option key={label} value={link}>
+      {DECADES.map(({ id, label }) => (
+        <option key={id} value={id}>
           {label}
         </option>
       ))}

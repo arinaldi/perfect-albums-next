@@ -58,24 +58,24 @@ export const BASE_URL =
 
 export const DECADES = [
   {
+    id: '2019',
     label: '10s',
-    link: '#2019',
   },
   {
+    id: '2009',
     label: '00s',
-    link: '#2009',
   },
   {
+    id: '1999',
     label: '90s',
-    link: '#1999',
   },
   {
+    id: '1989',
     label: '80s',
-    link: '#1989',
   },
   {
+    id: '1977',
     label: '70s',
-    link: '#1976',
   },
 ];
 
