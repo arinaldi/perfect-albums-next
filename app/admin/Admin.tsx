@@ -21,26 +21,28 @@ interface Props {
 
 export default function Admin({ albums, cdTotal, total }: Props) {
   const Title = (
-    <>
-      Admin
-      <span className="ml-3 rounded-md bg-gray-100 px-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
+    <div className="flex items-end gap-2">
+      <span>Admin</span>
+      <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-xl font-semibold dark:bg-gray-700">
         {total.toLocaleString()}
       </span>
-    </>
+    </div>
   );
 
-  const AppVersion = (
-    <div className="dark:text-white">
-      <code className="mr-3">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
-      <span className="text-md mr-1 rounded-md bg-gray-100 px-1 font-semibold dark:bg-gray-700 sm:text-lg">
-        {cdTotal.toLocaleString()}
+  const AppMetadata = (
+    <div className="flex items-center gap-4 dark:text-white">
+      <code className="">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
+      <span>
+        <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-semibold dark:bg-gray-700">
+          {cdTotal.toLocaleString()}
+        </span>
+        CDs
       </span>
-      CDs
     </div>
   );
 
   return (
-    <Layout title={Title} titleAction={AppVersion}>
+    <Layout title={Title} titleAction={AppMetadata}>
       <div className="mb-4 block sm:flex sm:items-center sm:justify-between">
         <Search />
         <div className="mt-2 flex justify-between sm:mt-0 sm:ml-4">

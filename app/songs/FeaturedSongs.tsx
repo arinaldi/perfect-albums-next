@@ -59,7 +59,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
             <div className="mb-2 text-gray-500 dark:text-white">
               {song.artist}
             </div>
-            <div>
+            <div className="flex items-center gap-2">
               <a
                 className="text-blue-700 hover:underline dark:text-blue-500"
                 href={song.link}
@@ -70,7 +70,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
               </a>
               {user ? (
                 <span
-                  className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
+                  className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
                   onClick={() =>
                     setModal({
                       data: song,

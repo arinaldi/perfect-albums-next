@@ -41,12 +41,12 @@ export default function TopAlbums({ albums }: Props) {
   return (
     <AppLayout
       title={
-        <>
-          Top Albums
-          <span className="ml-3 rounded-md bg-gray-100 p-1 text-xl font-semibold dark:bg-gray-700 sm:text-2xl">
+        <div className="flex items-end gap-2">
+          <span>Top Albums</span>
+          <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-xl font-semibold dark:bg-gray-700">
             {albums.length.toLocaleString()}
           </span>
-        </>
+        </div>
       }
       titleAction={DecadeSelect}
     >
@@ -59,7 +59,7 @@ export default function TopAlbums({ albums }: Props) {
                 <h4 id={year} className="text-xl font-semibold dark:text-white">
                   {year}
                 </h4>
-                <div className="mr-4 rounded-md bg-gray-100 px-2 py-1 text-xl font-semibold dark:bg-gray-700 dark:text-white">
+                <div className="mr-4 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-semibold dark:bg-gray-700 dark:text-white">
                   {favorites.length.toLocaleString()}
                 </div>
               </div>
