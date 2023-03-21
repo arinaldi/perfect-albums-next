@@ -28,7 +28,7 @@ export default function TopAlbums({ albums }: Props) {
       value={decade}
     >
       <option disabled value="jump">
-        Jump to decade
+        Decade
       </option>
       {DECADES.map(({ id, label }) => (
         <option key={id} value={id}>
@@ -43,7 +43,7 @@ export default function TopAlbums({ albums }: Props) {
       title={
         <div className="flex items-end gap-2">
           <span>Top Albums</span>
-          <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-xl font-semibold dark:bg-gray-700">
+          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xl font-semibold dark:bg-gray-700">
             {albums.length.toLocaleString()}
           </span>
         </div>
