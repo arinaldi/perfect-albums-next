@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from '@supabase/auth-helpers-nextjs';
 import {
   PencilIcon,
   PlusSmallIcon,
@@ -13,13 +12,13 @@ import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import ButtonWithIcon from 'components/ButtonWithIcon';
+import { useSupabase } from 'components/SupabaseProvider';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
 
 interface Props {
   releases: Release[];
-  user: User | null;
 }
 
 interface ModalState {
@@ -27,7 +26,8 @@ interface ModalState {
   type: MODAL_TYPES;
 }
 
-export default function NewReleases({ releases, user }: Props) {
+export default function NewReleases({ releases }: Props) {
+  const { session } = useSupabase();
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
@@ -38,7 +38,7 @@ export default function NewReleases({ releases, user }: Props) {
     <AppLayout
       title="New Releases"
       titleAction={
-        user ? (
+        session ? (
           <ButtonWithIcon
             icon={<PlusSmallIcon />}
             onClick={() => {
@@ -65,7 +65,7 @@ export default function NewReleases({ releases, user }: Props) {
                     <span>
                       {release.artist} &ndash; {release.title}
                     </span>
-                    {user && (
+                    {session && (
                       <>
                         <span
                           className="ml-1 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"

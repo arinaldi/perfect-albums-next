@@ -1,19 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { User } from '@supabase/auth-helpers-nextjs';
 import { PlusSmallIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import ButtonWithIcon from 'components/ButtonWithIcon';
+import { useSupabase } from 'components/SupabaseProvider';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
 
 interface Props {
   songs: Song[];
-  user: User | null;
 }
 
 interface ModalState {
@@ -21,7 +20,8 @@ interface ModalState {
   type: MODAL_TYPES;
 }
 
-export default function FeaturedSongs({ songs, user }: Props) {
+export default function FeaturedSongs({ songs }: Props) {
+  const { session } = useSupabase();
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
@@ -32,7 +32,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
     <AppLayout
       title="Featured Songs"
       titleAction={
-        user ? (
+        session ? (
           <ButtonWithIcon
             icon={<PlusSmallIcon />}
             onClick={() => {
@@ -68,7 +68,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
               >
                 Listen
               </a>
-              {user ? (
+              {session ? (
                 <span
                   className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
                   onClick={() =>

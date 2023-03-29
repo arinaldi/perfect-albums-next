@@ -10,13 +10,10 @@ export const metadata = {
 
 export default async function FeaturedSongsPage() {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
   const { data } = await supabase
     .from('songs')
     .select('*')
     .order('created_at', { ascending: false });
 
-  return <FeaturedSongs songs={data ?? []} user={user} />;
+  return <FeaturedSongs songs={data ?? []} />;
 }
