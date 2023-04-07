@@ -23,7 +23,7 @@ export default function CreateAlbum() {
     defaultValues: {
       artist: '',
       title: '',
-      year: new Date().getFullYear().toString(),
+      year: new Date().getFullYear(),
       studio: false,
       cd: false,
       favorite: false,

@@ -8,7 +8,16 @@ export type Song = Database['public']['Tables']['songs']['Row'];
 
 export type Table = 'albums' | 'releases' | 'songs';
 
-export type AlbumInput = Omit<Album, 'id' | 'created_at'>;
+// TODO: revert after changing to Int in Supabase
+// export type AlbumInput = Omit<Album, 'id' | 'created_at'>;
+export type AlbumInput = {
+  artist: string;
+  title: string;
+  year: number;
+  cd: boolean;
+  favorite: boolean;
+  studio: boolean;
+};
 export type ReleaseInput = Omit<Release, 'id' | 'created_at'>;
 export type SongInput = Omit<Song, 'id' | 'created_at'>;
 

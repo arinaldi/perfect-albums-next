@@ -7,7 +7,7 @@ interface Props {
   maxLength?: number;
   minLength?: number;
   required?: boolean;
-  type: 'text' | 'date' | 'email';
+  type: 'text' | 'date' | 'email' | 'number';
   wrapperClassName?: string;
 }
 

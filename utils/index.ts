@@ -131,3 +131,7 @@ export function parseAdminQuery(query: Record<string, QueryValue>) {
     title: parseQuery(query.title),
   };
 }
+
+export function setStringAsInt(v: string) {
+  return v === '' ? undefined : parseInt(v, 10);
+}

@@ -77,7 +77,7 @@ export default function FeaturedSongs({ songs }: Props) {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <dd className="text-2xl font-semibold">{song.title}</dd>
+              <dd className="-mt-1 text-xl font-medium">{song.title}</dd>
             </a>
           </div>
         ))}

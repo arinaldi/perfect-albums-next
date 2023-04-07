@@ -4,6 +4,7 @@ import { FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
+import { setStringAsInt } from 'utils';
 import { ROUTES_ADMIN } from 'utils/constants';
 import { AlbumInput } from 'utils/types';
 import Input from 'components/Input';
@@ -48,11 +49,9 @@ export default function AlbumForm({
           <Input
             error={errors.year}
             id="year"
-            maxLength={4}
-            minLength={4}
-            type="text"
+            type="number"
             wrapperClassName="order-3 sm:order-5"
-            {...register('year')}
+            {...register('year', { setValueAs: setStringAsInt })}
           />
           <Checkbox
             id="studio"

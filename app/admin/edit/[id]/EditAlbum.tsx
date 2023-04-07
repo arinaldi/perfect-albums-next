@@ -24,7 +24,10 @@ export default function EditAlbum({ album }: Props) {
     handleSubmit,
     register,
   } = useForm<AlbumInput>({
-    defaultValues: album,
+    defaultValues: {
+      ...album,
+      year: parseInt(album.year),
+    },
     resolver: zodResolver(albumSchema),
   });
   const editAlbum = useUpdate('albums');
