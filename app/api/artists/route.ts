@@ -1,8 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { cookies, headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 import {
-  createMiddlewareSupabaseClient,
+  createRouteHandlerSupabaseClient,
   SupabaseClient,
 } from '@supabase/auth-helpers-nextjs';
+
+import type { Database } from 'utils/db-types';
 
 interface Artist {
   artist: string;
@@ -18,9 +21,11 @@ async function getArtists(supabase: SupabaseClient): Promise<string[]> {
   return [];
 }
 
-export async function GET(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createMiddlewareSupabaseClient({ req, res });
+export async function GET() {
+  const supabase = createRouteHandlerSupabaseClient<Database>({
+    cookies,
+    headers,
+  });
 
   try {
     const artists = await getArtists(supabase);

@@ -45,7 +45,6 @@ export default function AlbumForm({
             wrapperClassName="order-2 sm:order-3"
             {...register('title')}
           />
-          {/* TODO: numbers only */}
           <Input
             error={errors.year}
             id="year"
