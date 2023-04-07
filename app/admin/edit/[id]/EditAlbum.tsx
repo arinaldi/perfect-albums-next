@@ -2,7 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+import { albumSchema } from 'app/admin/schema';
 import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import useSubmit from 'hooks/useSubmit';
 import useUpdate from 'hooks/useUpdate';
@@ -17,8 +19,13 @@ interface Props {
 export default function EditAlbum({ album }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { handleSubmit, register } = useForm<AlbumInput>({
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<AlbumInput>({
     defaultValues: album,
+    resolver: zodResolver(albumSchema),
   });
   const editAlbum = useUpdate('albums');
 
@@ -37,6 +44,7 @@ export default function EditAlbum({ album }: Props) {
   return (
     <AppLayout title="Edit Album">
       <AlbumForm
+        errors={errors}
         isSubmitting={isSubmitting}
         register={register}
         onSubmit={onSubmit}

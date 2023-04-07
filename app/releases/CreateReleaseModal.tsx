@@ -1,7 +1,9 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+import { releaseSchema } from 'app/releases/schema';
 import { MESSAGES } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
@@ -14,24 +16,37 @@ interface Props {
   onClose: () => void;
 }
 
+const defaultValues = {
+  artist: '',
+  title: '',
+  date: '',
+};
+
 export default function CreateReleaseModal({ isOpen, onClose }: Props) {
   const createRelease = useInsert('releases');
-  const { handleSubmit, register, reset } = useForm<ReleaseInput>();
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<ReleaseInput>({
+    defaultValues,
+    resolver: zodResolver(releaseSchema),
+  });
 
   function handleClose() {
     onClose();
-    reset();
+    reset(defaultValues);
   }
 
-  const options = {
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [handleClose],
     handleSubmit,
     submitFn: async (release: ReleaseInput) => {
       await createRelease({ ...release, date: release.date || null });
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
-  };
-  const { isSubmitting, onSubmit } = useSubmit(options);
+  });
 
   return (
     <Modal
@@ -45,22 +60,27 @@ export default function CreateReleaseModal({ isOpen, onClose }: Props) {
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
             <Input
+              error={errors.artist}
               id="artist"
-              required
               type="text"
-              {...register('artist', { required: true })}
+              {...register('artist')}
             />
           </div>
           <div className="col-span-6">
             <Input
+              error={errors.title}
               id="title"
-              required
               type="text"
-              {...register('title', { required: true })}
+              {...register('title')}
             />
           </div>
           <div className="col-span-6">
-            <Input id="date" type="date" {...register('date')} />
+            <Input
+              error={errors.date}
+              id="date"
+              type="date"
+              {...register('date')}
+            />
           </div>
         </div>
       </div>

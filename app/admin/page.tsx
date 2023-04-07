@@ -63,7 +63,7 @@ async function getAlbums(
   const { data, count: albumCount } = await query;
 
   return {
-    albums: data ?? [],
+    albums: (data as Album[]) ?? [],
     total: albumCount ?? 0,
   };
 }

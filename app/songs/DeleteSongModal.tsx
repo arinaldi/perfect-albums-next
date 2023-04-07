@@ -14,15 +14,13 @@ interface Props {
 
 export default function DeleteSongModal({ data, isOpen, onClose }: Props) {
   const deleteSong = useDelete('songs');
-
-  const options = {
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     submitFn: async () => {
       await deleteSong(data?.id || 0);
     },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
-  };
-  const { isSubmitting, onSubmit } = useSubmit(options);
+  });
 
   return (
     <Modal

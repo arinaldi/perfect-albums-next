@@ -47,27 +47,16 @@ export default function FeaturedSongs({ songs }: Props) {
         ) : null
       }
     >
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((song) => (
           <div
-            className="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-black dark:bg-gray-700"
+            className="rounded-md bg-white px-5 py-3 shadow dark:border-black dark:bg-gray-700"
             key={song.id}
           >
-            <div className="mb-1 text-xl font-semibold dark:text-white">
-              {song.title}
-            </div>
-            <div className="mb-2 text-gray-500 dark:text-white">
-              {song.artist}
-            </div>
-            <div className="flex items-center gap-2">
-              <a
-                className="text-blue-700 hover:underline dark:text-blue-500"
-                href={song.link}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Listen
-              </a>
+            <div className="flex items-center justify-between">
+              <dt className="text-sm font-medium text-gray-500 dark:text-white">
+                {song.artist}
+              </dt>
               {session ? (
                 <span
                   className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
@@ -82,9 +71,17 @@ export default function FeaturedSongs({ songs }: Props) {
                 </span>
               ) : null}
             </div>
+            <a
+              className="text-blue-700 hover:underline dark:text-blue-500"
+              href={song.link}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <dd className="text-2xl font-semibold">{song.title}</dd>
+            </a>
           </div>
         ))}
-      </div>
+      </dl>
       <CreateSongModal
         isOpen={modal.type === MODAL_TYPES.FEATURED_SONGS_CREATE}
         onClose={onClose}

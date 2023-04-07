@@ -24,7 +24,7 @@ export default async function RootLayout({ children }: Children) {
 
   return (
     <html>
-      <body className="min-h-screen dark:bg-gray-800">
+      <body className="min-h-screen bg-gray-50/25 dark:bg-gray-800">
         <SupabaseProvider session={session}>
           <SupabaseListener serverAccessToken={session?.access_token} />
           <NavBar user={session?.user} />

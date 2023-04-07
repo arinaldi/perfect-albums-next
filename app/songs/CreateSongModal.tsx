@@ -1,7 +1,9 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+import { songSchema } from 'app/songs/schema';
 import { MESSAGES } from 'utils/constants';
 import useInsert from 'hooks/useInsert';
 import useSubmit from 'hooks/useSubmit';
@@ -14,24 +16,37 @@ interface Props {
   onClose: () => void;
 }
 
+const defaultValues = {
+  artist: '',
+  title: '',
+  link: '',
+};
+
 export default function CreateSongModal({ isOpen, onClose }: Props) {
   const createSong = useInsert('songs');
-  const { handleSubmit, register, reset } = useForm<SongInput>();
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<SongInput>({
+    defaultValues,
+    resolver: zodResolver(songSchema),
+  });
 
   function handleClose() {
     onClose();
-    reset();
+    reset(defaultValues);
   }
 
-  const options = {
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [handleClose],
     handleSubmit,
     submitFn: async (song: SongInput) => {
       await createSong(song);
     },
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
-  };
-  const { isSubmitting, onSubmit } = useSubmit(options);
+  });
 
   return (
     <Modal
@@ -45,26 +60,26 @@ export default function CreateSongModal({ isOpen, onClose }: Props) {
         <div className="grid grid-cols-6 gap-6">
           <div className="col-span-6">
             <Input
+              error={errors.artist}
               id="artist"
-              required
               type="text"
-              {...register('artist', { required: true })}
+              {...register('artist')}
             />
           </div>
           <div className="col-span-6">
             <Input
+              error={errors.title}
               id="title"
-              required
               type="text"
-              {...register('title', { required: true })}
+              {...register('title')}
             />
           </div>
           <div className="col-span-6">
             <Input
+              error={errors.link}
               id="link"
-              required
               type="text"
-              {...register('link', { required: true })}
+              {...register('link')}
             />
           </div>
         </div>

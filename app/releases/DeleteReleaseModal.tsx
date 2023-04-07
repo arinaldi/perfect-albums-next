@@ -14,15 +14,13 @@ interface Props {
 
 export default function DeleteReleaseModal({ data, isOpen, onClose }: Props) {
   const deleteRelease = useDelete('releases');
-
-  const options = {
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     submitFn: async () => {
       await deleteRelease(data?.id || 0);
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
-  };
-  const { isSubmitting, onSubmit } = useSubmit(options);
+  });
 
   return (
     <Modal

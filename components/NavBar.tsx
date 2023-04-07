@@ -79,7 +79,7 @@ export default function NavBar({ user }: Props) {
             </div>
           </div>
           <button
-            className="rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            className="rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:bg-gray-800"
             aria-expanded="false"
             onClick={toggleDarkMode}
             type="button"
@@ -95,14 +95,17 @@ export default function NavBar({ user }: Props) {
             {user ? (
               <div
                 onClick={signOut}
-                className="text-md cursor-pointer rounded-md px-3 py-2 font-medium text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
+                className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
                 <ArrowRightOnRectangleIcon className="h-5 w-5" />
               </div>
             ) : (
-              <LinkWrapper href={ROUTE_HREF.SIGNIN}>
+              <div
+                className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
+                onClick={() => router.push(ROUTE_HREF.SIGNIN)}
+              >
                 <ArrowLeftOnRectangleIcon className="h-5 w-5" />
-              </LinkWrapper>
+              </div>
             )}
           </div>
         </div>

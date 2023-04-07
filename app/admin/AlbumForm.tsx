@@ -2,7 +2,7 @@
 
 import { FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'utils/constants';
 import { AlbumInput } from 'utils/types';
@@ -12,12 +12,18 @@ import OutlineButton from 'components/OutlineButton';
 import SubmitButton from 'components/SubmitButton';
 
 interface Props {
+  errors: FieldErrors<AlbumInput>;
   isSubmitting: boolean;
   register: UseFormRegister<AlbumInput>;
   onSubmit: (event: FormEvent<Element>) => void;
 }
 
-export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
+export default function AlbumForm({
+  errors,
+  isSubmitting,
+  onSubmit,
+  register,
+}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -26,27 +32,28 @@ export default function AlbumForm({ isSubmitting, onSubmit, register }: Props) {
       <div className="bg-white p-6 dark:bg-gray-800">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <Input
+            error={errors.artist}
             id="artist"
-            required
             type="text"
             wrapperClassName="order-1 sm:order-1"
-            {...register('artist', { required: true })}
+            {...register('artist')}
           />
           <Input
+            error={errors.title}
             id="title"
-            required
             type="text"
             wrapperClassName="order-2 sm:order-3"
-            {...register('title', { required: true })}
+            {...register('title')}
           />
+          {/* TODO: numbers only */}
           <Input
+            error={errors.year}
             id="year"
             maxLength={4}
             minLength={4}
-            required
             type="text"
             wrapperClassName="order-3 sm:order-5"
-            {...register('year', { required: true })}
+            {...register('year')}
           />
           <Checkbox
             id="studio"
