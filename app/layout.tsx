@@ -2,6 +2,7 @@ import 'server-only';
 
 import NavBar from 'components/NavBar';
 import SupabaseListener from 'components/SupabaseListener';
+import TailwindIndicator from 'components/TailwindIndicator';
 import Toast from 'components/Toast';
 import { createClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }: Children) {
         <SupabaseProvider session={session}>
           <SupabaseListener serverAccessToken={session?.access_token} />
           <NavBar user={session?.user} />
+          <TailwindIndicator />
           <Toast />
           <main>{children}</main>
         </SupabaseProvider>
