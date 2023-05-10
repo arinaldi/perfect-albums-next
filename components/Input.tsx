@@ -2,10 +2,12 @@ import { forwardRef } from 'react';
 import { FieldError } from 'react-hook-form';
 
 interface Props {
+  defaultValue?: string;
   error?: FieldError;
   id: string;
   maxLength?: number;
   minLength?: number;
+  name?: string;
   required?: boolean;
   type: 'text' | 'date' | 'email' | 'number';
   wrapperClassName?: string;
@@ -14,6 +16,7 @@ interface Props {
 const Input = forwardRef<HTMLInputElement, Props>(
   (
     {
+      defaultValue,
       error,
       id,
       maxLength,
@@ -43,6 +46,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
               ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
               : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
           }`}
+          defaultValue={defaultValue}
           enterKeyHint="enter"
           id={id}
           maxLength={maxLength}

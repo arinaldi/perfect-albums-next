@@ -8,7 +8,7 @@ export default function useInsert(table: Table) {
   const { supabase } = useSupabase();
 
   return async function (data: any) {
-    const { error } = await supabase.from(table).insert([data]);
+    const { error } = await supabase.from(table).insert(data);
 
     if (error) throw error;
 
