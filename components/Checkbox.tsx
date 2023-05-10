@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 interface Props {
   id: string;
   label: string;
+  name?: string;
   wrapperClassName?: string;
 }
 

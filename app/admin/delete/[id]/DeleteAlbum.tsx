@@ -37,7 +37,7 @@ export default function DeleteAlbum({ album }: Props) {
           Are you sure you want to delete {album.artist} – {album.title}?
         </div>
         <form
-          className="flex items-center justify-end p-6"
+          className="flex items-center px-6"
           method="POST"
           onSubmit={onSubmit}
         >

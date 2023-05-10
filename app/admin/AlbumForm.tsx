@@ -73,7 +73,7 @@ export default function AlbumForm({
           />
         </div>
       </div>
-      <div className="flex items-center justify-end p-6">
+      <div className="flex items-center px-6">
         <OutlineButton
           onClick={() => {
             router.push(

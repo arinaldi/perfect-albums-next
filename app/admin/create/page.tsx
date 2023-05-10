@@ -1,9 +1,93 @@
-import CreateAlbum from 'app/admin/create/CreateAlbum';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+import { createClient } from 'utils/supabase-server';
+import AppLayout from 'components/AppLayout';
+import Checkbox from 'components/Checkbox';
+import Input from 'components/Input';
+import SubmitButton from 'components/SubmitButton';
 
 export const metadata = {
   title: 'Create Album | Perfect Albums',
 };
 
+async function createAlbum(formData: FormData) {
+  'use server';
+
+  const supabase = createClient();
+  const url = headers().get('referer')?.split('?');
+  const query = url ? url[1] : '';
+  const { artist, title, year, studio, cd, favorite } = Object.fromEntries(
+    formData.entries(),
+  );
+  // TODO: add validation
+  const data = {
+    artist: artist.toString(),
+    title: title.toString(),
+    year: year.toString(),
+    studio: Boolean(studio),
+    cd: Boolean(cd),
+    favorite: Boolean(favorite),
+  };
+  const { error } = await supabase.from('albums').insert(data);
+
+  if (error) {
+    console.error(error.message);
+  } else {
+    redirect(`/admin${query ? `?${query}` : ''}`);
+  }
+}
+
 export default function CreateAlbumPage() {
-  return <CreateAlbum />;
+  return (
+    <AppLayout title="Create Album">
+      {/* @ts-ignore */}
+      <form action={createAlbum}>
+        <div className="bg-white p-6 dark:bg-gray-800">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <Input
+              id="artist"
+              name="artist"
+              type="text"
+              wrapperClassName="order-1 sm:order-1"
+            />
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              wrapperClassName="order-2 sm:order-3"
+            />
+            <Input
+              defaultValue={new Date().getFullYear().toString()}
+              id="year"
+              name="year"
+              type="number"
+              wrapperClassName="order-3 sm:order-5"
+            />
+            <Checkbox
+              id="studio"
+              label="Studio Album"
+              name="studio"
+              wrapperClassName="order-4 sm:order-2"
+            />
+            <Checkbox
+              id="cd"
+              label="CD"
+              name="cd"
+              wrapperClassName="order-5 sm:order-4"
+            />
+            <Checkbox
+              id="favorite"
+              label="Favorite"
+              name="favorite"
+              wrapperClassName="order-6 sm:order-6"
+            />
+          </div>
+        </div>
+        <div className="flex items-center px-6">
+          <SubmitButton isSubmitting={false} />
+        </div>
+      </form>
+    </AppLayout>
+  );
 }
