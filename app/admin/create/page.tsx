@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -34,7 +35,10 @@ async function createAlbum(formData: FormData) {
   if (error) {
     console.error(error.message);
   } else {
-    redirect(`/admin${query ? `?${query}` : ''}`);
+    const path = `/admin${query ? `?${query}` : ''}`;
+
+    revalidatePath(path);
+    redirect(path);
   }
 }
 
