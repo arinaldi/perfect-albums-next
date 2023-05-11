@@ -33,7 +33,7 @@ function PaginationButton({
   const searchParams = useSearchParams();
 
   function onClick() {
-    const query = new URLSearchParams(searchParams || '');
+    const query = new URLSearchParams(searchParams?.toString() || '');
     query.set('page', pageValue.toString());
 
     router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);

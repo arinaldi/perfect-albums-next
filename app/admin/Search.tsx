@@ -26,7 +26,7 @@ export default function Search() {
   }, []);
 
   function onSearch(name: InputName, value: string) {
-    const params = new URLSearchParams(searchParams ?? '');
+    const params = new URLSearchParams(searchParams?.toString() ?? '');
 
     if (value) {
       params.set(name, value);

@@ -6,46 +6,45 @@ import { createClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
 import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
-import SubmitButton from 'components/SubmitButton';
+import SubmitButton from 'app/admin/SubmitButton';
 
 export const metadata = {
   title: 'Create Album | Perfect Albums',
 };
 
-async function createAlbum(formData: FormData) {
-  'use server';
-
-  const supabase = createClient();
-  const url = headers().get('referer')?.split('?');
-  const query = url ? url[1] : '';
-  const { artist, title, year, studio, cd, favorite } = Object.fromEntries(
-    formData.entries(),
-  );
-  // TODO: add validation
-  const data = {
-    artist: artist.toString(),
-    title: title.toString(),
-    year: year.toString(),
-    studio: Boolean(studio),
-    cd: Boolean(cd),
-    favorite: Boolean(favorite),
-  };
-  const { error } = await supabase.from('albums').insert(data);
-
-  if (error) {
-    console.error(error.message);
-  } else {
-    const path = `/admin${query ? `?${query}` : ''}`;
-
-    revalidatePath(path);
-    redirect(path);
-  }
-}
-
 export default function CreateAlbumPage() {
+  async function createAlbum(formData: FormData) {
+    'use server';
+
+    const supabase = createClient();
+    const url = headers().get('referer')?.split('?');
+    const query = url ? url[1] : '';
+    const { artist, title, year, studio, cd, favorite } = Object.fromEntries(
+      formData.entries(),
+    );
+    // TODO: add validation
+    const data = {
+      artist: artist.toString(),
+      title: title.toString(),
+      year: year.toString(),
+      studio: Boolean(studio),
+      cd: Boolean(cd),
+      favorite: Boolean(favorite),
+    };
+    const { error } = await supabase.from('albums').insert(data);
+
+    if (error) {
+      console.error(error.message);
+    } else {
+      const path = `/admin${query ? `?${query}` : ''}`;
+
+      revalidatePath(path);
+      redirect(path);
+    }
+  }
+
   return (
     <AppLayout title="Create Album">
-      {/* @ts-ignore */}
       <form action={createAlbum}>
         <div className="bg-white p-6 dark:bg-gray-800">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -89,7 +88,7 @@ export default function CreateAlbumPage() {
           </div>
         </div>
         <div className="flex items-center px-6">
-          <SubmitButton isSubmitting={false} />
+          <SubmitButton />
         </div>
       </form>
     </AppLayout>

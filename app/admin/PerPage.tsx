@@ -17,7 +17,7 @@ function PerPageButton({ prop }: Props) {
   const perPage = parsePerPageQuery(searchParams?.get('perPage'));
 
   function onClick() {
-    const query = new URLSearchParams(searchParams ?? '');
+    const query = new URLSearchParams(searchParams?.toString() ?? '');
     query.set('page', '1');
     query.set('perPage', prop.toString());
 
