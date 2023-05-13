@@ -7,6 +7,7 @@ import { SORT_DIRECTION } from 'utils/constants';
 import { createClient } from 'utils/supabase-server';
 import { Album } from 'utils/types';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const metadata = {
   title: 'Admin | Perfect Albums',
