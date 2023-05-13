@@ -49,12 +49,14 @@ export default function CreateAlbumPage() {
             <Input
               id="artist"
               name="artist"
+              required
               type="text"
               wrapperClassName="order-1 sm:order-1"
             />
             <Input
               id="title"
               name="title"
+              required
               type="text"
               wrapperClassName="order-2 sm:order-3"
             />
@@ -62,6 +64,7 @@ export default function CreateAlbumPage() {
               defaultValue={new Date().getFullYear().toString()}
               id="year"
               name="year"
+              required
               type="number"
               wrapperClassName="order-3 sm:order-5"
             />
