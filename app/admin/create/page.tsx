@@ -36,10 +36,8 @@ export default function CreateAlbumPage() {
     if (error) {
       console.error(error.message);
     } else {
-      const path = `/admin${query ? `?${query}` : ''}`;
-
-      revalidatePath(path);
-      redirect(path);
+      revalidatePath('/admin');
+      redirect(`/admin${query ? `?${query}` : ''}`);
     }
   }
 

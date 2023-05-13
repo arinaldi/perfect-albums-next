@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
 interface Props {
+  defaultChecked?: boolean;
   id: string;
   label: string;
   name?: string;
@@ -8,11 +9,12 @@ interface Props {
 }
 
 const Checkbox = forwardRef<HTMLInputElement, Props>(
-  ({ id, label, wrapperClassName = '', ...rest }, ref) => {
+  ({ defaultChecked, id, label, wrapperClassName = '', ...rest }, ref) => {
     return (
       <fieldset className={`flex items-center ${wrapperClassName}`}>
         <input
           className="h-4 w-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-500"
+          defaultChecked={defaultChecked}
           id={id}
           ref={ref}
           type="checkbox"

@@ -16,7 +16,7 @@
     "@hookform/resolvers": "^3.0.1",
     "@supabase/auth-helpers-nextjs": "^0.6.0",
     "encoding": "^0.1.13",
-    "next": "^13.4.1",
+    "next": "^13.4.2",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
