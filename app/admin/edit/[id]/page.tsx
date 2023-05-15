@@ -54,10 +54,13 @@ export default async function EditAlbumPage({ params }: Props) {
 
     if (error) {
       console.error(error.message);
-    } else {
-      revalidatePath('/admin');
-      redirect(`/admin${query ? `?${query}` : ''}`);
+      return;
     }
+
+    revalidatePath('/admin');
+    // TODO: doesn't update data on second view edit
+    revalidatePath(`/admin/edit/${id}`);
+    redirect(`/admin${query ? `?${query}` : ''}`);
   }
 
   return (
