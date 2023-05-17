@@ -80,8 +80,10 @@ async function getCdCount(supabase: SupabaseClient): Promise<number> {
 
 export default async function AdminPage({ searchParams }: Props) {
   const supabase = createClient();
-  const { albums, total } = await getAlbums(supabase, searchParams);
-  const cdTotal = await getCdCount(supabase);
+  const [{ albums, total }, cdTotal] = await Promise.all([
+    getAlbums(supabase, searchParams),
+    getCdCount(supabase),
+  ]);
 
   return <Admin albums={albums} cdTotal={cdTotal} total={total} />;
 }

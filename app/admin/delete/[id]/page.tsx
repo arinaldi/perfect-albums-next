@@ -41,6 +41,7 @@ export default async function DeleteAlbumPage({ params }: Props) {
     const { error } = await supabase.from('albums').delete().eq('id', id);
 
     if (error) {
+      // eslint-disable-next-line
       console.error(error.message);
     } else {
       revalidatePath('/admin');

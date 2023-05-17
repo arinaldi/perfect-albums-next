@@ -53,6 +53,7 @@ export default async function EditAlbumPage({ params }: Props) {
     const { error } = await supabase.from('albums').update(data).eq('id', id);
 
     if (error) {
+      // eslint-disable-next-line
       console.error(error.message);
       return;
     }

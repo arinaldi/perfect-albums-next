@@ -34,6 +34,7 @@ export default function CreateAlbumPage() {
     const { error } = await supabase.from('albums').insert(data);
 
     if (error) {
+      // eslint-disable-next-line
       console.error(error.message);
       return;
     }
