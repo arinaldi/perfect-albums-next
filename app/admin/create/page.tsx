@@ -1,12 +1,14 @@
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 import { createClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
 import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
 import SubmitButton from 'app/admin/SubmitButton';
+import { albumSchema } from '../schema';
 
 export const metadata = {
   title: 'Create Album | Perfect Albums',
@@ -15,23 +17,34 @@ export const metadata = {
 export default function CreateAlbumPage() {
   async function createAlbum(formData: FormData) {
     'use server';
-
     const supabase = createClient();
     const url = headers().get('referer')?.split('?');
     const query = url ? url[1] : '';
     const { artist, title, year, studio, cd, favorite } = Object.fromEntries(
       formData.entries(),
     );
-    // TODO: add validation
+    const yearInt = parseInt(year.toString());
     const data = {
       artist: artist.toString(),
       title: title.toString(),
-      year: year.toString(),
+      year: yearInt,
       studio: Boolean(studio),
       cd: Boolean(cd),
       favorite: Boolean(favorite),
     };
-    const { error } = await supabase.from('albums').insert(data);
+
+    try {
+      albumSchema.parse(data);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return { error: error.issues[0].message };
+      }
+    }
+
+    const { error } = await supabase.from('albums').insert({
+      ...data,
+      year: yearInt.toString(),
+    });
 
     if (error) {
       // eslint-disable-next-line
