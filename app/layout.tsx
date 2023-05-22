@@ -4,6 +4,8 @@ import NavBar from 'components/NavBar';
 import SupabaseListener from 'components/SupabaseListener';
 import TailwindIndicator from 'components/TailwindIndicator';
 import Toast from 'components/Toast';
+import { cn } from 'utils';
+import { fontSans } from 'utils/fonts';
 import { createClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
@@ -25,7 +27,12 @@ export default async function RootLayout({ children }: Children) {
 
   return (
     <html>
-      <body className="min-h-screen bg-gray-50/25 dark:bg-gray-800">
+      <body
+        className={cn(
+          'min-h-screen bg-gray-50/25 font-sans antialiased dark:bg-gray-800',
+          fontSans.variable,
+        )}
+      >
         <SupabaseProvider session={session}>
           <SupabaseListener serverAccessToken={session?.access_token} />
           <NavBar user={session?.user} />

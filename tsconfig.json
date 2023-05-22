@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "target": "ES2021",
     "downlevelIteration": true,
     "lib": ["dom", "dom.iterable", "esnext"],

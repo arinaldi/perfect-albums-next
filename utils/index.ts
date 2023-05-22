@@ -1,3 +1,6 @@
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
 import { MONTHS, PER_PAGE } from 'utils/constants';
 import { Album, Release } from 'utils/types';
 
@@ -134,4 +137,8 @@ export function parseAdminQuery(query: Record<string, QueryValue>) {
 
 export function setStringAsInt(v: string) {
   return v === '' ? undefined : parseInt(v, 10);
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
