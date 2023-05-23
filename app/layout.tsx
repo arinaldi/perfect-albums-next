@@ -1,11 +1,10 @@
 import 'server-only';
+import { Inter } from 'next/font/google';
 
 import NavBar from 'components/NavBar';
 import SupabaseListener from 'components/SupabaseListener';
 import TailwindIndicator from 'components/TailwindIndicator';
 import Toast from 'components/Toast';
-import { cn } from 'utils';
-import { fontSans } from 'utils/fonts';
 import { createClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
@@ -19,6 +18,11 @@ export const metadata = {
   },
 };
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export default async function RootLayout({ children }: Children) {
   const supabase = createClient();
   const {
@@ -26,13 +30,8 @@ export default async function RootLayout({ children }: Children) {
   } = await supabase.auth.getSession();
 
   return (
-    <html>
-      <body
-        className={cn(
-          'min-h-screen bg-gray-50/25 font-sans antialiased dark:bg-gray-800',
-          fontSans.variable,
-        )}
-      >
+    <html lang="en" className={inter.className}>
+      <body className="min-h-screen bg-gray-50/25 antialiased dark:bg-gray-800">
         <SupabaseProvider session={session}>
           <SupabaseListener serverAccessToken={session?.access_token} />
           <NavBar user={session?.user} />
