@@ -69,11 +69,23 @@ async function getAlbums(
   };
 }
 
-async function getCdCount(supabase: SupabaseClient): Promise<number> {
-  const { count } = await supabase
+async function getCdCount(
+  supabase: SupabaseClient,
+  searchParams: Props['searchParams'],
+): Promise<number> {
+  const { artist, studio, title } = parseAdminQuery(searchParams);
+  let query = supabase
     .from('albums')
     .select('*', { count: 'exact', head: true })
-    .eq('cd', true);
+    .eq('cd', true)
+    .ilike('artist', `%${artist}%`)
+    .ilike('title', `%${title}%`);
+
+  if (studio === 'true') {
+    query = query.eq('studio', true);
+  }
+
+  const { count } = await query;
 
   return count ?? 0;
 }
@@ -82,7 +94,7 @@ export default async function AdminPage({ searchParams }: Props) {
   const supabase = createClient();
   const [{ albums, total }, cdTotal] = await Promise.all([
     getAlbums(supabase, searchParams),
-    getCdCount(supabase),
+    getCdCount(supabase, searchParams),
   ]);
 
   return <Admin albums={albums} cdTotal={cdTotal} total={total} />;
