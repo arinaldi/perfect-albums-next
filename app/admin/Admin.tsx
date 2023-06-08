@@ -36,7 +36,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
         <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-semibold dark:bg-gray-700">
           {cdTotal.toLocaleString()}
         </span>
-        CDs
+        CD{cdTotal === 1 ? '' : 's'}
       </span>
     </div>
   );

@@ -1,7 +1,6 @@
 import 'server-only';
-
 import NewReleases from 'app/releases/NewReleases';
-import { createClient } from 'utils/supabase-server';
+import { createServerClient } from 'utils/supabase-server';
 
 export const revalidate = 10;
 export const metadata = {
@@ -9,11 +8,14 @@ export const metadata = {
 };
 
 export default async function NewReleasesPage() {
-  const supabase = createClient();
+  const supabase = createServerClient();
   const { data } = await supabase
     .from('releases')
     .select('*')
     .order('artist', { ascending: true });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  return <NewReleases releases={data ?? []} />;
+  return <NewReleases releases={data ?? []} session={session} />;
 }

@@ -1,6 +1,6 @@
 'use client';
-
 import { useState } from 'react';
+import { Session } from '@supabase/auth-helpers-nextjs';
 import {
   PencilIcon,
   PlusSmallIcon,
@@ -12,13 +12,13 @@ import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import ButtonWithIcon from 'components/ButtonWithIcon';
-import { useSupabase } from 'components/SupabaseProvider';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
 
 interface Props {
   releases: Release[];
+  session: Session | null;
 }
 
 interface ModalState {
@@ -26,8 +26,7 @@ interface ModalState {
   type: MODAL_TYPES;
 }
 
-export default function NewReleases({ releases }: Props) {
-  const { session } = useSupabase();
+export default function NewReleases({ releases, session }: Props) {
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {

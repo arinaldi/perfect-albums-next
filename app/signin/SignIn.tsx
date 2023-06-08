@@ -1,20 +1,19 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { ROUTES_ADMIN } from 'utils/constants';
 import useSubmit from 'hooks/useSubmit';
+import { createClient } from 'utils/supabase-browser';
 import { SignInInput } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import Input from 'components/Input';
 import PasswordInput from 'components/PasswordInput';
 import SubmitButton from 'components/SubmitButton';
-import { useSupabase } from 'components/SupabaseProvider';
 
 export default function SignIn() {
   const router = useRouter();
-  const { session, supabase } = useSupabase();
+  const supabase = createClient();
   const { handleSubmit, register } = useForm<SignInInput>();
 
   const { isSubmitting, onSubmit } = useSubmit({
@@ -30,7 +29,7 @@ export default function SignIn() {
   return (
     <AppLayout maxWidth="max-w-sm" title="Sign In">
       <form method="POST" onSubmit={onSubmit}>
-        <fieldset disabled={Boolean(session)}>
+        <fieldset>
           <div className="bg-white dark:bg-gray-800">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">

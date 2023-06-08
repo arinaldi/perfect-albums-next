@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
-import { createClient } from 'utils/supabase-server';
+import { createActionClient, createServerClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
 import SubmitButton from 'app/admin/SubmitButton';
 
@@ -20,7 +20,7 @@ export const metadata = {
 };
 
 export default async function DeleteAlbumPage({ params }: Props) {
-  const supabase = createClient();
+  const supabase = createServerClient();
   const { data } = await supabase
     .from('albums')
     .select('*')
@@ -34,7 +34,7 @@ export default async function DeleteAlbumPage({ params }: Props) {
   async function deleteAlbum(formData: FormData) {
     'use server';
 
-    const supabase = createClient();
+    const supabase = createActionClient();
     const url = headers().get('referer')?.split('?');
     const query = url && url.length > 1 ? url[1] : '';
     const { id } = Object.fromEntries(formData.entries());

@@ -1,5 +1,4 @@
 'use client';
-
 import { useReducer } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { User } from '@supabase/auth-helpers-nextjs';
@@ -13,10 +12,10 @@ import {
 } from '@heroicons/react/24/outline';
 
 import LinkWrapper from 'components/LinkWrapper';
-import { useSupabase } from 'components/SupabaseProvider';
 import useDarkMode from 'hooks/useDarkMode';
-import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import useNProgress from 'hooks/useNProgress';
+import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
+import { createClient } from 'utils/supabase-browser';
 
 interface Props {
   user: User | undefined;
@@ -26,7 +25,7 @@ export default function NavBar({ user }: Props) {
   useNProgress();
   const pathname = usePathname();
   const router = useRouter();
-  const { supabase } = useSupabase();
+  const supabase = createClient();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [open, toggle] = useReducer(
     (flag: boolean, next: boolean | null) => (next == null ? !flag : next),

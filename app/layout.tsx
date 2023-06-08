@@ -2,14 +2,12 @@ import 'server-only';
 import { Inter } from 'next/font/google';
 
 import NavBar from 'components/NavBar';
-import SupabaseListener from 'components/SupabaseListener';
 import TailwindIndicator from 'components/TailwindIndicator';
 import Toast from 'components/Toast';
-import { createClient } from 'utils/supabase-server';
+import { createServerClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
 import 'styles/nprogress.css';
-import SupabaseProvider from 'components/SupabaseProvider';
 
 export const revalidate = 0;
 export const metadata = {
@@ -19,12 +17,12 @@ export const metadata = {
 };
 
 const inter = Inter({
-  subsets: ['latin'],
   display: 'swap',
+  subsets: ['latin'],
 });
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = createClient();
+  const supabase = createServerClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -32,13 +30,10 @@ export default async function RootLayout({ children }: Children) {
   return (
     <html lang="en" className={inter.className}>
       <body className="min-h-screen overflow-y-scroll bg-gray-50/25 antialiased dark:bg-gray-800">
-        <SupabaseProvider session={session}>
-          <SupabaseListener serverAccessToken={session?.access_token} />
-          <NavBar user={session?.user} />
-          <TailwindIndicator />
-          <Toast />
-          <main>{children}</main>
-        </SupabaseProvider>
+        <NavBar user={session?.user} />
+        <TailwindIndicator />
+        <Toast />
+        <main>{children}</main>
         <script
           id="dark-mode"
           dangerouslySetInnerHTML={{

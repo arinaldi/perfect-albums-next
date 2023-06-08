@@ -1,7 +1,7 @@
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import {
-  createRouteHandlerSupabaseClient,
+  createRouteHandlerClient,
   SupabaseClient,
 } from '@supabase/auth-helpers-nextjs';
 
@@ -22,9 +22,8 @@ async function getArtists(supabase: SupabaseClient): Promise<string[]> {
 }
 
 export async function GET() {
-  const supabase = createRouteHandlerSupabaseClient<Database>({
+  const supabase = createRouteHandlerClient<Database>({
     cookies,
-    headers,
   });
 
   try {

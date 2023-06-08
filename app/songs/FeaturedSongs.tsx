@@ -1,17 +1,17 @@
 'use client';
-
 import { useState } from 'react';
+import { Session } from '@supabase/auth-helpers-nextjs';
 import { PlusSmallIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import ButtonWithIcon from 'components/ButtonWithIcon';
-import { useSupabase } from 'components/SupabaseProvider';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
 
 interface Props {
+  session: Session | null;
   songs: Song[];
 }
 
@@ -20,8 +20,7 @@ interface ModalState {
   type: MODAL_TYPES;
 }
 
-export default function FeaturedSongs({ songs }: Props) {
-  const { session } = useSupabase();
+export default function FeaturedSongs({ session, songs }: Props) {
   const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
 
   function onClose() {
