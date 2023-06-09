@@ -8,9 +8,7 @@ import {
 import type { Database } from 'utils/db-types';
 
 export function createServerClient() {
-  return createServerComponentClient<Database>({
-    cookies,
-  });
+  return createServerComponentClient<Database>({ cookies });
 }
 
 export function createActionClient() {
@@ -18,7 +16,5 @@ export function createActionClient() {
 }
 
 export function createRouteClient() {
-  return createRouteHandlerClient<Database>({
-    cookies,
-  });
+  return createRouteHandlerClient<Database>({ cookies });
 }
