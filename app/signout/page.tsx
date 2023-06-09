@@ -13,6 +13,7 @@ export default function SignoutPage() {
     async function signOut() {
       await supabase.auth.signOut();
       router.push(ROUTE_HREF.TOP_ALBUMS);
+      router.refresh();
     }
 
     signOut();

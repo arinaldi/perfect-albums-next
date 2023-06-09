@@ -23,6 +23,8 @@ export default function SignIn() {
       const { error } = await supabase.auth.signInWithPassword(data);
 
       if (error) throw error;
+
+      router.refresh();
     },
   });
 

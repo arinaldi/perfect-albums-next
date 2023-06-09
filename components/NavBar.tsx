@@ -38,6 +38,8 @@ export default function NavBar({ user }: Props) {
     if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
       router.push(ROUTE_HREF.TOP_ALBUMS);
     }
+
+    router.refresh();
   }
 
   return (
