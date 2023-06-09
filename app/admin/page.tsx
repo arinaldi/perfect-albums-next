@@ -4,7 +4,7 @@ import { SupabaseClient } from '@supabase/auth-helpers-nextjs';
 import Admin from 'app/admin/Admin';
 import { parseAdminQuery } from 'utils';
 import { SORT_DIRECTION } from 'utils/constants';
-import { createClient } from 'utils/supabase-server';
+import { createServerClient } from 'utils/supabase-server';
 import { Album } from 'utils/types';
 
 export const dynamic = 'force-dynamic';
@@ -91,7 +91,7 @@ async function getCdCount(
 }
 
 export default async function AdminPage({ searchParams }: Props) {
-  const supabase = createClient();
+  const supabase = createServerClient();
   const [{ albums, total }, cdTotal] = await Promise.all([
     getAlbums(supabase, searchParams),
     getCdCount(supabase, searchParams),
