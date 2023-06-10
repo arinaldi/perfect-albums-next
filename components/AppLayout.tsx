@@ -1,20 +1,22 @@
 import { ReactNode } from 'react';
 
-interface Props {
-  children: ReactNode;
-  maxWidth?: string;
+import { Children } from 'utils/types';
+import { cn } from 'utils';
+
+interface Props extends Children {
+  className?: string;
   title: ReactNode;
   titleAction?: ReactNode;
 }
 
 export default function AppLayout({
   children,
-  maxWidth,
+  className = '',
   title,
   titleAction,
 }: Props) {
   return (
-    <div className={`mx-auto p-4 ${maxWidth ?? 'max-w-7xl'}`}>
+    <div className={cn('mx-auto max-w-7xl p-4', className)}>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-semibold dark:text-white sm:text-3xl">
           {title}

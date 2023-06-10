@@ -1,5 +1,3 @@
-'use client';
-
 import { FormEvent, Fragment, ReactNode, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';

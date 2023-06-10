@@ -1,6 +1,8 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { FieldError } from 'react-hook-form';
 
+import { cn } from 'utils';
+
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError;
   id: string;
@@ -8,7 +10,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ error, id, wrapperClassName = '', ...rest }, ref) => {
+  ({ className = '', error, id, wrapperClassName = '', ...rest }, ref) => {
     const errorId = `${id.toLowerCase().replaceAll(' ', '')}-error`;
 
     return (
@@ -22,11 +24,13 @@ const Input = forwardRef<HTMLInputElement, Props>(
         <input
           autoCapitalize={id === 'email' ? 'off' : 'on'}
           autoComplete={id}
-          className={`mt-1 block w-full rounded-md disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm ${
+          className={cn(
+            'mt-1 block w-full rounded-md disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm',
             error?.message
               ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-              : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-          }`}
+              : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
+            className,
+          )}
           enterKeyHint="enter"
           id={id}
           ref={ref}

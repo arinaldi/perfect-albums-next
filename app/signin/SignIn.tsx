@@ -29,7 +29,7 @@ export default function SignIn() {
   });
 
   return (
-    <AppLayout maxWidth="max-w-sm" title="Sign In">
+    <AppLayout className="max-w-sm" title="Sign In">
       <form method="POST" onSubmit={onSubmit}>
         <fieldset>
           <div className="bg-white dark:bg-gray-800">

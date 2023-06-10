@@ -49,7 +49,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
       <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((song) => (
           <div
-            className="rounded-md bg-white px-5 py-3 shadow dark:border-black dark:bg-gray-700"
+            className="rounded-md bg-white px-5 py-3 shadow dark:bg-gray-700"
             key={song.id}
           >
             <div className="flex items-center justify-between">
