@@ -42,11 +42,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
   );
 
   return (
-    <Layout
-      className="overflow-y-scroll"
-      title={Title}
-      titleAction={AppMetadata}
-    >
+    <Layout title={Title} titleAction={AppMetadata}>
       <div className="mb-4 block sm:flex sm:items-center sm:justify-between">
         <Search />
         <div className="mt-2 flex justify-between sm:ml-4 sm:mt-0">
