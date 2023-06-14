@@ -58,9 +58,9 @@ export default function NewReleases({ releases, session }: Props) {
           .map(([date, releases]) => (
             <div
               key={date}
-              className="rounded-md bg-white shadow dark:bg-gray-700"
+              className="rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-900 dark:bg-gray-700"
             >
-              <div className="border-b border-gray-200 px-4 py-3 dark:border-gray-500">
+              <div className="border-b border-gray-200 px-4 py-3 dark:border-gray-900">
                 <h3 className="text-lg font-semibold leading-6 dark:text-white">
                   {date}
                 </h3>
@@ -69,7 +69,7 @@ export default function NewReleases({ releases, session }: Props) {
                 {releases.map((release) => (
                   <li
                     key={release.id}
-                    className="flex items-start justify-between gap-3 border-b border-gray-200 px-4 py-2.5 last:border-b-0 dark:border-gray-500 dark:text-white"
+                    className="flex items-start justify-between gap-3 border-b border-gray-200 px-4 py-2.5 last:border-b-0 dark:border-gray-900 dark:text-white"
                   >
                     <span>
                       {release.artist} &ndash; {release.title}

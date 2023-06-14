@@ -32,26 +32,22 @@ export default function SignIn() {
     <AppLayout className="max-w-sm" title="Sign In">
       <form method="POST" onSubmit={onSubmit}>
         <fieldset>
-          <div className="bg-white dark:bg-gray-800">
-            <div className="grid grid-cols-6 gap-6">
-              <div className="col-span-6">
-                <div className="mb-4">
-                  <Input
-                    id="email"
-                    required
-                    type="email"
-                    {...register('email', { required: true })}
-                  />
-                </div>
-                <div className="mb-4">
-                  <PasswordInput
-                    {...register('password', { required: true })}
-                  />
-                </div>
-              </div>
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-6">
+              <Input
+                id="email"
+                required
+                type="email"
+                wrapperClassName="mt-4"
+                {...register('email')}
+              />
+              <PasswordInput
+                wrapperClassName="mt-4"
+                {...register('password')}
+              />
             </div>
           </div>
-          <div className="flex items-center justify-end">
+          <div className="mt-4 flex items-center justify-end">
             <SubmitButton isSubmitting={isSubmitting} />
           </div>
         </fieldset>

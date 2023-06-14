@@ -1,11 +1,16 @@
-import { forwardRef, useReducer } from 'react';
+import { forwardRef, InputHTMLAttributes, useReducer } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-const PasswordInput = forwardRef<HTMLInputElement>(({ ...rest }, ref) => {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  wrapperClassName?: string;
+}
+
+const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { wrapperClassName = '', ...rest } = props;
   const [on, toggle] = useReducer((flag) => !flag, false);
 
   return (
-    <>
+    <div className={wrapperClassName}>
       <label
         htmlFor="password"
         className="block text-sm font-medium text-gray-700 dark:text-white"
@@ -35,7 +40,7 @@ const PasswordInput = forwardRef<HTMLInputElement>(({ ...rest }, ref) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 });
 

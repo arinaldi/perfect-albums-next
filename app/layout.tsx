@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: Children) {
 
   return (
     <html lang="en" className={inter.className}>
-      <body className="min-h-screen bg-gray-50/25 antialiased dark:bg-gray-800">
+      <body className="min-h-screen bg-white antialiased dark:bg-gray-800">
         <NavBar user={session?.user} />
         <TailwindIndicator />
         <Toast />
