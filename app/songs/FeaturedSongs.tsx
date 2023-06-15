@@ -1,14 +1,14 @@
 'use client';
 import { useState } from 'react';
 import { Session } from '@supabase/auth-helpers-nextjs';
-import { PlusSmallIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import ButtonWithIcon from 'components/ButtonWithIcon';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
+import OutlineButton from 'components/OutlineButton';
 
 interface Props {
   session: Session | null;
@@ -31,9 +31,8 @@ export default function FeaturedSongs({ session, songs }: Props) {
     <AppLayout
       title="Featured Songs"
       titleAction={
-        session ? (
-          <ButtonWithIcon
-            icon={<PlusSmallIcon />}
+        session && (
+          <OutlineButton
             onClick={() => {
               setModal({
                 data: null,
@@ -42,8 +41,8 @@ export default function FeaturedSongs({ session, songs }: Props) {
             }}
           >
             New
-          </ButtonWithIcon>
-        ) : null
+          </OutlineButton>
+        )
       }
     >
       <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

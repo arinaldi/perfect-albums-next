@@ -48,7 +48,7 @@ export default function NavBar({ user }: Props) {
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex items-center sm:hidden">
             <button
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none"
               aria-expanded="false"
               onClick={() => toggle(null)}
               type="button"
@@ -80,7 +80,7 @@ export default function NavBar({ user }: Props) {
             </div>
           </div>
           <button
-            className="rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:bg-gray-800"
+            className="rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none dark:hover:bg-gray-800"
             aria-expanded="false"
             onClick={toggleDarkMode}
             type="button"
@@ -113,7 +113,7 @@ export default function NavBar({ user }: Props) {
       </div>
       {/* Mobile menu */}
       <div className={`${open ? 'block' : 'hidden'} sm:hidden`}>
-        <div className="space-y-1 px-2 pt-2 pb-3">
+        <div className="space-y-1 px-2 pb-3 pt-2">
           {ROUTES.map(({ href, label }) => (
             <LinkWrapper
               key={href}

@@ -1,5 +1,3 @@
-'use client';
-
 import { MESSAGES } from 'utils/constants';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';

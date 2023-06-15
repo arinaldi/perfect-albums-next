@@ -1,20 +1,16 @@
 'use client';
 import { useState } from 'react';
 import { Session } from '@supabase/auth-helpers-nextjs';
-import {
-  PencilIcon,
-  PlusSmallIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import ButtonWithIcon from 'components/ButtonWithIcon';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
+import OutlineButton from 'components/OutlineButton';
 
 interface Props {
   releases: Release[];
@@ -37,9 +33,8 @@ export default function NewReleases({ releases, session }: Props) {
     <AppLayout
       title="New Releases"
       titleAction={
-        session ? (
-          <ButtonWithIcon
-            icon={<PlusSmallIcon />}
+        session && (
+          <OutlineButton
             onClick={() => {
               setModal({
                 data: null,
@@ -48,8 +43,8 @@ export default function NewReleases({ releases, session }: Props) {
             }}
           >
             New
-          </ButtonWithIcon>
-        ) : null
+          </OutlineButton>
+        )
       }
     >
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

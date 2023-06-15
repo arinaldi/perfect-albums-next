@@ -21,7 +21,7 @@ export default function TopAlbums({ albums }: Props) {
 
   const DecadeSelect = (
     <select
-      className="rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
+      className="rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
       name="decade"
       onChange={onChange}
       value={decade}

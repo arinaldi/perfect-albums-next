@@ -54,11 +54,10 @@ export default function Modal({
             </Dialog.Title>
             <form method="POST" onSubmit={onSubmit}>
               {children}
-              <div className="flex items-center justify-end p-6 pt-0">
+              <div className="flex items-center justify-end gap-2 p-6 pt-0">
                 <OutlineButton onClick={onClose} ref={cancelButtonRef}>
                   Cancel
                 </OutlineButton>
-                <span className="ml-1" />
                 <SubmitButton isSubmitting={isSubmitting} />
               </div>
             </form>
