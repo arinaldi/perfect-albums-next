@@ -1,9 +1,9 @@
 import 'server-only';
 import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
-import Toast from 'components/Toast';
 import { createServerClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
@@ -32,7 +32,12 @@ export default async function RootLayout({ children }: Children) {
       <body className="min-h-screen bg-white antialiased dark:bg-gray-800">
         <NavBar user={session?.user} />
         <TailwindIndicator />
-        <Toast />
+        <Toaster
+          toastOptions={{
+            className: 'dark:bg-gray-700 dark:text-white',
+            position: 'bottom-center',
+          }}
+        />
         <main>{children}</main>
         <script
           id="dark-mode"
