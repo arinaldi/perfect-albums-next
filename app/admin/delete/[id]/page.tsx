@@ -1,5 +1,4 @@
 import 'server-only';
-import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
@@ -44,7 +43,6 @@ export default async function DeleteAlbumPage({ params }: Props) {
       // eslint-disable-next-line
       console.error(error.message);
     } else {
-      revalidatePath('/admin');
       redirect(`/admin${query ? `?${query}` : ''}`);
     }
   }

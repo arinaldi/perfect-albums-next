@@ -1,5 +1,4 @@
 import 'server-only';
-import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
@@ -58,9 +57,6 @@ export default async function EditAlbumPage({ params }: Props) {
       return;
     }
 
-    revalidatePath('/admin');
-    // TODO: doesn't update data on second view edit
-    revalidatePath(`/admin/edit/${id}`);
     redirect(`/admin${query ? `?${query}` : ''}`);
   }
 
