@@ -45,7 +45,7 @@ export default function Modal({
           <Dialog.Panel className="mx-auto w-full max-w-lg rounded-2xl bg-white text-left shadow-xl dark:bg-gray-800">
             <Dialog.Title
               as="h3"
-              className="flex items-center justify-between p-6 pb-0 text-2xl font-semibold dark:text-white"
+              className="flex items-center justify-between p-6 pb-0 text-xl font-semibold dark:text-white"
             >
               {title}
               <span className="-mr-2 -mt-1 h-10 w-10 cursor-pointer rounded-full p-2 transition hover:bg-gray-100 dark:hover:bg-gray-900">

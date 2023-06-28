@@ -32,7 +32,6 @@ export default async function DeleteAlbumPage({ params }: Props) {
 
   async function deleteAlbum(formData: FormData) {
     'use server';
-
     const supabase = createActionClient();
     const url = headers().get('referer')?.split('?');
     const query = url && url.length > 1 ? url[1] : '';
@@ -40,21 +39,20 @@ export default async function DeleteAlbumPage({ params }: Props) {
     const { error } = await supabase.from('albums').delete().eq('id', id);
 
     if (error) {
-      // eslint-disable-next-line
-      console.error(error.message);
-    } else {
-      redirect(`/admin${query ? `?${query}` : ''}`);
+      throw new Error(error.message);
     }
+
+    redirect(`/admin${query ? `?${query}` : ''}`);
   }
 
   return (
     <AppLayout title="Delete Album">
       <form action={deleteAlbum}>
-        <div className="bg-white p-6 dark:bg-gray-800 dark:text-white">
+        <div className="bg-white dark:bg-gray-800 dark:text-white">
           Are you sure you want to delete {data.artist} – {data.title}?
           <input name="id" type="hidden" value={data.id} />
         </div>
-        <div className="flex items-center px-6">
+        <div className="mt-6 flex items-center">
           <SubmitButton />
         </div>
       </form>

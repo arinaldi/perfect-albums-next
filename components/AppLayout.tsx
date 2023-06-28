@@ -18,7 +18,7 @@ export default function AppLayout({
   return (
     <div className={cn('mx-auto max-w-7xl px-5 py-4', className)}>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold dark:text-white sm:text-3xl">
+        <h1 className="text-xl font-semibold dark:text-white sm:text-2xl">
           {title}
         </h1>
         {titleAction}
