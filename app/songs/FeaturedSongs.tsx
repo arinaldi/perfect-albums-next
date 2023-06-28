@@ -57,7 +57,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
               </dt>
               {session ? (
                 <span
-                  className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
+                  className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
                   onClick={() =>
                     setModal({
                       data: song,
@@ -65,7 +65,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
                     })
                   }
                 >
-                  <TrashIcon className="inline h-4 w-4" />
+                  <TrashIcon className="inline h-6 w-6 p-1" />
                 </span>
               ) : null}
             </div>

@@ -1,6 +1,5 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 
 import { createActionClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
@@ -19,36 +18,15 @@ export default function CreateAlbumPage() {
     const supabase = createActionClient();
     const url = headers().get('referer')?.split('?');
     const query = url ? url[1] : '';
-    const { artist, title, year, studio, cd, favorite } = Object.fromEntries(
-      formData.entries(),
-    );
-    const yearInt = parseInt(year.toString());
-    const data = {
-      artist: artist.toString(),
-      title: title.toString(),
-      year: yearInt,
-      studio: Boolean(studio),
-      cd: Boolean(cd),
-      favorite: Boolean(favorite),
-    };
-
-    try {
-      albumSchema.parse(data);
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        return { error: error.issues[0].message };
-      }
-    }
-
+    const form = Object.fromEntries(formData.entries());
+    const data = albumSchema.parse(form);
     const { error } = await supabase.from('albums').insert({
       ...data,
-      year: yearInt.toString(),
+      year: data.year.toString(),
     });
 
     if (error) {
-      // eslint-disable-next-line
-      console.error(error.message);
-      return;
+      throw new Error(error.message);
     }
 
     redirect(`/admin${query ? `?${query}` : ''}`);

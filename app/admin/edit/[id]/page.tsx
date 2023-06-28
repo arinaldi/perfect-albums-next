@@ -1,4 +1,3 @@
-import 'server-only';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
@@ -7,6 +6,7 @@ import AppLayout from 'components/AppLayout';
 import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
 import SubmitButton from 'app/admin/SubmitButton';
+import { albumSchema } from '../../schema';
 
 interface Props {
   params: {
@@ -34,27 +34,21 @@ export default async function EditAlbumPage({ params }: Props) {
 
   async function editAlbum(formData: FormData) {
     'use server';
-
     const supabase = createActionClient();
     const url = headers().get('referer')?.split('?');
     const query = url && url.length > 1 ? url[1] : '';
-    const { id, artist, title, year, studio, cd, favorite } =
-      Object.fromEntries(formData.entries());
-    // TODO: add validation
-    const data = {
-      artist: artist.toString(),
-      title: title.toString(),
-      year: year.toString(),
-      studio: Boolean(studio),
-      cd: Boolean(cd),
-      favorite: Boolean(favorite),
-    };
-    const { error } = await supabase.from('albums').update(data).eq('id', id);
+    const form = Object.fromEntries(formData.entries());
+    const { id, ...data } = albumSchema.parse(form);
+    const { error } = await supabase
+      .from('albums')
+      .update({
+        ...data,
+        year: data.year.toString(),
+      })
+      .eq('id', id);
 
     if (error) {
-      // eslint-disable-next-line
-      console.error(error.message);
-      return;
+      throw new Error(error.message);
     }
 
     redirect(`/admin${query ? `?${query}` : ''}`);
