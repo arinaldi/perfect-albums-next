@@ -35,7 +35,7 @@ export default function CreateAlbumPage() {
   return (
     <AppLayout title="Create Album">
       <form action={createAlbum}>
-        <div className="bg-white p-6 dark:bg-gray-800">
+        <div className="bg-white dark:bg-gray-800">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <Input
               id="artist"
@@ -79,7 +79,7 @@ export default function CreateAlbumPage() {
             />
           </div>
         </div>
-        <div className="flex items-center px-6">
+        <div className="mt-6 flex items-center">
           <SubmitButton />
         </div>
       </form>

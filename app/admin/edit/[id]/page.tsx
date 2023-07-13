@@ -57,7 +57,7 @@ export default async function EditAlbumPage({ params }: Props) {
   return (
     <AppLayout title="Edit Album">
       <form action={editAlbum}>
-        <div className="bg-white p-6 dark:bg-gray-800">
+        <div className="bg-white dark:bg-gray-800">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <input name="id" type="hidden" value={data.id} />
             <Input
@@ -107,7 +107,7 @@ export default async function EditAlbumPage({ params }: Props) {
             />
           </div>
         </div>
-        <div className="flex items-center px-6">
+        <div className="mt-6 flex items-center">
           <SubmitButton />
         </div>
       </form>
