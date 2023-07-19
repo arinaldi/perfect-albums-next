@@ -17,7 +17,6 @@
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "encoding": "^0.1.13",
     "next": "^13.4.8",
-    "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
@@ -29,7 +28,6 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@types/node": "^20.2.6",
-    "@types/nprogress": "^0.2.0",
     "@types/react": "^18.2.10",
     "@types/react-dom": "^18.2.4",
     "autoprefixer": "^10.4.14",

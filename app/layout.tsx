@@ -7,7 +7,6 @@ import TailwindIndicator from 'components/TailwindIndicator';
 import { createServerClient } from 'utils/supabase-server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
-import 'styles/nprogress.css';
 
 export const revalidate = 0;
 export const metadata = {

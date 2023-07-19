@@ -13,7 +13,6 @@ import {
 
 import LinkWrapper from 'components/LinkWrapper';
 import useDarkMode from 'hooks/useDarkMode';
-import useNProgress from 'hooks/useNProgress';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase-browser';
 
@@ -22,7 +21,6 @@ interface Props {
 }
 
 export default function NavBar({ user }: Props) {
-  useNProgress();
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
