@@ -4,6 +4,8 @@
   "htmlWhitespaceSensitivity": "css",
   "insertPragma": false,
   "jsxSingleQuote": false,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "pluginSearchDirs": false,
   "printWidth": 80,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",

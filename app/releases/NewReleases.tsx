@@ -1,51 +1,23 @@
 'use client';
-import { useState } from 'react';
 import { Session } from '@supabase/auth-helpers-nextjs';
-import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
-import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
-import OutlineButton from 'components/OutlineButton';
 
 interface Props {
   releases: Release[];
   session: Session | null;
 }
 
-interface ModalState {
-  data: Release | null;
-  type: MODAL_TYPES;
-}
-
 export default function NewReleases({ releases, session }: Props) {
-  const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
-
-  function onClose() {
-    setModal((modal) => ({ ...modal, type: MODAL_TYPES.INITIAL }));
-  }
-
   return (
     <AppLayout
       title="New Releases"
-      titleAction={
-        session && (
-          <OutlineButton
-            onClick={() => {
-              setModal({
-                data: null,
-                type: MODAL_TYPES.NEW_RELEASE_CREATE,
-              });
-            }}
-          >
-            New
-          </OutlineButton>
-        )
-      }
+      titleAction={session && <CreateReleaseModal />}
     >
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(formatReleases(releases))
@@ -70,29 +42,9 @@ export default function NewReleases({ releases, session }: Props) {
                       {release.artist} &ndash; {release.title}
                     </span>
                     {session && (
-                      <span className="-mt-1 flex items-center">
-                        <span
-                          className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"
-                          onClick={() =>
-                            setModal({
-                              data: release,
-                              type: MODAL_TYPES.NEW_RELEASE_EDIT,
-                            })
-                          }
-                        >
-                          <Pencil1Icon className="inline h-6 w-6 p-1" />
-                        </span>
-                        <span
-                          className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"
-                          onClick={() =>
-                            setModal({
-                              data: release,
-                              type: MODAL_TYPES.NEW_RELEASE_DELETE,
-                            })
-                          }
-                        >
-                          <TrashIcon className="inline h-6 w-6 p-1" />
-                        </span>
+                      <span className="flex items-center gap-2">
+                        <EditReleaseModal data={release} />
+                        <DeleteReleaseModal data={release} />
                       </span>
                     )}
                   </li>
@@ -101,20 +53,6 @@ export default function NewReleases({ releases, session }: Props) {
             </div>
           ))}
       </div>
-      <CreateReleaseModal
-        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_CREATE}
-        onClose={onClose}
-      />
-      <EditReleaseModal
-        data={modal.data}
-        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_EDIT}
-        onClose={onClose}
-      />
-      <DeleteReleaseModal
-        data={modal.data}
-        isOpen={modal.type === MODAL_TYPES.NEW_RELEASE_DELETE}
-        onClose={onClose}
-      />
     </AppLayout>
   );
 }

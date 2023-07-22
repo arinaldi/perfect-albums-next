@@ -14,15 +14,6 @@ export enum MESSAGES {
   NO_DATA = 'No Data',
 }
 
-export enum MODAL_TYPES {
-  INITIAL = '',
-  FEATURED_SONGS_CREATE = 'Create Featured Song',
-  FEATURED_SONGS_DELETE = 'Delete Featured Song',
-  NEW_RELEASE_CREATE = 'Create New Release',
-  NEW_RELEASE_EDIT = 'Edit New Release',
-  NEW_RELEASE_DELETE = 'Delete New Release',
-}
-
 export enum PER_PAGE {
   SMALL = 25,
   MEDIUM = 50,
@@ -78,11 +69,6 @@ export const DECADES = [
     label: '70s',
   },
 ];
-
-export const MODAL_INITIAL_STATE = {
-  data: null,
-  type: MODAL_TYPES.INITIAL,
-};
 
 export const MONTHS = [
   'Jan',

@@ -47,7 +47,7 @@ export default function CreateSongModal() {
 
   return (
     <Modal open={open} onOpenChange={setOpen}>
-      <Modal.Button>
+      <Modal.Button asChild>
         <OutlineButton>New</OutlineButton>
       </Modal.Button>
       <Modal.Content title="Create Song">
@@ -78,7 +78,7 @@ export default function CreateSongModal() {
               />
             </div>
           </div>
-          <div className="flex items-center justify-end gap-2 mt-8">
+          <div className="mt-8 flex items-center justify-end gap-2">
             <OutlineButton onClick={onClose}>Cancel</OutlineButton>
             <SubmitButton isSubmitting={isSubmitting} />
           </div>

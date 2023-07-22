@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Pencil1Icon } from '@radix-ui/react-icons';
 
 import { releaseSchema } from 'app/releases/schema';
 import { MESSAGES } from 'utils/constants';
@@ -9,15 +10,16 @@ import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { Release, ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
-import Modal from '@/components/Modal_OLD';
+import Modal from 'components/Modal';
+import OutlineButton from 'components/OutlineButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   data: Release | null;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
+export default function EditReleaseModal({ data }: Props) {
+  const [open, setOpen] = useState(false);
   const editRelease = useUpdate('releases');
   const {
     formState: { errors },
@@ -38,6 +40,10 @@ export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
     });
   }, [data, reset]);
 
+  function onClose() {
+    setOpen(false);
+  }
+
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit,
@@ -51,41 +57,44 @@ export default function EditReleaseModal({ data, isOpen, onClose }: Props) {
   });
 
   return (
-    <Modal
-      isOpen={isOpen}
-      isSubmitting={isSubmitting}
-      onClose={onClose}
-      onSubmit={onSubmit}
-      title="Edit Release"
-    >
-      <div className="bg-white p-6 dark:bg-gray-800">
-        <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-6">
-            <Input
-              error={errors.artist}
-              id="artist"
-              type="text"
-              {...register('artist')}
-            />
+    <Modal open={open} onOpenChange={setOpen}>
+      <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
+        <Pencil1Icon className="inline h-4 w-4" />
+      </Modal.Button>
+      <Modal.Content title="Edit Release">
+        <form className="mt-6" onSubmit={onSubmit}>
+          <div className="grid grid-cols-6 gap-6">
+            <div className="col-span-6">
+              <Input
+                error={errors.artist}
+                id="artist"
+                type="text"
+                {...register('artist')}
+              />
+            </div>
+            <div className="col-span-6">
+              <Input
+                error={errors.title}
+                id="title"
+                type="text"
+                {...register('title')}
+              />
+            </div>
+            <div className="col-span-6">
+              <Input
+                error={errors.date}
+                id="date"
+                type="date"
+                {...register('date')}
+              />
+            </div>
           </div>
-          <div className="col-span-6">
-            <Input
-              error={errors.title}
-              id="title"
-              type="text"
-              {...register('title')}
-            />
+          <div className="mt-8 flex items-center justify-end gap-2">
+            <OutlineButton onClick={onClose}>Cancel</OutlineButton>
+            <SubmitButton isSubmitting={isSubmitting} />
           </div>
-          <div className="col-span-6">
-            <Input
-              error={errors.date}
-              id="date"
-              type="date"
-              {...register('date')}
-            />
-          </div>
-        </div>
-      </div>
+        </form>
+      </Modal.Content>
     </Modal>
   );
 }

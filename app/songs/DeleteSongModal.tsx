@@ -16,7 +16,6 @@ interface Props {
 export default function DeleteSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
   const deleteSong = useDelete('songs');
-
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async () => {
@@ -27,7 +26,7 @@ export default function DeleteSongModal({ data }: Props) {
 
   return (
     <Modal open={open} onOpenChange={setOpen}>
-      <Modal.Button className="cursor-pointer dark:text-white hover:text-gray-600 dark:hover:text-gray-200">
+      <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <TrashIcon className="inline h-4 w-4" />
       </Modal.Button>
       <Modal.Content title="Delete Song">
@@ -36,8 +35,8 @@ export default function DeleteSongModal({ data }: Props) {
             Are you sure you want to delete {data?.artist} &ndash; {data?.title}
             ?
           </p>
-          <div className="flex items-center justify-end gap-2 mt-8">
-            <Modal.Button>
+          <div className="mt-8 flex items-center justify-end gap-2">
+            <Modal.Button asChild>
               <OutlineButton>Cancel</OutlineButton>
             </Modal.Button>
             <SubmitButton isSubmitting={isSubmitting} />

@@ -1,19 +1,23 @@
-import { MESSAGES } from 'utils/constants';
+import { useState } from 'react';
+import { TrashIcon } from '@radix-ui/react-icons';
+
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
+import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import Modal from '@/components/Modal_OLD';
+import Modal from 'components/Modal';
+import OutlineButton from 'components/OutlineButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   data: Release | null;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-export default function DeleteReleaseModal({ data, isOpen, onClose }: Props) {
+export default function DeleteReleaseModal({ data }: Props) {
+  const [open, setOpen] = useState(false);
   const deleteRelease = useDelete('releases');
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [onClose],
+    callbacks: [() => setOpen(false)],
     submitFn: async () => {
       await deleteRelease(data?.id || 0);
     },
@@ -21,21 +25,24 @@ export default function DeleteReleaseModal({ data, isOpen, onClose }: Props) {
   });
 
   return (
-    <Modal
-      isOpen={isOpen}
-      isSubmitting={isSubmitting}
-      onClose={onClose}
-      onSubmit={onSubmit}
-      title="Delete Release"
-    >
-      <div className="bg-white p-6 dark:bg-gray-800">
-        <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-6 dark:text-white">
+    <Modal open={open} onOpenChange={setOpen}>
+      <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
+        <TrashIcon className="inline h-4 w-4" />
+      </Modal.Button>
+      <Modal.Content title="Delete Release">
+        <form className="mt-6 dark:text-white" onSubmit={onSubmit}>
+          <p>
             Are you sure you want to delete {data?.artist} &ndash; {data?.title}
             ?
+          </p>
+          <div className="mt-8 flex items-center justify-end gap-2">
+            <Modal.Button asChild>
+              <OutlineButton>Cancel</OutlineButton>
+            </Modal.Button>
+            <SubmitButton isSubmitting={isSubmitting} />
           </div>
-        </div>
-      </div>
+        </form>
+      </Modal.Content>
     </Modal>
   );
 }
