@@ -2,7 +2,7 @@ import { MESSAGES } from 'utils/constants';
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
 import { Release } from 'utils/types';
-import Modal from 'components/Modal';
+import Modal from '@/components/Modal_OLD';
 
 interface Props {
   data: Release | null;

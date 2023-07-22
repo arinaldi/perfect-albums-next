@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Session } from '@supabase/auth-helpers-nextjs';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { formatReleases, sortByDate } from 'utils';
@@ -80,7 +80,7 @@ export default function NewReleases({ releases, session }: Props) {
                             })
                           }
                         >
-                          <PencilIcon className="inline h-6 w-6 p-1" />
+                          <Pencil1Icon className="inline h-6 w-6 p-1" />
                         </span>
                         <span
                           className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900"

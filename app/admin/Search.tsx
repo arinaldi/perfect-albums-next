@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 import { SORT_VALUE } from 'utils/constants';
 import { parseQuery } from 'utils';
@@ -123,7 +123,7 @@ function ClearButton({ onClick }: ButtonProps) {
   return (
     <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
       <span className="mr-1.5 h-6 w-6 cursor-pointer rounded-full p-1 transition hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
-        <XMarkIcon onClick={onClick} />
+        <Cross2Icon onClick={onClick} />
       </span>
     </div>
   );

@@ -3,16 +3,17 @@ import { useReducer } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { User } from '@supabase/auth-helpers-nextjs';
 import {
-  ArrowLeftOnRectangleIcon,
-  ArrowRightOnRectangleIcon,
-  Bars3Icon,
+  Cross1Icon,
+  EnterIcon,
+  ExitIcon,
+  HamburgerMenuIcon,
   MoonIcon,
   SunIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+} from '@radix-ui/react-icons';
 
 import LinkWrapper from 'components/LinkWrapper';
 import useDarkMode from 'hooks/useDarkMode';
+import { cn } from 'utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase-browser';
 
@@ -52,8 +53,12 @@ export default function NavBar({ user }: Props) {
               type="button"
             >
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon className={`${open ? 'hidden' : 'block'} h-6 w-6`} />
-              <XMarkIcon className={`${open ? 'block' : 'hidden'} h-6 w-6`} />
+              <HamburgerMenuIcon
+                className={cn('h-6 w-6', open ? 'hidden' : 'block')}
+              />
+              <Cross1Icon
+                className={cn('h-6 w-6', open ? 'block' : 'hidden')}
+              />
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -96,14 +101,14 @@ export default function NavBar({ user }: Props) {
                 onClick={signOut}
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
-                <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                <ExitIcon className="h-5 w-5" />
               </div>
             ) : (
               <div
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
                 onClick={() => router.push(ROUTE_HREF.SIGNIN)}
               >
-                <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                <EnterIcon className="h-5 w-5" />
               </div>
             )}
           </div>

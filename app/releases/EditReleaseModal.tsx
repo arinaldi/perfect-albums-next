@@ -9,7 +9,7 @@ import useSubmit from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { Release, ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
-import Modal from 'components/Modal';
+import Modal from '@/components/Modal_OLD';
 
 interface Props {
   data: Release | null;

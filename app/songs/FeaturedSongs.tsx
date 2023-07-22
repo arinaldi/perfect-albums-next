@@ -1,49 +1,21 @@
 'use client';
-import { useState } from 'react';
 import { Session } from '@supabase/auth-helpers-nextjs';
-import { TrashIcon } from '@heroicons/react/24/outline';
 
-import { MODAL_INITIAL_STATE, MODAL_TYPES } from 'utils/constants';
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
-import OutlineButton from 'components/OutlineButton';
 
 interface Props {
   session: Session | null;
   songs: Song[];
 }
 
-interface ModalState {
-  data: Song | null;
-  type: MODAL_TYPES;
-}
-
 export default function FeaturedSongs({ session, songs }: Props) {
-  const [modal, setModal] = useState<ModalState>(MODAL_INITIAL_STATE);
-
-  function onClose() {
-    setModal((modal) => ({ ...modal, type: MODAL_TYPES.INITIAL }));
-  }
-
   return (
     <AppLayout
       title="Featured Songs"
-      titleAction={
-        session && (
-          <OutlineButton
-            onClick={() => {
-              setModal({
-                data: null,
-                type: MODAL_TYPES.FEATURED_SONGS_CREATE,
-              });
-            }}
-          >
-            New
-          </OutlineButton>
-        )
-      }
+      titleAction={session && <CreateSongModal />}
     >
       <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((song) => (
@@ -55,19 +27,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
               <dt className="text-sm font-medium text-gray-700 dark:text-white">
                 {song.artist}
               </dt>
-              {session ? (
-                <span
-                  className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
-                  onClick={() =>
-                    setModal({
-                      data: song,
-                      type: MODAL_TYPES.FEATURED_SONGS_DELETE,
-                    })
-                  }
-                >
-                  <TrashIcon className="inline h-6 w-6 p-1" />
-                </span>
-              ) : null}
+              {session && <DeleteSongModal data={song} />}
             </div>
             <a
               className="text-blue-700 hover:underline dark:text-blue-500"
@@ -80,15 +40,6 @@ export default function FeaturedSongs({ session, songs }: Props) {
           </div>
         ))}
       </dl>
-      <CreateSongModal
-        isOpen={modal.type === MODAL_TYPES.FEATURED_SONGS_CREATE}
-        onClose={onClose}
-      />
-      <DeleteSongModal
-        data={modal.data}
-        isOpen={modal.type === MODAL_TYPES.FEATURED_SONGS_DELETE}
-        onClose={onClose}
-      />
     </AppLayout>
   );
 }

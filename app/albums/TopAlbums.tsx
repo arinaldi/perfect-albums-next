@@ -1,6 +1,6 @@
 'use client';
 import { ChangeEvent, useState } from 'react';
-import { ArrowUpIcon } from '@heroicons/react/24/outline';
+import { ArrowUpIcon } from '@radix-ui/react-icons';
 
 import { formatFavorites, sortDesc } from 'utils';
 import { DECADES, ROUTE_HREF, SPOTIFY_URL } from 'utils/constants';
