@@ -1,19 +1,24 @@
-import { MESSAGES } from 'utils/constants';
+import { useState } from 'react';
+import { TrashIcon } from '@radix-ui/react-icons';
+
 import useDelete from 'hooks/useDelete';
 import useSubmit from 'hooks/useSubmit';
+import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import Modal from 'components/Modal';
+import OutlineButton from 'components/OutlineButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   data: Song | null;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-export default function DeleteSongModal({ data, isOpen, onClose }: Props) {
+export default function DeleteSongModal({ data }: Props) {
+  const [open, setOpen] = useState(false);
   const deleteSong = useDelete('songs');
+
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [onClose],
+    callbacks: [() => setOpen(false)],
     submitFn: async () => {
       await deleteSong(data?.id || 0);
     },
@@ -21,21 +26,24 @@ export default function DeleteSongModal({ data, isOpen, onClose }: Props) {
   });
 
   return (
-    <Modal
-      isOpen={isOpen}
-      isSubmitting={isSubmitting}
-      onClose={onClose}
-      onSubmit={onSubmit}
-      title="Delete Song"
-    >
-      <div className="bg-white p-6 dark:bg-gray-800">
-        <div className="grid grid-cols-6 gap-6">
-          <div className="col-span-6 dark:text-white">
+    <Modal open={open} onOpenChange={setOpen}>
+      <Modal.Button className="cursor-pointer dark:text-white hover:text-gray-600 dark:hover:text-gray-200">
+        <TrashIcon className="inline h-4 w-4" />
+      </Modal.Button>
+      <Modal.Content title="Delete Song">
+        <form className="mt-6 dark:text-white" onSubmit={onSubmit}>
+          <p>
             Are you sure you want to delete {data?.artist} &ndash; {data?.title}
             ?
+          </p>
+          <div className="flex items-center justify-end gap-2 mt-8">
+            <Modal.Button>
+              <OutlineButton>Cancel</OutlineButton>
+            </Modal.Button>
+            <SubmitButton isSubmitting={isSubmitting} />
           </div>
-        </div>
-      </div>
+        </form>
+      </Modal.Content>
     </Modal>
   );
 }

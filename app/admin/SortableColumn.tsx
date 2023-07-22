@@ -1,8 +1,7 @@
 'use client';
-
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLongDownIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon } from '@radix-ui/react-icons';
 
 import { parseQuery } from 'utils';
 import { ROUTES_ADMIN } from 'utils/constants';
@@ -55,7 +54,7 @@ export default function SortableColumn({
               : 'invisible text-gray-400 group-hover:visible'
           } ml-1 flex-none`}
         >
-          <ArrowLongDownIcon
+          <ArrowDownIcon
             aria-hidden="true"
             className={`${desc ? 'rotate-180' : ''} inline h-4 w-4`}
           />

@@ -1,7 +1,7 @@
 'use client';
-
 import { useRouter, useSearchParams } from 'next/navigation';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+
 import { ROUTES_ADMIN } from 'utils/constants';
 
 interface Props {
@@ -14,9 +14,9 @@ export default function AlbumActions({ id }: Props) {
 
   return (
     <>
-      <span className="cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
-        <PencilIcon
-          className="inline h-4 w-4"
+      <span className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+        <Pencil1Icon
+          className="inline h-6 w-6 p-1"
           onClick={() => {
             router.push(
               `${ROUTES_ADMIN.edit.href}/${id}?${searchParams?.toString()}`,
@@ -24,9 +24,9 @@ export default function AlbumActions({ id }: Props) {
           }}
         />
       </span>
-      <span className="ml-2 cursor-pointer rounded-md p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+      <span className="ml-2 cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
         <TrashIcon
-          className="inline h-4 w-4"
+          className="inline h-6 w-6 p-1"
           onClick={() => {
             router.push(
               `${ROUTES_ADMIN.delete.href}/${id}?${searchParams?.toString()}`,

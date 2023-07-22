@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/24/outline';
+import { CheckIcon } from '@radix-ui/react-icons';
 
 import { APP_MESSAGE_TYPES } from 'utils/constants';
 import { Album } from 'utils/types';

@@ -1,7 +1,7 @@
 import {
-  ExclamationCircleIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/solid';
+  ExclamationTriangleIcon,
+  InfoCircledIcon,
+} from '@radix-ui/react-icons';
 
 import { APP_MESSAGE_TYPES } from 'utils/constants';
 
@@ -19,8 +19,8 @@ const styles = {
 
 const className = 'w-6 h-6';
 const icons = {
-  [ERROR]: <ExclamationCircleIcon className={className} />,
-  [INFO]: <InformationCircleIcon className={className} />,
+  [ERROR]: <ExclamationTriangleIcon className={className} />,
+  [INFO]: <InfoCircledIcon className={className} />,
 };
 
 export default function AppMessage({

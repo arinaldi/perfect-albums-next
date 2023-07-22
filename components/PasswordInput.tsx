@@ -1,5 +1,5 @@
 import { forwardRef, InputHTMLAttributes, useReducer } from 'react';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   wrapperClassName?: string;
@@ -34,9 +34,9 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           onClick={toggle}
         >
           {on ? (
-            <EyeIcon className="h-5 w-5" />
+            <EyeOpenIcon className="h-5 w-5" />
           ) : (
-            <EyeSlashIcon className="h-5 w-5" />
+            <EyeNoneIcon className="h-5 w-5" />
           )}
         </div>
       </div>
