@@ -31,13 +31,13 @@ export default function CreateSongModal() {
     resolver: zodResolver(songSchema),
   });
 
-  function handleClose() {
+  function onClose() {
     setOpen(false);
     reset(defaultValues);
   }
 
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [handleClose],
+    callbacks: [onClose],
     handleSubmit,
     submitFn: async (song: SongInput) => {
       await createSong(song);
@@ -79,7 +79,7 @@ export default function CreateSongModal() {
             </div>
           </div>
           <div className="flex items-center justify-end gap-2 mt-8">
-            <OutlineButton onClick={handleClose}>Cancel</OutlineButton>
+            <OutlineButton onClick={onClose}>Cancel</OutlineButton>
             <SubmitButton isSubmitting={isSubmitting} />
           </div>
         </form>

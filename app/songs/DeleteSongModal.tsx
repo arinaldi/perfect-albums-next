@@ -16,6 +16,7 @@ interface Props {
 export default function DeleteSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
   const deleteSong = useDelete('songs');
+
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async () => {
@@ -36,7 +37,9 @@ export default function DeleteSongModal({ data }: Props) {
             ?
           </p>
           <div className="flex items-center justify-end gap-2 mt-8">
-            <OutlineButton onClick={() => setOpen(false)}>Cancel</OutlineButton>
+            <Modal.Button>
+              <OutlineButton>Cancel</OutlineButton>
+            </Modal.Button>
             <SubmitButton isSubmitting={isSubmitting} />
           </div>
         </form>
