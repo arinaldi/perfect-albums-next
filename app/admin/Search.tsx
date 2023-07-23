@@ -30,13 +30,13 @@ export default function Search() {
 
     if (value) {
       params.set(name, value);
-      params.set('page', '1');
       params.set('sort', SORT_VALUE.YEAR);
     } else {
       params.delete(name);
       params.delete('sort');
     }
 
+    params.set('page', '1');
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
     });
@@ -109,7 +109,7 @@ export default function Search() {
 
 function InputSpinner() {
   return (
-    <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
+    <div className="absolute bottom-0 right-0 top-0 flex items-center justify-center">
       <Spinner className="mr-1.5 h-6 w-6 cursor-none p-1" />
     </div>
   );
@@ -121,7 +121,7 @@ interface ButtonProps {
 
 function ClearButton({ onClick }: ButtonProps) {
   return (
-    <div className="absolute right-0 top-0 bottom-0 flex items-center justify-center">
+    <div className="absolute bottom-0 right-0 top-0 flex items-center justify-center">
       <span className="mr-1.5 h-6 w-6 cursor-pointer rounded-full p-1 transition hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900">
         <Cross2Icon onClick={onClick} />
       </span>
