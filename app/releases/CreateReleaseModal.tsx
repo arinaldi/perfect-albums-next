@@ -9,8 +9,8 @@ import useSubmit from 'hooks/useSubmit';
 import { ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
-import OutlineButton from 'components/OutlineButton';
-import SubmitButton from 'components/SubmitButton';
+import PrimaryButton from 'components/PrimaryButton';
+import SecondaryButton from 'components/SecondaryButton';
 
 const defaultValues = {
   artist: '',
@@ -48,7 +48,7 @@ export default function CreateReleaseModal() {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <Modal.Button asChild>
-        <OutlineButton>New</OutlineButton>
+        <SecondaryButton label="New" />
       </Modal.Button>
       <Modal.Content title="Create Release">
         <form className="mt-6" onSubmit={onSubmit}>
@@ -79,8 +79,8 @@ export default function CreateReleaseModal() {
             </div>
           </div>
           <div className="mt-8 flex items-center justify-end gap-2">
-            <OutlineButton onClick={onClose}>Cancel</OutlineButton>
-            <SubmitButton isSubmitting={isSubmitting} />
+            <SecondaryButton onClick={onClose} />
+            <PrimaryButton isSubmitting={isSubmitting} />
           </div>
         </form>
       </Modal.Content>

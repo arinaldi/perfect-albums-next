@@ -6,8 +6,8 @@ import useSubmit from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import Modal from 'components/Modal';
-import OutlineButton from 'components/OutlineButton';
-import SubmitButton from 'components/SubmitButton';
+import PrimaryButton from 'components/PrimaryButton';
+import SecondaryButton from 'components/SecondaryButton';
 
 interface Props {
   data: Song | null;
@@ -37,9 +37,9 @@ export default function DeleteSongModal({ data }: Props) {
           </p>
           <div className="mt-8 flex items-center justify-end gap-2">
             <Modal.Button asChild>
-              <OutlineButton>Cancel</OutlineButton>
+              <SecondaryButton />
             </Modal.Button>
-            <SubmitButton isSubmitting={isSubmitting} />
+            <PrimaryButton isSubmitting={isSubmitting} />
           </div>
         </form>
       </Modal.Content>

@@ -13,8 +13,8 @@ export default function AlbumActions({ id }: Props) {
   const searchParams = useSearchParams();
 
   return (
-    <>
-      <span className="cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+    <div className="flex items-center gap-2">
+      <span className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <Pencil1Icon
           className="inline h-6 w-6 p-1"
           onClick={() => {
@@ -24,7 +24,7 @@ export default function AlbumActions({ id }: Props) {
           }}
         />
       </span>
-      <span className="ml-2 cursor-pointer rounded-full p-1 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800">
+      <span className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <TrashIcon
           className="inline h-6 w-6 p-1"
           onClick={() => {
@@ -34,6 +34,6 @@ export default function AlbumActions({ id }: Props) {
           }}
         />
       </span>
-    </>
+    </div>
   );
 }

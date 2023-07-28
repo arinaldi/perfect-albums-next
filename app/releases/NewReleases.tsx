@@ -4,6 +4,7 @@ import { Session } from '@supabase/auth-helpers-nextjs';
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
+import Badge from 'components/Badge';
 import CreateReleaseModal from 'app/releases/CreateReleaseModal';
 import DeleteReleaseModal from 'app/releases/DeleteReleaseModal';
 import EditReleaseModal from 'app/releases/EditReleaseModal';
@@ -16,7 +17,12 @@ interface Props {
 export default function NewReleases({ releases, session }: Props) {
   return (
     <AppLayout
-      title="New Releases"
+      title={
+        <div className="flex items-center gap-2">
+          <span>New Releases</span>
+          <Badge label={releases.length.toLocaleString()} />
+        </div>
+      }
       titleAction={session && <CreateReleaseModal />}
     >
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

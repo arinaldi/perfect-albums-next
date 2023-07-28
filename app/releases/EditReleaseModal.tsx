@@ -11,8 +11,8 @@ import { formatDate } from 'utils';
 import { Release, ReleaseInput } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
-import OutlineButton from 'components/OutlineButton';
-import SubmitButton from 'components/SubmitButton';
+import PrimaryButton from 'components/PrimaryButton';
+import SecondaryButton from 'components/SecondaryButton';
 
 interface Props {
   data: Release | null;
@@ -90,8 +90,8 @@ export default function EditReleaseModal({ data }: Props) {
             </div>
           </div>
           <div className="mt-8 flex items-center justify-end gap-2">
-            <OutlineButton onClick={onClose}>Cancel</OutlineButton>
-            <SubmitButton isSubmitting={isSubmitting} />
+            <SecondaryButton onClick={onClose} />
+            <PrimaryButton isSubmitting={isSubmitting} />
           </div>
         </form>
       </Modal.Content>

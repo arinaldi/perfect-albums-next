@@ -2,19 +2,18 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { ROUTES_ADMIN } from 'utils/constants';
-import OutlineButton from 'components/OutlineButton';
+import SecondaryButton from 'components/SecondaryButton';
 
 export default function NewAlbumButton() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   return (
-    <OutlineButton
+    <SecondaryButton
+      label="New"
       onClick={() => {
         router.push(`${ROUTES_ADMIN.create.href}?${searchParams?.toString()}`);
       }}
-    >
-      New
-    </OutlineButton>
+    />
   );
 }

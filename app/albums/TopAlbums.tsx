@@ -5,6 +5,7 @@ import { ArrowUpIcon } from '@radix-ui/react-icons';
 import { formatFavorites, sortDesc } from 'utils';
 import { DECADES, ROUTE_HREF, SPOTIFY_URL } from 'utils/constants';
 import { Album } from 'utils/types';
+import Badge from 'components/Badge';
 import AppLayout from 'components/AppLayout';
 
 interface Props {
@@ -40,11 +41,9 @@ export default function TopAlbums({ albums }: Props) {
   return (
     <AppLayout
       title={
-        <div className="flex items-end gap-2">
+        <div className="flex items-center gap-2">
           <span>Top Albums</span>
-          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xl font-semibold dark:bg-gray-700">
-            {albums.length.toLocaleString()}
-          </span>
+          <Badge label={albums.length.toLocaleString()} />
         </div>
       }
       titleAction={DecadeSelect}
@@ -54,13 +53,11 @@ export default function TopAlbums({ albums }: Props) {
           .sort(sortDesc)
           .map(([year, favorites]) => (
             <div key={year}>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
                 <h4 id={year} className="text-xl font-semibold dark:text-white">
                   {year}
                 </h4>
-                <div className="mr-4 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-semibold dark:bg-gray-700 dark:text-white">
-                  {favorites.length.toLocaleString()}
-                </div>
+                <Badge label={favorites.length.toLocaleString()} />
               </div>
               <ul className="ml-6 list-disc p-1">
                 {favorites.map(({ artist, title }, index) => {
@@ -71,7 +68,7 @@ export default function TopAlbums({ albums }: Props) {
                     <li key={index} className="dark:text-white">
                       {artist} &ndash;{' '}
                       <a
-                        className="text-blue-700 hover:underline dark:text-blue-500"
+                        className="text-blue-700 hover:underline dark:text-blue-300"
                         href={url}
                         rel="noopener noreferrer"
                         target="_blank"

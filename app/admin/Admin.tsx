@@ -4,6 +4,7 @@ import { APP_MESSAGE_TYPES } from 'utils/constants';
 import { Album } from 'utils/types';
 import AppMessage from 'components/AppMessage';
 import AlbumActions from 'app/admin/AlbumActions';
+import Badge from 'components/Badge';
 import Column from 'app/admin/Column';
 import Layout from 'components/AppLayout';
 import NewAlbumButton from 'app/admin/NewAlbumButton';
@@ -21,22 +22,18 @@ interface Props {
 
 export default function Admin({ albums, cdTotal, total }: Props) {
   const Title = (
-    <div className="flex items-end gap-2">
+    <div className="flex items-center gap-2">
       <span>Admin</span>
-      <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-xl font-semibold dark:bg-gray-700">
-        {total.toLocaleString()}
-      </span>
+      <Badge label={total.toLocaleString()} />
     </div>
   );
 
   const AppMetadata = (
     <div className="flex items-center gap-4 dark:text-white">
-      <code className="">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
-      <span>
-        <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 font-semibold dark:bg-gray-700">
-          {cdTotal.toLocaleString()}
-        </span>
-        CD{cdTotal === 1 ? '' : 's'}
+      <code className="text-sm">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
+      <span className="flex items-center gap-0.5">
+        <Badge label={cdTotal.toLocaleString()} />
+        <span className="text-sm">CD{cdTotal === 1 ? '' : 's'}</span>
       </span>
     </div>
   );
@@ -125,7 +122,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                               <CheckIcon className="inline h-5 w-5" />
                             ) : null}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
+                          <td className="whitespace-nowrap px-3 py-2 text-gray-900 dark:text-white sm:w-1/12">
                             <AlbumActions id={id} />
                           </td>
                         </tr>

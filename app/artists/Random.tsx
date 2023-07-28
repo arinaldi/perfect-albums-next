@@ -1,8 +1,7 @@
 'use client';
-
 import { useState } from 'react';
 
-import OutlineButton from 'components/OutlineButton';
+import SecondaryButton from 'components/SecondaryButton';
 
 interface Props {
   artists: string[];
@@ -18,7 +17,7 @@ export default function Random({ artists }: Props) {
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <OutlineButton onClick={onClick}>Get Random Artist</OutlineButton>
+      <SecondaryButton label="Get Random Artist" onClick={onClick} />
       <p>{value}</p>
     </div>
   );

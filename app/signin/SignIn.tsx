@@ -9,7 +9,7 @@ import { SignInInput } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import Input from 'components/Input';
 import PasswordInput from 'components/PasswordInput';
-import SubmitButton from 'components/SubmitButton';
+import PrimaryButton from 'components/PrimaryButton';
 
 export default function SignIn() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function SignIn() {
             </div>
           </div>
           <div className="mt-6 flex items-center">
-            <SubmitButton isSubmitting={isSubmitting} />
+            <PrimaryButton isSubmitting={isSubmitting} />
           </div>
         </fieldset>
       </form>
