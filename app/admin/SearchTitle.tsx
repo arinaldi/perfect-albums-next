@@ -19,6 +19,18 @@ export default function Search() {
   const debouncedValue = useDebounce(value);
 
   useEffect(() => {
+    if (!value && debouncedValue) {
+      const params = new URLSearchParams(searchParams?.toString() ?? '');
+
+      params.delete('title');
+      params.delete('sort');
+      params.set('page', '1');
+      startTransition(() => {
+        router.replace(`${pathname}?${params.toString()}`);
+      });
+      return;
+    }
+
     if (debouncedValue === title) return;
 
     const params = new URLSearchParams(searchParams?.toString() ?? '');
@@ -35,7 +47,7 @@ export default function Search() {
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
     });
-  }, [debouncedValue, pathname, router, searchParams, title]);
+  }, [debouncedValue, pathname, router, searchParams, title, value]);
 
   return (
     <div className="relative mt-2 w-full sm:ml-4 sm:mt-0">

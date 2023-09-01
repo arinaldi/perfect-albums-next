@@ -1,6 +1,5 @@
 import { CheckIcon } from '@radix-ui/react-icons';
 
-import { APP_MESSAGE_TYPES } from 'utils/constants';
 import { Album } from 'utils/types';
 import AppMessage from 'components/AppMessage';
 import AlbumActions from 'app/admin/AlbumActions';
@@ -66,7 +65,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
       </div>
 
       {albums?.length === 0 ? (
-        <AppMessage message="No results found" type={APP_MESSAGE_TYPES.INFO} />
+        <AppMessage message="No results found" variant="info" />
       ) : (
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

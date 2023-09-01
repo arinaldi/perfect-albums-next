@@ -1,10 +1,5 @@
 /* ENUM */
 
-export enum APP_MESSAGE_TYPES {
-  ERROR = 'error',
-  INFO = 'info',
-}
-
 export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
   SONG_PREFIX = 'Song successfully',

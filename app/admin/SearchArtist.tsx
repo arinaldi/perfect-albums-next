@@ -23,6 +23,18 @@ export default function SearchArtist() {
   }, []);
 
   useEffect(() => {
+    if (!value && debouncedValue) {
+      const params = new URLSearchParams(searchParams?.toString() ?? '');
+
+      params.delete('artist');
+      params.delete('sort');
+      params.set('page', '1');
+      startTransition(() => {
+        router.replace(`${pathname}?${params.toString()}`);
+      });
+      return;
+    }
+
     if (debouncedValue === artist) return;
 
     const params = new URLSearchParams(searchParams?.toString() ?? '');
@@ -39,7 +51,7 @@ export default function SearchArtist() {
     startTransition(() => {
       router.replace(`${pathname}?${params.toString()}`);
     });
-  }, [artist, debouncedValue, pathname, router, searchParams]);
+  }, [artist, debouncedValue, pathname, router, searchParams, value]);
 
   return (
     <div className="relative w-full">

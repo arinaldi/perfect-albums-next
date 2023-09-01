@@ -1,40 +1,41 @@
-import {
-  ExclamationTriangleIcon,
-  InfoCircledIcon,
-} from '@radix-ui/react-icons';
+import { ReactNode } from 'react';
+import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 
-import { APP_MESSAGE_TYPES } from 'utils/constants';
+import { cn } from '@/utils';
 
-const { ERROR, INFO } = APP_MESSAGE_TYPES;
+type Variant = 'error' | 'info';
 
 interface Props {
   message?: string;
-  type?: APP_MESSAGE_TYPES;
+  variant?: Variant;
 }
 
-const styles = {
-  [ERROR]: 'bg-red-100 border-red-700 text-red-700',
-  [INFO]: 'bg-blue-100 border-blue-700 text-blue-700',
+const styles: Record<Variant, string> = {
+  error: 'bg-red-50 text-red-800',
+  info: 'bg-blue-50 text-blue-800',
 };
 
-const className = 'w-6 h-6';
-const icons = {
-  [ERROR]: <ExclamationTriangleIcon className={className} />,
-  [INFO]: <InfoCircledIcon className={className} />,
+const icons: Record<Variant, ReactNode> = {
+  error: (
+    <CrossCircledIcon aria-hidden="true" className="h-5 w-5 text-red-400" />
+  ),
+  info: (
+    <InfoCircledIcon aria-hidden="true" className="h-5 w-5 text-blue-400" />
+  ),
 };
 
 export default function AppMessage({
   message = 'Something went wrong',
-  type = ERROR,
+  variant = 'error',
 }: Props) {
   return (
-    <div className="mt-8 text-center">
-      <div
-        className={`inline-flex items-center rounded border-l-4 py-4 pl-5 pr-6 ${styles[type]}`}
-        role="alert"
-      >
-        {icons[type]}
-        <p className="ml-3 text-center">{message}</p>
+    <div
+      className={cn('mx-auto mt-8 flex w-fit rounded-md p-4', styles[variant])}
+      role="alert"
+    >
+      <div className="flex-shrink-0">{icons[variant]}</div>
+      <div className="ml-3 flex-1 md:flex md:justify-between">
+        <p className="text-sm font-medium">{message}</p>
       </div>
     </div>
   );
