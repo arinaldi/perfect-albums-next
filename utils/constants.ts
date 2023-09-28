@@ -42,6 +42,8 @@ export const BASE_URL =
     ? 'http://localhost:3006'
     : 'https://perfect-albums.vercel.app';
 
+export const DEBOUNCE_IN_MS = 500;
+
 export const DECADES = [
   {
     id: '2019',

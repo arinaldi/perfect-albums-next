@@ -9,8 +9,7 @@ import Layout from 'components/AppLayout';
 import NewAlbumButton from 'app/admin/NewAlbumButton';
 import Pagination from 'app/admin/Pagination';
 import PerPage from 'app/admin/PerPage';
-import SearchArtist from 'app/admin/SearchArtist';
-import SearchTitle from 'app/admin/SearchTitle';
+import Search from 'app/admin/Search';
 import SortableColumn from 'app/admin/SortableColumn';
 import StudioFilter from 'app/admin/StudioFilter';
 
@@ -40,14 +39,10 @@ export default function Admin({ albums, cdTotal, total }: Props) {
 
   return (
     <Layout title={Title} titleAction={AppMetadata}>
-      <div className="mb-4 block sm:flex sm:items-center sm:justify-between">
-        <SearchArtist />
-        <SearchTitle />
-        <div className="mt-2 flex justify-between sm:ml-4 sm:mt-0">
-          <div className="flex gap-1">
-            <NewAlbumButton />
-          </div>
-        </div>
+      <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+        <Search hasFocus type="artist" />
+        <Search type="title" />
+        <NewAlbumButton />
       </div>
 
       <div className="mb-2 flex justify-center sm:mb-4">
