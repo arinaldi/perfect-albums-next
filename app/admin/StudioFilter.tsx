@@ -21,7 +21,7 @@ function FilterButton({ prop }: Props) {
   const value = prop === FILTER.ON;
 
   function onClick() {
-    const query = new URLSearchParams(searchParams?.toString() ?? '');
+    const query = new URLSearchParams(searchParams?.toString());
     query.set('studio', value.toString());
 
     router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);

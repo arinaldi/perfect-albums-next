@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
+import { MESSAGES } from 'utils/constants';
 import { createActionClient, createServerClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
 import Checkbox from 'components/Checkbox';
@@ -35,8 +36,16 @@ export default async function EditAlbumPage({ params }: Props) {
   async function editAlbum(formData: FormData) {
     'use server';
     const supabase = createActionClient();
-    const url = headers().get('referer')?.split('?');
-    const query = url && url.length > 1 ? url[1] : '';
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      throw new Error(MESSAGES.NOT_AUTHORIZED);
+    }
+
+    const referer = headers().get('referer') ?? '';
+    const url = new URL(referer);
     const form = Object.fromEntries(formData.entries());
     const { id, ...data } = albumSchema.parse(form);
     const { error } = await supabase
@@ -51,7 +60,7 @@ export default async function EditAlbumPage({ params }: Props) {
       throw new Error(error.message);
     }
 
-    redirect(`/admin${query ? `?${query}` : ''}`);
+    redirect(`/admin${url.search}`);
   }
 
   return (

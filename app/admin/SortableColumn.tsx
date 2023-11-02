@@ -28,7 +28,7 @@ export default function SortableColumn({
     newSort = `${prop}:desc`;
   }
 
-  const query = new URLSearchParams(searchParams?.toString() ?? '');
+  const query = new URLSearchParams(searchParams?.toString());
   query.set('sort', newSort as string);
 
   return (

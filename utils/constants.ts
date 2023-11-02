@@ -7,6 +7,7 @@ export enum MESSAGES {
   SIGNIN = 'Invalid username or password',
   ERROR = 'Something went wrong',
   NO_DATA = 'No Data',
+  NOT_AUTHORIZED = 'Not authorized',
 }
 
 export enum PER_PAGE {

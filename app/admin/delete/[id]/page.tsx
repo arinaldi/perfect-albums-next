@@ -2,6 +2,7 @@ import 'server-only';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
+import { MESSAGES } from 'utils/constants';
 import { createActionClient, createServerClient } from 'utils/supabase-server';
 import AppLayout from 'components/AppLayout';
 import SubmitButton from 'app/admin/SubmitButton';
@@ -33,8 +34,16 @@ export default async function DeleteAlbumPage({ params }: Props) {
   async function deleteAlbum(formData: FormData) {
     'use server';
     const supabase = createActionClient();
-    const url = headers().get('referer')?.split('?');
-    const query = url && url.length > 1 ? url[1] : '';
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      throw new Error(MESSAGES.NOT_AUTHORIZED);
+    }
+
+    const referer = headers().get('referer') ?? '';
+    const url = new URL(referer);
     const { id } = Object.fromEntries(formData.entries());
     const { error } = await supabase.from('albums').delete().eq('id', id);
 
@@ -42,7 +51,7 @@ export default async function DeleteAlbumPage({ params }: Props) {
       throw new Error(error.message);
     }
 
-    redirect(`/admin${query ? `?${query}` : ''}`);
+    redirect(`/admin${url.search}`);
   }
 
   return (
