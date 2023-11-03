@@ -6,26 +6,6 @@ export type Album = Database['public']['Tables']['albums']['Row'];
 export type Release = Database['public']['Tables']['releases']['Row'];
 export type Song = Database['public']['Tables']['songs']['Row'];
 
-export type Table = 'albums' | 'releases' | 'songs';
-
-// TODO: revert after changing to Int in Supabase
-// export type AlbumInput = Omit<Album, 'id' | 'created_at'>;
-export type AlbumInput = {
-  artist: string;
-  title: string;
-  year: number;
-  cd: boolean;
-  favorite: boolean;
-  studio: boolean;
-};
-export type ReleaseInput = Omit<Release, 'id' | 'created_at'>;
-export type SongInput = Omit<Song, 'id' | 'created_at'>;
-
-export interface SignInInput {
-  email: string;
-  password: string;
-}
-
 export type Callback = () => void;
 
 export interface Children {
