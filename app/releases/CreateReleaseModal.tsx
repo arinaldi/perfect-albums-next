@@ -39,12 +39,7 @@ export default function CreateReleaseModal() {
   const { isSubmitting, onSubmit } = useServerAction({
     callbacks: [onClose],
     handleSubmit,
-    submitFn: async (release: ReleaseInput) => {
-      await createRelease({
-        ...release,
-        date: release.date || null,
-      });
-    },
+    submitFn: createRelease,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   });
 

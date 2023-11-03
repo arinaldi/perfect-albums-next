@@ -21,7 +21,10 @@ export async function createRelease(release: ReleaseInput) {
     throw new Error(MESSAGES.NOT_AUTHORIZED);
   }
 
-  const { error } = await supabase.from('releases').insert(release);
+  const { error } = await supabase.from('releases').insert({
+    ...release,
+    date: release.date || null,
+  });
 
   if (error) throw error;
 
@@ -44,11 +47,13 @@ export async function editRelease(id: number, release: ReleaseInput) {
     throw new Error(MESSAGES.NOT_AUTHORIZED);
   }
 
-  const data = {
-    ...release,
-    date: release.date || null,
-  };
-  const { error } = await supabase.from('releases').update(data).eq('id', id);
+  const { error } = await supabase
+    .from('releases')
+    .update({
+      ...release,
+      date: release.date || null,
+    })
+    .eq('id', id);
 
   if (error) throw error;
 
