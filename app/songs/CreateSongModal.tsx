@@ -1,16 +1,17 @@
+'use client';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { songSchema } from 'app/songs/schema';
 import { MESSAGES } from 'utils/constants';
-import useInsert from 'hooks/useInsert';
-import useSubmit from 'hooks/useSubmit';
-import { SongInput } from 'utils/types';
+import { useServerAction } from 'hooks/useServerAction';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
+import { createSong } from './actions';
+import { SongInput } from './schema';
 
 const defaultValues = {
   artist: '',
@@ -20,7 +21,6 @@ const defaultValues = {
 
 export default function CreateSongModal() {
   const [open, setOpen] = useState(false);
-  const createSong = useInsert('songs');
   const {
     formState: { errors },
     handleSubmit,
@@ -36,12 +36,10 @@ export default function CreateSongModal() {
     reset(defaultValues);
   }
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { isSubmitting, onSubmit } = useServerAction({
     callbacks: [onClose],
     handleSubmit,
-    submitFn: async (song: SongInput) => {
-      await createSong(song);
-    },
+    submitFn: createSong,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   });
 

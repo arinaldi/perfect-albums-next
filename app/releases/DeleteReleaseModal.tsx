@@ -1,25 +1,26 @@
-import { useState } from 'react';
+'use client';
+import { FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import useDelete from 'hooks/useDelete';
-import useSubmit from 'hooks/useSubmit';
+import { useServerAction } from 'hooks/useServerAction';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
+import { deleteRelease } from './actions';
 
 interface Props {
-  data: Release | null;
+  data: Release;
 }
 
 export default function DeleteReleaseModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const deleteRelease = useDelete('releases');
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { isSubmitting, onSubmit } = useServerAction({
     callbacks: [() => setOpen(false)],
-    submitFn: async () => {
-      await deleteRelease(data?.id || 0);
+    submitFn: async (event: FormEvent) => {
+      event.preventDefault();
+      await deleteRelease(data.id);
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   });

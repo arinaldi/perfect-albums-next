@@ -1,4 +1,3 @@
-'use client';
 import { Session } from '@supabase/auth-helpers-nextjs';
 
 import { Song } from 'utils/types';

@@ -1,25 +1,26 @@
-import { useState } from 'react';
+'use client';
+import { FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import useDelete from 'hooks/useDelete';
-import useSubmit from 'hooks/useSubmit';
+import { useServerAction } from 'hooks/useServerAction';
 import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
+import { deleteSong } from './actions';
 
 interface Props {
-  data: Song | null;
+  data: Song;
 }
 
 export default function DeleteSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const deleteSong = useDelete('songs');
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { isSubmitting, onSubmit } = useServerAction({
     callbacks: [() => setOpen(false)],
-    submitFn: async () => {
-      await deleteSong(data?.id || 0);
+    submitFn: async (event: FormEvent) => {
+      event.preventDefault();
+      await deleteSong(data.id);
     },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   });
@@ -32,8 +33,7 @@ export default function DeleteSongModal({ data }: Props) {
       <Modal.Content title="Delete Song">
         <form className="mt-6 dark:text-white" onSubmit={onSubmit}>
           <p>
-            Are you sure you want to delete {data?.artist} &ndash; {data?.title}
-            ?
+            Are you sure you want to delete {data.artist} &ndash; {data.title}?
           </p>
           <div className="mt-8 flex items-center justify-end gap-2">
             <Modal.Button asChild>

@@ -1,26 +1,26 @@
+'use client';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 
-import { releaseSchema } from 'app/releases/schema';
 import { MESSAGES } from 'utils/constants';
-import useUpdate from 'hooks/useUpdate';
-import useSubmit from 'hooks/useSubmit';
+import { useServerAction } from 'hooks/useServerAction';
 import { formatDate } from 'utils';
-import { Release, ReleaseInput } from 'utils/types';
+import { Release } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
+import { editRelease } from './actions';
+import { ReleaseInput, releaseSchema } from './schema';
 
 interface Props {
-  data: Release | null;
+  data: Release;
 }
 
 export default function EditReleaseModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const editRelease = useUpdate('releases');
   const {
     formState: { errors },
     handleSubmit,
@@ -44,15 +44,10 @@ export default function EditReleaseModal({ data }: Props) {
     setOpen(false);
   }
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { isSubmitting, onSubmit } = useServerAction({
     callbacks: [onClose],
     handleSubmit,
-    submitFn: async (release: ReleaseInput) => {
-      await editRelease(data?.id || 0, {
-        ...release,
-        date: release.date || null,
-      });
-    },
+    submitFn: editRelease.bind(null, data.id),
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   });
 
