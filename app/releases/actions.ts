@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 
 import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
-import { type ReleaseInput, releaseSchema } from './schema';
+import { releaseSchema, type ReleaseInput } from './schema';
 
 export async function createRelease(release: ReleaseInput) {
   const result = releaseSchema.safeParse(release);

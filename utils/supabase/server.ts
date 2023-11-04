@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { createServerClient, CookieOptions } from '@supabase/ssr';
 
-import type { Database } from 'utils/db-types';
+import { type Database } from 'utils/db-types';
 
 export function createClient(cookieStore: ReturnType<typeof cookies>) {
   return createServerClient<Database>(

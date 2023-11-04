@@ -4,7 +4,7 @@ import { createClient } from 'utils/supabase/middleware';
 import { ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 
 export async function middleware(req: NextRequest) {
-  const { response, supabase } = createClient(req);
+  const { res, supabase } = createClient(req);
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -27,7 +27,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  return response;
+  return res;
 }
 
 export const config = {

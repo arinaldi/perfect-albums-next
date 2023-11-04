@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 
 import { createClient } from 'utils/supabase/server';
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
+export async function GET(req: Request) {
+  const url = new URL(req.url);
   const code = url.searchParams.get('code');
 
   if (code) {

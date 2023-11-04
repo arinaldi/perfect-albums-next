@@ -1,10 +1,10 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { type NextRequest, NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export const createClient = (request: NextRequest) => {
-  let response = NextResponse.next({
+export const createClient = (req: NextRequest) => {
+  let res = NextResponse.next({
     request: {
-      headers: request.headers,
+      headers: req.headers,
     },
   });
 
@@ -14,37 +14,37 @@ export const createClient = (request: NextRequest) => {
     {
       cookies: {
         get(name: string) {
-          return request.cookies.get(name)?.value;
+          return req.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
+          req.cookies.set({
             name,
             value,
             ...options,
           });
-          response = NextResponse.next({
+          res = NextResponse.next({
             request: {
-              headers: request.headers,
+              headers: req.headers,
             },
           });
-          response.cookies.set({
+          res.cookies.set({
             name,
             value,
             ...options,
           });
         },
         remove(name: string, options: CookieOptions) {
-          request.cookies.set({
+          req.cookies.set({
             name,
             value: '',
             ...options,
           });
-          response = NextResponse.next({
+          res = NextResponse.next({
             request: {
-              headers: request.headers,
+              headers: req.headers,
             },
           });
-          response.cookies.set({
+          res.cookies.set({
             name,
             value: '',
             ...options,
@@ -54,5 +54,5 @@ export const createClient = (request: NextRequest) => {
     },
   );
 
-  return { response, supabase };
+  return { res, supabase };
 };
