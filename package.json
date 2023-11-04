@@ -1,6 +1,6 @@
 {
   "name": "perfect-albums-next",
-  "version": "4.2.2",
+  "version": "5.0.0",
   "private": true,
   "scripts": {
     "dev": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next dev -p 3006",
