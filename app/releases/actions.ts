@@ -1,18 +1,19 @@
 'use server';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
 import { MESSAGES } from 'utils/constants';
-import { createActionClient } from 'utils/supabase-server';
-import { ReleaseInput, releaseSchema } from './schema';
+import { createClient } from 'utils/supabase/server';
+import { type ReleaseInput, releaseSchema } from './schema';
 
 export async function createRelease(release: ReleaseInput) {
   const result = releaseSchema.safeParse(release);
 
   if (!result.success) {
-    throw new Error('Invalid data');
+    throw new Error(MESSAGES.INVALID_DATA);
   }
 
-  const supabase = createActionClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -35,10 +36,10 @@ export async function editRelease(id: number, release: ReleaseInput) {
   const result = releaseSchema.safeParse(release);
 
   if (!result.success) {
-    throw new Error('Invalid data');
+    throw new Error(MESSAGES.INVALID_DATA);
   }
 
-  const supabase = createActionClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -61,7 +62,7 @@ export async function editRelease(id: number, release: ReleaseInput) {
 }
 
 export async function deleteRelease(id: number) {
-  const supabase = createActionClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();

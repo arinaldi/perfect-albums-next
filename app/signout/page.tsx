@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { ROUTE_HREF } from 'utils/constants';
-import { createClient } from '@/utils/supabase-browser';
+import { createClient } from 'utils/supabase/client';
 
 export default function SignoutPage() {
   const router = useRouter();

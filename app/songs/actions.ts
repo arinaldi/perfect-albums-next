@@ -1,18 +1,19 @@
 'use server';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
 import { MESSAGES } from 'utils/constants';
-import { createActionClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 import { SongInput, songSchema } from './schema';
 
 export async function createSong(song: SongInput) {
   const result = songSchema.safeParse(song);
 
   if (!result.success) {
-    throw new Error('Invalid data');
+    throw new Error(MESSAGES.INVALID_DATA);
   }
 
-  const supabase = createActionClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -29,7 +30,7 @@ export async function createSong(song: SongInput) {
 }
 
 export async function deleteSong(id: number) {
-  const supabase = createActionClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();

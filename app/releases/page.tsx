@@ -1,6 +1,8 @@
 import 'server-only';
+import { cookies } from 'next/headers';
+
 import NewReleases from 'app/releases/NewReleases';
-import { createServerClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 
 export const revalidate = 10;
 export const metadata = {
@@ -8,7 +10,7 @@ export const metadata = {
 };
 
 export default async function NewReleasesPage() {
-  const supabase = createServerClient();
+  const supabase = createClient(cookies());
   const { data } = await supabase
     .from('releases')
     .select('*')

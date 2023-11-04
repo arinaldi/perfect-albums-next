@@ -8,6 +8,7 @@ export enum MESSAGES {
   ERROR = 'Something went wrong',
   NO_DATA = 'No Data',
   NOT_AUTHORIZED = 'Not authorized',
+  INVALID_DATA = 'Invalid data',
 }
 
 export enum PER_PAGE {

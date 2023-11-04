@@ -1,8 +1,8 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { MESSAGES } from 'utils/constants';
-import { createActionClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
 import Checkbox from 'components/Checkbox';
 import Input from 'components/Input';
@@ -16,7 +16,7 @@ export const metadata = {
 export default function CreateAlbumPage() {
   async function createAlbum(formData: FormData) {
     'use server';
-    const supabase = createActionClient();
+    const supabase = createClient(cookies());
     const {
       data: { session },
     } = await supabase.auth.getSession();

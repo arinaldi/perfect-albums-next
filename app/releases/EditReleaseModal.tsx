@@ -4,16 +4,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 
-import { MESSAGES } from 'utils/constants';
 import { useServerAction } from 'hooks/useServerAction';
 import { formatDate } from 'utils';
+import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
 import { editRelease } from './actions';
-import { ReleaseInput, releaseSchema } from './schema';
+import { releaseSchema, type ReleaseInput } from './schema';
 
 interface Props {
   data: Release;

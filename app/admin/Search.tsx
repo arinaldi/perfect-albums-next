@@ -33,7 +33,7 @@ export default function Search({ hasFocus, type }: Props) {
 
     const { value } = event.target;
     const id = setTimeout(() => {
-      const params = new URLSearchParams(searchParams?.toString() ?? '');
+      const params = new URLSearchParams(searchParams?.toString());
 
       if (value) {
         params.set(type, value);
@@ -55,7 +55,7 @@ export default function Search({ hasFocus, type }: Props) {
   }
 
   function onClear() {
-    const params = new URLSearchParams(searchParams?.toString() ?? '');
+    const params = new URLSearchParams(searchParams?.toString());
 
     params.delete(type);
     params.delete('sort');

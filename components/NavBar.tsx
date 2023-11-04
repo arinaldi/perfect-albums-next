@@ -1,7 +1,7 @@
 'use client';
 import { useReducer } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { User } from '@supabase/auth-helpers-nextjs';
+import { type User } from '@supabase/supabase-js';
 import {
   Cross1Icon,
   EnterIcon,
@@ -15,7 +15,7 @@ import LinkWrapper from 'components/LinkWrapper';
 import useDarkMode from 'hooks/useDarkMode';
 import { cn } from 'utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
-import { createClient } from 'utils/supabase-browser';
+import { createClient } from 'utils/supabase/client';
 
 interface Props {
   user: User | undefined;

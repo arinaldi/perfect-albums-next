@@ -1,10 +1,11 @@
 import 'server-only';
+import { cookies } from 'next/headers';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
-import { createServerClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
 
@@ -21,14 +22,14 @@ const inter = Inter({
 });
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = createServerClient();
+  const supabase = createClient(cookies());
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
   return (
     <html lang="en" className={inter.className}>
-      <body className="text-gray-900 min-h-screen bg-white antialiased dark:bg-gray-800">
+      <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-800">
         <NavBar user={session?.user} />
         <TailwindIndicator />
         <Toaster

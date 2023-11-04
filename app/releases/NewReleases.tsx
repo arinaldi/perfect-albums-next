@@ -1,4 +1,4 @@
-import { Session } from '@supabase/auth-helpers-nextjs';
+import { type Session } from '@supabase/supabase-js';
 
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';

@@ -1,5 +1,5 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
-import { FieldError } from 'react-hook-form';
+import { type FieldError } from 'react-hook-form';
 
 import { cn } from 'utils';
 
@@ -36,11 +36,11 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         {...rest}
       />
-      {error?.message ? (
+      {error?.message && (
         <p className="mt-1 text-sm text-red-600" id={errorId}>
           {error.message}
         </p>
-      ) : null}
+      )}
     </div>
   );
 });
