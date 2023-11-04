@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
-import { createRouteClient } from '@/utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   const url = new URL(req.url);
   const code = url.searchParams.get('code');
 
   if (code) {
-    const supabase = createRouteClient();
+    const supabase = createClient(cookies());
     await supabase.auth.exchangeCodeForSession(code);
   }
 

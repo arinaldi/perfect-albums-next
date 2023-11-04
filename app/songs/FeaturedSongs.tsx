@@ -1,4 +1,4 @@
-import { Session } from '@supabase/auth-helpers-nextjs';
+import { type Session } from '@supabase/supabase-js';
 
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';

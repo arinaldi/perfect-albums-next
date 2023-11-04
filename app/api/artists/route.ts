@@ -1,7 +1,8 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { SupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { type SupabaseClient } from '@supabase/supabase-js';
 
-import { createRouteClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 
 interface Artist {
   artist: string;
@@ -18,7 +19,7 @@ async function getArtists(supabase: SupabaseClient): Promise<string[]> {
 }
 
 export async function GET() {
-  const supabase = createRouteClient();
+  const supabase = createClient(cookies());
 
   try {
     const artists = await getArtists(supabase);

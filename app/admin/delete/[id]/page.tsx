@@ -1,9 +1,9 @@
 import 'server-only';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 
 import { MESSAGES } from 'utils/constants';
-import { createActionClient, createServerClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
 import SubmitButton from 'app/admin/SubmitButton';
 
@@ -19,12 +19,12 @@ export const metadata = {
   title: 'Delete Album | Perfect Albums',
 };
 
-export default async function DeleteAlbumPage({ params }: Props) {
-  const supabase = createServerClient();
+export default async function DeleteAlbumPage({ params: { id } }: Props) {
+  const supabase = createClient(cookies());
   const { data } = await supabase
     .from('albums')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (!data) {
@@ -33,7 +33,7 @@ export default async function DeleteAlbumPage({ params }: Props) {
 
   async function deleteAlbum(formData: FormData) {
     'use server';
-    const supabase = createActionClient();
+    const supabase = createClient(cookies());
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -44,7 +44,6 @@ export default async function DeleteAlbumPage({ params }: Props) {
 
     const referer = headers().get('referer') ?? '';
     const url = new URL(referer);
-    const { id } = Object.fromEntries(formData.entries());
     const { error } = await supabase.from('albums').delete().eq('id', id);
 
     if (error) {
@@ -59,7 +58,6 @@ export default async function DeleteAlbumPage({ params }: Props) {
       <form action={deleteAlbum}>
         <div className="bg-white dark:bg-gray-800 dark:text-white">
           Are you sure you want to delete {data.artist} – {data.title}?
-          <input name="id" type="hidden" value={data.id} />
         </div>
         <div className="mt-6 flex items-center">
           <SubmitButton />

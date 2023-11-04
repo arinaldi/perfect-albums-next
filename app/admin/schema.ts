@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 export const albumSchema = z.object({
-  id: z.coerce.number().optional(),
   artist: z.string().min(1).max(128),
   title: z.string().min(1).max(128),
   year: z.coerce.number().gte(1900).lte(2100),

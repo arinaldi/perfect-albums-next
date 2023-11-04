@@ -1,6 +1,8 @@
 import 'server-only';
+import { cookies } from 'next/headers';
+
 import TopAlbums from 'app/albums/TopAlbums';
-import { createServerClient } from 'utils/supabase-server';
+import { createClient } from 'utils/supabase/server';
 
 export const revalidate = 10;
 export const metadata = {
@@ -8,7 +10,7 @@ export const metadata = {
 };
 
 export default async function TopAlbumsPage() {
-  const supabase = createServerClient();
+  const supabase = createClient(cookies());
   const { data } = await supabase
     .from('albums')
     .select('*')

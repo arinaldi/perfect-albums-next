@@ -1,12 +1,16 @@
 import { forwardRef, InputHTMLAttributes, useReducer } from 'react';
 import { EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons';
+import { type FieldError } from 'react-hook-form';
+
+import { cn } from 'utils';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  error?: FieldError;
   wrapperClassName?: string;
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { wrapperClassName = '', ...rest } = props;
+  const { error, wrapperClassName = '', ...rest } = props;
   const [on, toggle] = useReducer((flag) => !flag, false);
 
   return (
@@ -21,10 +25,14 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
         <input
           autoCapitalize="off"
           autoComplete="password"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
+          className={cn(
+            'mt-1 block w-full rounded-md shadow-sm disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm',
+            error?.message
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
+          )}
           id="password"
           ref={ref}
-          required
           type={on ? 'text' : 'password'}
           {...rest}
         />
@@ -40,6 +48,11 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           )}
         </div>
       </div>
+      {error?.message && (
+        <p className="mt-1 text-sm text-red-600" id="password-error">
+          {error.message}
+        </p>
+      )}
     </div>
   );
 });

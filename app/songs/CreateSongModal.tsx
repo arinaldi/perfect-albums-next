@@ -3,15 +3,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { songSchema } from 'app/songs/schema';
-import { MESSAGES } from 'utils/constants';
 import { useServerAction } from 'hooks/useServerAction';
+import { MESSAGES } from 'utils/constants';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
 import PrimaryButton from 'components/PrimaryButton';
 import SecondaryButton from 'components/SecondaryButton';
 import { createSong } from './actions';
-import { SongInput } from './schema';
+import { songSchema, type SongInput } from './schema';
 
 const defaultValues = {
   artist: '',
