@@ -32,7 +32,9 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
               : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
           )}
           id="password"
+          name="password"
           ref={ref}
+          required
           type={on ? 'text' : 'password'}
           {...rest}
         />

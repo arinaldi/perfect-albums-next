@@ -4,19 +4,26 @@ import { redirect } from 'next/navigation';
 
 import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
-import { SignInInput, signInSchema } from './schema';
+import { signInSchema, type State } from './schema';
 
-export async function signIn(data: SignInInput) {
-  const result = signInSchema.safeParse(data);
+export async function signIn(_: State, formData: FormData) {
+  const form = Object.fromEntries(formData.entries());
+  const result = signInSchema.safeParse(form);
 
   if (!result.success) {
-    throw new Error(MESSAGES.INVALID_DATA);
+    return {
+      message: MESSAGES.INVALID_DATA,
+    };
   }
 
   const supabase = createClient(cookies());
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error } = await supabase.auth.signInWithPassword(result.data);
 
-  if (error) throw error;
+  if (error) {
+    return {
+      message: error.message,
+    };
+  }
 
   redirect(ROUTES_ADMIN.base.href);
 }

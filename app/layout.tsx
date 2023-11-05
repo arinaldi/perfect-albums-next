@@ -34,8 +34,8 @@ export default async function RootLayout({ children }: Children) {
         <TailwindIndicator />
         <Toaster
           toastOptions={{
-            className: 'dark:bg-gray-700 dark:text-white',
-            position: 'bottom-center',
+            className: 'dark:bg-gray-700 dark:text-white text-sm',
+            position: 'top-center',
           }}
         />
         <main>{children}</main>

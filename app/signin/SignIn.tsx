@@ -1,51 +1,43 @@
 'use client';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useFormState } from 'react-dom';
+import { toast } from 'react-hot-toast';
 
-import { useServerAction } from 'hooks/useServerAction';
 import AppLayout from 'components/AppLayout';
 import Input from 'components/Input';
 import PasswordInput from 'components/PasswordInput';
-import PrimaryButton from 'components/PrimaryButton';
+import SubmitButton from 'app/admin/SubmitButton';
 import { signIn } from './actions';
-import { signInSchema, type SignInInput } from './schema';
+import { initialState } from './schema';
 
 export default function SignIn() {
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<SignInInput>({
-    resolver: zodResolver(signInSchema),
-  });
-  const { isSubmitting, onSubmit } = useServerAction({
-    callbacks: [],
-    handleSubmit,
-    submitFn: signIn,
-  });
+  const [state, formAction] = useFormState(signIn, initialState);
+
+  useEffect(() => {
+    if (state.message) {
+      toast.error(state.message);
+    }
+    // state.message will not trigger effect if same value
+  }, [state]);
 
   return (
     <AppLayout className="max-w-sm" title="Sign In">
-      <form onSubmit={onSubmit}>
+      <form action={formAction}>
         <fieldset>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6">
               <Input
-                error={errors.email}
                 id="email"
+                name="email"
+                required
                 type="email"
                 wrapperClassName="mt-4"
-                {...register('email')}
               />
-              <PasswordInput
-                error={errors.password}
-                wrapperClassName="mt-4"
-                {...register('password')}
-              />
+              <PasswordInput wrapperClassName="mt-4" />
             </div>
           </div>
           <div className="mt-6 flex items-center">
-            <PrimaryButton isSubmitting={isSubmitting} />
+            <SubmitButton />
           </div>
         </fieldset>
       </form>

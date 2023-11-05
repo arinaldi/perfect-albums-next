@@ -6,3 +6,11 @@ export const signInSchema = z.object({
 });
 
 export type SignInInput = z.infer<typeof signInSchema>;
+
+export interface State {
+  message: string | null;
+}
+
+export const initialState: State = {
+  message: null,
+};
