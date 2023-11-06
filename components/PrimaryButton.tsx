@@ -27,7 +27,7 @@ export default function PrimaryButton(props: Props) {
       {...rest}
       disabled={rest.disabled || isSubmitting}
     >
-      {isSubmitting && <Spinner className="-ml-0.5 h-5 w-5 text-white" />}
+      {isSubmitting && <Spinner className="-ml-0.5 h-4 w-4 text-white" />}
       {label}
     </button>
   );
