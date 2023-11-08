@@ -4,10 +4,7 @@ import { createClient } from 'utils/supabase/middleware';
 import { ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 
 export async function middleware(req: NextRequest) {
-  const { res, supabase } = createClient(req);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { res, session } = await createClient(req);
 
   if (req.nextUrl.pathname === '/') {
     const url = req.nextUrl.clone();

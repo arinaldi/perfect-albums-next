@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-export const createClient = (req: NextRequest) => {
+export const createClient = async (req: NextRequest) => {
   let res = NextResponse.next({
     request: {
       headers: req.headers,
@@ -53,6 +53,9 @@ export const createClient = (req: NextRequest) => {
       },
     },
   );
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  return { res, supabase };
+  return { res, session };
 };
