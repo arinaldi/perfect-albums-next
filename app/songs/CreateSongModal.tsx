@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useServerAction } from 'hooks/useServerAction';
+import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
 import Input from 'components/Input';
 import Modal from 'components/Modal';
@@ -35,7 +35,7 @@ export default function CreateSongModal() {
     reset(defaultValues);
   }
 
-  const { isSubmitting, onSubmit } = useServerAction({
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit,
     submitFn: createSong,

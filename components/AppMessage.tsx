@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 
-import { cn } from '@/utils';
+import { cn } from 'utils';
 
 type Variant = 'error' | 'info';
 

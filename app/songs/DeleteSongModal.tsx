@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import { useServerAction } from 'hooks/useServerAction';
+import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import Modal from 'components/Modal';
@@ -16,7 +16,7 @@ interface Props {
 
 export default function DeleteSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const { isSubmitting, onSubmit } = useServerAction({
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();

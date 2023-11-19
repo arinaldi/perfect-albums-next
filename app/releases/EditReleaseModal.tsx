@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 
-import { useServerAction } from 'hooks/useServerAction';
+import { useSubmit } from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
@@ -44,7 +44,7 @@ export default function EditReleaseModal({ data }: Props) {
     setOpen(false);
   }
 
-  const { isSubmitting, onSubmit } = useServerAction({
+  const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit,
     submitFn: editRelease.bind(null, data.id),
