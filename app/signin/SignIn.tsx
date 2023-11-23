@@ -22,24 +22,13 @@ export default function SignIn() {
 
   return (
     <AppLayout className="max-w-sm" title="Sign In">
-      <form action={formAction}>
-        <fieldset>
-          <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6">
-              <Input
-                id="email"
-                name="email"
-                required
-                type="email"
-                wrapperClassName="mt-4"
-              />
-              <PasswordInput wrapperClassName="mt-4" />
-            </div>
-          </div>
-          <div className="mt-6 flex items-center">
-            <SubmitButton />
-          </div>
-        </fieldset>
+      <form action={formAction} className="mt-4 flex flex-col gap-4">
+        <Input id="email" name="email" required type="email" />
+        <PasswordInput />
+        <Input id="name" name="name" tabIndex={-1} wrapperClassName="hidden" />
+        <div className="mt-2 flex items-center">
+          <SubmitButton />
+        </div>
       </form>
     </AppLayout>
   );

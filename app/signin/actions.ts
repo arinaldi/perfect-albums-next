@@ -10,7 +10,7 @@ export async function signIn(_: State, formData: FormData) {
   const form = Object.fromEntries(formData.entries());
   const result = signInSchema.safeParse(form);
 
-  if (!result.success) {
+  if (form.name || !result.success) {
     return {
       message: MESSAGES.INVALID_DATA,
     };
