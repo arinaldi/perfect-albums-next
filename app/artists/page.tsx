@@ -9,7 +9,7 @@ interface Payload {
 }
 
 export const metadata = {
-  title: 'Artists | Perfect Albums',
+  title: 'Artists | Perfect albums',
 };
 
 async function getArtists(): Promise<Payload> {

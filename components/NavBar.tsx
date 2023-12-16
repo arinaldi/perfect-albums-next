@@ -1,5 +1,6 @@
 'use client';
 import { useReducer } from 'react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { type User } from '@supabase/supabase-js';
 import {
@@ -63,9 +64,12 @@ export default function NavBar({ user }: Props) {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <span className="text-xl font-semibold text-white">
-                Perfect Albums
-              </span>
+              <Link
+                className="text-lg font-semibold text-white"
+                href="/dashboard"
+              >
+                Perfect albums
+              </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex">

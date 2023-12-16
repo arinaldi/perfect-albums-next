@@ -17,7 +17,7 @@ export default function Random({ artists }: Props) {
 
   return (
     <div className="flex flex-col items-start gap-2">
-      <SecondaryButton label="Get Random Artist" onClick={onClick} />
+      <SecondaryButton label="Get random artist" onClick={onClick} />
       <p>{value}</p>
     </div>
   );

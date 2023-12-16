@@ -47,7 +47,7 @@ export default function CreateReleaseModal() {
       <Modal.Button asChild>
         <SecondaryButton label="New" />
       </Modal.Button>
-      <Modal.Content title="Create Release">
+      <Modal.Content title="Create release">
         <form className="mt-6" onSubmit={onSubmit}>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6">

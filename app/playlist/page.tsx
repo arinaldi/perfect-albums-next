@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Playlist | Perfect Albums',
+  title: 'Playlist | Perfect albums',
 };
 
 export default function Playlist() {

@@ -85,16 +85,16 @@ export const MONTHS = [
 ];
 
 export const ROUTES = [
-  { href: ROUTE_HREF.TOP_ALBUMS, label: 'Top Albums' },
-  { href: ROUTE_HREF.FEATURED_SONGS, label: 'Featured Songs' },
-  { href: ROUTE_HREF.NEW_RELEASES, label: 'New Releases' },
+  { href: ROUTE_HREF.TOP_ALBUMS, label: 'Top albums' },
+  { href: ROUTE_HREF.FEATURED_SONGS, label: 'Featured songs' },
+  { href: ROUTE_HREF.NEW_RELEASES, label: 'New releases' },
 ];
 
 export const ROUTES_ADMIN = {
   base: { href: '/admin', label: 'Admin' },
-  create: { href: '/admin/create', label: 'Admin Create' },
-  edit: { href: '/admin/edit', label: 'Admin Edit' },
-  delete: { href: '/admin/delete', label: 'Admin Delete' },
+  create: { href: '/admin/create', label: 'Admin create' },
+  edit: { href: '/admin/edit', label: 'Admin edit' },
+  delete: { href: '/admin/delete', label: 'Admin delete' },
 };
 
 export const SPOTIFY_URL = 'https://open.spotify.com/search';

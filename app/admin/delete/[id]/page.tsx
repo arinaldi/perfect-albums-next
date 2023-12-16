@@ -16,7 +16,7 @@ interface Props {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const metadata = {
-  title: 'Delete Album | Perfect Albums',
+  title: 'Delete album | Perfect albums',
 };
 
 export default async function DeleteAlbumPage({ params: { id } }: Props) {
@@ -54,7 +54,7 @@ export default async function DeleteAlbumPage({ params: { id } }: Props) {
   }
 
   return (
-    <AppLayout title="Delete Album">
+    <AppLayout title="Delete album">
       <form action={deleteAlbum}>
         <div className="bg-white dark:bg-gray-800 dark:text-white">
           Are you sure you want to delete {data.artist} – {data.title}?
