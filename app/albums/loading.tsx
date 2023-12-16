@@ -3,7 +3,7 @@ import Spinner from 'components/Spinner';
 
 export default function TopAlbumsLoading() {
   return (
-    <AppLayout title="Top Albums">
+    <AppLayout title="Top albums">
       <div className="mt-8 flex justify-center">
         <Spinner />
       </div>

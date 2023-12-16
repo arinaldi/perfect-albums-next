@@ -11,7 +11,7 @@ import { Album } from 'utils/types';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const metadata = {
-  title: 'Admin | Perfect Albums',
+  title: 'Admin | Perfect albums',
 };
 const { ASC, DESC } = SORT_DIRECTION;
 

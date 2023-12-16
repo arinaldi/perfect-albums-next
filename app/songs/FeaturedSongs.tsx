@@ -16,7 +16,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
     <AppLayout
       title={
         <div className="flex items-center gap-2">
-          <span>Featured Songs</span>
+          <span>Featured songs</span>
           <Badge label={songs.length.toLocaleString()} />
         </div>
       }

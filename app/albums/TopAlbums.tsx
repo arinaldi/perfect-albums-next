@@ -42,7 +42,7 @@ export default function TopAlbums({ albums }: Props) {
     <AppLayout
       title={
         <div className="flex items-center gap-2">
-          <span>Top Albums</span>
+          <span>Top albums</span>
           <Badge label={albums.length.toLocaleString()} />
         </div>
       }

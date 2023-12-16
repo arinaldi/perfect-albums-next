@@ -18,7 +18,7 @@ interface Props {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const metadata = {
-  title: 'Edit Album | Perfect Albums',
+  title: 'Edit album | Perfect albums',
 };
 
 export default async function EditAlbumPage({ params: { id } }: Props) {
@@ -64,7 +64,7 @@ export default async function EditAlbumPage({ params: { id } }: Props) {
   }
 
   return (
-    <AppLayout title="Edit Album">
+    <AppLayout title="Edit album">
       <form action={editAlbum}>
         <div className="bg-white dark:bg-gray-800">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -95,7 +95,7 @@ export default async function EditAlbumPage({ params: { id } }: Props) {
             <Checkbox
               defaultChecked={data.studio}
               id="studio"
-              label="Studio Album"
+              label="Studio album"
               name="studio"
               wrapperClassName="order-4 sm:order-2"
             />

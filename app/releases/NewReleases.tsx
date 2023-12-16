@@ -18,7 +18,7 @@ export default function NewReleases({ releases, session }: Props) {
     <AppLayout
       title={
         <div className="flex items-center gap-2">
-          <span>New Releases</span>
+          <span>New releases</span>
           <Badge label={releases.length.toLocaleString()} />
         </div>
       }

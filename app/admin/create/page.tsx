@@ -10,7 +10,7 @@ import SubmitButton from 'app/admin/SubmitButton';
 import { albumSchema } from '../schema';
 
 export const metadata = {
-  title: 'Create Album | Perfect Albums',
+  title: 'Create album | Perfect albums',
 };
 
 export default function CreateAlbumPage() {
@@ -42,7 +42,7 @@ export default function CreateAlbumPage() {
   }
 
   return (
-    <AppLayout title="Create Album">
+    <AppLayout title="Create album">
       <form action={createAlbum}>
         <div className="bg-white dark:bg-gray-800">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -70,7 +70,7 @@ export default function CreateAlbumPage() {
             />
             <Checkbox
               id="studio"
-              label="Studio Album"
+              label="Studio album"
               name="studio"
               wrapperClassName="order-4 sm:order-2"
             />

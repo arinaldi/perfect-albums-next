@@ -21,7 +21,7 @@ export default function SignIn() {
   }, [state]);
 
   return (
-    <AppLayout className="max-w-sm" title="Sign In">
+    <AppLayout className="max-w-sm" title="Sign in">
       <form action={formAction} className="mt-4 flex flex-col gap-4">
         <Input id="email" name="email" required type="email" />
         <PasswordInput />

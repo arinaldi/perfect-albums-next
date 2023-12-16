@@ -30,7 +30,7 @@ export default function DeleteReleaseModal({ data }: Props) {
       <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <TrashIcon className="inline h-4 w-4" />
       </Modal.Button>
-      <Modal.Content title="Delete Release">
+      <Modal.Content title="Delete release">
         <form className="mt-6 dark:text-white" onSubmit={onSubmit}>
           <p>
             Are you sure you want to delete {data?.artist} &ndash; {data?.title}
