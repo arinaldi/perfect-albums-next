@@ -26,14 +26,14 @@ export default function DashboardLayout({
 }: Props) {
   return (
     <AppLayout title="Dashboard">
-      <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {topAlbums}
+      <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {songs}
         {releases}
         {totalAlbums}
+        {topAlbums}
         {cds}
       </dl>
-      <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {leaderboard}
       </div>
     </AppLayout>
