@@ -15,9 +15,7 @@ export default async function DashboardLeaderboard() {
 
   if (!data || error) return <AppMessage />;
 
-  const items = (data as unknown as Leaderboard[]).filter(
-    ({ artist }) => artist !== 'Various Artists',
-  );
+  const items = data as unknown as Leaderboard[];
 
   return (
     <div className="flex flex-col">
