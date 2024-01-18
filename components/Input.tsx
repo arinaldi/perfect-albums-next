@@ -1,5 +1,6 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { type FieldError } from 'react-hook-form';
+import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 import { cn } from 'utils';
 
@@ -21,6 +22,15 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
       >
         {id}
       </label>
+      {error?.message && (
+        <p
+          className="mt-1 flex items-center gap-1 text-sm text-red-600"
+          id={errorId}
+        >
+          <CrossCircledIcon className="h-4 w-4" />
+          {error.message}
+        </p>
+      )}
       <input
         autoCapitalize={id === 'email' ? 'off' : 'on'}
         autoComplete={id}
@@ -36,11 +46,6 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         {...rest}
       />
-      {error?.message && (
-        <p className="mt-1 text-sm text-red-600" id={errorId}>
-          {error.message}
-        </p>
-      )}
     </div>
   );
 });

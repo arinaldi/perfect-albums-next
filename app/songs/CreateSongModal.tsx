@@ -45,9 +45,9 @@ export default function CreateSongModal() {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <Modal.Button asChild>
-        <SecondaryButton label="New" />
+        <PrimaryButton label="Add song" type="button" />
       </Modal.Button>
-      <Modal.Content title="Create song">
+      <Modal.Content title="Add song">
         <form className="mt-6" onSubmit={onSubmit}>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6">
@@ -75,10 +75,10 @@ export default function CreateSongModal() {
               />
             </div>
           </div>
-          <div className="mt-8 flex items-center justify-end gap-2">
-            <SecondaryButton onClick={onClose} />
+          <Modal.Footer>
             <PrimaryButton isSubmitting={isSubmitting} />
-          </div>
+            <SecondaryButton onClick={onClose} />
+          </Modal.Footer>
         </form>
       </Modal.Content>
     </Modal>

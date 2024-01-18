@@ -36,12 +36,12 @@ export default function DeleteReleaseModal({ data }: Props) {
             Are you sure you want to delete {data?.artist} &ndash; {data?.title}
             ?
           </p>
-          <div className="mt-8 flex items-center justify-end gap-2">
+          <Modal.Footer>
+            <PrimaryButton isSubmitting={isSubmitting} />
             <Modal.Button asChild>
               <SecondaryButton />
             </Modal.Button>
-            <PrimaryButton isSubmitting={isSubmitting} />
-          </div>
+          </Modal.Footer>
         </form>
       </Modal.Content>
     </Modal>

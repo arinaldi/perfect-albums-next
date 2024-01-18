@@ -68,7 +68,7 @@ export default function TopAlbums({ albums }: Props) {
                     <li key={index} className="dark:text-white">
                       {artist} &ndash;{' '}
                       <a
-                        className="text-blue-700 hover:underline dark:text-blue-300"
+                        className="text-blue-700 underline decoration-dotted dark:text-blue-300"
                         href={url}
                         rel="noopener noreferrer"
                         target="_blank"

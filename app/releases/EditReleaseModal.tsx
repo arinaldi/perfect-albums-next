@@ -84,10 +84,10 @@ export default function EditReleaseModal({ data }: Props) {
               />
             </div>
           </div>
-          <div className="mt-8 flex items-center justify-end gap-2">
-            <SecondaryButton onClick={onClose} />
+          <Modal.Footer>
             <PrimaryButton isSubmitting={isSubmitting} />
-          </div>
+            <SecondaryButton onClick={onClose} />
+          </Modal.Footer>
         </form>
       </Modal.Content>
     </Modal>

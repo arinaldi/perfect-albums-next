@@ -35,12 +35,12 @@ export default function FeaturedSongs({ session, songs }: Props) {
               {session && <DeleteSongModal data={song} />}
             </div>
             <a
-              className="text-blue-700 hover:underline dark:text-blue-500"
+              className="text-blue-700 underline decoration-dotted dark:text-blue-500"
               href={song.link}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <dd className="-mt-1 text-xl font-medium">{song.title}</dd>
+              <dd className="-mt-1 text-lg font-medium">{song.title}</dd>
             </a>
           </div>
         ))}

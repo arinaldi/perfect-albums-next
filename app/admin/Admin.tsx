@@ -6,7 +6,7 @@ import AlbumActions from 'app/admin/AlbumActions';
 import Badge from 'components/Badge';
 import Column from 'app/admin/Column';
 import Layout from 'components/AppLayout';
-import NewAlbumButton from 'app/admin/NewAlbumButton';
+import AddAlbumButton from 'app/admin/AddAlbumButton';
 import Pagination from 'app/admin/Pagination';
 import PerPage from 'app/admin/PerPage';
 import Search from 'app/admin/Search';
@@ -42,7 +42,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <Search hasFocus type="artist" />
         <Search type="title" />
-        <NewAlbumButton />
+        <AddAlbumButton />
       </div>
 
       <div className="mb-2 flex justify-center sm:mb-4">

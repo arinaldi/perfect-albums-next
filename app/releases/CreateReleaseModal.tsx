@@ -45,9 +45,9 @@ export default function CreateReleaseModal() {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <Modal.Button asChild>
-        <SecondaryButton label="New" />
+        <PrimaryButton label="Add release" type="button" />
       </Modal.Button>
-      <Modal.Content title="Create release">
+      <Modal.Content title="Add release">
         <form className="mt-6" onSubmit={onSubmit}>
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6">
@@ -75,10 +75,10 @@ export default function CreateReleaseModal() {
               />
             </div>
           </div>
-          <div className="mt-8 flex items-center justify-end gap-2">
-            <SecondaryButton onClick={onClose} />
+          <Modal.Footer>
             <PrimaryButton isSubmitting={isSubmitting} />
-          </div>
+            <SecondaryButton onClick={onClose} />
+          </Modal.Footer>
         </form>
       </Modal.Content>
     </Modal>
