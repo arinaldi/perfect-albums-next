@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
+import { ThemeProvider } from 'components/ThemeProvider';
 import { ToastProvider } from 'components/Toast';
 import { createClient } from 'utils/supabase/server';
 import { Children } from 'utils/types';
@@ -28,29 +29,15 @@ export default async function RootLayout({ children }: Children) {
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en" className={inter.className}>
+    <html className={inter.className} lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-800">
-        <ToastProvider>
-          <NavBar user={session?.user} />
-          <TailwindIndicator />
-          <main>{children}</main>
-          <script
-            id="dark-mode"
-            dangerouslySetInnerHTML={{
-              __html: `
-            const root = window.document.documentElement;
-            const prefersDark = !('theme' in localStorage) &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (localStorage.theme === 'dark' || prefersDark) {
-              root.classList.add('dark');
-            } else {
-              root.classList.remove('dark');
-            }
-            `,
-            }}
-          />
-        </ToastProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ToastProvider>
+            <NavBar user={session?.user} />
+            <TailwindIndicator />
+            <main>{children}</main>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

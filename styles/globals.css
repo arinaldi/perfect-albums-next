@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  transition:
-    color 0.15s ease-out,
-    background 0.15s ease-out;
-}
-
 @keyframes dialog-overlay-show {
   from {
     opacity: 0;
