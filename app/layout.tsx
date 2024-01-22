@@ -1,10 +1,10 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'react-hot-toast';
 
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
+import { ToastProvider } from 'components/Toast';
 import { createClient } from 'utils/supabase/server';
 import { Children } from 'utils/types';
 import 'styles/globals.css';
@@ -30,31 +30,27 @@ export default async function RootLayout({ children }: Children) {
   return (
     <html lang="en" className={inter.className}>
       <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-800">
-        <NavBar user={session?.user} />
-        <TailwindIndicator />
-        <Toaster
-          toastOptions={{
-            className: 'dark:bg-gray-700 dark:text-white text-sm',
-            position: 'top-center',
-          }}
-        />
-        <main>{children}</main>
-        <script
-          id="dark-mode"
-          dangerouslySetInnerHTML={{
-            __html: `
+        <ToastProvider>
+          <NavBar user={session?.user} />
+          <TailwindIndicator />
+          <main>{children}</main>
+          <script
+            id="dark-mode"
+            dangerouslySetInnerHTML={{
+              __html: `
             const root = window.document.documentElement;
             const prefersDark = !('theme' in localStorage) &&
-              window.matchMedia('(prefers-color-scheme: dark)').matches;
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
 
             if (localStorage.theme === 'dark' || prefersDark) {
               root.classList.add('dark');
             } else {
               root.classList.remove('dark');
             }
-          `,
-          }}
-        />
+            `,
+            }}
+          />
+        </ToastProvider>
       </body>
     </html>
   );

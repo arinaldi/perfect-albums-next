@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
-import toast from 'react-hot-toast';
 import { UseFormHandleSubmit } from 'react-hook-form';
 
+import { useToast } from 'components/Toast';
 import { MESSAGES } from 'utils/constants';
 import { Callback } from 'utils/types';
 
@@ -20,6 +20,7 @@ interface Payload {
 export function useSubmit(options: Options): Payload {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { callbacks, handleSubmit, submitFn, successMessage = '' } = options;
+  const { showToast } = useToast();
 
   async function handler(data?: any) {
     try {
@@ -32,7 +33,7 @@ export function useSubmit(options: Options): Payload {
       });
 
       if (successMessage) {
-        toast.success(successMessage);
+        showToast(successMessage);
       }
     } catch (error: any) {
       setIsSubmitting(false);
@@ -44,7 +45,7 @@ export function useSubmit(options: Options): Payload {
         message = error.message;
       }
 
-      toast.error(message);
+      showToast(message);
     }
   }
 
