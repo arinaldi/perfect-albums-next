@@ -29,7 +29,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
 
   const AppMetadata = (
     <div className="flex items-center gap-4 dark:text-white">
-      <code className="text-sm">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
+      <code className="text-xs">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
       <span className="flex items-center gap-0.5">
         <Badge label={cdTotal.toLocaleString()} />
         <span className="text-sm">CD{cdTotal === 1 ? '' : 's'}</span>
