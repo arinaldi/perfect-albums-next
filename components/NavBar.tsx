@@ -57,11 +57,9 @@ export default function NavBar({ user }: Props) {
             >
               <span className="sr-only">Open main menu</span>
               <HamburgerMenuIcon
-                className={cn('h-6 w-6', open ? 'hidden' : 'block')}
+                className={cn('size-6', open ? 'hidden' : 'block')}
               />
-              <Cross1Icon
-                className={cn('h-6 w-6', open ? 'block' : 'hidden')}
-              />
+              <Cross1Icon className={cn('size-6', open ? 'block' : 'hidden')} />
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -97,14 +95,14 @@ export default function NavBar({ user }: Props) {
             >
               <span className="sr-only">Toggle dark mode</span>
               {theme === 'dark' ? (
-                <SunIcon className="h-5 w-5" />
+                <SunIcon className="size-5" />
               ) : (
-                <MoonIcon className="h-5 w-5" />
+                <MoonIcon className="size-5" />
               )}
             </button>
           ) : (
             <button className="invisible p-2">
-              <SunIcon className="h-5 w-5" />
+              <SunIcon className="size-5" />
             </button>
           )}
           <div className="absolute inset-y-0 right-0 hidden pr-2 sm:static sm:inset-auto sm:ml-0 sm:flex sm:items-center sm:pr-0">
@@ -113,14 +111,14 @@ export default function NavBar({ user }: Props) {
                 onClick={signOut}
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
-                <ExitIcon className="h-5 w-5" />
+                <ExitIcon className="size-5" />
               </div>
             ) : (
               <div
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
                 onClick={() => router.push(ROUTE_HREF.SIGNIN)}
               >
-                <EnterIcon className="h-5 w-5" />
+                <EnterIcon className="size-5" />
               </div>
             )}
           </div>

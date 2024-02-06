@@ -86,7 +86,7 @@ export default function TopAlbums({ albums }: Props) {
         className="fixed bottom-0 right-0 p-5 text-gray-500 dark:text-gray-200"
         href="#top"
       >
-        <ArrowUpIcon className="mr-1 inline h-4 w-4" />
+        <ArrowUpIcon className="mr-1 inline size-4" />
         <span>Top</span>
       </a>
     </AppLayout>

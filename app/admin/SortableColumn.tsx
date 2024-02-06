@@ -56,7 +56,7 @@ export default function SortableColumn({
         >
           <ArrowDownIcon
             aria-hidden="true"
-            className={`${desc ? 'rotate-180' : ''} inline h-4 w-4`}
+            className={`${desc ? 'rotate-180' : ''} inline size-4`}
           />
         </span>
       </Link>

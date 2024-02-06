@@ -54,7 +54,7 @@ export default function EditReleaseModal({ data }: Props) {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
-        <Pencil1Icon className="inline h-4 w-4" />
+        <Pencil1Icon className="inline size-4" />
       </Modal.Button>
       <Modal.Content title="Edit release">
         <form className="mt-6" onSubmit={onSubmit}>

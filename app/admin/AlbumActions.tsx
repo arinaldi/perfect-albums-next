@@ -16,7 +16,7 @@ export default function AlbumActions({ id }: Props) {
     <div className="flex items-center gap-2">
       <span className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <Pencil1Icon
-          className="inline h-6 w-6 p-1"
+          className="inline size-6 p-1"
           onClick={() => {
             router.push(
               `${ROUTES_ADMIN.edit.href}/${id}?${searchParams?.toString()}`,
@@ -26,7 +26,7 @@ export default function AlbumActions({ id }: Props) {
       </span>
       <span className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
         <TrashIcon
-          className="inline h-6 w-6 p-1"
+          className="inline size-6 p-1"
           onClick={() => {
             router.push(
               `${ROUTES_ADMIN.delete.href}/${id}?${searchParams?.toString()}`,

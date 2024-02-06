@@ -14,7 +14,7 @@ const Checkbox = forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <fieldset className={`flex items-center ${wrapperClassName}`}>
       <input
-        className="h-4 w-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-500"
+        className="size-4 rounded border-gray-300 text-indigo-500 focus:ring-indigo-500"
         defaultChecked={defaultChecked}
         id={id}
         ref={ref}

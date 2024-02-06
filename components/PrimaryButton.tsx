@@ -28,7 +28,7 @@ const PrimaryButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
       {...rest}
       disabled={rest.disabled || isSubmitting}
     >
-      {isSubmitting && <Spinner className="-ml-0.5 h-4 w-4 text-white" />}
+      {isSubmitting && <Spinner className="-ml-0.5 size-4 text-white" />}
       {label}
     </button>
   );

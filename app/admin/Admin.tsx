@@ -115,7 +115,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
                           </td>
                           <td className="px-3 py-2 text-sm text-gray-900 dark:text-white sm:w-1/12">
                             {favorite ? (
-                              <CheckIcon className="inline h-5 w-5" />
+                              <CheckIcon className="inline size-5" />
                             ) : null}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2 text-gray-900 dark:text-white sm:w-1/12">

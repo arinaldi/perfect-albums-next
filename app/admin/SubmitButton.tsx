@@ -12,7 +12,7 @@ export default function SubmitButton() {
       disabled={pending}
       type="submit"
     >
-      {pending && <Spinner className="-ml-0.5 h-4 w-4 text-white" />}
+      {pending && <Spinner className="-ml-0.5 size-4 text-white" />}
       Submit
     </button>
   );

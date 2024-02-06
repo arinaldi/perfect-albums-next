@@ -28,7 +28,7 @@ export default function DeleteSongModal({ data }: Props) {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
-        <TrashIcon className="inline h-4 w-4" />
+        <TrashIcon className="inline size-4" />
       </Modal.Button>
       <Modal.Content title="Delete song">
         <form className="mt-6 dark:text-white" onSubmit={onSubmit}>

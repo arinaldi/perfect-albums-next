@@ -17,11 +17,9 @@ const styles: Record<Variant, string> = {
 
 const icons: Record<Variant, ReactNode> = {
   error: (
-    <CrossCircledIcon aria-hidden="true" className="h-5 w-5 text-red-400" />
+    <CrossCircledIcon aria-hidden="true" className="size-5 text-red-400" />
   ),
-  info: (
-    <InfoCircledIcon aria-hidden="true" className="h-5 w-5 text-blue-400" />
-  ),
+  info: <InfoCircledIcon aria-hidden="true" className="size-5 text-blue-400" />,
 };
 
 export default function AppMessage({

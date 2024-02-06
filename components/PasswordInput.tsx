@@ -44,9 +44,9 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           onClick={toggle}
         >
           {on ? (
-            <EyeOpenIcon className="h-5 w-5" />
+            <EyeOpenIcon className="size-5" />
           ) : (
-            <EyeNoneIcon className="h-5 w-5" />
+            <EyeNoneIcon className="size-5" />
           )}
         </div>
       </div>

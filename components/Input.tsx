@@ -27,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
           className="mt-1 flex items-center gap-1 text-sm text-red-600"
           id={errorId}
         >
-          <CrossCircledIcon className="h-4 w-4" />
+          <CrossCircledIcon className="size-4" />
           {error.message}
         </p>
       )}

@@ -112,7 +112,7 @@ const Toast = forwardRef<ElementRef<typeof RadixToast.Root>, ToastProps>(
               {text}
             </RadixToast.Description>
             <RadixToast.Close className="border-l border-gray-200 p-4 text-gray-500 transition hover:text-gray-400 dark:border-gray-900 dark:text-gray-200 dark:hover:text-gray-100">
-              <Cross1Icon className="h-4 w-4" />
+              <Cross1Icon className="size-4" />
             </RadixToast.Close>
           </div>
         </motion.li>
