@@ -40,7 +40,7 @@ export default function Admin({ albums, cdTotal, total }: Props) {
   return (
     <Layout title={Title} titleAction={AppMetadata}>
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-        <Search hasFocus type="artist" />
+        <Search autoFocus type="artist" />
         <Search type="title" />
         <AddAlbumButton />
       </div>

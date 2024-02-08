@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, useEffect, useRef, useState, useTransition } from 'react';
+import { ChangeEvent, useRef, useState, useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { DEBOUNCE_IN_MS, SORT_VALUE } from 'utils/constants';
@@ -8,11 +8,11 @@ import ClearButton from 'app/admin/ClearButton';
 import InputSpinner from 'app/admin/InputSpinner';
 
 interface Props {
-  hasFocus?: boolean;
+  autoFocus?: boolean;
   type: 'artist' | 'title';
 }
 
-export default function Search({ hasFocus, type }: Props) {
+export default function Search({ autoFocus, type }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -21,12 +21,6 @@ export default function Search({ hasFocus, type }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
   const isSearching = Boolean(timeoutId) || isPending;
-
-  useEffect(() => {
-    if (hasFocus) {
-      inputRef?.current?.focus();
-    }
-  }, [hasFocus]);
 
   function onSearch(event: ChangeEvent<HTMLInputElement>) {
     clearTimeout(timeoutId);
@@ -74,6 +68,7 @@ export default function Search({ hasFocus, type }: Props) {
   return (
     <div className="relative w-full">
       <input
+        autoFocus={autoFocus}
         className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-black dark:bg-gray-700 dark:text-white sm:text-sm"
         defaultValue={query}
         id={`${type}-search`}
