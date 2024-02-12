@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { createServerClient, CookieOptions } from '@supabase/ssr';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 import { type Database } from 'utils/db-types';
 
@@ -13,10 +13,14 @@ export function createClient(cookieStore: ReturnType<typeof cookies>) {
           return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          cookieStore?.set({ name, value, ...options });
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch (error) {}
         },
         remove(name: string, options: CookieOptions) {
-          cookieStore?.set({ name, value: '', ...options });
+          try {
+            cookieStore.set({ name, value: '', ...options });
+          } catch (error) {}
         },
       },
     },

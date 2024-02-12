@@ -54,8 +54,8 @@ export const createClient = async (req: NextRequest) => {
     },
   );
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return { res, session };
+  return { res, user };
 };
