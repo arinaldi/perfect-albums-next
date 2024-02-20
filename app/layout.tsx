@@ -25,15 +25,15 @@ const inter = Inter({
 export default async function RootLayout({ children }: Children) {
   const supabase = createClient(cookies());
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <html className={inter.className} lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-800">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ToastProvider>
-            <NavBar user={session?.user} />
+            <NavBar user={user} />
             <TailwindIndicator />
             <main>{children}</main>
           </ToastProvider>

@@ -16,8 +16,8 @@ export default async function NewReleasesPage() {
     .select('*')
     .order('artist', { ascending: true });
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return <NewReleases releases={data ?? []} session={session} />;
+  return <NewReleases releases={data ?? []} user={user} />;
 }

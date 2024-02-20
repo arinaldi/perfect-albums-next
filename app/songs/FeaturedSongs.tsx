@@ -1,4 +1,4 @@
-import { type Session } from '@supabase/supabase-js';
+import { type User } from '@supabase/supabase-js';
 
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
@@ -7,11 +7,11 @@ import CreateSongModal from 'app/songs/CreateSongModal';
 import DeleteSongModal from 'app/songs/DeleteSongModal';
 
 interface Props {
-  session: Session | null;
   songs: Song[];
+  user: User | null;
 }
 
-export default function FeaturedSongs({ session, songs }: Props) {
+export default function FeaturedSongs({ songs, user }: Props) {
   return (
     <AppLayout
       title={
@@ -20,7 +20,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
           <Badge label={songs.length.toLocaleString()} />
         </div>
       }
-      titleAction={session && <CreateSongModal />}
+      titleAction={user && <CreateSongModal />}
     >
       <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((song) => (
@@ -32,7 +32,7 @@ export default function FeaturedSongs({ session, songs }: Props) {
               <dt className="text-sm font-medium text-gray-700 dark:text-white">
                 {song.artist}
               </dt>
-              {session && <DeleteSongModal data={song} />}
+              {user && <DeleteSongModal data={song} />}
             </div>
             <a
               className="text-blue-700 underline decoration-dotted dark:text-blue-500"

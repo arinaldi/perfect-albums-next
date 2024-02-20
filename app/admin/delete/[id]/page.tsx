@@ -31,14 +31,14 @@ export default async function DeleteAlbumPage({ params: { id } }: Props) {
     notFound();
   }
 
-  async function deleteAlbum(formData: FormData) {
+  async function deleteAlbum() {
     'use server';
     const supabase = createClient(cookies());
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (!user) {
       throw new Error(MESSAGES.NOT_AUTHORIZED);
     }
 

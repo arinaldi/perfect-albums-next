@@ -20,7 +20,7 @@ import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/client';
 
 interface Props {
-  user: User | undefined;
+  user: User | null;
 }
 
 export default function NavBar({ user }: Props) {

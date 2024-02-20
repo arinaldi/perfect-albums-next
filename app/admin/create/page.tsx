@@ -18,10 +18,10 @@ export default function CreateAlbumPage() {
     'use server';
     const supabase = createClient(cookies());
     const {
-      data: { session },
-    } = await supabase.auth.getSession();
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    if (!session) {
+    if (!user) {
       throw new Error(MESSAGES.NOT_AUTHORIZED);
     }
 

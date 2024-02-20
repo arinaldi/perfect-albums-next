@@ -1,4 +1,4 @@
-import { type Session } from '@supabase/supabase-js';
+import { type User } from '@supabase/supabase-js';
 
 import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
@@ -10,10 +10,10 @@ import EditReleaseModal from 'app/releases/EditReleaseModal';
 
 interface Props {
   releases: Release[];
-  session: Session | null;
+  user: User | null;
 }
 
-export default function NewReleases({ releases, session }: Props) {
+export default function NewReleases({ releases, user }: Props) {
   return (
     <AppLayout
       title={
@@ -22,7 +22,7 @@ export default function NewReleases({ releases, session }: Props) {
           <Badge label={releases.length.toLocaleString()} />
         </div>
       }
-      titleAction={session && <CreateReleaseModal />}
+      titleAction={user && <CreateReleaseModal />}
     >
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(formatReleases(releases))
@@ -46,7 +46,7 @@ export default function NewReleases({ releases, session }: Props) {
                     <span>
                       {release.artist} &ndash; {release.title}
                     </span>
-                    {session && (
+                    {user && (
                       <span className="flex items-center gap-2">
                         <EditReleaseModal data={release} />
                         <DeleteReleaseModal data={release} />

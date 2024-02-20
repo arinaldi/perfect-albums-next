@@ -15,10 +15,10 @@ export async function createRelease(release: ReleaseInput) {
 
   const supabase = createClient(cookies());
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Error(MESSAGES.NOT_AUTHORIZED);
   }
 
@@ -41,10 +41,10 @@ export async function editRelease(id: number, release: ReleaseInput) {
 
   const supabase = createClient(cookies());
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Error(MESSAGES.NOT_AUTHORIZED);
   }
 
@@ -64,10 +64,10 @@ export async function editRelease(id: number, release: ReleaseInput) {
 export async function deleteRelease(id: number) {
   const supabase = createClient(cookies());
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     throw new Error(MESSAGES.NOT_AUTHORIZED);
   }
 

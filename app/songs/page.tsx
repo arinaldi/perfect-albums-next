@@ -16,8 +16,8 @@ export default async function FeaturedSongsPage() {
     .select('*')
     .order('created_at', { ascending: false });
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  return <FeaturedSongs session={session} songs={data ?? []} />;
+  return <FeaturedSongs songs={data ?? []} user={user} />;
 }
