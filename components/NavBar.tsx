@@ -2,15 +2,12 @@
 import { useReducer } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { type User } from '@supabase/supabase-js';
 import {
   Cross1Icon,
   EnterIcon,
   ExitIcon,
   HamburgerMenuIcon,
-  MoonIcon,
-  SunIcon,
 } from '@radix-ui/react-icons';
 
 import LinkWrapper from 'components/LinkWrapper';
@@ -18,6 +15,7 @@ import { useIsClient } from 'hooks/useIsClient';
 import { cn } from 'utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/client';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface Props {
   user: User | null;
@@ -27,7 +25,6 @@ export default function NavBar({ user }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
-  const { setTheme, theme } = useTheme();
   const isClient = useIsClient();
   const [open, toggle] = useReducer(
     (flag: boolean, next: boolean | null) => (next == null ? !flag : next),
@@ -86,25 +83,7 @@ export default function NavBar({ user }: Props) {
               </div>
             </div>
           </div>
-          {isClient ? (
-            <button
-              className="rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white focus:outline-none dark:hover:bg-gray-800"
-              aria-expanded="false"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              type="button"
-            >
-              <span className="sr-only">Toggle dark mode</span>
-              {theme === 'dark' ? (
-                <SunIcon className="size-5" />
-              ) : (
-                <MoonIcon className="size-5" />
-              )}
-            </button>
-          ) : (
-            <button className="invisible p-2">
-              <SunIcon className="size-5" />
-            </button>
-          )}
+          {isClient && <ThemeToggle />}
           <div className="absolute inset-y-0 right-0 hidden pr-2 sm:static sm:inset-auto sm:ml-0 sm:flex sm:items-center sm:pr-0">
             {user ? (
               <div

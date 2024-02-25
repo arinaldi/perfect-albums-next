@@ -18,7 +18,7 @@ export default function AppLayout({
   return (
     <div className={cn('mx-auto max-w-7xl px-5 py-4', className)}>
       <div className="mb-4 flex min-h-[40px] items-center justify-between">
-        <h1 className="text-xl font-semibold dark:text-white sm:text-2xl">
+        <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {title}
         </h1>
         {titleAction}
