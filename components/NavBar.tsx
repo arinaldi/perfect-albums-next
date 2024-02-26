@@ -11,11 +11,11 @@ import {
 } from '@radix-ui/react-icons';
 
 import LinkWrapper from 'components/LinkWrapper';
+import { ThemeToggle } from 'components/ThemeToggle';
 import { useIsClient } from 'hooks/useIsClient';
 import { cn } from 'utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/client';
-import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface Props {
   user: User | null;

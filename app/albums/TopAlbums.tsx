@@ -5,8 +5,8 @@ import { formatFavorites, sortDesc } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
 import { Album } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import { DecadeSelect } from '@/components/DecadeSelect';
-import { Badge } from '@/components/ui/badge';
+import { DecadeSelect } from 'components/DecadeSelect';
+import { Badge } from 'components/ui/badge';
 
 interface Props {
   albums: Album[];

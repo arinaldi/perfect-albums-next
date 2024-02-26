@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import { Button } from '@/components/ui/button';
+import { Button } from 'components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -13,8 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { SubmitButton } from '@/components/ui/submit-button';
+} from 'components/ui/dialog';
+import { SubmitButton } from 'components/ui/submit-button';
 import { deleteRelease } from './actions';
 
 interface Props {

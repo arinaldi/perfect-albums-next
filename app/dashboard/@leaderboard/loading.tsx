@@ -1,5 +1,5 @@
-import Spinner from 'components/Spinner';
+import { Loader2 } from 'lucide-react';
 
 export default function Loading() {
-  return <Spinner className="mt-3 size-5" />;
+  return <Loader2 className="mt-3 size-5 animate-spin" />;
 }

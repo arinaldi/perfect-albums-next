@@ -2,13 +2,13 @@ import { type User } from '@supabase/supabase-js';
 
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from 'components/ui/badge';
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from 'components/ui/card';
 import CreateSongModal from './CreateSongModal';
 import DeleteSongModal from './DeleteSongModal';
 

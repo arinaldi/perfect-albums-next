@@ -14,8 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+} from 'components/ui/dialog';
+import { Button } from 'components/ui/button';
 import {
   Form,
   FormControl,
@@ -23,9 +23,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { SubmitButton } from '@/components/ui/submit-button';
+} from 'components/ui/form';
+import { Input } from 'components/ui/input';
+import { SubmitButton } from 'components/ui/submit-button';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { editRelease } from './actions';
 

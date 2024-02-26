@@ -4,11 +4,11 @@ import { Inter } from 'next/font/google';
 
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
+import { ThemeProvider } from 'components/ThemeProvider';
 import { ToastProvider } from 'components/Toast';
+import { cn } from 'lib/utils';
 import { createClient } from 'utils/supabase/server';
 import { Children } from 'utils/types';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { cn } from '@/lib/utils';
 import 'styles/globals.css';
 
 export const revalidate = 0;

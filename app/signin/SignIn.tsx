@@ -4,9 +4,9 @@ import { useFormState } from 'react-dom';
 
 import AppLayout from 'components/AppLayout';
 import { useToast } from 'components/Toast';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { SubmitButton } from '@/components/ui/submit-button';
+import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
+import { SubmitButton } from 'components/ui/submit-button';
 import { signIn } from './actions';
 import { initialState } from './schema';
 
