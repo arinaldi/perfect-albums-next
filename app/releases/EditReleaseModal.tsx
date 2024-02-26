@@ -2,18 +2,32 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Pencil1Icon } from '@radix-ui/react-icons';
+import { Pencil } from 'lucide-react';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import Input from 'components/Input';
-import Modal from 'components/Modal';
-import PrimaryButton from 'components/PrimaryButton';
-import SecondaryButton from 'components/SecondaryButton';
-import { editRelease } from './actions';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { SubmitButton } from '@/components/ui/submit-button';
 import { releaseSchema, type ReleaseInput } from './schema';
+import { editRelease } from './actions';
 
 interface Props {
   data: Release;
@@ -21,14 +35,10 @@ interface Props {
 
 export default function EditReleaseModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<ReleaseInput>({
+  const form = useForm<ReleaseInput>({
     resolver: zodResolver(releaseSchema),
   });
+  const { handleSubmit, reset } = form;
 
   useEffect(() => {
     if (!data) return;
@@ -52,44 +62,64 @@ export default function EditReleaseModal({ data }: Props) {
   });
 
   return (
-    <Modal open={open} onOpenChange={setOpen}>
-      <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
-        <Pencil1Icon className="inline size-4" />
-      </Modal.Button>
-      <Modal.Content title="Edit release">
-        <form className="mt-6" onSubmit={onSubmit}>
-          <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6">
-              <Input
-                error={errors.artist}
-                id="artist"
-                type="text"
-                {...register('artist')}
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                error={errors.title}
-                id="title"
-                type="text"
-                {...register('title')}
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                error={errors.date}
-                id="date"
-                type="date"
-                {...register('date')}
-              />
-            </div>
-          </div>
-          <Modal.Footer>
-            <PrimaryButton isSubmitting={isSubmitting} />
-            <SecondaryButton onClick={onClose} />
-          </Modal.Footer>
-        </form>
-      </Modal.Content>
-    </Modal>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="flex-shrink-0" size="icon" variant="outline">
+          <Pencil className="size-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Edit release</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={onSubmit}>
+            <FormField
+              control={form.control}
+              name="artist"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Artist</FormLabel>
+                  <FormControl>
+                    <Input autoFocus {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="mt-4">
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="mt-4">
+                  <FormLabel>Date</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <SubmitButton
+              className="mt-6 w-full sm:w-auto"
+              submitting={isSubmitting}
+            />
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -61,7 +61,7 @@ export default function CreateSongModal() {
           <DialogTitle>Add song</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={onSubmit} className="space-y-4">
+          <form onSubmit={onSubmit}>
             <FormField
               control={form.control}
               name="artist"
@@ -79,7 +79,7 @@ export default function CreateSongModal() {
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mt-4">
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input {...field} />
@@ -92,7 +92,7 @@ export default function CreateSongModal() {
               control={form.control}
               name="link"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mt-4">
                   <FormLabel>Link</FormLabel>
                   <FormControl>
                     <Input {...field} />
@@ -101,7 +101,10 @@ export default function CreateSongModal() {
                 </FormItem>
               )}
             />
-            <SubmitButton submitting={isSubmitting} />
+            <SubmitButton
+              className="mt-6 w-full sm:w-auto"
+              submitting={isSubmitting}
+            />
           </form>
         </Form>
       </DialogContent>

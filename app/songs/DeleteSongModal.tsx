@@ -35,12 +35,12 @@ export default function DeleteSongModal({ data }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="outline">
+        <Button className="flex-shrink-0" size="icon" variant="outline">
           <Trash2 className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <form className="space-y-4" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
           <DialogHeader>
             <DialogTitle>Delete song</DialogTitle>
             <DialogDescription>
@@ -48,7 +48,10 @@ export default function DeleteSongModal({ data }: Props) {
               ?
             </DialogDescription>
           </DialogHeader>
-          <SubmitButton submitting={isSubmitting} />
+          <SubmitButton
+            className="mt-6 w-full sm:w-auto"
+            submitting={isSubmitting}
+          />
         </form>
       </DialogContent>
     </Dialog>

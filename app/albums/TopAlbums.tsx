@@ -39,13 +39,13 @@ export default function TopAlbums({ albums }: Props) {
                   {favorites.length.toLocaleString()}
                 </Badge>
               </div>
-              <ul className="ml-6 list-disc p-1 [&>li]:mt-0.5">
+              <ul className="ml-6 list-disc p-1">
                 {favorites.map(({ artist, title }, index) => {
                   const query = encodeURI(`${artist} ${title}`);
                   const url = `${SPOTIFY_URL}/${query}`;
 
                   return (
-                    <li key={index}>
+                    <li key={index} className="mt-0.5">
                       {artist} &ndash;{' '}
                       <a
                         className="text-muted-foreground underline underline-offset-4 hover:text-primary"

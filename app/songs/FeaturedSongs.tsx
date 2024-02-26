@@ -2,8 +2,6 @@ import { type User } from '@supabase/supabase-js';
 
 import { Song } from 'utils/types';
 import AppLayout from 'components/AppLayout';
-import CreateSongModal from 'app/songs/CreateSongModal';
-import DeleteSongModal from 'app/songs/DeleteSongModal';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
@@ -11,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import CreateSongModal from './CreateSongModal';
+import DeleteSongModal from './DeleteSongModal';
 
 interface Props {
   songs: Song[];
@@ -28,11 +28,11 @@ export default function FeaturedSongs({ songs, user }: Props) {
       }
       titleAction={user && <CreateSongModal />}
     >
-      <dl className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((song) => (
           <Card key={song.id}>
             <CardHeader>
-              <CardTitle className="flex items-center justify-between text-xl">
+              <CardTitle className="flex justify-between gap-2 text-xl">
                 <a
                   className="text-muted-foreground underline underline-offset-4 hover:text-primary"
                   href={song.link}
@@ -47,7 +47,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
             </CardHeader>
           </Card>
         ))}
-      </dl>
+      </div>
     </AppLayout>
   );
 }
