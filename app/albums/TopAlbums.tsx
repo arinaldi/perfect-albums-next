@@ -18,7 +18,7 @@ export default function TopAlbums({ albums }: Props) {
       title={
         <div className="flex items-center gap-2">
           <span>Top albums</span>
-          <Badge variant="outline">{albums.length.toLocaleString()}</Badge>
+          <Badge variant="secondary">{albums.length.toLocaleString()}</Badge>
         </div>
       }
       titleAction={<DecadeSelect />}
@@ -35,7 +35,7 @@ export default function TopAlbums({ albums }: Props) {
                 >
                   {year}
                 </h4>
-                <Badge variant="outline">
+                <Badge variant="secondary">
                   {favorites.length.toLocaleString()}
                 </Badge>
               </div>
