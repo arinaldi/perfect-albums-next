@@ -1,27 +1,35 @@
 'use client';
+import { startTransition, useOptimistic } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Label } from 'components/ui/label';
 import { Switch } from 'components/ui/switch';
-import { parseQuery } from 'utils';
 
-export default function StudioFilter() {
+interface Props {
+  studio: string;
+}
+
+export default function StudioFilter({ studio }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const studio = parseQuery(searchParams?.get('studio')) || 'false';
+  const [optimisticStudio, setOptimisticStudio] = useOptimistic(studio);
 
   function onCheckedChange(value: boolean) {
+    const newValue = value.toString();
     const query = new URLSearchParams(searchParams?.toString());
     query.set('page', '1');
-    query.set('studio', value.toString());
+    query.set('studio', newValue);
 
-    router.push(`?${query.toString()}`);
+    startTransition(() => {
+      setOptimisticStudio(newValue);
+      router.push(`?${query.toString()}`);
+    });
   }
 
   return (
     <div className="flex items-center space-x-2">
       <Switch
-        checked={studio === 'true'}
+        checked={optimisticStudio === 'true'}
         id="studio-filter"
         onCheckedChange={onCheckedChange}
       />

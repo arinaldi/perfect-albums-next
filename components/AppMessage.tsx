@@ -2,10 +2,12 @@ import { ReactNode } from 'react';
 import { Info, XCircle } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
+import { cn } from 'lib/utils';
 
 type Variant = 'default' | 'destructive';
 
 interface Props {
+  className?: string;
   description?: string;
   title?: string;
   variant?: Variant;
@@ -17,12 +19,13 @@ const icons: Record<Variant, ReactNode> = {
 };
 
 export default function AppMessage({
+  className = '',
   description = 'Something went wrong',
   title = 'Error',
   variant = 'destructive',
 }: Props) {
   return (
-    <Alert className="max-w-fit" variant={variant}>
+    <Alert className={cn('max-w-fit', className)} variant={variant}>
       {icons[variant]}
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{description}</AlertDescription>

@@ -97,6 +97,15 @@ export default async function AdminPage({ searchParams }: Props) {
     getAlbums(supabase, searchParams),
     getCdCount(supabase, searchParams),
   ]);
+  const { perPage, studio } = parseAdminQuery(searchParams);
 
-  return <Admin albums={albums} cdTotal={cdTotal} total={total} />;
+  return (
+    <Admin
+      albums={albums}
+      cdTotal={cdTotal}
+      perPage={perPage}
+      studio={studio}
+      total={total}
+    />
+  );
 }

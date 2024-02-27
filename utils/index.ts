@@ -121,13 +121,19 @@ export function parsePerPageQuery(value: QueryValue) {
   return SMALL;
 }
 
+type StudioValue = 'true' | 'false';
+
+export function parseStudioQuery(value: QueryValue): StudioValue {
+  return value === 'true' ? value : 'false';
+}
+
 export function parseAdminQuery(query: Record<string, QueryValue>) {
   return {
     artist: parseQuery(query.artist),
     page: parsePageQuery(query.page),
     perPage: parsePerPageQuery(query.perPage),
     sort: parseQuery(query.sort),
-    studio: parseQuery(query.studio),
+    studio: parseStudioQuery(query.studio),
     title: parseQuery(query.title),
   };
 }

@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 
+import { PER_PAGE } from 'utils/constants';
 import { Album } from 'utils/types';
 import Layout from 'components/AppLayout';
 import AppMessage from 'components/AppMessage';
@@ -23,19 +24,23 @@ import StudioFilter from './StudioFilter';
 interface Props {
   albums: Album[];
   cdTotal: number;
+  perPage: PER_PAGE;
+  studio: string;
   total: number;
 }
 
-export default function Admin({ albums, cdTotal, total }: Props) {
-  const Title = (
-    <div className="flex items-center gap-2">
-      <span>Admin</span>
-      <Badge variant="secondary">{total.toLocaleString()}</Badge>
-    </div>
-  );
-
+export default function Admin({
+  albums,
+  cdTotal,
+  perPage,
+  studio,
+  total,
+}: Props) {
   return (
-    <Layout title={Title} titleAction={<AppMetadata cdTotal={cdTotal} />}>
+    <Layout
+      title={<Title total={total} />}
+      titleAction={<AppMetadata cdTotal={cdTotal} />}
+    >
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <Search autoFocus type="artist" />
         <Search type="title" />
@@ -44,8 +49,8 @@ export default function Admin({ albums, cdTotal, total }: Props) {
 
       <div className="mb-4 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
         <Paginate total={total} />
-        <PerPage />
-        <StudioFilter />
+        <PerPage perPage={perPage} />
+        <StudioFilter studio={studio} />
       </div>
 
       {albums?.length === 0 ? (
@@ -92,6 +97,19 @@ export default function Admin({ albums, cdTotal, total }: Props) {
         </Table>
       )}
     </Layout>
+  );
+}
+
+interface TitleProps {
+  total: number;
+}
+
+function Title({ total }: TitleProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <span>Admin</span>
+      <Badge variant="secondary">{total.toLocaleString()}</Badge>
+    </div>
   );
 }
 

@@ -8,5 +8,5 @@ interface Props {
 }
 
 export default function Error({ error }: Props) {
-  return <AppMessage description={error?.message} />;
+  return <AppMessage className="mx-auto mt-4" description={error?.message} />;
 }
