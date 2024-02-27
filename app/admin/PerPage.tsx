@@ -1,52 +1,36 @@
 'use client';
-
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { PER_PAGE, ROUTES_ADMIN } from 'utils/constants';
+import { PER_PAGE } from 'utils/constants';
 import { parsePerPageQuery } from 'utils';
+import { ToggleGroup, ToggleGroupItem } from 'components/ui/toggle-group';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 
-interface Props {
-  prop: PER_PAGE;
-}
-
-function PerPageButton({ prop }: Props) {
+export default function PerPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const perPage = parsePerPageQuery(searchParams?.get('perPage'));
+  const perPage = parsePerPageQuery(searchParams?.get('perPage')).toString();
 
-  function onClick() {
+  function onValueChange(value: string) {
     const query = new URLSearchParams(searchParams?.toString());
     query.set('page', '1');
-    query.set('perPage', prop.toString());
+    query.set('perPage', value);
 
-    router.replace(`${ROUTES_ADMIN.base.href}?${query.toString()}`);
+    router.push(`?${query.toString()}`);
   }
 
   return (
-    <button
-      className={`${prop === SMALL ? 'rounded-l-md' : ''} ${
-        prop === LARGE ? 'rounded-r-md' : ''
-      } relative inline-flex items-center border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-black dark:bg-gray-700 dark:text-white`}
-      disabled={perPage === prop}
-      onClick={onClick}
-    >
-      <span className="sr-only">{prop}</span>
-      {prop}
-    </button>
-  );
-}
-
-export default function PerPage() {
-  return (
-    <nav
-      className="relative z-0 inline-flex -space-x-px rounded-md shadow-sm"
-      aria-label="Pagination"
-    >
-      <PerPageButton prop={SMALL} />
-      <PerPageButton prop={MEDIUM} />
-      <PerPageButton prop={LARGE} />
-    </nav>
+    <ToggleGroup onValueChange={onValueChange} type="single" value={perPage}>
+      <ToggleGroupItem value={SMALL.toString()} aria-label="Toggle small">
+        {SMALL}
+      </ToggleGroupItem>
+      <ToggleGroupItem value={MEDIUM.toString()} aria-label="Toggle medium">
+        {MEDIUM}
+      </ToggleGroupItem>
+      <ToggleGroupItem value={LARGE.toString()} aria-label="Toggle large">
+        {LARGE}
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }

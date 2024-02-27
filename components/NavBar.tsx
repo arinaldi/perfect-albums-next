@@ -3,17 +3,12 @@ import { useReducer } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { type User } from '@supabase/supabase-js';
-import {
-  Cross1Icon,
-  EnterIcon,
-  ExitIcon,
-  HamburgerMenuIcon,
-} from '@radix-ui/react-icons';
+import { LogIn, LogOut, Menu, X } from 'lucide-react';
 
 import LinkWrapper from 'components/LinkWrapper';
 import { ThemeToggle } from 'components/ThemeToggle';
 import { useIsClient } from 'hooks/useIsClient';
-import { cn } from 'utils';
+import { cn } from 'lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/client';
 
@@ -53,10 +48,8 @@ export default function NavBar({ user }: Props) {
               type="button"
             >
               <span className="sr-only">Open main menu</span>
-              <HamburgerMenuIcon
-                className={cn('size-6', open ? 'hidden' : 'block')}
-              />
-              <Cross1Icon className={cn('size-6', open ? 'block' : 'hidden')} />
+              <Menu className={cn('size-6', open ? 'hidden' : 'block')} />
+              <X className={cn('size-6', open ? 'block' : 'hidden')} />
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -90,14 +83,14 @@ export default function NavBar({ user }: Props) {
                 onClick={signOut}
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
               >
-                <ExitIcon className="size-5" />
+                <LogOut className="size-5" />
               </div>
             ) : (
               <div
                 className="cursor-pointer rounded-md p-2 text-gray-300 hover:bg-gray-700 hover:text-white dark:hover:bg-gray-800"
                 onClick={() => router.push(ROUTE_HREF.SIGNIN)}
               >
-                <EnterIcon className="size-5" />
+                <LogIn className="size-5" />
               </div>
             )}
           </div>

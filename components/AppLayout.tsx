@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
+import { cn } from 'lib/utils';
 import { Children } from 'utils/types';
-import { cn } from 'utils';
 
 interface Props extends Children {
   className?: string;

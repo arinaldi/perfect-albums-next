@@ -1,40 +1,31 @@
 import { ReactNode } from 'react';
-import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
+import { Info, XCircle } from 'lucide-react';
 
-import { cn } from 'utils';
+import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
 
-type Variant = 'error' | 'info';
+type Variant = 'default' | 'destructive';
 
 interface Props {
-  message?: string;
+  description?: string;
+  title?: string;
   variant?: Variant;
 }
 
-const styles: Record<Variant, string> = {
-  error: 'bg-red-50 text-red-800',
-  info: 'bg-blue-50 text-blue-800',
-};
-
 const icons: Record<Variant, ReactNode> = {
-  error: (
-    <CrossCircledIcon aria-hidden="true" className="size-5 text-red-400" />
-  ),
-  info: <InfoCircledIcon aria-hidden="true" className="size-5 text-blue-400" />,
+  default: <Info aria-hidden="true" className="size-4" />,
+  destructive: <XCircle aria-hidden="true" className="size-4" />,
 };
 
 export default function AppMessage({
-  message = 'Something went wrong',
-  variant = 'error',
+  description = 'Something went wrong',
+  title = 'Error',
+  variant = 'destructive',
 }: Props) {
   return (
-    <div
-      className={cn('mx-auto mt-8 flex w-fit rounded-md p-4', styles[variant])}
-      role="alert"
-    >
-      <div className="flex-shrink-0">{icons[variant]}</div>
-      <div className="ml-3 flex-1 md:flex md:justify-between">
-        <p className="text-sm font-medium">{message}</p>
-      </div>
-    </div>
+    <Alert className="max-w-fit" variant={variant}>
+      {icons[variant]}
+      <AlertTitle>{title}</AlertTitle>
+      <AlertDescription>{description}</AlertDescription>
+    </Alert>
   );
 }

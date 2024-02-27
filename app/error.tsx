@@ -8,5 +8,5 @@ interface Props {
 }
 
 export default function Error({ error }: Props) {
-  return <AppMessage message={error?.message} />;
+  return <AppMessage description={error?.message} />;
 }

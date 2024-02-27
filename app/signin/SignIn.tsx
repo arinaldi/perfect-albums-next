@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 
 import AppLayout from 'components/AppLayout';
-import { useToast } from 'components/Toast';
+import { useToast } from 'components/ui/use-toast';
 import { Input } from 'components/ui/input';
 import { Label } from 'components/ui/label';
 import { SubmitButton } from 'components/ui/submit-button';
@@ -12,18 +12,21 @@ import { initialState } from './schema';
 
 export default function SignIn() {
   const [state, formAction] = useFormState(signIn, initialState);
-  const { showToast } = useToast();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (state.message) {
-      showToast(state.message);
+      toast({
+        description: state.message,
+        title: 'Error',
+      });
     }
     // state.message will not trigger effect if same value
-  }, [showToast, state]);
+  }, [state, toast]);
 
   return (
     <AppLayout className="max-w-sm" title="Sign in">
-      <form action={formAction} className="mt-4 flex flex-col gap-4">
+      <form action={formAction} className="mt-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -35,7 +38,7 @@ export default function SignIn() {
             type="email"
           />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Password</Label>
           <Input
             autoComplete="off"
@@ -45,9 +48,7 @@ export default function SignIn() {
             type="password"
           />
         </div>
-        <div>
-          <SubmitButton />
-        </div>
+        <SubmitButton className="mt-6 w-full sm:w-auto" />
       </form>
     </AppLayout>
   );

@@ -8,6 +8,7 @@ import { useSubmit } from 'hooks/useSubmit';
 import { formatDate } from 'utils';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
+import { Button } from 'components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'components/ui/dialog';
-import { Button } from 'components/ui/button';
 import {
   Form,
   FormControl,

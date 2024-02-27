@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 import NavBar from 'components/NavBar';
 import TailwindIndicator from 'components/TailwindIndicator';
 import { ThemeProvider } from 'components/ThemeProvider';
-import { ToastProvider } from 'components/Toast';
+import { Toaster } from 'components/ui/toaster';
 import { cn } from 'lib/utils';
 import { createClient } from 'utils/supabase/server';
 import { Children } from 'utils/types';
@@ -38,11 +38,10 @@ export default async function RootLayout({ children }: Children) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ToastProvider>
-            <NavBar user={user} />
-            <TailwindIndicator />
-            <main>{children}</main>
-          </ToastProvider>
+          <NavBar user={user} />
+          <TailwindIndicator />
+          <main>{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
