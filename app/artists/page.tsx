@@ -24,9 +24,11 @@ export default async function ArtistsPage() {
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row">
-      <ul className="order-2 flex-1 list-disc p-4 dark:text-white sm:order-1">
+      <ul className="order-2 ml-6 flex-1 list-disc p-1 sm:order-1">
         {artists.map((artist) => (
-          <li key={artist}>{artist}</li>
+          <li key={artist} className="mt-0.5">
+            {artist}
+          </li>
         ))}
       </ul>
       <div className="order-1 flex-1 sm:order-2">

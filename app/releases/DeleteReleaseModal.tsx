@@ -1,13 +1,20 @@
 'use client';
 import { FormEvent, useState } from 'react';
-import { TrashIcon } from '@radix-ui/react-icons';
+import { Trash2 } from 'lucide-react';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import Modal from 'components/Modal';
-import PrimaryButton from 'components/PrimaryButton';
-import SecondaryButton from 'components/SecondaryButton';
+import { Button } from 'components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
+import SubmitButton from 'components/SubmitButton';
 import { deleteRelease } from './actions';
 
 interface Props {
@@ -26,24 +33,27 @@ export default function DeleteReleaseModal({ data }: Props) {
   });
 
   return (
-    <Modal open={open} onOpenChange={setOpen}>
-      <Modal.Button className="cursor-pointer hover:text-gray-600 dark:text-white dark:hover:text-gray-200">
-        <TrashIcon className="inline size-4" />
-      </Modal.Button>
-      <Modal.Content title="Delete release">
-        <form className="mt-6 dark:text-white" onSubmit={onSubmit}>
-          <p>
-            Are you sure you want to delete {data?.artist} &ndash; {data?.title}
-            ?
-          </p>
-          <Modal.Footer>
-            <PrimaryButton isSubmitting={isSubmitting} />
-            <Modal.Button asChild>
-              <SecondaryButton />
-            </Modal.Button>
-          </Modal.Footer>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="flex-shrink-0" size="icon" variant="outline">
+          <Trash2 className="size-4" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <form onSubmit={onSubmit}>
+          <DialogHeader>
+            <DialogTitle>Delete release</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete {data.artist} &ndash; {data.title}
+              ?
+            </DialogDescription>
+          </DialogHeader>
+          <SubmitButton
+            className="mt-6 w-full sm:w-auto"
+            submitting={isSubmitting}
+          />
         </form>
-      </Modal.Content>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 }

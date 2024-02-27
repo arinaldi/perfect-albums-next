@@ -1,11 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowDownIcon } from '@radix-ui/react-icons';
+import { ArrowDown } from 'lucide-react';
 
 import { parseQuery } from 'utils';
 import { ROUTES_ADMIN } from 'utils/constants';
 import { Children } from 'utils/types';
+import { TableHead } from 'components/ui/table';
 
 interface Props extends Children {
   prop: string;
@@ -32,8 +33,8 @@ export default function SortableColumn({
   query.set('sort', newSort as string);
 
   return (
-    <th
-      className={`cursor-pointer px-3 py-3 text-left text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-white ${wrapperClassName}`}
+    <TableHead
+      className={`cursor-pointer font-extrabold ${wrapperClassName}`}
       scope="col"
     >
       <Link
@@ -48,18 +49,14 @@ export default function SortableColumn({
       >
         {children}
         <span
-          className={`${
-            sortProp === prop
-              ? 'text-gray-700 group-hover:bg-gray-300'
-              : 'invisible text-gray-400 group-hover:visible'
-          } ml-1 flex-none`}
+          className={`${sortProp === prop ? '' : 'invisible'} ml-1 flex-none`}
         >
-          <ArrowDownIcon
+          <ArrowDown
             aria-hidden="true"
             className={`${desc ? 'rotate-180' : ''} inline size-4`}
           />
         </span>
       </Link>
-    </th>
+    </TableHead>
   );
 }

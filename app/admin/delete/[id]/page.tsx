@@ -5,7 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
-import SubmitButton from 'app/admin/SubmitButton';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   params: {
@@ -56,12 +56,10 @@ export default async function DeleteAlbumPage({ params: { id } }: Props) {
   return (
     <AppLayout title="Delete album">
       <form action={deleteAlbum}>
-        <div className="bg-white dark:bg-gray-800 dark:text-white">
+        <div className="leading-7">
           Are you sure you want to delete {data.artist} – {data.title}?
         </div>
-        <div className="mt-6 flex items-center">
-          <SubmitButton />
-        </div>
+        <SubmitButton className="mt-6 w-full sm:w-auto" />
       </form>
     </AppLayout>
   );

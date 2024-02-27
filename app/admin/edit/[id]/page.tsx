@@ -4,9 +4,10 @@ import { notFound, redirect } from 'next/navigation';
 import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
-import Checkbox from 'components/Checkbox';
-import Input from 'components/Input';
-import SubmitButton from 'app/admin/SubmitButton';
+import { Checkbox } from 'components/ui/checkbox';
+import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
+import SubmitButton from 'components/SubmitButton';
 import { albumSchema } from '../../schema';
 
 interface Props {
@@ -66,58 +67,56 @@ export default async function EditAlbumPage({ params: { id } }: Props) {
   return (
     <AppLayout title="Edit album">
       <form action={editAlbum}>
-        <div className="bg-white dark:bg-gray-800">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <Input
-              defaultValue={data.artist}
-              id="artist"
-              name="artist"
-              required
-              type="text"
-              wrapperClassName="order-1 sm:order-1"
-            />
-            <Input
-              defaultValue={data.title}
-              id="title"
-              name="title"
-              required
-              type="text"
-              wrapperClassName="order-2 sm:order-3"
-            />
-            <Input
-              defaultValue={data.year}
-              id="year"
-              name="year"
-              required
-              type="number"
-              wrapperClassName="order-3 sm:order-5"
-            />
-            <Checkbox
-              defaultChecked={data.studio}
-              id="studio"
-              label="Studio album"
-              name="studio"
-              wrapperClassName="order-4 sm:order-2"
-            />
-            <Checkbox
-              defaultChecked={data.cd}
-              id="cd"
-              label="CD"
-              name="cd"
-              wrapperClassName="order-5 sm:order-4"
-            />
-            <Checkbox
-              defaultChecked={data.favorite}
-              id="favorite"
-              label="Favorite"
-              name="favorite"
-              wrapperClassName="order-6 sm:order-6"
-            />
-          </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="artist">Artist</Label>
+          <Input
+            autoFocus
+            defaultValue={data.artist}
+            id="artist"
+            name="artist"
+            required
+          />
         </div>
-        <div className="mt-6 flex items-center">
-          <SubmitButton />
+        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="title">Title</Label>
+          <Input defaultValue={data.title} id="title" name="title" required />
         </div>
+        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="year">Year</Label>
+          <Input
+            defaultValue={data.year}
+            id="year"
+            name="year"
+            required
+            type="number"
+          />
+        </div>
+        <div className="mt-4 flex items-center space-x-2">
+          <Checkbox defaultChecked={data.studio} id="studio" name="studio" />
+          <label htmlFor="studio" className="text-sm font-medium leading-none">
+            Studio album
+          </label>
+        </div>
+        <div className="mt-4 flex items-center space-x-2">
+          <Checkbox defaultChecked={data.cd} id="cd" name="cd" />
+          <label htmlFor="cd" className="text-sm font-medium leading-none">
+            CD
+          </label>
+        </div>
+        <div className="mt-4 flex items-center space-x-2">
+          <Checkbox
+            defaultChecked={data.favorite}
+            id="favorite"
+            name="favorite"
+          />
+          <label
+            htmlFor="favorite"
+            className="text-sm font-medium leading-none"
+          >
+            Favorite
+          </label>
+        </div>
+        <SubmitButton className="mt-6 w-full sm:w-auto" />
       </form>
     </AppLayout>
   );

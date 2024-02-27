@@ -3,40 +3,52 @@ import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 
 import AppLayout from 'components/AppLayout';
-import Input from 'components/Input';
-import PasswordInput from 'components/PasswordInput';
-import { useToast } from 'components/Toast';
-import SubmitButton from 'app/admin/SubmitButton';
+import { useToast } from 'components/ui/use-toast';
+import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
+import SubmitButton from 'components/SubmitButton';
 import { signIn } from './actions';
 import { initialState } from './schema';
 
 export default function SignIn() {
   const [state, formAction] = useFormState(signIn, initialState);
-  const { showToast } = useToast();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (state.message) {
-      showToast(state.message);
+      toast({
+        description: state.message,
+        title: 'Error',
+      });
     }
     // state.message will not trigger effect if same value
-  }, [showToast, state]);
+  }, [state, toast]);
 
   return (
     <AppLayout className="max-w-sm" title="Sign in">
-      <form action={formAction} className="mt-4 flex flex-col gap-4">
-        <Input
-          autoComplete="email"
-          autoFocus
-          id="email"
-          name="email"
-          required
-          type="email"
-        />
-        <PasswordInput />
-        <Input id="name" name="name" tabIndex={-1} wrapperClassName="hidden" />
-        <div className="mt-2 flex items-center">
-          <SubmitButton />
+      <form action={formAction} className="mt-4">
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            autoComplete="email"
+            autoFocus
+            id="email"
+            name="email"
+            required
+            type="email"
+          />
         </div>
+        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="email">Password</Label>
+          <Input
+            autoComplete="off"
+            id="password"
+            name="password"
+            required
+            type="password"
+          />
+        </div>
+        <SubmitButton className="mt-6 w-full sm:w-auto" />
       </form>
     </AppLayout>
   );

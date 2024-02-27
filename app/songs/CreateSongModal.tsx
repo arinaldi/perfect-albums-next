@@ -5,12 +5,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
-import Input from 'components/Input';
-import Modal from 'components/Modal';
-import PrimaryButton from 'components/PrimaryButton';
-import SecondaryButton from 'components/SecondaryButton';
-import { createSong } from './actions';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
+import { Button } from 'components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from 'components/ui/form';
+import { Input } from 'components/ui/input';
+import SubmitButton from 'components/SubmitButton';
 import { songSchema, type SongInput } from './schema';
+import { createSong } from './actions';
 
 const defaultValues = {
   artist: '',
@@ -20,67 +34,80 @@ const defaultValues = {
 
 export default function CreateSongModal() {
   const [open, setOpen] = useState(false);
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<SongInput>({
+  const form = useForm<SongInput>({
     defaultValues,
     resolver: zodResolver(songSchema),
   });
 
   function onClose() {
     setOpen(false);
-    reset(defaultValues);
+    form.reset(defaultValues);
   }
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
-    handleSubmit,
+    handleSubmit: form.handleSubmit,
     submitFn: createSong,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   });
 
   return (
-    <Modal open={open} onOpenChange={setOpen}>
-      <Modal.Button asChild>
-        <PrimaryButton label="Add song" type="button" />
-      </Modal.Button>
-      <Modal.Content title="Add song">
-        <form className="mt-6" onSubmit={onSubmit}>
-          <div className="grid grid-cols-6 gap-6">
-            <div className="col-span-6">
-              <Input
-                error={errors.artist}
-                id="artist"
-                type="text"
-                {...register('artist')}
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                error={errors.title}
-                id="title"
-                type="text"
-                {...register('title')}
-              />
-            </div>
-            <div className="col-span-6">
-              <Input
-                error={errors.link}
-                id="link"
-                type="text"
-                {...register('link')}
-              />
-            </div>
-          </div>
-          <Modal.Footer>
-            <PrimaryButton isSubmitting={isSubmitting} />
-            <SecondaryButton onClick={onClose} />
-          </Modal.Footer>
-        </form>
-      </Modal.Content>
-    </Modal>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>Add song</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add song</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={onSubmit}>
+            <FormField
+              control={form.control}
+              name="artist"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Artist</FormLabel>
+                  <FormControl>
+                    <Input autoFocus {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="mt-4">
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem className="mt-4">
+                  <FormLabel>Link</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <SubmitButton
+              className="mt-6 w-full sm:w-auto"
+              submitting={isSubmitting}
+            />
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
