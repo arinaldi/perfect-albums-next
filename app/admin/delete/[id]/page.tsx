@@ -5,7 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
-import { SubmitButton } from 'components/ui/submit-button';
+import SubmitButton from 'components/SubmitButton';
 
 interface Props {
   params: {

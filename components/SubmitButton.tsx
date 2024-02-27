@@ -9,7 +9,7 @@ interface Props {
   submitting?: boolean;
 }
 
-export function SubmitButton({ className = '', submitting }: Props) {
+export default function SubmitButton({ className = '', submitting }: Props) {
   const { pending } = useFormStatus();
   const loading = pending || submitting;
 

@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'components/ui/dialog';
-import { SubmitButton } from 'components/ui/submit-button';
+import SubmitButton from 'components/SubmitButton';
 import { deleteSong } from './actions';
 
 interface Props {

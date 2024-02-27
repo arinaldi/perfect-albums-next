@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from 'components/ui/form';
 import { Input } from 'components/ui/input';
-import { SubmitButton } from 'components/ui/submit-button';
+import SubmitButton from 'components/SubmitButton';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { createRelease } from './actions';
 

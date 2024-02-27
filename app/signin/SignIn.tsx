@@ -6,7 +6,7 @@ import AppLayout from 'components/AppLayout';
 import { useToast } from 'components/ui/use-toast';
 import { Input } from 'components/ui/input';
 import { Label } from 'components/ui/label';
-import { SubmitButton } from 'components/ui/submit-button';
+import SubmitButton from 'components/SubmitButton';
 import { signIn } from './actions';
 import { initialState } from './schema';
 
