@@ -1,6 +1,6 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { ROUTES_ADMIN } from 'utils/constants';
 import { Button } from 'components/ui/button';
@@ -24,7 +24,7 @@ export default function AlbumActions({ id }: Props) {
         size="icon"
         variant="outline"
       >
-        <Pencil className="inline size-4" />
+        <Pencil1Icon className="inline size-4" />
       </Button>
       <Button
         onClick={() => {
@@ -35,7 +35,7 @@ export default function AlbumActions({ id }: Props) {
         size="icon"
         variant="outline"
       >
-        <Trash2 className="inline size-4" />
+        <TrashIcon className="inline size-4" />
       </Button>
     </div>
   );

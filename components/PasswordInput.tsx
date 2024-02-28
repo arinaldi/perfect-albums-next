@@ -1,5 +1,5 @@
 import { forwardRef, InputHTMLAttributes, useReducer } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons';
 import { type FieldError } from 'react-hook-form';
 
 import { cn } from 'lib/utils';
@@ -43,7 +43,11 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>((props, ref) => {
           className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 dark:text-white"
           onClick={toggle}
         >
-          {on ? <Eye className="size-5" /> : <EyeOff className="size-5" />}
+          {on ? (
+            <EyeOpenIcon className="size-5" />
+          ) : (
+            <EyeNoneIcon className="size-5" />
+          )}
         </div>
       </div>
       {error?.message && (

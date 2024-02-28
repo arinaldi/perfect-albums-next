@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Info, XCircle } from 'lucide-react';
+import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 
 import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
 import { cn } from 'lib/utils';
@@ -14,8 +14,8 @@ interface Props {
 }
 
 const icons: Record<Variant, ReactNode> = {
-  default: <Info aria-hidden="true" className="size-4" />,
-  destructive: <XCircle aria-hidden="true" className="size-4" />,
+  default: <InfoCircledIcon aria-hidden="true" className="size-4" />,
+  destructive: <CrossCircledIcon aria-hidden="true" className="size-4" />,
 };
 
 export default function AppMessage({

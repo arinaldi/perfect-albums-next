@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Pencil } from 'lucide-react';
+import { Pencil1Icon } from '@radix-ui/react-icons';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { formatDate } from 'utils';
@@ -64,8 +64,8 @@ export default function EditReleaseModal({ data }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex-shrink-0" size="icon" variant="outline">
-          <Pencil className="size-4" />
+        <Button className="flex-shrink-0" size="icon" variant="ghost">
+          <Pencil1Icon className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>

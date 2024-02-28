@@ -29,22 +29,26 @@ export default function FeaturedSongs({ songs, user }: Props) {
       titleAction={user && <CreateSongModal />}
     >
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {songs.map((song) => (
-          <Card key={song.id}>
+        {songs.map((s) => (
+          <Card key={s.id} className="relative">
             <CardHeader>
-              <CardTitle className="flex justify-between gap-2 text-xl">
+              <CardTitle>
                 <a
-                  className="text-muted-foreground underline underline-offset-4 hover:text-primary"
-                  href={song.link}
+                  className="leading-6 text-muted-foreground underline underline-offset-4 hover:text-primary"
+                  href={s.link}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  {song.title}
+                  {s.title}
                 </a>
-                {user && <DeleteSongModal data={song} />}
               </CardTitle>
-              <CardDescription>{song.artist}</CardDescription>
+              <CardDescription>{s.artist}</CardDescription>
             </CardHeader>
+            {user && (
+              <span className="absolute right-2 top-4">
+                <DeleteSongModal data={s} />
+              </span>
+            )}
           </Card>
         ))}
       </div>

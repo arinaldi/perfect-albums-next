@@ -1,6 +1,6 @@
 'use client';
 import { FormEvent, useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { TrashIcon } from '@radix-ui/react-icons';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
@@ -35,8 +35,8 @@ export default function DeleteReleaseModal({ data }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex-shrink-0" size="icon" variant="outline">
-          <Trash2 className="size-4" />
+        <Button className="flex-shrink-0" size="icon" variant="ghost">
+          <TrashIcon className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>

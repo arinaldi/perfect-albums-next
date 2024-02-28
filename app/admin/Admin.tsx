@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { CheckIcon } from '@radix-ui/react-icons';
 
 import { PER_PAGE } from 'utils/constants';
 import { Album } from 'utils/types';
@@ -86,7 +86,7 @@ export default function Admin({
                 </TableCell>
                 <TableCell>{a.year}</TableCell>
                 <TableCell>
-                  {a.favorite && <Check className="inline size-5" />}
+                  {a.favorite && <CheckIcon className="inline size-5" />}
                 </TableCell>
                 <TableCell>
                   <AlbumActions id={a.id} />

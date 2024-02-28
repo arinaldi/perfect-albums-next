@@ -31,20 +31,20 @@ export default function NewReleases({ releases, user }: Props) {
           .map(([date, releases]) => (
             <Card key={date}>
               <CardHeader>
-                <CardTitle className="text-xl">{date}</CardTitle>
+                <CardTitle>{date}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul>
                   {releases.map((r) => (
                     <li
                       key={r.id}
-                      className="mt-1.5 flex justify-between gap-2"
+                      className="mt-1.5 flex items-start justify-between gap-2 text-sm"
                     >
                       <span>
                         {r.artist} &ndash; {r.title}
                       </span>
                       {user && (
-                        <span className="flex items-center gap-1.5">
+                        <span className="flex items-center">
                           <EditReleaseModal data={r} />
                           <DeleteReleaseModal data={r} />
                         </span>

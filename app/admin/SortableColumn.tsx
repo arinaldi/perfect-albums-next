@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDownIcon } from '@radix-ui/react-icons';
 
 import { parseQuery } from 'utils';
 import { ROUTES_ADMIN } from 'utils/constants';
@@ -51,7 +51,7 @@ export default function SortableColumn({
         <span
           className={`${sortProp === prop ? '' : 'invisible'} ml-1 flex-none`}
         >
-          <ArrowDown
+          <ArrowDownIcon
             aria-hidden="true"
             className={`${desc ? 'rotate-180' : ''} inline size-4`}
           />

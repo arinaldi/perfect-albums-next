@@ -1,5 +1,5 @@
 'use client';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUpIcon } from '@radix-ui/react-icons';
 
 import { formatFavorites, sortDesc } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
@@ -45,7 +45,7 @@ export default function TopAlbums({ albums }: Props) {
                   const url = `${SPOTIFY_URL}/${query}`;
 
                   return (
-                    <li key={index} className="mt-0.5">
+                    <li key={index} className="mt-1 text-sm">
                       {artist} &ndash;{' '}
                       <a
                         className="text-muted-foreground underline underline-offset-4 hover:text-primary"
@@ -66,7 +66,7 @@ export default function TopAlbums({ albums }: Props) {
         className="fixed bottom-0 right-0 p-5 text-sm text-muted-foreground"
         href="#top"
       >
-        <ArrowUp className="mr-1 inline size-4" />
+        <ArrowUpIcon className="mr-1 inline size-4" />
         <span>Top</span>
       </a>
     </AppLayout>

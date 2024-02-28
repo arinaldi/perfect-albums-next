@@ -1,6 +1,9 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
+import {
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@radix-ui/react-icons';
 
 import { parsePageQuery, parsePerPageQuery } from 'utils';
 
@@ -41,7 +44,7 @@ export default function Paginate({ total }: Props) {
             className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
             href={getHref(1)}
           >
-            <ChevronsLeft className="size-4" />
+            <DoubleArrowLeftIcon className="size-4" />
           </PaginationLink>
         </PaginationItem>
         <PaginationItem>
@@ -67,7 +70,7 @@ export default function Paginate({ total }: Props) {
             className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
             href={getHref(lastPage)}
           >
-            <ChevronsRight className="size-4" />
+            <DoubleArrowRightIcon className="size-4" />
           </PaginationLink>
         </PaginationItem>
       </PaginationContent>
