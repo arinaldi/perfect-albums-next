@@ -21,3 +21,5 @@ export interface SupaError {
   message: string;
   status: number;
 }
+
+export type StudioValue = 'true' | 'false';

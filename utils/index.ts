@@ -1,5 +1,5 @@
 import { MONTHS, PER_PAGE } from 'utils/constants';
-import { Album, Release } from 'utils/types';
+import { Album, Release, StudioValue } from 'utils/types';
 
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
@@ -120,8 +120,6 @@ export function parsePerPageQuery(value: QueryValue) {
   if (perPage === LARGE) return LARGE;
   return SMALL;
 }
-
-type StudioValue = 'true' | 'false';
 
 export function parseStudioQuery(value: QueryValue): StudioValue {
   return value === 'true' ? value : 'false';

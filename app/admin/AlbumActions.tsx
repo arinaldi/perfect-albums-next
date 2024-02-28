@@ -14,7 +14,7 @@ export default function AlbumActions({ id }: Props) {
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex items-center justify-end gap-2">
+    <div className="flex items-center justify-end">
       <Button
         onClick={() => {
           router.push(
@@ -22,9 +22,9 @@ export default function AlbumActions({ id }: Props) {
           );
         }}
         size="icon"
-        variant="outline"
+        variant="ghost"
       >
-        <Pencil1Icon className="inline size-4" />
+        <Pencil1Icon className="size-4" />
       </Button>
       <Button
         onClick={() => {
@@ -33,9 +33,9 @@ export default function AlbumActions({ id }: Props) {
           );
         }}
         size="icon"
-        variant="outline"
+        variant="ghost"
       >
-        <TrashIcon className="inline size-4" />
+        <TrashIcon className="size-4" />
       </Button>
     </div>
   );

@@ -3,7 +3,13 @@ import { startTransition, useOptimistic } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { PER_PAGE } from 'utils/constants';
-import { ToggleGroup, ToggleGroupItem } from 'components/ui/toggle-group';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface Props {
   perPage: PER_PAGE;
@@ -30,20 +36,18 @@ export default function PerPage({ perPage }: Props) {
   }
 
   return (
-    <ToggleGroup
-      onValueChange={onValueChange}
-      type="single"
-      value={optimisticPerPage}
-    >
-      <ToggleGroupItem value={SMALL.toString()} aria-label="Toggle small">
-        {SMALL}
-      </ToggleGroupItem>
-      <ToggleGroupItem value={MEDIUM.toString()} aria-label="Toggle medium">
-        {MEDIUM}
-      </ToggleGroupItem>
-      <ToggleGroupItem value={LARGE.toString()} aria-label="Toggle large">
-        {LARGE}
-      </ToggleGroupItem>
-    </ToggleGroup>
+    <div className="flex items-center gap-x-2">
+      <p className="text-sm font-medium">Rows per page</p>
+      <Select value={optimisticPerPage} onValueChange={onValueChange}>
+        <SelectTrigger className="h-8 w-[70px]">
+          <SelectValue placeholder={`10`} />
+        </SelectTrigger>
+        <SelectContent side="top">
+          <SelectItem value={`${SMALL}`}>{SMALL}</SelectItem>
+          <SelectItem value={`${MEDIUM}`}>{MEDIUM}</SelectItem>
+          <SelectItem value={`${LARGE}`}>{LARGE}</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

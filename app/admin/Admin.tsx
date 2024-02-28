@@ -1,7 +1,7 @@
 import { CheckIcon } from '@radix-ui/react-icons';
 
 import { PER_PAGE } from 'utils/constants';
-import { Album } from 'utils/types';
+import { Album, StudioValue } from 'utils/types';
 import Layout from 'components/AppLayout';
 import AppMessage from 'components/AppMessage';
 import { Badge } from 'components/ui/badge';
@@ -9,6 +9,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -16,16 +17,14 @@ import {
 import AddAlbumButton from './AddAlbumButton';
 import AlbumActions from './AlbumActions';
 import Paginate from './Paginate';
-import PerPage from './PerPage';
 import Search from './Search';
 import SortableColumn from './SortableColumn';
-import StudioFilter from './StudioFilter';
 
 interface Props {
   albums: Album[];
   cdTotal: number;
   perPage: PER_PAGE;
-  studio: string;
+  studio: StudioValue;
   total: number;
 }
 
@@ -45,12 +44,6 @@ export default function Admin({
         <Search autoFocus type="artist" />
         <Search type="title" />
         <AddAlbumButton />
-      </div>
-
-      <div className="mb-4 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
-        <Paginate total={total} />
-        <PerPage perPage={perPage} />
-        <StudioFilter studio={studio} />
       </div>
 
       {albums?.length === 0 ? (
@@ -94,6 +87,13 @@ export default function Admin({
               </TableRow>
             ))}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={5}>
+                <Paginate perPage={perPage} total={total} studio={studio} />
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       )}
     </Layout>

@@ -2,11 +2,12 @@
 import { startTransition, useOptimistic } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { Label } from 'components/ui/label';
-import { Switch } from 'components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { StudioValue } from '@/utils/types';
 
 interface Props {
-  studio: string;
+  studio: StudioValue;
 }
 
 export default function StudioFilter({ studio }: Props) {
@@ -15,7 +16,7 @@ export default function StudioFilter({ studio }: Props) {
   const [optimisticStudio, setOptimisticStudio] = useOptimistic(studio);
 
   function onCheckedChange(value: boolean) {
-    const newValue = value.toString();
+    const newValue = value ? 'true' : 'false';
     const query = new URLSearchParams(searchParams?.toString());
     query.set('page', '1');
     query.set('studio', newValue);
@@ -33,7 +34,7 @@ export default function StudioFilter({ studio }: Props) {
         id="studio-filter"
         onCheckedChange={onCheckedChange}
       />
-      <Label htmlFor="studio-filter">Studio albums</Label>
+      <Label htmlFor="studio-filter">Studio</Label>
     </div>
   );
 }
