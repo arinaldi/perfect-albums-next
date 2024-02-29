@@ -6,7 +6,7 @@ import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import { releaseSchema, type ReleaseInput } from './schema';
 
-export async function createRelease(release: ReleaseInput) {
+export async function addRelease(release: ReleaseInput) {
   const result = releaseSchema.safeParse(release);
 
   if (!result.success) {

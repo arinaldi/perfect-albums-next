@@ -11,11 +11,11 @@ import SubmitButton from 'components/SubmitButton';
 import { albumSchema } from '../schema';
 
 export const metadata = {
-  title: 'Create album | Perfect albums',
+  title: 'Add album | Perfect albums',
 };
 
-export default function CreateAlbumPage() {
-  async function createAlbum(formData: FormData) {
+export default function AddAlbumPage() {
+  async function addAlbum(formData: FormData) {
     'use server';
     const supabase = createClient(cookies());
     const {
@@ -43,8 +43,8 @@ export default function CreateAlbumPage() {
   }
 
   return (
-    <AppLayout title="Create album">
-      <form action={createAlbum}>
+    <AppLayout title="Add album">
+      <form action={addAlbum}>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="artist">Artist</Label>
           <Input autoFocus id="artist" name="artist" required />

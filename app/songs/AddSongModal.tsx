@@ -24,7 +24,7 @@ import {
 import { Input } from 'components/ui/input';
 import SubmitButton from 'components/SubmitButton';
 import { songSchema, type SongInput } from './schema';
-import { createSong } from './actions';
+import { addSong } from './actions';
 
 const defaultValues = {
   artist: '',
@@ -32,7 +32,7 @@ const defaultValues = {
   link: '',
 };
 
-export default function CreateSongModal() {
+export default function AddSongModal() {
   const [open, setOpen] = useState(false);
   const form = useForm<SongInput>({
     defaultValues,
@@ -47,8 +47,8 @@ export default function CreateSongModal() {
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
-    submitFn: createSong,
-    successMessage: `${MESSAGES.SONG_PREFIX} created`,
+    submitFn: addSong,
+    successMessage: `${MESSAGES.SONG_PREFIX} added`,
   });
 
   return (

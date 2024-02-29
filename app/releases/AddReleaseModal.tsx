@@ -24,7 +24,7 @@ import {
 import { Input } from 'components/ui/input';
 import SubmitButton from 'components/SubmitButton';
 import { releaseSchema, type ReleaseInput } from './schema';
-import { createRelease } from './actions';
+import { addRelease } from './actions';
 
 const defaultValues = {
   artist: '',
@@ -32,7 +32,7 @@ const defaultValues = {
   date: '',
 };
 
-export default function CreateReleaseModal() {
+export default function AddReleaseModal() {
   const [open, setOpen] = useState(false);
   const form = useForm<ReleaseInput>({
     defaultValues,
@@ -47,8 +47,8 @@ export default function CreateReleaseModal() {
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
-    submitFn: createRelease,
-    successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
+    submitFn: addRelease,
+    successMessage: `${MESSAGES.RELEASE_PREFIX} added`,
   });
 
   return (

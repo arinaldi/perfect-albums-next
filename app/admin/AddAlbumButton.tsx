@@ -11,7 +11,7 @@ export default function AddAlbumButton() {
   return (
     <Button
       onClick={() => {
-        router.push(`${ROUTES_ADMIN.create.href}?${searchParams?.toString()}`);
+        router.push(`${ROUTES_ADMIN.add.href}?${searchParams?.toString()}`);
       }}
       type="button"
     >

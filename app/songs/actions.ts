@@ -6,7 +6,7 @@ import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import { SongInput, songSchema } from './schema';
 
-export async function createSong(song: SongInput) {
+export async function addSong(song: SongInput) {
   const result = songSchema.safeParse(song);
 
   if (!result.success) {

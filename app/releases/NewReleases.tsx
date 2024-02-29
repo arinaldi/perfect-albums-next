@@ -4,8 +4,14 @@ import { formatReleases, sortByDate } from 'utils';
 import { Release } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import { Badge } from 'components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import CreateReleaseModal from './CreateReleaseModal';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from 'components/ui/card';
+import AddReleaseModal from './AddReleaseModal';
 import DeleteReleaseModal from './DeleteReleaseModal';
 import EditReleaseModal from './EditReleaseModal';
 
@@ -23,7 +29,7 @@ export default function NewReleases({ releases, user }: Props) {
           <Badge variant="secondary">{releases.length.toLocaleString()}</Badge>
         </div>
       }
-      titleAction={user && <CreateReleaseModal />}
+      titleAction={user && <AddReleaseModal />}
     >
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(formatReleases(releases))
@@ -32,6 +38,10 @@ export default function NewReleases({ releases, user }: Props) {
             <Card key={date}>
               <CardHeader>
                 <CardTitle>{date}</CardTitle>
+                <CardDescription>
+                  {releases.length.toLocaleString()} release
+                  {releases.length > 1 && 's'}
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ul>

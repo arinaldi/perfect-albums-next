@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from 'components/ui/card';
-import CreateSongModal from './CreateSongModal';
+import AddSongModal from './AddSongModal';
 import DeleteSongModal from './DeleteSongModal';
 
 interface Props {
@@ -26,7 +26,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
           <Badge variant="secondary">{songs.length.toLocaleString()}</Badge>
         </div>
       }
-      titleAction={user && <CreateSongModal />}
+      titleAction={user && <AddSongModal />}
     >
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {songs.map((s) => (

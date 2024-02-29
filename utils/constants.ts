@@ -91,8 +91,8 @@ export const ROUTES = [
 ];
 
 export const ROUTES_ADMIN = {
+  add: { href: '/admin/add', label: 'Admin add' },
   base: { href: '/admin', label: 'Admin' },
-  create: { href: '/admin/create', label: 'Admin create' },
   edit: { href: '/admin/edit', label: 'Admin edit' },
   delete: { href: '/admin/delete', label: 'Admin delete' },
 };
