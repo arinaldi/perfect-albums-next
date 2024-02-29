@@ -19,6 +19,7 @@ export default function SignIn() {
       toast({
         description: state.message,
         title: 'Error',
+        variant: 'destructive',
       });
     }
     // state.message will not trigger effect if same value

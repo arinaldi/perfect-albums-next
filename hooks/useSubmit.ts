@@ -51,6 +51,7 @@ export function useSubmit(options: Options): Payload {
       toast({
         description: message,
         title: 'Error',
+        variant: 'destructive',
       });
     }
   }
