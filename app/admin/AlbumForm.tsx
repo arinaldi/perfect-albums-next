@@ -21,16 +21,12 @@ export default function AlbumForm({ action, data }: Props) {
           name="artist"
           required
         />
-        <p className="text-[0.8rem] text-muted-foreground">
-          The artist of the album
-        </p>
+        <p className="text-[0.8rem] text-muted-foreground">The album artist</p>
       </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="title">Title</Label>
         <Input defaultValue={data?.title} id="title" name="title" required />
-        <p className="text-[0.8rem] text-muted-foreground">
-          The title of the album
-        </p>
+        <p className="text-[0.8rem] text-muted-foreground">The album title</p>
       </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="year">Year</Label>

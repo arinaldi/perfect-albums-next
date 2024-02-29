@@ -33,7 +33,7 @@ export default function ReleaseForm({ form, isSubmitting, onSubmit }: Props) {
               <FormControl>
                 <Input autoFocus {...field} />
               </FormControl>
-              <FormDescription>The artist of the release</FormDescription>
+              <FormDescription>The release artist</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -47,7 +47,7 @@ export default function ReleaseForm({ form, isSubmitting, onSubmit }: Props) {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>The title of the release</FormDescription>
+              <FormDescription>The release title</FormDescription>
               <FormMessage />
             </FormItem>
           )}

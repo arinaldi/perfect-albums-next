@@ -72,7 +72,7 @@ export default function AddSongModal() {
                   <FormControl>
                     <Input autoFocus {...field} />
                   </FormControl>
-                  <FormDescription>The artist of the song</FormDescription>
+                  <FormDescription>The song artist</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -86,7 +86,7 @@ export default function AddSongModal() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormDescription>The title of the song</FormDescription>
+                  <FormDescription>The song title</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -9,7 +9,7 @@ interface Props {
   id: number;
 }
 
-export default function AlbumActions({ id }: Props) {
+export default function TableActions({ id }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

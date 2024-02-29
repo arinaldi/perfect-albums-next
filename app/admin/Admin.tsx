@@ -15,10 +15,10 @@ import {
   TableRow,
 } from 'components/ui/table';
 import AddAlbumButton from './AddAlbumButton';
-import AlbumActions from './AlbumActions';
 import Paginate from './Paginate';
 import Search from './Search';
 import SortableColumn from './SortableColumn';
+import TableActions from './TableActions';
 
 interface Props {
   albums: Album[];
@@ -37,8 +37,25 @@ export default function Admin({
 }: Props) {
   return (
     <Layout
-      title={<Title total={total} />}
-      titleAction={<AppMetadata cdTotal={cdTotal} />}
+      title={
+        <div className="flex items-center gap-2">
+          <span>Admin</span>
+          <Badge variant="secondary">{total.toLocaleString()}</Badge>
+        </div>
+      }
+      titleAction={
+        <div className="flex items-center gap-4 dark:text-white">
+          <code className="font-mono text-xs">
+            {process.env.NEXT_PUBLIC_APP_VERSION}
+          </code>
+          <span className="flex items-center gap-0.5">
+            <Badge variant="secondary">{cdTotal.toLocaleString()}</Badge>
+            <span className="text-sm leading-7">
+              CD{cdTotal === 1 ? '' : 's'}
+            </span>
+          </span>
+        </div>
+      }
     >
       <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <Search autoFocus type="artist" />
@@ -82,7 +99,7 @@ export default function Admin({
                   {a.favorite && <CheckIcon className="inline size-5" />}
                 </TableCell>
                 <TableCell>
-                  <AlbumActions id={a.id} />
+                  <TableActions id={a.id} />
                 </TableCell>
               </TableRow>
             ))}
@@ -97,36 +114,5 @@ export default function Admin({
         </Table>
       )}
     </Layout>
-  );
-}
-
-interface TitleProps {
-  total: number;
-}
-
-function Title({ total }: TitleProps) {
-  return (
-    <div className="flex items-center gap-2">
-      <span>Admin</span>
-      <Badge variant="secondary">{total.toLocaleString()}</Badge>
-    </div>
-  );
-}
-
-interface MetadataProps {
-  cdTotal: number;
-}
-
-function AppMetadata({ cdTotal }: MetadataProps) {
-  return (
-    <div className="flex items-center gap-4 dark:text-white">
-      <code className="font-mono text-xs">
-        {process.env.NEXT_PUBLIC_APP_VERSION}
-      </code>
-      <span className="flex items-center gap-0.5">
-        <Badge variant="secondary">{cdTotal.toLocaleString()}</Badge>
-        <span className="text-sm leading-7">CD{cdTotal === 1 ? '' : 's'}</span>
-      </span>
-    </div>
   );
 }
