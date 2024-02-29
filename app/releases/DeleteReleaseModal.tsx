@@ -40,7 +40,7 @@ export default function DeleteReleaseModal({ data }: Props) {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <form onSubmit={onSubmit}>
+        <form className="space-y-8" onSubmit={onSubmit}>
           <DialogHeader>
             <DialogTitle>Delete release</DialogTitle>
             <DialogDescription>
@@ -49,7 +49,7 @@ export default function DeleteReleaseModal({ data }: Props) {
             </DialogDescription>
           </DialogHeader>
           <SubmitButton
-            className="mt-6 w-full sm:w-auto"
+            className="w-full sm:w-auto"
             submitting={isSubmitting}
           />
         </form>

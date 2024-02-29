@@ -73,7 +73,7 @@ export default function EditReleaseModal({ data }: Props) {
           <DialogTitle>Edit release</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={onSubmit}>
+          <form className="space-y-8" onSubmit={onSubmit}>
             <FormField
               control={form.control}
               name="artist"
@@ -114,7 +114,7 @@ export default function EditReleaseModal({ data }: Props) {
               )}
             />
             <SubmitButton
-              className="mt-6 w-full sm:w-auto"
+              className="w-full sm:w-auto"
               submitting={isSubmitting}
             />
           </form>

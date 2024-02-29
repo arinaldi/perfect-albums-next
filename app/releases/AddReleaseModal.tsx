@@ -16,6 +16,7 @@ import { Button } from 'components/ui/button';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -61,7 +62,7 @@ export default function AddReleaseModal() {
           <DialogTitle>Add release</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={onSubmit}>
+          <form className="space-y-8" onSubmit={onSubmit}>
             <FormField
               control={form.control}
               name="artist"
@@ -71,6 +72,7 @@ export default function AddReleaseModal() {
                   <FormControl>
                     <Input autoFocus {...field} />
                   </FormControl>
+                  <FormDescription>The artist of the release</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -84,6 +86,7 @@ export default function AddReleaseModal() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormDescription>The title of the release</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -97,12 +100,13 @@ export default function AddReleaseModal() {
                   <FormControl>
                     <Input type="date" {...field} />
                   </FormControl>
+                  <FormDescription>The release date</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <SubmitButton
-              className="mt-6 w-full sm:w-auto"
+              className="w-full sm:w-auto"
               submitting={isSubmitting}
             />
           </form>

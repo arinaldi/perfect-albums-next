@@ -27,7 +27,7 @@ export default function SignIn() {
 
   return (
     <AppLayout className="max-w-sm" title="Sign in">
-      <form action={formAction} className="mt-4">
+      <form action={formAction} className="space-y-8">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -49,7 +49,7 @@ export default function SignIn() {
             type="password"
           />
         </div>
-        <SubmitButton className="mt-6 w-full sm:w-auto" />
+        <SubmitButton className="w-full sm:w-auto" />
       </form>
     </AppLayout>
   );

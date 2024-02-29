@@ -4,10 +4,7 @@ import { redirect } from 'next/navigation';
 import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import AppLayout from 'components/AppLayout';
-import { Checkbox } from 'components/ui/checkbox';
-import { Input } from 'components/ui/input';
-import { Label } from 'components/ui/label';
-import SubmitButton from 'components/SubmitButton';
+import AlbumForm from '../AlbumForm';
 import { albumSchema } from '../schema';
 
 export const metadata = {
@@ -44,48 +41,7 @@ export default function AddAlbumPage() {
 
   return (
     <AppLayout title="Add album">
-      <form action={addAlbum}>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="artist">Artist</Label>
-          <Input autoFocus id="artist" name="artist" required />
-        </div>
-        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="title">Title</Label>
-          <Input id="title" name="title" required />
-        </div>
-        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="year">Year</Label>
-          <Input
-            defaultValue={new Date().getFullYear().toString()}
-            id="year"
-            name="year"
-            required
-            type="number"
-          />
-        </div>
-        <div className="mt-4 flex items-center space-x-2">
-          <Checkbox id="studio" name="studio" />
-          <label htmlFor="studio" className="text-sm font-medium leading-none">
-            Studio album
-          </label>
-        </div>
-        <div className="mt-4 flex items-center space-x-2">
-          <Checkbox id="cd" name="cd" />
-          <label htmlFor="cd" className="text-sm font-medium leading-none">
-            CD
-          </label>
-        </div>
-        <div className="mt-4 flex items-center space-x-2">
-          <Checkbox id="favorite" name="favorite" />
-          <label
-            htmlFor="favorite"
-            className="text-sm font-medium leading-none"
-          >
-            Favorite
-          </label>
-        </div>
-        <SubmitButton className="mt-6 w-full sm:w-auto" />
-      </form>
+      <AlbumForm action={addAlbum} />
     </AppLayout>
   );
 }
