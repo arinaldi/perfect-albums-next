@@ -36,7 +36,7 @@ export default function NavBar({ user }: Props) {
     <div className="border-b">
       {/* Desktop */}
       <div className="hidden h-14 items-center justify-between px-8 sm:flex">
-        <nav className="flex items-center space-x-4 lg:space-x-6">
+        <nav className="flex items-center gap-6">
           <Link
             className="font-semibold transition-colors hover:text-primary"
             href="/dashboard"
