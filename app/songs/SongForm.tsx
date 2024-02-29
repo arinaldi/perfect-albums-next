@@ -13,16 +13,16 @@ import {
 import { Input } from '@/components/ui/input';
 import SubmitButton from '@/components/SubmitButton';
 import { cn } from '@/lib/utils';
-import { type ReleaseInput } from './schema';
+import { type SongInput } from './schema';
 
 interface Props {
   className?: string;
-  form: UseFormReturn<ReleaseInput, any>;
+  form: UseFormReturn<SongInput, any>;
   isSubmitting: boolean;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
 }
 
-export default function ReleaseForm({
+export default function SongForm({
   className,
   form,
   isSubmitting,
@@ -40,7 +40,7 @@ export default function ReleaseForm({
               <FormControl>
                 <Input autoFocus {...field} />
               </FormControl>
-              <FormDescription>The release artist</FormDescription>
+              <FormDescription>The song artist</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -54,21 +54,21 @@ export default function ReleaseForm({
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>The release title</FormDescription>
+              <FormDescription>The song title</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="date"
+          name="link"
           render={({ field }) => (
             <FormItem className="mt-4">
-              <FormLabel>Date</FormLabel>
+              <FormLabel>Link</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>The release date</FormDescription>
+              <FormDescription>The link to the song</FormDescription>
               <FormMessage />
             </FormItem>
           )}

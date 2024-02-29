@@ -5,27 +5,29 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useSubmit } from 'hooks/useSubmit';
 import { MESSAGES } from 'utils/constants';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import { Button } from 'components/ui/button';
+} from '@/components/ui/dialog';
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from 'components/ui/form';
-import { Input } from 'components/ui/input';
-import SubmitButton from 'components/SubmitButton';
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
+import { useMediaQuery } from '@/components/ui/use-media-query';
 import { songSchema, type SongInput } from './schema';
 import { addSong } from './actions';
+import SongForm from './SongForm';
 
 const defaultValues = {
   artist: '',
@@ -35,6 +37,7 @@ const defaultValues = {
 
 export default function AddSongModal() {
   const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 640px)');
   const form = useForm<SongInput>({
     defaultValues,
     resolver: zodResolver(songSchema),
@@ -52,66 +55,53 @@ export default function AddSongModal() {
     successMessage: `${MESSAGES.SONG_PREFIX} added`,
   });
 
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button>Add song</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader className="text-left">
+            <DialogTitle>Add song</DialogTitle>
+            <DialogDescription>
+              What&apos;s the next featured song?
+            </DialogDescription>
+          </DialogHeader>
+          <SongForm
+            form={form}
+            isSubmitting={isSubmitting}
+            onSubmit={onSubmit}
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
         <Button>Add song</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add song</DialogTitle>
-        </DialogHeader>
-        <Form {...form}>
-          <form className="space-y-8" onSubmit={onSubmit}>
-            <FormField
-              control={form.control}
-              name="artist"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Artist</FormLabel>
-                  <FormControl>
-                    <Input autoFocus {...field} />
-                  </FormControl>
-                  <FormDescription>The song artist</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem className="mt-4">
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormDescription>The song title</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="link"
-              render={({ field }) => (
-                <FormItem className="mt-4">
-                  <FormLabel>Link</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormDescription>The link to the song</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <SubmitButton
-              className="w-full sm:w-auto"
-              submitting={isSubmitting}
-            />
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>Add song</DrawerTitle>
+          <DrawerDescription>
+            What&apos;s the next featured song?
+          </DrawerDescription>
+        </DrawerHeader>
+        <SongForm
+          className="px-4"
+          form={form}
+          isSubmitting={isSubmitting}
+          onSubmit={onSubmit}
+        />
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }

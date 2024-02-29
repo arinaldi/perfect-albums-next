@@ -36,7 +36,7 @@ export function MobileSheet({ signOut, user }: Props) {
           <HamburgerMenuIcon className="size-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent className="w-2/3" side="left">
         <SheetHeader>
           <SheetTitle className="text-left">
             <Link

@@ -54,7 +54,7 @@ export default function NewReleases({ releases, user }: Props) {
                         {r.artist} &ndash; {r.title}
                       </span>
                       {user && (
-                        <span className="-mt-1.5 flex items-center">
+                        <span className="-mt-1.5 flex items-center gap-0.5">
                           <EditReleaseModal data={r} />
                           <DeleteReleaseModal data={r} />
                         </span>

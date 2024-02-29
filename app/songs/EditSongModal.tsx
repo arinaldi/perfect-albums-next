@@ -5,9 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 
 import { useSubmit } from 'hooks/useSubmit';
-import { formatDate } from 'utils';
 import { MESSAGES } from 'utils/constants';
-import { Release } from 'utils/types';
+import { Song } from 'utils/types';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -28,19 +27,19 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/components/ui/use-media-query';
-import { releaseSchema, type ReleaseInput } from './schema';
-import { editRelease } from './actions';
-import ReleaseForm from './ReleaseForm';
+import { songSchema, type SongInput } from './schema';
+import { editSong } from './actions';
+import SongForm from './SongForm';
 
 interface Props {
-  data: Release;
+  data: Song;
 }
 
-export default function EditReleaseModal({ data }: Props) {
+export default function EditSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 640px)');
-  const form = useForm<ReleaseInput>({
-    resolver: zodResolver(releaseSchema),
+  const form = useForm<SongInput>({
+    resolver: zodResolver(songSchema),
   });
   const { handleSubmit, reset } = form;
 
@@ -50,15 +49,15 @@ export default function EditReleaseModal({ data }: Props) {
     reset({
       artist: data.artist,
       title: data.title,
-      date: data.date ? formatDate(data.date) : '',
+      link: data.link,
     });
   }, [data, reset]);
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     handleSubmit,
-    submitFn: editRelease.bind(null, data.id),
-    successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
+    submitFn: editSong.bind(null, data.id),
+    successMessage: `${MESSAGES.SONG_PREFIX} edited`,
   });
 
   if (isDesktop) {
@@ -71,10 +70,10 @@ export default function EditReleaseModal({ data }: Props) {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader className="text-left">
-            <DialogTitle>Edit release</DialogTitle>
-            <DialogDescription>Update data for new release</DialogDescription>
+            <DialogTitle>Edit song</DialogTitle>
+            <DialogDescription>Update data for featured song</DialogDescription>
           </DialogHeader>
-          <ReleaseForm
+          <SongForm
             form={form}
             isSubmitting={isSubmitting}
             onSubmit={onSubmit}
@@ -93,10 +92,10 @@ export default function EditReleaseModal({ data }: Props) {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit release</DrawerTitle>
-          <DrawerDescription>Update data for new release</DrawerDescription>
+          <DrawerTitle>Edit song</DrawerTitle>
+          <DrawerDescription>Update data for featured song</DrawerDescription>
         </DrawerHeader>
-        <ReleaseForm
+        <SongForm
           className="px-4"
           form={form}
           isSubmitting={isSubmitting}

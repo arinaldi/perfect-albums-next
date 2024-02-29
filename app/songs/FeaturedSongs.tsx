@@ -11,6 +11,7 @@ import {
 } from 'components/ui/card';
 import AddSongModal from './AddSongModal';
 import DeleteSongModal from './DeleteSongModal';
+import EditSongModal from './EditSongModal';
 
 interface Props {
   songs: Song[];
@@ -45,7 +46,8 @@ export default function FeaturedSongs({ songs, user }: Props) {
               <CardDescription>{s.artist}</CardDescription>
             </CardHeader>
             {user && (
-              <span className="absolute right-2 top-4">
+              <span className="absolute right-2 top-4 flex items-center gap-0.5">
+                <EditSongModal data={s} />
                 <DeleteSongModal data={s} />
               </span>
             )}

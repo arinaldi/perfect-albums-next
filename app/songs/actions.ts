@@ -29,6 +29,29 @@ export async function addSong(song: SongInput) {
   revalidatePath('/songs');
 }
 
+export async function editSong(id: number, song: SongInput) {
+  const result = songSchema.safeParse(song);
+
+  if (!result.success) {
+    throw new Error(MESSAGES.INVALID_DATA);
+  }
+
+  const supabase = createClient(cookies());
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error(MESSAGES.NOT_AUTHORIZED);
+  }
+
+  const { error } = await supabase.from('songs').update(song).eq('id', id);
+
+  if (error) throw error;
+
+  revalidatePath('/songs');
+}
+
 export async function deleteSong(id: number) {
   const supabase = createClient(cookies());
   const {
