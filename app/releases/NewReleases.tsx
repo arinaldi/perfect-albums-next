@@ -44,7 +44,7 @@ export default function NewReleases({ releases, user }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul>
+                <ul className="space-y-1">
                   {releases.map((r) => (
                     <li
                       key={r.id}

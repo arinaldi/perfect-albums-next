@@ -1,56 +1,91 @@
 'use client';
 import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import AppLayout from 'components/AppLayout';
-import { useToast } from 'components/ui/use-toast';
-import { Input } from 'components/ui/input';
-import { Label } from 'components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import SubmitButton from 'components/SubmitButton';
+import { useToast } from '@/components/ui/use-toast';
 import { signIn } from './actions';
-import { initialState } from './schema';
+import { initialState, signInSchema, type SignInInput } from './schema';
 
 export default function SignIn() {
   const [state, formAction] = useFormState(signIn, initialState);
   const { toast } = useToast();
+  const form = useForm<SignInInput>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(signInSchema),
+  });
 
   useEffect(() => {
-    if (state.message) {
-      toast({
-        description: state.message,
-        title: 'Error',
-        variant: 'destructive',
-      });
-    }
-    // state.message will not trigger effect if same value
-  }, [state, toast]);
+    if (!state.message) return;
+
+    toast({
+      description: state.message.split('-')[0].trim(),
+      title: 'Error',
+      variant: 'destructive',
+    });
+  }, [state.message, toast]);
+
+  async function action(formData: FormData) {
+    const valid = await form.trigger();
+
+    if (!valid) return;
+
+    formAction(formData);
+  }
 
   return (
     <AppLayout className="max-w-sm" title="Sign in">
-      <form action={formAction} className="space-y-8">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            autoComplete="email"
-            autoFocus
-            id="email"
+      <Form {...form}>
+        <form action={action} className="space-y-8">
+          <FormField
+            control={form.control}
             name="email"
-            required
-            type="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    autoComplete="email"
+                    autoFocus
+                    type="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <div className="mt-4 grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Password</Label>
-          <Input
-            autoComplete="off"
-            id="password"
+          <FormField
+            control={form.control}
             name="password"
-            required
-            type="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input autoComplete="off" type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
-        <SubmitButton className="w-full sm:w-auto" />
-      </form>
+          <SubmitButton className="w-full sm:w-auto" />
+        </form>
+      </Form>
     </AppLayout>
   );
 }

@@ -40,20 +40,20 @@ export default function TopAlbums({ albums }: Props) {
                 </Badge>
               </div>
               <ul className="ml-6 list-disc p-1">
-                {favorites.map(({ artist, title }, index) => {
-                  const query = encodeURI(`${artist} ${title}`);
+                {favorites.map((f, index) => {
+                  const query = encodeURI(`${f.artist} ${f.title}`);
                   const url = `${SPOTIFY_URL}/${query}`;
 
                   return (
                     <li key={index} className="mt-1 text-sm">
-                      {artist} &ndash;{' '}
+                      {f.artist} &ndash;{' '}
                       <a
                         className="text-muted-foreground underline underline-offset-4 hover:text-primary"
                         href={url}
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        {title}
+                        {f.title}
                       </a>
                     </li>
                   );

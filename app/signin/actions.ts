@@ -9,10 +9,11 @@ import { signInSchema, type State } from './schema';
 export async function signIn(_: State, formData: FormData) {
   const form = Object.fromEntries(formData.entries());
   const result = signInSchema.safeParse(form);
+  const id = crypto.randomUUID().split('-')[1];
 
   if (form.name || !result.success) {
     return {
-      message: MESSAGES.INVALID_DATA,
+      message: `${MESSAGES.INVALID_DATA} - ${id}`,
     };
   }
 
@@ -21,7 +22,7 @@ export async function signIn(_: State, formData: FormData) {
 
   if (error) {
     return {
-      message: error.message,
+      message: `${error.message} - ${id}`,
     };
   }
 
