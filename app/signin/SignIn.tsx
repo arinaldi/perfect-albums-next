@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import PasswordInput from '@/components/PasswordInput';
 import SubmitButton from 'components/SubmitButton';
 import { useToast } from '@/components/ui/use-toast';
 import { signIn } from './actions';
@@ -77,7 +78,7 @@ export default function SignIn() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input autoComplete="off" type="password" {...field} />
+                  <PasswordInput {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
