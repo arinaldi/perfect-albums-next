@@ -1,16 +1,16 @@
 import { type User } from '@supabase/supabase-js';
 
-import { formatReleases, sortByDate } from 'utils';
-import { Release } from 'utils/types';
-import AppLayout from 'components/AppLayout';
-import { Badge } from 'components/ui/badge';
+import { formatReleases, sortByDate } from '@/utils';
+import { Release } from '@/utils/types';
+import AppLayout from '@/components/AppLayout';
+import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from 'components/ui/card';
+} from '@/components/ui/card';
 import AddReleaseModal from './AddReleaseModal';
 import DeleteReleaseModal from './DeleteReleaseModal';
 import EditReleaseModal from './EditReleaseModal';
@@ -44,21 +44,23 @@ export default function NewReleases({ releases, user }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-1">
+                <ul className="ml-4 list-disc space-y-1">
                   {releases.map((r) => (
-                    <li
-                      key={r.id}
-                      className="flex items-start justify-between gap-2 text-sm"
-                    >
-                      <span>
-                        {r.artist} &ndash; {r.title}
-                      </span>
-                      {user && (
-                        <span className="-mt-1.5 flex items-center gap-0.5">
-                          <EditReleaseModal data={r} />
-                          <DeleteReleaseModal data={r} />
+                    <li key={r.id} className="text-sm">
+                      <span className="flex items-start justify-between gap-2">
+                        <span>
+                          <span className="text-muted-foreground">
+                            {r.artist} &ndash;
+                          </span>{' '}
+                          {r.title}
                         </span>
-                      )}
+                        {user && (
+                          <span className="-mt-1.5 flex items-center gap-0.5">
+                            <EditReleaseModal data={r} />
+                            <DeleteReleaseModal data={r} />
+                          </span>
+                        )}
+                      </span>
                     </li>
                   ))}
                 </ul>

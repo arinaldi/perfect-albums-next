@@ -1,14 +1,14 @@
 import { type User } from '@supabase/supabase-js';
 
-import { Song } from 'utils/types';
-import AppLayout from 'components/AppLayout';
-import { Badge } from 'components/ui/badge';
+import { Song } from '@/utils/types';
+import AppLayout from '@/components/AppLayout';
+import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from 'components/ui/card';
+} from '@/components/ui/card';
 import AddSongModal from './AddSongModal';
 import DeleteSongModal from './DeleteSongModal';
 import EditSongModal from './EditSongModal';
@@ -35,7 +35,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
             <CardHeader>
               <CardTitle>
                 <a
-                  className="leading-6 text-muted-foreground underline underline-offset-4 hover:text-primary"
+                  className="leading-6 underline underline-offset-4 hover:text-muted-foreground"
                   href={s.link}
                   rel="noopener noreferrer"
                   target="_blank"

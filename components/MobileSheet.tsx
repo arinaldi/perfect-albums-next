@@ -36,7 +36,13 @@ export function MobileSheet({ signOut, user }: Props) {
           <HamburgerMenuIcon className="size-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-2/3" side="left">
+      <SheetContent
+        className="w-2/3"
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+        }}
+        side="left"
+      >
         <SheetHeader>
           <SheetTitle className="text-left">
             <Link
@@ -51,11 +57,11 @@ export function MobileSheet({ signOut, user }: Props) {
             The best music on the net
           </SheetDescription>
         </SheetHeader>
-        <nav className="mt-6 flex flex-col items-start gap-4">
+        <nav className="mt-8 flex flex-col items-start gap-4">
           {ROUTES.map((r) => (
             <Link
               className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
+                'font-medium transition-colors hover:text-primary',
                 !pathname?.startsWith(r.href) ? 'text-muted-foreground' : '',
               )}
               key={r.href}
@@ -68,7 +74,7 @@ export function MobileSheet({ signOut, user }: Props) {
           {user && (
             <Link
               className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
+                'font-medium transition-colors hover:text-primary',
                 !pathname?.startsWith(ROUTES_ADMIN.base.href)
                   ? 'text-muted-foreground'
                   : '',
@@ -81,7 +87,7 @@ export function MobileSheet({ signOut, user }: Props) {
           )}
           {user ? (
             <Button
-              className="h-auto p-0 text-muted-foreground hover:bg-transparent"
+              className="h-auto p-0 text-base text-muted-foreground hover:bg-transparent"
               onClick={() => {
                 onClose();
                 signOut();
@@ -97,7 +103,7 @@ export function MobileSheet({ signOut, user }: Props) {
               variant="ghost"
             >
               <Link
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
                 href={ROUTE_HREF.SIGNIN}
                 onClick={onClose}
               >
