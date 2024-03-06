@@ -60,12 +60,7 @@ export default function SignIn() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    autoComplete="email"
-                    autoFocus
-                    type="email"
-                    {...field}
-                  />
+                  <Input autoFocus type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

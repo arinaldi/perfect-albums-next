@@ -57,7 +57,7 @@ export function MobileSheet({ signOut, user }: Props) {
             The best music on the net
           </SheetDescription>
         </SheetHeader>
-        <nav className="mt-8 flex flex-col items-start gap-8">
+        <nav className="mt-8 flex flex-col items-start gap-6">
           {ROUTES.map((r) => (
             <Link
               className={cn(
@@ -97,19 +97,13 @@ export function MobileSheet({ signOut, user }: Props) {
               Sign out
             </Button>
           ) : (
-            <Button
-              asChild
-              className="h-auto p-0 hover:bg-transparent"
-              variant="ghost"
+            <Link
+              className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+              href={ROUTE_HREF.SIGNIN}
+              onClick={onClose}
             >
-              <Link
-                className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
-                href={ROUTE_HREF.SIGNIN}
-                onClick={onClose}
-              >
-                Sign in
-              </Link>
-            </Button>
+              Sign in
+            </Link>
           )}
         </nav>
       </SheetContent>
