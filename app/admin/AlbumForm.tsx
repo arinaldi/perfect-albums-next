@@ -21,12 +21,10 @@ export default function AlbumForm({ action, data }: Props) {
           name="artist"
           required
         />
-        <p className="text-[0.8rem] text-muted-foreground">The album artist</p>
       </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="title">Title</Label>
         <Input defaultValue={data?.title} id="title" name="title" required />
-        <p className="text-[0.8rem] text-muted-foreground">The album title</p>
       </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="year">Year</Label>
@@ -37,9 +35,6 @@ export default function AlbumForm({ action, data }: Props) {
           required
           type="number"
         />
-        <p className="text-[0.8rem] text-muted-foreground">
-          The year the album was released
-        </p>
       </div>
       <div className="flex space-x-3 space-y-0">
         <Checkbox defaultChecked={data?.studio} id="studio" name="studio" />

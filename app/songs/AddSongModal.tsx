@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useSubmit } from 'hooks/useSubmit';
-import { MESSAGES } from 'utils/constants';
+import { useSubmit } from '@/hooks/useSubmit';
+import { MESSAGES } from '@/utils/constants';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

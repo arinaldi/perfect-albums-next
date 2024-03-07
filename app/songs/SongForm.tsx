@@ -4,7 +4,6 @@ import { UseFormReturn } from 'react-hook-form';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -40,7 +39,6 @@ export default function SongForm({
               <FormControl>
                 <Input autoFocus {...field} />
               </FormControl>
-              <FormDescription>The song artist</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -49,12 +47,11 @@ export default function SongForm({
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="mt-4">
+            <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>The song title</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -63,12 +60,11 @@ export default function SongForm({
           control={form.control}
           name="link"
           render={({ field }) => (
-            <FormItem className="mt-4">
+            <FormItem>
               <FormLabel>Link</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>The link to the song</FormDescription>
               <FormMessage />
             </FormItem>
           )}
