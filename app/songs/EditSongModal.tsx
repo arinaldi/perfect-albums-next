@@ -101,7 +101,7 @@ export default function EditSongModal({ data }: Props) {
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
         />
-        <DrawerFooter>
+        <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button size="lg" variant="outline">
               Cancel
