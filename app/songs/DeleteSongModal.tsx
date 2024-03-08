@@ -34,7 +34,7 @@ interface Props {
 
 export default function DeleteSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery('(min-width: 640px)');
+  const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async (event: FormEvent) => {
@@ -64,6 +64,7 @@ export default function DeleteSongModal({ data }: Props) {
             <SubmitButton
               className="w-full sm:w-auto"
               submitting={isSubmitting}
+              variant="destructive"
             />
           </form>
         </DialogContent>
@@ -90,13 +91,17 @@ export default function DeleteSongModal({ data }: Props) {
             </p>
             <SubmitButton
               className="w-full sm:w-auto"
+              size="lg"
               submitting={isSubmitting}
+              variant="destructive"
             />
           </div>
         </form>
-        <DrawerFooter className="pt-2">
+        <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="lg" variant="outline">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

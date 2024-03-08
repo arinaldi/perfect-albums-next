@@ -37,7 +37,7 @@ const defaultValues = {
 
 export default function AddSongModal() {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery('(min-width: 640px)');
+  const isDesktop = useMediaQuery();
   const form = useForm<SongInput>({
     defaultValues,
     resolver: zodResolver(songSchema),
@@ -96,9 +96,11 @@ export default function AddSongModal() {
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
         />
-        <DrawerFooter className="pt-2">
+        <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="lg" variant="outline">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

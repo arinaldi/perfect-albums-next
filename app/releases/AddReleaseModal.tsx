@@ -37,7 +37,7 @@ const defaultValues = {
 
 export default function AddReleaseModal() {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery('(min-width: 640px)');
+  const isDesktop = useMediaQuery();
   const form = useForm<ReleaseInput>({
     defaultValues,
     resolver: zodResolver(releaseSchema),
@@ -94,9 +94,11 @@ export default function AddReleaseModal() {
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
         />
-        <DrawerFooter className="pt-2">
+        <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="lg" variant="outline">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

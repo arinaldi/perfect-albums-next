@@ -37,7 +37,7 @@ interface Props {
 
 export default function EditSongModal({ data }: Props) {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery('(min-width: 640px)');
+  const isDesktop = useMediaQuery();
   const form = useForm<SongInput>({
     resolver: zodResolver(songSchema),
   });
@@ -101,9 +101,11 @@ export default function EditSongModal({ data }: Props) {
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
         />
-        <DrawerFooter className="pt-2">
+        <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button size="lg" variant="outline">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

@@ -59,7 +59,7 @@ export default async function DeleteAlbumPage({ params: { id } }: Props) {
         <div className="text-sm leading-7">
           Are you sure you want to delete {data.artist} – {data.title}?
         </div>
-        <SubmitButton className="w-full sm:w-auto" />
+        <SubmitButton className="w-full sm:w-auto" variant="destructive" />
       </form>
     </AppLayout>
   );
