@@ -1,8 +1,8 @@
 'use client';
 import { useFormStatus } from 'react-dom';
 
-import { Button, ButtonProps } from 'components/ui/button';
-import Spinner from 'components/Spinner';
+import { Button, ButtonProps } from '@/components/ui/button';
+import Spinner from '@/components/Spinner';
 
 interface Props extends ButtonProps {
   className?: string;
