@@ -30,7 +30,7 @@ interface Props {
   onCancel: () => void;
 }
 
-export default function SignInOtp({ email, onCancel }: Props) {
+export default function OtpForm({ email, onCancel }: Props) {
   const [state, formAction] = useFormState(verifyOtp, initialState);
   const form = useForm<VerifyOtpInput>({
     defaultValues: {

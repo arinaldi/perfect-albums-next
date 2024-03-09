@@ -79,7 +79,6 @@ export default function SignIn() {
                 </FormItem>
               )}
             />
-            <Input className="hidden" id="name" name="name" tabIndex={-1} />
             <Button className="w-full" type="submit">
               <EnvelopeClosedIcon className="mr-2 size-4" />
               Sign in with email
