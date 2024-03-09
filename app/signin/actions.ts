@@ -4,12 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
-import {
-  signInSchema,
-  verifyOtpSchema,
-  type EmailInput,
-  type State,
-} from './schema';
+import { signInSchema, verifyOtpSchema, type State } from './schema';
 
 const EMAIL = process.env.EMAIL as string;
 
@@ -36,18 +31,26 @@ export async function signIn(_: State, formData: FormData): Promise<State> {
   redirect(ROUTES_ADMIN.base.href);
 }
 
-export async function sendOtp(data: EmailInput) {
-  if (data.email !== EMAIL) {
-    throw new Error(MESSAGES.ERROR);
+export async function sendOtp(email: string): Promise<State> {
+  if (email !== EMAIL) {
+    return {
+      message: MESSAGES.ERROR,
+    };
   }
 
   const supabase = createClient(cookies());
   const { error } = await supabase.auth.signInWithOtp({
-    email: data.email,
+    email,
     options: { shouldCreateUser: false },
   });
 
-  if (error) throw error;
+  if (error) {
+    return {
+      message: error.message,
+    };
+  }
+
+  return { message: '' };
 }
 
 export async function verifyOtp(_: State, formData: FormData): Promise<State> {

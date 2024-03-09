@@ -31,7 +31,13 @@ export default function EmailForm({
   const { isSubmitting, onSubmit: onOtpSubmit } = useSubmit({
     callbacks: [() => setViewOtp()],
     handleSubmit: form.handleSubmit,
-    submitFn: sendOtp,
+    submitFn: async (data: EmailInput) => {
+      const result = await sendOtp(data.email);
+
+      if (result.message) {
+        throw new Error(result.message);
+      }
+    },
     successMessage: 'Check your email for the code',
   });
 
