@@ -17,9 +17,16 @@ export interface ErrorProps {
   reset: () => void;
 }
 
-export interface SupaError {
-  message: string;
-  status: number;
+interface SuccessResult {
+  data: any;
+  type: 'success';
 }
+
+interface ErrorResult {
+  message: string;
+  type: 'error';
+}
+
+export type MutateResult = SuccessResult | ErrorResult;
 
 export type StudioValue = 'true' | 'false';

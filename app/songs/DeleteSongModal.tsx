@@ -29,17 +29,22 @@ import SubmitButton from 'components/SubmitButton';
 import { deleteSong } from './actions';
 
 interface Props {
-  data: Song;
+  song: Song;
 }
 
-export default function DeleteSongModal({ data }: Props) {
+export default function DeleteSongModal({ song }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
-      await deleteSong(data.id);
+
+      const result = await deleteSong(song.id);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
     },
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   });
@@ -59,7 +64,7 @@ export default function DeleteSongModal({ data }: Props) {
               <DialogDescription>Are you sure?</DialogDescription>
             </DialogHeader>
             <p className="text-sm">
-              {data.artist} &ndash; {data.title}
+              {song.artist} &ndash; {song.title}
             </p>
             <SubmitButton
               className="w-full sm:w-auto"
@@ -87,7 +92,7 @@ export default function DeleteSongModal({ data }: Props) {
           </DrawerHeader>
           <div className="space-y-8 px-4">
             <p className="text-sm">
-              {data.artist} &ndash; {data.title}
+              {song.artist} &ndash; {song.title}
             </p>
             <SubmitButton
               className="w-full sm:w-auto"

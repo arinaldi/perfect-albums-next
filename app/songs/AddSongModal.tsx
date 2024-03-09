@@ -51,7 +51,13 @@ export default function AddSongModal() {
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
-    submitFn: addSong,
+    submitFn: async (data: SongInput) => {
+      const result = await addSong(data);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
     successMessage: `${MESSAGES.SONG_PREFIX} added`,
   });
 

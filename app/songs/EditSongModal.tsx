@@ -32,10 +32,10 @@ import { editSong } from './actions';
 import SongForm from './SongForm';
 
 interface Props {
-  data: Song;
+  song: Song;
 }
 
-export default function EditSongModal({ data }: Props) {
+export default function EditSongModal({ song }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const form = useForm<SongInput>({
@@ -44,19 +44,25 @@ export default function EditSongModal({ data }: Props) {
   const { handleSubmit, reset } = form;
 
   useEffect(() => {
-    if (!data) return;
+    if (!song) return;
 
     reset({
-      artist: data.artist,
-      title: data.title,
-      link: data.link,
+      artist: song.artist,
+      title: song.title,
+      link: song.link,
     });
-  }, [data, reset]);
+  }, [reset, song]);
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     handleSubmit,
-    submitFn: editSong.bind(null, data.id),
+    submitFn: async (data: SongInput) => {
+      const result = await editSong(song.id, data);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
     successMessage: `${MESSAGES.SONG_PREFIX} edited`,
   });
 

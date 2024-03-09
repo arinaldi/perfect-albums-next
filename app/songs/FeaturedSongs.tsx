@@ -47,8 +47,8 @@ export default function FeaturedSongs({ songs, user }: Props) {
             </CardHeader>
             {user && (
               <span className="absolute right-2 top-4 flex items-center gap-0.5">
-                <EditSongModal data={s} />
-                <DeleteSongModal data={s} />
+                <EditSongModal song={s} />
+                <DeleteSongModal song={s} />
               </span>
             )}
           </Card>
