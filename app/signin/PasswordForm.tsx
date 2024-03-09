@@ -73,7 +73,7 @@ export default function PasswordForm({ email, onCancel }: Props) {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <PasswordInput {...field} />
+                  <PasswordInput autoFocus {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
