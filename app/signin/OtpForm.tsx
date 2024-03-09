@@ -35,7 +35,7 @@ export default function SignInOtp({ email, onCancel }: Props) {
   const form = useForm<VerifyOtpInput>({
     defaultValues: {
       code: '',
-      email: 'name@example.com',
+      email,
     },
     resolver: zodResolver(verifyOtpSchema),
   });

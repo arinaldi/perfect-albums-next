@@ -32,7 +32,7 @@ export default function SignIn() {
     },
     resolver: zodResolver(emailSchema),
   });
-  const email = form.getValues('email');
+  const email = form.watch('email');
 
   function onEmailSubmit() {
     setView('password');
