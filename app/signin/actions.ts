@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
+import { EMAIL, MESSAGES, ROUTES_ADMIN } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import { signInSchema, verifyOtpSchema, type State } from './schema';
 
@@ -11,7 +11,7 @@ export async function signIn(_: State, formData: FormData): Promise<State> {
   const result = signInSchema.safeParse(form);
   const id = crypto.randomUUID().split('-')[1];
 
-  if (form.name || !result.success) {
+  if (form.name || !result.success || result.data.email !== EMAIL) {
     return {
       message: `${MESSAGES.INVALID_DATA} - ${id}`,
     };
@@ -30,6 +30,10 @@ export async function signIn(_: State, formData: FormData): Promise<State> {
 }
 
 export async function sendOtp(email: string) {
+  if (email !== EMAIL) {
+    throw new Error('Invalid email');
+  }
+
   const supabase = createClient(cookies());
   const { error } = await supabase.auth.signInWithOtp({
     email,
@@ -44,7 +48,7 @@ export async function verifyOtp(_: State, formData: FormData): Promise<State> {
   const result = verifyOtpSchema.safeParse(form);
   const id = crypto.randomUUID().split('-')[1];
 
-  if (form.name || !result.success) {
+  if (form.name || !result.success || result.data.email !== EMAIL) {
     return {
       message: `${MESSAGES.INVALID_DATA} - ${id}`,
     };

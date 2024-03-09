@@ -69,6 +69,8 @@ export const DECADES = [
   },
 ];
 
+export const EMAIL = 'tony.rinaldi13@gmail.com';
+
 export const MONTHS = [
   'Jan',
   'Feb',
