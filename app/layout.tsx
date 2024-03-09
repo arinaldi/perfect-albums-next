@@ -2,13 +2,13 @@ import 'server-only';
 import { cookies } from 'next/headers';
 import { Inter } from 'next/font/google';
 
-import NavBar from 'components/NavBar';
-import TailwindIndicator from 'components/TailwindIndicator';
-import { ThemeProvider } from 'components/ThemeProvider';
-import { Toaster } from 'components/ui/toaster';
+import NavBar from '@/components/NavBar';
+import TailwindIndicator from '@/components/TailwindIndicator';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Toaster } from '@/components/ui/sonner';
 import { cn } from 'lib/utils';
-import { createClient } from 'utils/supabase/server';
-import { Children } from 'utils/types';
+import { createClient } from '@/utils/supabase/server';
+import { Children } from '@/utils/types';
 import 'styles/globals.css';
 
 export const revalidate = 0;
@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: Children) {
           <NavBar user={user} />
           <TailwindIndicator />
           <main>{children}</main>
-          <Toaster />
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>

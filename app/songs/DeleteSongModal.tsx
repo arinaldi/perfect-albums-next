@@ -97,7 +97,7 @@ export default function DeleteSongModal({ data }: Props) {
             />
           </div>
         </form>
-        <DrawerFooter>
+        <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button size="lg" variant="outline">
               Cancel
