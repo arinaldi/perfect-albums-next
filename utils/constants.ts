@@ -4,7 +4,6 @@ export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
   SONG_PREFIX = 'Song successfully',
   RELEASE_PREFIX = 'Release successfully',
-  SIGNIN = 'Invalid username or password',
   ERROR = 'Something went wrong',
   NO_DATA = 'No Data',
   NOT_AUTHORIZED = 'Not authorized',
@@ -68,8 +67,6 @@ export const DECADES = [
     label: '70s',
   },
 ];
-
-export const EMAIL = 'tony.rinaldi13@gmail.com';
 
 export const MONTHS = [
   'Jan',
