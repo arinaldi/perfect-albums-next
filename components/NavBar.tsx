@@ -35,7 +35,7 @@ export default function NavBar({ user }: Props) {
   return (
     <div className="border-b">
       {/* Desktop */}
-      <div className="hidden h-14 items-center justify-between px-8 sm:flex">
+      <div className="hidden h-14 items-center justify-between px-5 sm:flex xl:px-8">
         <nav className="flex items-center gap-6">
           <Link
             className="font-semibold transition-colors hover:text-primary"

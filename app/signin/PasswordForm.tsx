@@ -54,14 +54,14 @@ export default function PasswordForm({ email, onCancel }: Props) {
   return (
     <AppLayout className="max-w-sm" title="Sign in">
       <Form {...form}>
-        <form action={action} className="space-y-6">
+        <form action={action}>
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="hidden">
                 <FormControl>
-                  <Input className="hidden" type="email" {...field} />
+                  <Input type="email" {...field} />
                 </FormControl>
               </FormItem>
             )}
@@ -80,7 +80,7 @@ export default function PasswordForm({ email, onCancel }: Props) {
             )}
           />
           <Input className="hidden" id="name" name="name" tabIndex={-1} />
-          <SubmitButton className="w-full" />
+          <SubmitButton className="mt-6 w-full" />
         </form>
       </Form>
       <Button className="mt-2 w-full" onClick={onCancel} variant="outline">
