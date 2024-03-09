@@ -5,7 +5,7 @@ export const metadata = {
 export default function Playlist() {
   return (
     <a
-      className="text-blue-700 hover:underline dark:text-blue-300"
+      className="underline underline-offset-4 hover:text-muted-foreground"
       href="https://open.spotify.com/playlist/3NAIQcUEkwKXu2eHaZBQrg"
       rel="noopener noreferrer"
       target="_blank"
