@@ -38,7 +38,7 @@ export default function NavBar({ user }: Props) {
       <div className="hidden h-14 items-center justify-between px-5 sm:flex xl:px-8">
         <nav className="flex items-center gap-6">
           <Link
-            className="font-semibold transition-colors hover:text-primary"
+            className="text-sm font-semibold uppercase tracking-wider transition-colors hover:text-primary"
             href="/dashboard"
           >
             Perfect Albums
@@ -85,10 +85,10 @@ export default function NavBar({ user }: Props) {
         </div>
       </div>
       {/* Mobile */}
-      <div className="grid h-12 grid-cols-3 items-center px-2 sm:hidden">
+      <div className="flex h-12 items-center justify-between px-2 sm:hidden">
         <MobileSheet signOut={signOut} user={user} />
         <Link
-          className="font-semibold transition-colors hover:text-primary"
+          className="text-sm font-semibold uppercase tracking-wider transition-colors hover:text-primary"
           href="/dashboard"
         >
           Perfect Albums
