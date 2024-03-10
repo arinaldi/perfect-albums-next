@@ -44,10 +44,10 @@ export default function NewReleases({ releases, user }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="ml-4 list-disc space-y-1">
+                <ul className="ml-4 list-disc space-y-2">
                   {releases.map((r) => (
                     <li key={r.id} className="text-sm">
-                      <span className="flex items-start justify-between gap-2">
+                      <span className="flex items-center justify-between gap-4">
                         <span>
                           <span className="text-muted-foreground">
                             {r.artist} &ndash;
@@ -55,7 +55,7 @@ export default function NewReleases({ releases, user }: Props) {
                           {r.title}
                         </span>
                         {user && (
-                          <span className="-mt-1.5 flex items-center gap-0.5">
+                          <span className="flex gap-2">
                             <EditReleaseModal release={r} />
                             <DeleteReleaseModal release={r} />
                           </span>

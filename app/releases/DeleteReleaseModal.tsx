@@ -53,7 +53,7 @@ export default function DeleteReleaseModal({ release }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="flex-shrink-0" size="icon" variant="ghost">
+          <Button size="icon" variant="outline">
             <TrashIcon className="size-4" />
           </Button>
         </DialogTrigger>
@@ -80,7 +80,7 @@ export default function DeleteReleaseModal({ release }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button className="flex-shrink-0" size="icon" variant="ghost">
+        <Button size="icon" variant="outline">
           <TrashIcon className="size-4" />
         </Button>
       </DrawerTrigger>
