@@ -29,17 +29,22 @@ import SubmitButton from 'components/SubmitButton';
 import { deleteRelease } from './actions';
 
 interface Props {
-  data: Release;
+  release: Release;
 }
 
-export default function DeleteReleaseModal({ data }: Props) {
+export default function DeleteReleaseModal({ release }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
-      await deleteRelease(data.id);
+
+      const result = await deleteRelease(release.id);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   });
@@ -59,7 +64,7 @@ export default function DeleteReleaseModal({ data }: Props) {
               <DialogDescription>Are you sure?</DialogDescription>
             </DialogHeader>
             <p className="text-sm">
-              {data.artist} &ndash; {data.title}
+              {release.artist} &ndash; {release.title}
             </p>
             <SubmitButton
               className="w-full sm:w-auto"
@@ -87,7 +92,7 @@ export default function DeleteReleaseModal({ data }: Props) {
           </DrawerHeader>
           <div className="space-y-8 px-4">
             <p className="text-sm">
-              {data.artist} &ndash; {data.title}
+              {release.artist} &ndash; {release.title}
             </p>
             <SubmitButton
               className="w-full sm:w-auto"

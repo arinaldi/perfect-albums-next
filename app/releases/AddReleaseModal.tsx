@@ -51,7 +51,13 @@ export default function AddReleaseModal() {
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
-    submitFn: addRelease,
+    submitFn: async (data: ReleaseInput) => {
+      const result = await addRelease(data);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
     successMessage: `${MESSAGES.RELEASE_PREFIX} added`,
   });
 

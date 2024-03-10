@@ -2,15 +2,19 @@
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-import { MESSAGES } from 'utils/constants';
-import { createClient } from 'utils/supabase/server';
+import { MESSAGES } from '@/utils/constants';
+import { createClient } from '@/utils/supabase/server';
+import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
-export async function addRelease(release: ReleaseInput) {
+export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
   const result = releaseSchema.safeParse(release);
 
   if (!result.success) {
-    throw new Error(MESSAGES.INVALID_DATA);
+    return {
+      message: MESSAGES.INVALID_DATA,
+      type: 'error',
+    };
   }
 
   const supabase = createClient(cookies());
@@ -19,7 +23,10 @@ export async function addRelease(release: ReleaseInput) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error(MESSAGES.NOT_AUTHORIZED);
+    return {
+      message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
   }
 
   const { error } = await supabase.from('releases').insert({
@@ -27,16 +34,32 @@ export async function addRelease(release: ReleaseInput) {
     date: release.date || null,
   });
 
-  if (error) throw error;
+  if (error) {
+    return {
+      message: error.message,
+      type: 'error',
+    };
+  }
 
   revalidatePath('/releases');
+
+  return {
+    data: null,
+    type: 'success',
+  };
 }
 
-export async function editRelease(id: number, release: ReleaseInput) {
+export async function editRelease(
+  id: number,
+  release: ReleaseInput,
+): Promise<MutateResult> {
   const result = releaseSchema.safeParse(release);
 
-  if (!result.success) {
-    throw new Error(MESSAGES.INVALID_DATA);
+  if (!id || !result.success) {
+    return {
+      message: MESSAGES.INVALID_DATA,
+      type: 'error',
+    };
   }
 
   const supabase = createClient(cookies());
@@ -45,7 +68,10 @@ export async function editRelease(id: number, release: ReleaseInput) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error(MESSAGES.NOT_AUTHORIZED);
+    return {
+      message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
   }
 
   const { error } = await supabase
@@ -56,24 +82,54 @@ export async function editRelease(id: number, release: ReleaseInput) {
     })
     .eq('id', id);
 
-  if (error) throw error;
+  if (error) {
+    return {
+      message: error.message,
+      type: 'error',
+    };
+  }
 
   revalidatePath('/releases');
+
+  return {
+    data: null,
+    type: 'success',
+  };
 }
 
-export async function deleteRelease(id: number) {
+export async function deleteRelease(id: number): Promise<MutateResult> {
+  if (!id) {
+    return {
+      message: MESSAGES.INVALID_DATA,
+      type: 'error',
+    };
+  }
+
   const supabase = createClient(cookies());
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error(MESSAGES.NOT_AUTHORIZED);
+    return {
+      message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
   }
 
   const { error } = await supabase.from('releases').delete().eq('id', id);
 
-  if (error) throw error;
+  if (error) {
+    return {
+      message: error.message,
+      type: 'error',
+    };
+  }
 
   revalidatePath('/releases');
+
+  return {
+    data: null,
+    type: 'success',
+  };
 }

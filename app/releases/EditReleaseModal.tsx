@@ -33,10 +33,10 @@ import { editRelease } from './actions';
 import ReleaseForm from './ReleaseForm';
 
 interface Props {
-  data: Release;
+  release: Release;
 }
 
-export default function EditReleaseModal({ data }: Props) {
+export default function EditReleaseModal({ release }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const form = useForm<ReleaseInput>({
@@ -45,19 +45,25 @@ export default function EditReleaseModal({ data }: Props) {
   const { handleSubmit, reset } = form;
 
   useEffect(() => {
-    if (!data) return;
+    if (!release) return;
 
     reset({
-      artist: data.artist,
-      title: data.title,
-      date: data.date ? formatDate(data.date) : '',
+      artist: release.artist,
+      title: release.title,
+      date: release.date ? formatDate(release.date) : '',
     });
-  }, [data, reset]);
+  }, [release, reset]);
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [() => setOpen(false)],
     handleSubmit,
-    submitFn: editRelease.bind(null, data.id),
+    submitFn: async (data: ReleaseInput) => {
+      const result = await editRelease(release.id, data);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   });
 
