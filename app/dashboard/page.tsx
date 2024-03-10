@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Dashboard | Perfect albums',
+  title: 'Dashboard | Perfect Albums',
 };
 
 export default function DashboardPage() {

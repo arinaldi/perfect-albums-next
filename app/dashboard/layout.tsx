@@ -4,7 +4,7 @@ import AppLayout from 'components/AppLayout';
 import { Children } from 'utils/types';
 
 export const metadata = {
-  title: 'Dashboard | Perfect albums',
+  title: 'Dashboard | Perfect Albums',
 };
 
 interface Props extends Children {

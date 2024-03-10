@@ -41,7 +41,7 @@ export default function NavBar({ user }: Props) {
             className="font-semibold transition-colors hover:text-primary"
             href="/dashboard"
           >
-            Perfect albums
+            Perfect Albums
           </Link>
           {ROUTES.map((r) => (
             <Link
@@ -91,7 +91,7 @@ export default function NavBar({ user }: Props) {
           className="font-semibold transition-colors hover:text-primary"
           href="/dashboard"
         >
-          Perfect albums
+          Perfect Albums
         </Link>
         <div className="text-right">
           {isClient ? <ThemeToggle /> : <div className="size-9" />}

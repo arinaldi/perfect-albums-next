@@ -51,7 +51,7 @@ export function MobileSheet({ signOut, user }: Props) {
               href="/dashboard"
               onClick={onClose}
             >
-              Perfect albums
+              Perfect Albums
             </Link>
           </SheetTitle>
           <SheetDescription className="text-left">

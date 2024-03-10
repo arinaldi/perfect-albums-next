@@ -8,7 +8,7 @@ import AlbumForm from '../AlbumForm';
 import { albumSchema } from '../schema';
 
 export const metadata = {
-  title: 'Add album | Perfect albums',
+  title: 'Add album | Perfect Albums',
 };
 
 export default function AddAlbumPage() {

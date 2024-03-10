@@ -16,7 +16,7 @@ interface Props {
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const metadata = {
-  title: 'Delete album | Perfect albums',
+  title: 'Delete album | Perfect Albums',
 };
 
 export default async function DeleteAlbumPage({ params: { id } }: Props) {
