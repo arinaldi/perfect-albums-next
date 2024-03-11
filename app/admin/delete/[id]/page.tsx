@@ -1,11 +1,9 @@
 import 'server-only';
-import { cookies, headers } from 'next/headers';
-import { notFound, redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 
-import { MESSAGES } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
-import AppLayout from 'components/AppLayout';
-import SubmitButton from 'components/SubmitButton';
+import DeleteAlbum from './DeleteAlbum';
 
 interface Props {
   params: {
@@ -31,36 +29,5 @@ export default async function DeleteAlbumPage({ params: { id } }: Props) {
     notFound();
   }
 
-  async function deleteAlbum() {
-    'use server';
-    const supabase = createClient(cookies());
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error(MESSAGES.NOT_AUTHORIZED);
-    }
-
-    const referer = headers().get('referer') ?? '';
-    const url = new URL(referer);
-    const { error } = await supabase.from('albums').delete().eq('id', id);
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    redirect(`/admin${url.search}`);
-  }
-
-  return (
-    <AppLayout title="Delete album">
-      <form action={deleteAlbum} className="space-y-8">
-        <div className="text-sm leading-7">
-          Are you sure you want to delete {data.artist} – {data.title}?
-        </div>
-        <SubmitButton className="w-full sm:w-auto" variant="destructive" />
-      </form>
-    </AppLayout>
-  );
+  return <DeleteAlbum album={data} />;
 }

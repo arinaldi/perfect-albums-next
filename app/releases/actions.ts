@@ -8,15 +8,6 @@ import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
 export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
-  const result = releaseSchema.safeParse(release);
-
-  if (!result.success) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -25,6 +16,15 @@ export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  const result = releaseSchema.safeParse(release);
+
+  if (!result.success) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }
@@ -53,15 +53,6 @@ export async function editRelease(
   id: number,
   release: ReleaseInput,
 ): Promise<MutateResult> {
-  const result = releaseSchema.safeParse(release);
-
-  if (!id || !result.success) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -70,6 +61,15 @@ export async function editRelease(
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  const result = releaseSchema.safeParse(release);
+
+  if (!id || !result.success) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }
@@ -98,13 +98,6 @@ export async function editRelease(
 }
 
 export async function deleteRelease(id: number): Promise<MutateResult> {
-  if (!id) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -113,6 +106,13 @@ export async function deleteRelease(id: number): Promise<MutateResult> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  if (!id) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }

@@ -8,15 +8,6 @@ import { type MutateResult } from '@/utils/types';
 import { SongInput, songSchema } from './schema';
 
 export async function addSong(song: SongInput): Promise<MutateResult> {
-  const result = songSchema.safeParse(song);
-
-  if (!result.success) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -25,6 +16,15 @@ export async function addSong(song: SongInput): Promise<MutateResult> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  const result = songSchema.safeParse(song);
+
+  if (!result.success) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }
@@ -50,15 +50,6 @@ export async function editSong(
   id: number,
   song: SongInput,
 ): Promise<MutateResult> {
-  const result = songSchema.safeParse(song);
-
-  if (!id || !result.success) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -67,6 +58,15 @@ export async function editSong(
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  const result = songSchema.safeParse(song);
+
+  if (!id || !result.success) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }
@@ -89,13 +89,6 @@ export async function editSong(
 }
 
 export async function deleteSong(id: number): Promise<MutateResult> {
-  if (!id) {
-    return {
-      message: MESSAGES.INVALID_DATA,
-      type: 'error',
-    };
-  }
-
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -104,6 +97,13 @@ export async function deleteSong(id: number): Promise<MutateResult> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  if (!id) {
+    return {
+      message: MESSAGES.INVALID_DATA,
       type: 'error',
     };
   }
