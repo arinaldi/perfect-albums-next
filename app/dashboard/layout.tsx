@@ -27,11 +27,11 @@ export default function DashboardLayout({
   return (
     <AppLayout title="Dashboard">
       <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        {totalAlbums}
+        {cds}
+        {topAlbums}
         {songs}
         {releases}
-        {totalAlbums}
-        {topAlbums}
-        {cds}
       </dl>
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {leaderboard}
