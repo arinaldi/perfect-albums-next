@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: Children) {
           <NavBar user={user} />
           <TailwindIndicator />
           <main>{children}</main>
-          <Toaster position="top-right" richColors />
+          <Toaster closeButton position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>

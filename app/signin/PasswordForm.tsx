@@ -38,10 +38,8 @@ export default function PasswordForm({ email, onCancel }: Props) {
   useEffect(() => {
     if (!state.message) return;
 
-    if (state.message) {
-      toast.error(state.message.split('-')[0].trim());
-    }
-  }, [state.message]);
+    toast.error(state.message);
+  }, [state]);
 
   async function action(formData: FormData) {
     const valid = await form.trigger();

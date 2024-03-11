@@ -7,7 +7,6 @@ import { createClient } from 'utils/supabase/server';
 import { albumSchema, deleteAlbumSchema, type State } from './schema';
 
 export async function addAlbum(_: State, formData: FormData): Promise<State> {
-  const id = crypto.randomUUID().split('-')[1];
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -15,7 +14,7 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
 
   if (!user) {
     return {
-      message: `${MESSAGES.NOT_AUTHORIZED} - ${id}`,
+      message: MESSAGES.NOT_AUTHORIZED,
     };
   }
 
@@ -24,11 +23,11 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
 
   if (!result.success) {
     return {
-      message: `${MESSAGES.INVALID_DATA} - ${id}`,
+      message: MESSAGES.INVALID_DATA,
     };
   }
 
-  const { id: albumId, year, ...rest } = result.data;
+  const { id, year, ...rest } = result.data;
   const referer = headers().get('referer') ?? '';
   const url = new URL(referer);
   const { error } = await supabase.from('albums').insert({
@@ -38,7 +37,7 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
 
   if (error) {
     return {
-      message: `${error.message} - ${id}`,
+      message: error.message,
     };
   }
 
@@ -46,7 +45,6 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
 }
 
 export async function editAlbum(_: State, formData: FormData): Promise<State> {
-  const id = crypto.randomUUID().split('-')[1];
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -54,7 +52,7 @@ export async function editAlbum(_: State, formData: FormData): Promise<State> {
 
   if (!user) {
     return {
-      message: `${MESSAGES.NOT_AUTHORIZED} - ${id}`,
+      message: MESSAGES.NOT_AUTHORIZED,
     };
   }
 
@@ -63,11 +61,11 @@ export async function editAlbum(_: State, formData: FormData): Promise<State> {
 
   if (!result.success || !result.data.id) {
     return {
-      message: `${MESSAGES.INVALID_DATA} - ${id}`,
+      message: MESSAGES.INVALID_DATA,
     };
   }
 
-  const { id: albumId, year, ...rest } = result.data;
+  const { id, year, ...rest } = result.data;
   const referer = headers().get('referer') ?? '';
   const url = new URL(referer);
   const { error } = await supabase
@@ -76,11 +74,11 @@ export async function editAlbum(_: State, formData: FormData): Promise<State> {
       ...rest,
       year: year.toString(),
     })
-    .eq('id', albumId);
+    .eq('id', id);
 
   if (error) {
     return {
-      message: `${error.message} - ${id}`,
+      message: error.message,
     };
   }
 
@@ -91,7 +89,6 @@ export async function deleteAlbum(
   _: State,
   formData: FormData,
 ): Promise<State> {
-  const id = crypto.randomUUID().split('-')[1];
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -99,7 +96,7 @@ export async function deleteAlbum(
 
   if (!user) {
     return {
-      message: `${MESSAGES.NOT_AUTHORIZED} - ${id}`,
+      message: MESSAGES.NOT_AUTHORIZED,
     };
   }
 
@@ -108,7 +105,7 @@ export async function deleteAlbum(
 
   if (!result.success) {
     return {
-      message: `${MESSAGES.INVALID_DATA} - ${id}`,
+      message: MESSAGES.INVALID_DATA,
     };
   }
 
@@ -121,7 +118,7 @@ export async function deleteAlbum(
 
   if (error) {
     return {
-      message: `${error.message} - ${id}`,
+      message: error.message,
     };
   }
 

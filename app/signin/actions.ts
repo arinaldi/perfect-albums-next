@@ -11,11 +11,10 @@ const EMAIL = process.env.EMAIL as string;
 export async function signIn(_: State, formData: FormData): Promise<State> {
   const form = Object.fromEntries(formData.entries());
   const result = signInSchema.safeParse(form);
-  const id = crypto.randomUUID().split('-')[1];
 
   if (form.name || !result.success || result.data.email !== EMAIL) {
     return {
-      message: `${MESSAGES.INVALID_DATA} - ${id}`,
+      message: MESSAGES.INVALID_DATA,
     };
   }
 
@@ -24,7 +23,7 @@ export async function signIn(_: State, formData: FormData): Promise<State> {
 
   if (error) {
     return {
-      message: `${error.message} - ${id}`,
+      message: error.message,
     };
   }
 
@@ -56,11 +55,10 @@ export async function sendOtp(email: string): Promise<State> {
 export async function verifyOtp(_: State, formData: FormData): Promise<State> {
   const form = Object.fromEntries(formData.entries());
   const result = verifyOtpSchema.safeParse(form);
-  const id = crypto.randomUUID().split('-')[1];
 
   if (form.name || !result.success || result.data.email !== EMAIL) {
     return {
-      message: `${MESSAGES.INVALID_DATA} - ${id}`,
+      message: MESSAGES.INVALID_DATA,
     };
   }
 
@@ -73,7 +71,7 @@ export async function verifyOtp(_: State, formData: FormData): Promise<State> {
 
   if (error) {
     return {
-      message: `${error.message} - ${id}`,
+      message: error.message,
     };
   }
 
