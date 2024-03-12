@@ -26,7 +26,7 @@ export default async function ArtistsPage() {
 
   return (
     <div className="flex flex-col gap-8 sm:flex-row">
-      <ScrollArea className="h-[550px] rounded-md border">
+      <ScrollArea className="h-[420px] rounded-md border">
         <div className="p-4">
           <h4 className="mb-4 text-sm font-medium italic leading-none">
             {artists.length.toLocaleString()} artists

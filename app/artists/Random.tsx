@@ -16,9 +16,9 @@ export default function Random({ artists }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-start gap-2">
+    <div className="flex items-center gap-4">
       <Button onClick={onClick} variant="outline">
-        Get random artist
+        Get random
       </Button>
       <p className="text-sm">{value}</p>
     </div>
