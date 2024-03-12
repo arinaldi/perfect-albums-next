@@ -17,7 +17,7 @@ import { type SongInput } from './schema';
 
 interface Props {
   className?: string;
-  form: UseFormReturn<SongInput, any>;
+  form: UseFormReturn<SongInput>;
   isSubmitting: boolean;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
 }

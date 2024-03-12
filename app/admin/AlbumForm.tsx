@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
+import { FormEvent } from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -16,43 +14,20 @@ import {
 import { Input } from '@/components/ui/input';
 import SubmitButton from '@/components/SubmitButton';
 import { useMediaQuery } from '@/components/ui/use-media-query';
-import { MESSAGES } from '@/utils/constants';
-import { AlbumInput, State, initialState } from './schema';
+import { AlbumInput } from './schema';
 
 interface Props {
-  action: (state: State, formData: FormData) => Promise<State>;
   form: UseFormReturn<AlbumInput>;
-  id?: number;
+  isSubmitting: boolean;
+  onSubmit: (event: FormEvent<Element>) => Promise<void>;
 }
 
-export default function AlbumForm({ action, form, id }: Props) {
-  const [state, formAction] = useFormState(action, initialState);
+export default function AlbumForm({ form, isSubmitting, onSubmit }: Props) {
   const isDesktop = useMediaQuery();
-
-  useEffect(() => {
-    if (!state.message) return;
-
-    toast.error(state.message);
-  }, [state]);
-
-  async function actionWithValidation(formData: FormData) {
-    const valid = await form.trigger();
-
-    if (!valid) {
-      toast.error(MESSAGES.ERROR);
-      return;
-    }
-
-    if (id) {
-      formData.append('id', id.toString());
-    }
-
-    formAction(formData);
-  }
 
   return (
     <Form {...form}>
-      <form action={actionWithValidation} className="space-y-8">
+      <form className="space-y-8" onSubmit={onSubmit}>
         <FormField
           control={form.control}
           name="artist"
@@ -152,6 +127,7 @@ export default function AlbumForm({ action, form, id }: Props) {
         <SubmitButton
           className="w-full sm:w-auto"
           size={isDesktop ? 'default' : 'lg'}
+          submitting={isSubmitting}
         />
       </form>
     </Form>

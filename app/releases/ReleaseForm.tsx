@@ -17,7 +17,7 @@ import { type ReleaseInput } from './schema';
 
 interface Props {
   className?: string;
-  form: UseFormReturn<ReleaseInput, any>;
+  form: UseFormReturn<ReleaseInput>;
   isSubmitting: boolean;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
 }

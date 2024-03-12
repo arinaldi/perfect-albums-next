@@ -1,43 +1,52 @@
 'use client';
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
-import { toast } from 'sonner';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FormEvent } from 'react';
 
 import AppLayout from '@/components/AppLayout';
+import { useSubmit } from '@/hooks/useSubmit';
+import { MESSAGES, ROUTES_ADMIN } from '@/utils/constants';
 import SubmitButton from '@/components/SubmitButton';
 import { useMediaQuery } from '@/components/ui/use-media-query';
 import { Album } from '@/utils/types';
 import { deleteAlbum } from '../../actions';
-import { initialState } from '../../schema';
 
 interface Props {
   album: Album;
 }
 
 export default function DeleteAlbum({ album }: Props) {
-  const [state, formAction] = useFormState(deleteAlbum, initialState);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const isDesktop = useMediaQuery();
 
-  useEffect(() => {
-    if (!state.message) return;
+  const { isSubmitting, onSubmit } = useSubmit({
+    callbacks: [
+      () =>
+        router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
+      router.refresh,
+    ],
+    submitFn: async (event: FormEvent) => {
+      event.preventDefault();
 
-    toast.error(state.message);
-  }, [state]);
+      const result = await deleteAlbum(album.id);
 
-  async function actionWithValidation(formData: FormData) {
-    formData.append('id', album.id.toString());
-    formAction(formData);
-  }
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
+    successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
+  });
 
   return (
     <AppLayout className="max-w-sm" title="Delete album">
-      <form action={actionWithValidation} className="space-y-8">
+      <form className="space-y-8" onSubmit={onSubmit}>
         <div className="text-sm leading-7">
           Are you sure you want to delete {album.artist} – {album.title}?
         </div>
         <SubmitButton
           className="w-full sm:w-auto"
           size={isDesktop ? 'default' : 'lg'}
+          submitting={isSubmitting}
           variant="destructive"
         />
       </form>

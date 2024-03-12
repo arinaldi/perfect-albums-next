@@ -1,12 +1,12 @@
 'use server';
 import { cookies, headers } from 'next/headers';
-import { redirect } from 'next/navigation';
 
-import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
-import { createClient } from 'utils/supabase/server';
-import { albumSchema, deleteAlbumSchema, type State } from './schema';
+import { MESSAGES } from '@/utils/constants';
+import { createClient } from '@/utils/supabase/server';
+import { type MutateResult } from '@/utils/types';
+import { albumSchema, type AlbumInput } from './schema';
 
-export async function addAlbum(_: State, formData: FormData): Promise<State> {
+export async function addAlbum(album: AlbumInput): Promise<MutateResult> {
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -15,21 +15,20 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
     };
   }
 
-  const form = Object.fromEntries(formData.entries());
-  const result = albumSchema.safeParse(form);
+  const result = albumSchema.safeParse(album);
 
   if (!result.success) {
     return {
       message: MESSAGES.INVALID_DATA,
+      type: 'error',
     };
   }
 
-  const { id, year, ...rest } = result.data;
-  const referer = headers().get('referer') ?? '';
-  const url = new URL(referer);
+  const { year, ...rest } = result.data;
   const { error } = await supabase.from('albums').insert({
     ...rest,
     year: year.toString(),
@@ -38,13 +37,20 @@ export async function addAlbum(_: State, formData: FormData): Promise<State> {
   if (error) {
     return {
       message: error.message,
+      type: 'error',
     };
   }
 
-  redirect(`/${ROUTES_ADMIN.base.href}${url.search}`);
+  return {
+    data: null,
+    type: 'success',
+  };
 }
 
-export async function editAlbum(_: State, formData: FormData): Promise<State> {
+export async function editAlbum(
+  id: number,
+  album: AlbumInput,
+): Promise<MutateResult> {
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -53,19 +59,20 @@ export async function editAlbum(_: State, formData: FormData): Promise<State> {
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
     };
   }
 
-  const form = Object.fromEntries(formData.entries());
-  const result = albumSchema.safeParse(form);
+  const result = albumSchema.safeParse(album);
 
-  if (!result.success || !result.data.id) {
+  if (!id || !result.success) {
     return {
       message: MESSAGES.INVALID_DATA,
+      type: 'error',
     };
   }
 
-  const { id, year, ...rest } = result.data;
+  const { year, ...rest } = result.data;
   const referer = headers().get('referer') ?? '';
   const url = new URL(referer);
   const { error } = await supabase
@@ -79,16 +86,17 @@ export async function editAlbum(_: State, formData: FormData): Promise<State> {
   if (error) {
     return {
       message: error.message,
+      type: 'error',
     };
   }
 
-  redirect(`/admin${url.search}`);
+  return {
+    data: null,
+    type: 'success',
+  };
 }
 
-export async function deleteAlbum(
-  _: State,
-  formData: FormData,
-): Promise<State> {
+export async function deleteAlbum(id: number): Promise<MutateResult> {
   const supabase = createClient(cookies());
   const {
     data: { user },
@@ -97,30 +105,30 @@ export async function deleteAlbum(
   if (!user) {
     return {
       message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
     };
   }
 
-  const form = Object.fromEntries(formData.entries());
-  const result = deleteAlbumSchema.safeParse(form);
-
-  if (!result.success) {
+  if (!id) {
     return {
       message: MESSAGES.INVALID_DATA,
+      type: 'error',
     };
   }
 
   const referer = headers().get('referer') ?? '';
   const url = new URL(referer);
-  const { error } = await supabase
-    .from('albums')
-    .delete()
-    .eq('id', result.data.id);
+  const { error } = await supabase.from('albums').delete().eq('id', id);
 
   if (error) {
     return {
       message: error.message,
+      type: 'error',
     };
   }
 
-  redirect(`/admin${url.search}`);
+  return {
+    data: null,
+    type: 'success',
+  };
 }

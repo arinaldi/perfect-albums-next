@@ -1,8 +1,11 @@
 'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import AppLayout from '@/components/AppLayout';
+import { useSubmit } from '@/hooks/useSubmit';
+import { MESSAGES, ROUTES_ADMIN } from '@/utils/constants';
 import { Album } from '@/utils/types';
 import { albumSchema, type AlbumInput } from '../../schema';
 import AlbumForm from '../../AlbumForm';
@@ -13,6 +16,8 @@ interface Props {
 }
 
 export default function EditAlbum({ album }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<AlbumInput>({
     defaultValues: {
       artist: album.artist,
@@ -25,9 +30,26 @@ export default function EditAlbum({ album }: Props) {
     resolver: zodResolver(albumSchema),
   });
 
+  const { isSubmitting, onSubmit } = useSubmit({
+    callbacks: [
+      () =>
+        router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
+      router.refresh,
+    ],
+    handleSubmit: form.handleSubmit,
+    submitFn: async (data: AlbumInput) => {
+      const result = await editAlbum(album.id, data);
+
+      if (result.type === 'error') {
+        throw new Error(result.message);
+      }
+    },
+    successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
+  });
+
   return (
     <AppLayout className="max-w-sm" title="Edit album">
-      <AlbumForm action={editAlbum} form={form} id={album.id} />
+      <AlbumForm form={form} isSubmitting={isSubmitting} onSubmit={onSubmit} />
     </AppLayout>
   );
 }
