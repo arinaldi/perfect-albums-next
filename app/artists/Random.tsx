@@ -20,7 +20,7 @@ export default function Random({ artists }: Props) {
       <Button onClick={onClick} variant="outline">
         Get random artist
       </Button>
-      <p>{value}</p>
+      <p className="text-sm">{value}</p>
     </div>
   );
 }

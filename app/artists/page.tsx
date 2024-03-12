@@ -1,7 +1,9 @@
 import 'server-only';
 
-import { BASE_URL } from 'utils/constants';
-import Random from 'app/artists/Random';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { BASE_URL } from '@/utils/constants';
+import Random from './Random';
 
 interface Payload {
   artists: string[];
@@ -23,15 +25,23 @@ export default async function ArtistsPage() {
   const { artists } = await getArtists();
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row">
-      <ul className="order-2 ml-6 flex-1 list-disc p-1 sm:order-1">
-        {artists.map((artist) => (
-          <li key={artist} className="mt-0.5">
-            {artist}
-          </li>
-        ))}
-      </ul>
-      <div className="order-1 flex-1 sm:order-2">
+    <div className="flex flex-col gap-8 sm:flex-row">
+      <ScrollArea className="h-[550px] rounded-md border">
+        <div className="p-4">
+          <h4 className="mb-4 text-sm font-medium italic leading-none">
+            {artists.length.toLocaleString()} artists
+          </h4>
+          {artists.map((a, index) => (
+            <>
+              <div key={a} className="text-sm">
+                {a}
+              </div>
+              {index !== artists.length - 1 && <Separator className="my-2" />}
+            </>
+          ))}
+        </div>
+      </ScrollArea>
+      <div className="order-1 flex-1">
         <Random artists={artists} />
       </div>
     </div>
