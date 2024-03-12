@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import {
+  ArchiveIcon,
   CalendarIcon,
   DiscIcon,
   RocketIcon,
   SpeakerModerateIcon,
-  StackIcon,
 } from '@radix-ui/react-icons';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,7 +32,7 @@ const icons: Record<Variant, ReactNode> = {
   releases: <CalendarIcon className={className} />,
   songs: <SpeakerModerateIcon className={className} />,
   topAlbums: <RocketIcon className={className} />,
-  totalAlbums: <StackIcon className={className} />,
+  totalAlbums: <ArchiveIcon className={className} />,
 };
 
 export default function StatCard(props: Props) {
