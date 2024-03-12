@@ -83,7 +83,7 @@ export default function Admin({
               <TableRow key={a.id}>
                 <TableCell>{a.artist}</TableCell>
                 <TableCell>
-                  {a.cd && <DiscIcon className="mr-1 inline size-4" />}
+                  {a.cd && <DiscIcon className="mb-0.5 mr-1 inline size-4" />}
                   <span
                     className={a.studio ? 'font-medium italic' : 'font-light'}
                   >
