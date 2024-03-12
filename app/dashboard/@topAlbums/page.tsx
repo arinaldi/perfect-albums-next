@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
-import StatCard from 'components/StatCard';
-import { createClient } from 'utils/supabase/server';
+import StatCard from '@/app/dashboard/StatCard';
+import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardAlbums() {
   const supabase = createClient(cookies());
@@ -11,5 +11,5 @@ export default async function DashboardAlbums() {
     .eq('favorite', true);
   const value = (count ?? 0).toLocaleString();
 
-  return <StatCard title="Top albums" value={value} />;
+  return <StatCard title="Top albums" value={value} variant="topAlbums" />;
 }

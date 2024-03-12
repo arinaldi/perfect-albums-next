@@ -1,4 +1,4 @@
-import { CheckIcon } from '@radix-ui/react-icons';
+import { CheckIcon, DiscIcon } from '@radix-ui/react-icons';
 
 import { PER_PAGE } from 'utils/constants';
 import { Album, StudioValue } from 'utils/types';
@@ -87,7 +87,7 @@ export default function Admin({
               <TableRow key={a.id}>
                 <TableCell>{a.artist}</TableCell>
                 <TableCell>
-                  {a.cd && <span className="mr-1 text-xs">💿</span>}
+                  {a.cd && <DiscIcon className="mr-1 inline size-4" />}
                   <span
                     className={a.studio ? 'font-medium italic' : 'font-light'}
                   >
@@ -104,7 +104,7 @@ export default function Admin({
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
+          <TableFooter className="bg-white">
             <TableRow>
               <TableCell colSpan={5}>
                 <Paginate perPage={perPage} total={total} studio={studio} />

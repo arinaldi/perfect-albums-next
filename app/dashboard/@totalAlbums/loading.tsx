@@ -1,5 +1,7 @@
-import StatCard from 'components/StatCard';
+import StatCard from '@/app/dashboard/StatCard';
 
 export default function Loading() {
-  return <StatCard isLoading title="Total albums" value="" />;
+  return (
+    <StatCard isLoading title="Total albums" value="" variant="totalAlbums" />
+  );
 }

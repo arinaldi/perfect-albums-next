@@ -1,5 +1,5 @@
-import StatCard from 'components/StatCard';
+import StatCard from '@/app/dashboard/StatCard';
 
 export default function Loading() {
-  return <StatCard isLoading title="Featured songs" value="" />;
+  return <StatCard isLoading title="Featured songs" value="" variant="songs" />;
 }

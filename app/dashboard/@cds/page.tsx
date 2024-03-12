@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 
-import StatCard from 'components/StatCard';
-import { createClient } from 'utils/supabase/server';
+import StatCard from '@/app/dashboard/StatCard';
+import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardCDs() {
   const supabase = createClient(cookies());
@@ -11,5 +11,5 @@ export default async function DashboardCDs() {
     .eq('cd', true);
   const value = (count ?? 0).toLocaleString();
 
-  return <StatCard title="CDs" value={value} />;
+  return <StatCard title="CDs" value={value} variant="cds" />;
 }

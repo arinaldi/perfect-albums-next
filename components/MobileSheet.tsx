@@ -47,7 +47,7 @@ export function MobileSheet({ signOut, user }: Props) {
         <SheetHeader>
           <SheetTitle className="text-left">
             <Link
-              className="text-base font-semibold uppercase tracking-wider transition-colors hover:text-primary"
+              className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
               href="/dashboard"
               onClick={onClose}
             >
