@@ -1,5 +1,4 @@
-import { ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
-import { IconProps } from '@radix-ui/react-icons/dist/types';
+import { ReactNode } from 'react';
 
 import type { Database } from 'utils/db-types';
 
@@ -17,10 +16,6 @@ export interface ErrorProps {
   error: Error;
   reset: () => void;
 }
-
-export type Icon = ForwardRefExoticComponent<
-  IconProps & RefAttributes<SVGSVGElement>
->;
 
 interface SuccessResult {
   data: any;
