@@ -1,10 +1,7 @@
 import { CheckIcon, DiscIcon } from '@radix-ui/react-icons';
 
-import { PER_PAGE } from 'utils/constants';
-import { Album, StudioValue } from 'utils/types';
-import Layout from 'components/AppLayout';
-import AppMessage from 'components/AppMessage';
-import { Badge } from 'components/ui/badge';
+import AppLayout from '@/components/AppLayout';
+import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,
@@ -13,8 +10,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from 'components/ui/table';
+} from '@/components/ui/table';
+import { PER_PAGE } from '@/utils/constants';
+import { Album, StudioValue } from '@/utils/types';
 import AddAlbumButton from './AddAlbumButton';
+import DataEmptyPlaceholder from './DataEmptyPlaceholder';
 import Paginate from './Paginate';
 import Search from './Search';
 import SortableColumn from './SortableColumn';
@@ -36,7 +36,7 @@ export default function Admin({
   total,
 }: Props) {
   return (
-    <Layout
+    <AppLayout
       title={
         <div className="flex items-center gap-2">
           <span>Admin</span>
@@ -65,11 +65,7 @@ export default function Admin({
 
       {albums?.length === 0 ? (
         <div className="flex justify-center">
-          <AppMessage
-            description="Modify your search query"
-            title="No results found"
-            variant="default"
-          />
+          <DataEmptyPlaceholder />
         </div>
       ) : (
         <Table>
@@ -113,6 +109,6 @@ export default function Admin({
           </TableFooter>
         </Table>
       )}
-    </Layout>
+    </AppLayout>
   );
 }

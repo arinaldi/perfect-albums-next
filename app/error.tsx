@@ -1,6 +1,5 @@
 'use client';
-
-import AppMessage from 'components/AppMessage';
+import AppMessage from '@/components/AppMessage';
 
 interface Props {
   error: any;

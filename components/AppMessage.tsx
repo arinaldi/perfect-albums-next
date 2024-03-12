@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
 
-import { Alert, AlertDescription, AlertTitle } from 'components/ui/alert';
-import { cn } from 'lib/utils';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 type Variant = 'default' | 'destructive';
 
@@ -13,9 +12,12 @@ interface Props {
   variant?: Variant;
 }
 
+const iconClassName = '-mt-1 size-4';
 const icons: Record<Variant, ReactNode> = {
-  default: <InfoCircledIcon aria-hidden="true" className="size-4" />,
-  destructive: <CrossCircledIcon aria-hidden="true" className="size-4" />,
+  default: <InfoCircledIcon aria-hidden="true" className={iconClassName} />,
+  destructive: (
+    <CrossCircledIcon aria-hidden="true" className={iconClassName} />
+  ),
 };
 
 export default function AppMessage({
@@ -25,7 +27,7 @@ export default function AppMessage({
   variant = 'destructive',
 }: Props) {
   return (
-    <Alert className={cn('max-w-fit', className)} variant={variant}>
+    <Alert className={className} variant={variant}>
       {icons[variant]}
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{description}</AlertDescription>
