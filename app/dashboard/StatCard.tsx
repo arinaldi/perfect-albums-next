@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import {
-  ArchiveIcon,
   CalendarIcon,
   DiscIcon,
+  LayersIcon,
   RocketIcon,
   SpeakerModerateIcon,
 } from '@radix-ui/react-icons';
@@ -10,13 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-type Variant =
-  | 'cds'
-  | 'leaderboard'
-  | 'releases'
-  | 'songs'
-  | 'topAlbums'
-  | 'totalAlbums';
+type Variant = 'cds' | 'releases' | 'songs' | 'topAlbums' | 'totalAlbums';
 
 interface Props {
   isLoading?: boolean;
@@ -28,11 +22,10 @@ interface Props {
 const className = 'size-4 text-muted-foreground';
 const icons: Record<Variant, ReactNode> = {
   cds: <DiscIcon className={className} />,
-  leaderboard: <DiscIcon className={className} />,
   releases: <CalendarIcon className={className} />,
   songs: <SpeakerModerateIcon className={className} />,
   topAlbums: <RocketIcon className={className} />,
-  totalAlbums: <ArchiveIcon className={className} />,
+  totalAlbums: <LayersIcon className={className} />,
 };
 
 export default function StatCard(props: Props) {

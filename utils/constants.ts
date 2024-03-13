@@ -90,10 +90,10 @@ export const ROUTES = [
 ];
 
 export const ROUTES_ADMIN = {
-  add: { href: '/admin/add', label: 'Admin add' },
+  add: { href: '/admin/add', label: 'Add album' },
   base: { href: '/admin', label: 'Admin' },
-  edit: { href: '/admin/edit', label: 'Admin edit' },
-  delete: { href: '/admin/delete', label: 'Admin delete' },
+  edit: { href: '/admin/edit', label: 'Edit album' },
+  delete: { href: '/admin/delete', label: 'Delete album' },
 };
 
 export const SPOTIFY_URL = 'https://open.spotify.com/search';

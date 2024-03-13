@@ -5,6 +5,7 @@ import { type User } from '@supabase/supabase-js';
 import { EnterIcon, ExitIcon } from '@radix-ui/react-icons';
 
 import { Button } from '@/components/ui/button';
+import CommandMenu from '@/components/CommandMenu';
 import { MobileSheet } from '@/components/MobileSheet';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -69,8 +70,13 @@ export default function NavBar({ user }: Props) {
             </Link>
           )}
         </nav>
-        <div>
-          {isClient && <ThemeToggle />}
+        <div className="flex items-center gap-0.5">
+          {isClient && (
+            <>
+              <CommandMenu user={user} />
+              <ThemeToggle />
+            </>
+          )}
           {user ? (
             <Button onClick={signOut} size="icon" variant="ghost">
               <ExitIcon className="size-4" />
