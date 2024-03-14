@@ -13,7 +13,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Spinner from '@/components/Spinner';
-import { useSubmit } from '@/hooks/useSubmit';
+import { useMediaQuery } from '@/hooks/media-query';
+import { useSubmit } from '@/hooks/submit';
 import { sendOtp } from './actions';
 import type { EmailInput } from './schema';
 
@@ -28,6 +29,7 @@ export default function EmailForm({
   setViewOtp,
   setViewPassword,
 }: Props) {
+  const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit: onOtpSubmit } = useSubmit({
     callbacks: [() => setViewOtp()],
     handleSubmit: form.handleSubmit,
@@ -65,7 +67,11 @@ export default function EmailForm({
               </FormItem>
             )}
           />
-          <Button className="mt-6 w-full" type="submit">
+          <Button
+            className="mt-6 w-full"
+            size={isDesktop ? 'default' : 'lg'}
+            type="submit"
+          >
             <LockClosedIcon className="mr-2 size-4" />
             Sign in with password
           </Button>
@@ -86,6 +92,7 @@ export default function EmailForm({
           <Button
             className="w-full"
             disabled={isSubmitting}
+            size={isDesktop ? 'default' : 'lg'}
             type="submit"
             variant="outline"
           >

@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import { useSubmit } from 'hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { useMediaQuery } from '@/components/ui/use-media-query';
+import { useMediaQuery } from '@/hooks/media-query';
 import SubmitButton from 'components/SubmitButton';
 import { deleteRelease } from './actions';
 
@@ -66,11 +66,7 @@ export default function DeleteReleaseModal({ release }: Props) {
             <p className="text-sm">
               {release.artist} &ndash; {release.title}
             </p>
-            <SubmitButton
-              className="w-full sm:w-auto"
-              submitting={isSubmitting}
-              variant="destructive"
-            />
+            <SubmitButton submitting={isSubmitting} variant="destructive" />
           </form>
         </DialogContent>
       </Dialog>
@@ -95,8 +91,7 @@ export default function DeleteReleaseModal({ release }: Props) {
               {release.artist} &ndash; {release.title}
             </p>
             <SubmitButton
-              className="w-full sm:w-auto"
-              size="lg"
+              className="w-full"
               submitting={isSubmitting}
               variant="destructive"
             />

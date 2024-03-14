@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import CommandMenu from '@/components/CommandMenu';
 import { MobileSheet } from '@/components/MobileSheet';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { useIsClient } from '@/hooks/useIsClient';
+import { useIsClient } from '@/hooks/is-client';
 import { cn } from '@/lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/client';

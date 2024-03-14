@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useSubmit } from 'hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,7 +24,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { useMediaQuery } from '@/components/ui/use-media-query';
+import { useMediaQuery } from '@/hooks/media-query';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { addRelease } from './actions';
 import ReleaseForm from './ReleaseForm';

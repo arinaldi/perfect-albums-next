@@ -3,10 +3,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent } from 'react';
 
 import AppLayout from '@/components/AppLayout';
-import { useSubmit } from '@/hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES, ROUTES_ADMIN } from '@/utils/constants';
 import SubmitButton from '@/components/SubmitButton';
-import { useMediaQuery } from '@/components/ui/use-media-query';
 import { Album } from '@/utils/types';
 import { deleteAlbum } from '../../actions';
 
@@ -17,7 +16,6 @@ interface Props {
 export default function DeleteAlbum({ album }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isDesktop = useMediaQuery();
 
   const { isSubmitting, onSubmit } = useSubmit({
     callbacks: [
@@ -45,7 +43,6 @@ export default function DeleteAlbum({ album }: Props) {
         </div>
         <SubmitButton
           className="w-full sm:w-auto"
-          size={isDesktop ? 'default' : 'lg'}
           submitting={isSubmitting}
           variant="destructive"
         />

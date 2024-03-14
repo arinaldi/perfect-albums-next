@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import SubmitButton from '@/components/SubmitButton';
-import { useMediaQuery } from '@/components/ui/use-media-query';
 import { cn } from '@/lib/utils';
 import { type ReleaseInput } from './schema';
 
@@ -28,8 +27,6 @@ export default function ReleaseForm({
   isSubmitting,
   onSubmit,
 }: Props) {
-  const isDesktop = useMediaQuery();
-
   return (
     <Form {...form}>
       <form className={cn('space-y-8', className)} onSubmit={onSubmit}>
@@ -72,11 +69,7 @@ export default function ReleaseForm({
             </FormItem>
           )}
         />
-        <SubmitButton
-          className="w-full sm:w-auto"
-          size={isDesktop ? 'default' : 'lg'}
-          submitting={isSubmitting}
-        />
+        <SubmitButton className="w-full sm:w-auto" submitting={isSubmitting} />
       </form>
     </Form>
   );

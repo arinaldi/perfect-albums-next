@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input';
 import PasswordInput from '@/components/PasswordInput';
 import SubmitButton from '@/components/SubmitButton';
+import { useMediaQuery } from '@/hooks/media-query';
 import { signIn } from './actions';
 import { initialState, SignInInput, signInSchema } from './schema';
 
@@ -27,6 +28,7 @@ interface Props {
 
 export default function PasswordForm({ email, onCancel }: Props) {
   const [state, formAction] = useFormState(signIn, initialState);
+  const isDesktop = useMediaQuery();
   const form = useForm<SignInInput>({
     defaultValues: {
       email,
@@ -81,7 +83,12 @@ export default function PasswordForm({ email, onCancel }: Props) {
           <SubmitButton className="mt-6 w-full" />
         </form>
       </Form>
-      <Button className="mt-2 w-full" onClick={onCancel} variant="outline">
+      <Button
+        className="mt-2 w-full"
+        onClick={onCancel}
+        size={isDesktop ? 'default' : 'lg'}
+        variant="outline"
+      >
         Cancel
       </Button>
     </AppLayout>

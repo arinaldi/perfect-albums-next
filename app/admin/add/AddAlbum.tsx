@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import AppLayout from '@/components/AppLayout';
-import { useSubmit } from '@/hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES, ROUTES_ADMIN } from '@/utils/constants';
 import { albumSchema, type AlbumInput } from '../schema';
 import AlbumForm from '../AlbumForm';

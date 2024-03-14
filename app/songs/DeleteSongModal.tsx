@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import { useSubmit } from 'hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { useMediaQuery } from '@/components/ui/use-media-query';
+import { useMediaQuery } from '@/hooks/media-query';
 import SubmitButton from 'components/SubmitButton';
 import { deleteSong } from './actions';
 
@@ -66,11 +66,7 @@ export default function DeleteSongModal({ song }: Props) {
             <p className="text-sm">
               {song.artist} &ndash; {song.title}
             </p>
-            <SubmitButton
-              className="w-full sm:w-auto"
-              submitting={isSubmitting}
-              variant="destructive"
-            />
+            <SubmitButton submitting={isSubmitting} variant="destructive" />
           </form>
         </DialogContent>
       </Dialog>
@@ -95,7 +91,7 @@ export default function DeleteSongModal({ song }: Props) {
               {song.artist} &ndash; {song.title}
             </p>
             <SubmitButton
-              className="w-full sm:w-auto"
+              className="w-full"
               size="lg"
               submitting={isSubmitting}
               variant="destructive"

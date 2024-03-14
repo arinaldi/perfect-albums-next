@@ -14,7 +14,7 @@ export default function TableActions({ id }: Props) {
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex items-center justify-end">
+    <div className="flex justify-end gap-2">
       <Button
         onClick={() => {
           router.push(
@@ -22,7 +22,7 @@ export default function TableActions({ id }: Props) {
           );
         }}
         size="icon"
-        variant="ghost"
+        variant="outline"
       >
         <Pencil1Icon className="size-4" />
       </Button>
@@ -33,7 +33,7 @@ export default function TableActions({ id }: Props) {
           );
         }}
         size="icon"
-        variant="ghost"
+        variant="outline"
       >
         <TrashIcon className="size-4" />
       </Button>

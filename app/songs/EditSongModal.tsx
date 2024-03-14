@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
 
-import { useSubmit } from 'hooks/useSubmit';
+import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
 import { Song } from 'utils/types';
 import { Button } from '@/components/ui/button';
@@ -26,7 +26,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
-import { useMediaQuery } from '@/components/ui/use-media-query';
+import { useMediaQuery } from '@/hooks/media-query';
 import { songSchema, type SongInput } from './schema';
 import { editSong } from './actions';
 import SongForm from './SongForm';

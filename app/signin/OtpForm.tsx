@@ -22,6 +22,7 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp';
 import SubmitButton from '@/components/SubmitButton';
+import { useMediaQuery } from '@/hooks/media-query';
 import { verifyOtp } from './actions';
 import { initialState, verifyOtpSchema, type VerifyOtpInput } from './schema';
 
@@ -32,6 +33,7 @@ interface Props {
 
 export default function OtpForm({ email, onCancel }: Props) {
   const [state, formAction] = useFormState(verifyOtp, initialState);
+  const isDesktop = useMediaQuery();
   const form = useForm<VerifyOtpInput>({
     defaultValues: {
       code: '',
@@ -104,7 +106,12 @@ export default function OtpForm({ email, onCancel }: Props) {
           <SubmitButton className="mt-6 w-full" />
         </form>
       </Form>
-      <Button className="mt-2 w-full" onClick={onCancel} variant="outline">
+      <Button
+        className="mt-2 w-full"
+        onClick={onCancel}
+        size={isDesktop ? 'default' : 'lg'}
+        variant="outline"
+      >
         Cancel
       </Button>
     </AppLayout>
