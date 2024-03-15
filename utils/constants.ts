@@ -34,6 +34,7 @@ export enum ROUTE_HREF {
   FEATURED_SONGS = '/songs',
   NEW_RELEASES = '/releases',
   SIGNIN = '/signin',
+  SIGNOUT = '/signout',
 }
 
 /* CONST */

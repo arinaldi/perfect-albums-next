@@ -5,11 +5,12 @@ import { type User } from '@supabase/supabase-js';
 import {
   CalendarIcon,
   DashboardIcon,
+  EnterIcon,
+  ExitIcon,
   LayersIcon,
   PlusIcon,
   RocketIcon,
   SpeakerModerateIcon,
-  TableIcon,
 } from '@radix-ui/react-icons';
 
 import {
@@ -116,6 +117,28 @@ export default function CommandMenu({ user }: Props) {
               </CommandGroup>
             </>
           )}
+          <CommandSeparator />
+          <CommandGroup heading="Authentication">
+            {user ? (
+              <CommandItem
+                className="gap-2"
+                onSelect={navigate}
+                value={ROUTE_HREF.SIGNOUT}
+              >
+                <ExitIcon />
+                <span>Sign out</span>
+              </CommandItem>
+            ) : (
+              <CommandItem
+                className="gap-2"
+                onSelect={navigate}
+                value={ROUTE_HREF.SIGNIN}
+              >
+                <EnterIcon />
+                <span>Sign in</span>
+              </CommandItem>
+            )}
+          </CommandGroup>
         </CommandList>
       </CommandDialog>
     </>
