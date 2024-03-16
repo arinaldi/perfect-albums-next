@@ -12,6 +12,7 @@ import {
   RocketIcon,
   SpeakerModerateIcon,
 } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
 
 import {
   CommandDialog,
@@ -23,6 +24,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { ROUTES_ADMIN, ROUTE_HREF } from '@/utils/constants';
+import { signOut } from '@/app/actions';
 
 interface Props {
   user: User | null;
@@ -47,6 +49,16 @@ export default function CommandMenu({ user }: Props) {
   function navigate(value: string) {
     setOpen(false);
     router.push(value);
+  }
+
+  async function onSignOut() {
+    const result = await signOut();
+
+    if (result?.type === 'error') {
+      toast.error(result.message);
+    }
+
+    setOpen(false);
   }
 
   return (
@@ -120,11 +132,7 @@ export default function CommandMenu({ user }: Props) {
           <CommandSeparator />
           <CommandGroup heading="Authentication">
             {user ? (
-              <CommandItem
-                className="gap-2"
-                onSelect={navigate}
-                value={ROUTE_HREF.SIGNOUT}
-              >
+              <CommandItem className="gap-2" onSelect={onSignOut}>
                 <ExitIcon />
                 <span>Sign out</span>
               </CommandItem>

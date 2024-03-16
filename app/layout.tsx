@@ -39,9 +39,9 @@ export default async function RootLayout({ children }: Children) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NavBar user={user} />
-          <TailwindIndicator />
           <main>{children}</main>
           <Toaster closeButton position="top-right" richColors />
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

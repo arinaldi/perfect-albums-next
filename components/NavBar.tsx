@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { type User } from '@supabase/supabase-js';
 import { EnterIcon, ExitIcon } from '@radix-ui/react-icons';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import CommandMenu from '@/components/CommandMenu';
@@ -24,7 +25,12 @@ export default function NavBar({ user }: Props) {
   const isClient = useIsClient();
 
   async function signOut() {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
 
     if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
       router.push(ROUTE_HREF.TOP_ALBUMS);
