@@ -63,7 +63,7 @@ export default function SongForm({
             <FormItem>
               <FormLabel>Link</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input inputMode="url" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

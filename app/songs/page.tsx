@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import FeaturedSongs from 'app/songs/FeaturedSongs';
 import { createClient } from 'utils/supabase/server';
 
-export const revalidate = 10;
+export const revalidate = 60;
 export const metadata = {
   title: 'Featured songs | Perfect Albums',
 };
