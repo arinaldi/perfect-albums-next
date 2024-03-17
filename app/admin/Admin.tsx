@@ -100,7 +100,7 @@ export default function Admin({
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter className="bg-white">
+          <TableFooter>
             <TableRow>
               <TableCell colSpan={5}>
                 <Paginate perPage={perPage} total={total} studio={studio} />
