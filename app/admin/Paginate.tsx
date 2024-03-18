@@ -104,11 +104,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
       </Pagination>
       {/* Mobile version */}
       <Pagination className="flex items-center justify-between gap-2 sm:hidden">
-        <StudioFilter studio={studio} />
         <div className="flex items-center gap-4">
-          <p className="text-sm font-medium">
-            Page {page.toLocaleString()} of {lastPage.toLocaleString()}
-          </p>
           <PaginationContent className="gap-2">
             <PaginationItem>
               <Button asChild size="icon" variant="outline">
@@ -135,7 +131,11 @@ export default function Paginate({ perPage, studio, total }: Props) {
               </Button>
             </PaginationItem>
           </PaginationContent>
+          <p className="text-sm font-medium">
+            Page {page.toLocaleString()} of {lastPage.toLocaleString()}
+          </p>
         </div>
+        <StudioFilter studio={studio} />
       </Pagination>
     </>
   );

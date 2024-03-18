@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 import { PER_PAGE } from '@/utils/constants';
 import { Album, StudioValue } from '@/utils/types';
 import AddAlbumButton from './AddAlbumButton';
@@ -74,7 +75,6 @@ export default function Admin({
               <SortableColumn prop="artist">Artist</SortableColumn>
               <SortableColumn prop="title">Title</SortableColumn>
               <SortableColumn prop="year">Year</SortableColumn>
-              <TableHead className="font-extrabold">Favorite</TableHead>
               <TableHead className="font-extrabold" />
             </TableRow>
           </TableHeader>
@@ -85,15 +85,18 @@ export default function Admin({
                 <TableCell>
                   {a.cd && <DiscIcon className="mb-0.5 mr-1 inline size-4" />}
                   <span
-                    className={a.studio ? 'font-medium italic' : 'font-light'}
+                    className={cn(
+                      a.studio ? 'font-medium' : 'font-light',
+                      a.favorite ? 'italic' : '',
+                    )}
                   >
                     {a.title}
                   </span>
+                  {a.favorite && (
+                    <CheckIcon className="mb-0.5 ml-1 inline size-4" />
+                  )}
                 </TableCell>
                 <TableCell>{a.year}</TableCell>
-                <TableCell>
-                  {a.favorite && <CheckIcon className="inline size-5" />}
-                </TableCell>
                 <TableCell>
                   <TableActions id={a.id} />
                 </TableCell>
