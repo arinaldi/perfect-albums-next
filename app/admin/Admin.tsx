@@ -75,7 +75,7 @@ export default function Admin({
               <SortableColumn prop="artist">Artist</SortableColumn>
               <SortableColumn prop="title">Title</SortableColumn>
               <SortableColumn prop="year">Year</SortableColumn>
-              <TableHead className="font-extrabold" />
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>

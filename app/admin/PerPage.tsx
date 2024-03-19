@@ -38,9 +38,9 @@ export default function PerPage({ perPage }: Props) {
   return (
     <div className="flex items-center gap-x-2">
       <p className="text-sm font-medium">Rows per page</p>
-      <Select value={optimisticPerPage} onValueChange={onValueChange}>
+      <Select onValueChange={onValueChange} value={optimisticPerPage}>
         <SelectTrigger className="h-8 w-[70px]">
-          <SelectValue placeholder={`10`} />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent side="top">
           <SelectItem value={`${SMALL}`}>{SMALL}</SelectItem>

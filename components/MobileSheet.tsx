@@ -59,11 +59,11 @@ export function MobileSheet({ signOut, user }: Props) {
           </SheetDescription>
         </SheetHeader>
         <nav className="flex h-full flex-col items-start justify-between pb-16 pt-8">
-          <div className="flex flex-col items-start gap-6">
+          <div className="flex w-full flex-col items-start gap-6">
             {ROUTES.map((r) => (
               <Link
                 className={cn(
-                  'text-lg font-medium transition-colors hover:text-primary',
+                  'w-full text-lg font-medium transition-colors hover:text-primary',
                   !pathname?.startsWith(r.href) ? 'text-muted-foreground' : '',
                 )}
                 key={r.href}
@@ -77,7 +77,7 @@ export function MobileSheet({ signOut, user }: Props) {
               <>
                 <Link
                   className={cn(
-                    'text-lg font-medium transition-colors hover:text-primary',
+                    'w-full text-lg font-medium transition-colors hover:text-primary',
                     !pathname?.startsWith(ROUTES_ADMIN.base.href)
                       ? 'text-muted-foreground'
                       : '',
@@ -88,7 +88,7 @@ export function MobileSheet({ signOut, user }: Props) {
                   {ROUTES_ADMIN.base.label}
                 </Link>
                 <Button
-                  className="flex h-auto items-center gap-3 p-0 text-lg text-muted-foreground hover:bg-transparent"
+                  className="h-auto w-full justify-start p-0 text-lg text-muted-foreground hover:bg-transparent"
                   onClick={() => {
                     onClose();
                     signOut();
@@ -100,7 +100,7 @@ export function MobileSheet({ signOut, user }: Props) {
               </>
             ) : (
               <Link
-                className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="w-full text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
                 href={ROUTE_HREF.SIGNIN}
                 onClick={onClose}
               >

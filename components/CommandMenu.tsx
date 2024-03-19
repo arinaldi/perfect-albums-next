@@ -8,6 +8,7 @@ import {
   EnterIcon,
   ExitIcon,
   LayersIcon,
+  PersonIcon,
   PlusIcon,
   RocketIcon,
   SpeakerModerateIcon,
@@ -104,6 +105,10 @@ export default function CommandMenu({ user }: Props) {
             >
               <CalendarIcon />
               <span>New releases</span>
+            </CommandItem>
+            <CommandItem className="gap-2" onSelect={navigate} value="/artists">
+              <PersonIcon />
+              <span>Artists</span>
             </CommandItem>
           </CommandGroup>
           {user && (
