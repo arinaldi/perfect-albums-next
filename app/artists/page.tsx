@@ -32,12 +32,10 @@ export default async function ArtistsPage() {
             {artists.length.toLocaleString()} artists
           </h4>
           {artists.map((a, index) => (
-            <>
-              <div key={a} className="text-sm">
-                {a}
-              </div>
+            <div key={a}>
+              <p className="text-sm">{a}</p>
               {index !== artists.length - 1 && <Separator className="my-2" />}
-            </>
+            </div>
           ))}
         </div>
       </ScrollArea>
