@@ -46,7 +46,7 @@ export default function NavBar({ user }: Props) {
         <nav className="flex items-center gap-6">
           <Link
             className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
-            href="/dashboard"
+            href={ROUTE_HREF.DASHBOARD}
           >
             Perfect Albums
           </Link>
@@ -101,7 +101,7 @@ export default function NavBar({ user }: Props) {
         <MobileSheet signOut={signOut} user={user} />
         <Link
           className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
-          href="/dashboard"
+          href={ROUTE_HREF.DASHBOARD}
         >
           Perfect Albums
         </Link>

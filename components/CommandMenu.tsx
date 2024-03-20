@@ -77,7 +77,7 @@ export default function CommandMenu({ user }: Props) {
             <CommandItem
               className="gap-2"
               onSelect={navigate}
-              value="/dashboard"
+              value={ROUTE_HREF.DASHBOARD}
             >
               <DashboardIcon />
               <span>Dashboard</span>
@@ -106,7 +106,11 @@ export default function CommandMenu({ user }: Props) {
               <CalendarIcon />
               <span>New releases</span>
             </CommandItem>
-            <CommandItem className="gap-2" onSelect={navigate} value="/artists">
+            <CommandItem
+              className="gap-2"
+              onSelect={navigate}
+              value={ROUTE_HREF.ARTISTS}
+            >
               <PersonIcon />
               <span>Artists</span>
             </CommandItem>

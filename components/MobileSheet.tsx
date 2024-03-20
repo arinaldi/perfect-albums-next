@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { type User } from '@supabase/supabase-js';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import LinkWrapper from '@/components/LinkWrapper';
 import {
   Sheet,
   SheetContent,
@@ -14,7 +14,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
 
 interface Props {
@@ -23,7 +22,6 @@ interface Props {
 }
 
 export function MobileSheet({ signOut, user }: Props) {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   function onClose() {
@@ -48,7 +46,7 @@ export function MobileSheet({ signOut, user }: Props) {
           <SheetTitle className="text-left">
             <Link
               className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
-              href="/dashboard"
+              href={ROUTE_HREF.DASHBOARD}
               onClick={onClose}
             >
               Perfect Albums
@@ -61,32 +59,18 @@ export function MobileSheet({ signOut, user }: Props) {
         <nav className="flex h-full flex-col items-start justify-between pb-16 pt-8">
           <div className="flex w-full flex-col items-start gap-6">
             {ROUTES.map((r) => (
-              <Link
-                className={cn(
-                  'w-full text-lg font-medium transition-colors hover:text-primary',
-                  !pathname?.startsWith(r.href) ? 'text-muted-foreground' : '',
-                )}
-                key={r.href}
-                href={r.href}
-                onClick={onClose}
-              >
+              <LinkWrapper key={r.href} href={r.href} onClick={onClose}>
                 {r.label}
-              </Link>
+              </LinkWrapper>
             ))}
+            <LinkWrapper href={ROUTE_HREF.ARTISTS} onClick={onClose}>
+              Artists
+            </LinkWrapper>
             {user ? (
               <>
-                <Link
-                  className={cn(
-                    'w-full text-lg font-medium transition-colors hover:text-primary',
-                    !pathname?.startsWith(ROUTES_ADMIN.base.href)
-                      ? 'text-muted-foreground'
-                      : '',
-                  )}
-                  href={ROUTES_ADMIN.base.href}
-                  onClick={onClose}
-                >
+                <LinkWrapper href={ROUTES_ADMIN.base.href} onClick={onClose}>
                   {ROUTES_ADMIN.base.label}
-                </Link>
+                </LinkWrapper>
                 <Button
                   className="h-auto w-full justify-start p-0 text-lg text-muted-foreground hover:bg-transparent"
                   onClick={() => {
@@ -99,13 +83,9 @@ export function MobileSheet({ signOut, user }: Props) {
                 </Button>
               </>
             ) : (
-              <Link
-                className="w-full text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
-                href={ROUTE_HREF.SIGNIN}
-                onClick={onClose}
-              >
+              <LinkWrapper href={ROUTE_HREF.SIGNIN} onClick={onClose}>
                 Sign in
-              </Link>
+              </LinkWrapper>
             )}
           </div>
           {user && (
