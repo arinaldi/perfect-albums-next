@@ -1,6 +1,6 @@
 import 'server-only';
 import { cookies } from 'next/headers';
-import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 
 import NavBar from '@/components/NavBar';
 import TailwindIndicator from '@/components/TailwindIndicator';
@@ -18,11 +18,6 @@ export const metadata = {
   },
 };
 
-const inter = Inter({
-  display: 'swap',
-  subsets: ['latin'],
-});
-
 export default async function RootLayout({ children }: Children) {
   const supabase = createClient(cookies());
   const {
@@ -34,7 +29,7 @@ export default async function RootLayout({ children }: Children) {
       <body
         className={cn(
           'min-h-screen bg-background antialiased',
-          inter.className,
+          GeistSans.className,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
