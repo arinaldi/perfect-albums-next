@@ -12,7 +12,12 @@ const PasswordInput = forwardRef<
 
   return (
     <div className="relative">
-      <Input ref={ref} type={on ? 'text' : 'password'} {...props} />
+      <Input
+        className="pr-10"
+        ref={ref}
+        type={on ? 'text' : 'password'}
+        {...props}
+      />
       <Button
         aria-label="Show or hide password"
         className="absolute inset-y-0 right-0 mr-0.5 flex cursor-pointer items-center"
