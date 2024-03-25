@@ -9,14 +9,17 @@ interface Props extends Children {
   onClick: () => void;
 }
 
+export const linkClassName =
+  'flex w-full items-center gap-4 rounded-lg px-3 py-2 text-lg font-medium transition-colors hover:text-primary';
+
 export default function LinkWrapper({ children, href, onClick }: Props) {
   const pathname = usePathname();
 
   return (
     <Link
       className={cn(
-        'w-full text-lg font-medium transition-colors hover:text-primary',
-        !pathname?.startsWith(href) ? 'text-muted-foreground' : '',
+        linkClassName,
+        pathname?.startsWith(href) ? 'bg-muted' : 'text-muted-foreground',
       )}
       href={href}
       onClick={onClick}

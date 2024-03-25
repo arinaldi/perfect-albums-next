@@ -1,3 +1,10 @@
+import {
+  CalendarIcon,
+  LayersIcon,
+  SpeakerModerateIcon,
+  StackIcon,
+} from '@radix-ui/react-icons';
+
 /* ENUM */
 
 export enum MESSAGES {
@@ -87,9 +94,21 @@ export const ROUTE_HREF = {
 };
 
 export const ROUTES = [
-  { href: ROUTE_HREF.TOP_ALBUMS, label: 'Top albums' },
-  { href: ROUTE_HREF.FEATURED_SONGS, label: 'Featured songs' },
-  { href: ROUTE_HREF.NEW_RELEASES, label: 'New releases' },
+  {
+    href: ROUTE_HREF.TOP_ALBUMS,
+    icon: LayersIcon,
+    label: 'Top albums',
+  },
+  {
+    href: ROUTE_HREF.FEATURED_SONGS,
+    icon: SpeakerModerateIcon,
+    label: 'Featured songs',
+  },
+  {
+    href: ROUTE_HREF.NEW_RELEASES,
+    icon: CalendarIcon,
+    label: 'New releases',
+  },
 ];
 
 export const ROUTES_ADMIN = {
