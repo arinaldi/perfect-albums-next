@@ -3,6 +3,7 @@ import {
   CalendarIcon,
   DiscIcon,
   LayersIcon,
+  PersonIcon,
   RocketIcon,
   SpeakerModerateIcon,
 } from '@radix-ui/react-icons';
@@ -10,7 +11,13 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-type Variant = 'cds' | 'releases' | 'songs' | 'topAlbums' | 'totalAlbums';
+type Variant =
+  | 'artists'
+  | 'cds'
+  | 'releases'
+  | 'songs'
+  | 'topAlbums'
+  | 'totalAlbums';
 
 interface Props {
   isLoading?: boolean;
@@ -19,8 +26,9 @@ interface Props {
   variant: Variant;
 }
 
-const className = 'size-4 text-muted-foreground';
+const className = 'size-4 text-muted-foreground shrink-0';
 const icons: Record<Variant, ReactNode> = {
+  artists: <PersonIcon className={className} />,
   cds: <DiscIcon className={className} />,
   releases: <CalendarIcon className={className} />,
   songs: <SpeakerModerateIcon className={className} />,

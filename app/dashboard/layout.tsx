@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 interface Props extends Children {
+  artists: ReactNode;
   cds: ReactNode;
   leaderboard: ReactNode;
   releases: ReactNode;
@@ -17,6 +18,7 @@ interface Props extends Children {
 }
 
 export default function DashboardLayout({
+  artists,
   cds,
   leaderboard,
   releases,
@@ -26,15 +28,18 @@ export default function DashboardLayout({
 }: Props) {
   return (
     <AppLayout title="Dashboard">
-      <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {totalAlbums}
-        {cds}
-        {topAlbums}
-        {songs}
-        {releases}
-      </dl>
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {leaderboard}
+      <div className="flex flex-col gap-4 md:gap-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+          {totalAlbums}
+          {cds}
+          {topAlbums}
+          {songs}
+          {releases}
+          {artists}
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+          {leaderboard}
+        </div>
       </div>
     </AppLayout>
   );
