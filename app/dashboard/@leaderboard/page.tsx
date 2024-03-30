@@ -1,9 +1,15 @@
 import { cookies } from 'next/headers';
-import { TableIcon } from '@radix-ui/react-icons';
+import { TextAlignTopIcon } from '@radix-ui/react-icons';
 
 import { createClient } from 'utils/supabase/server';
 import AppMessage from 'components/AppMessage';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -28,9 +34,12 @@ export default async function DashboardLeaderboard() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0.5">
-        <CardTitle className="text-sm font-medium">Leaderboard</CardTitle>
-        <TableIcon className="size-4 text-muted-foreground" />
+      <CardHeader>
+        <div className="flex flex-row items-center justify-between gap-3 space-y-0">
+          <CardTitle className="font-semibold">Leaderboard</CardTitle>
+          <TextAlignTopIcon className="size-4 text-muted-foreground" />
+        </div>
+        <CardDescription>Top 10 artists by release count</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
