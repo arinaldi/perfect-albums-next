@@ -14,9 +14,9 @@ export const metadata = {
   title: 'Artists | Perfect Albums',
 };
 
-export async function getArtists(): Promise<Payload> {
+async function getArtists(): Promise<Payload> {
   const res = await fetch(`${BASE_URL}/api/artists`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 60 },
   });
   return res.json();
 }
