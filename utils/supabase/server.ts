@@ -3,7 +3,9 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 
 import { type Database } from 'utils/db-types';
 
-export function createClient(cookieStore: ReturnType<typeof cookies>) {
+export function createClient() {
+  const cookieStore = cookies();
+
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

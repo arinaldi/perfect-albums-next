@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import { TextAlignTopIcon } from '@radix-ui/react-icons';
 
 import { createClient } from 'utils/supabase/server';
@@ -25,7 +24,7 @@ interface Leaderboard {
 }
 
 export default async function DashboardLeaderboard() {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const { data, error } = await supabase.rpc('leaderboard');
 
   if (!data || error) return <AppMessage />;

@@ -1,5 +1,4 @@
 import 'server-only';
-import { cookies } from 'next/headers';
 import { type SupabaseClient } from '@supabase/supabase-js';
 
 import Admin from 'app/admin/Admin';
@@ -92,7 +91,7 @@ async function getCdCount(
 }
 
 export default async function AdminPage({ searchParams }: Props) {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const [{ albums, total }, cdTotal] = await Promise.all([
     getAlbums(supabase, searchParams),
     getCdCount(supabase, searchParams),

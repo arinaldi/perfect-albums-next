@@ -1,6 +1,5 @@
 'use server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -8,7 +7,7 @@ import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
 export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -53,7 +52,7 @@ export async function editRelease(
   id: number,
   release: ReleaseInput,
 ): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -98,7 +97,7 @@ export async function editRelease(
 }
 
 export async function deleteRelease(id: number): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

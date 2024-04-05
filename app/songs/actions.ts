@@ -1,6 +1,5 @@
 'use server';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -8,7 +7,7 @@ import { type MutateResult } from '@/utils/types';
 import { SongInput, songSchema } from './schema';
 
 export async function addSong(song: SongInput): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -50,7 +49,7 @@ export async function editSong(
   id: number,
   song: SongInput,
 ): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -89,7 +88,7 @@ export async function editSong(
 }
 
 export async function deleteSong(id: number): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

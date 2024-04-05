@@ -1,10 +1,8 @@
-import { cookies } from 'next/headers';
-
 import StatCard from '@/app/dashboard/StatCard';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardCDs() {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const { count } = await supabase
     .from('albums')
     .select('*', { count: 'exact', head: true })

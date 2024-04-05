@@ -1,5 +1,4 @@
 import 'server-only';
-import { cookies } from 'next/headers';
 import { GeistSans } from 'geist/font/sans';
 
 import NavBar from '@/components/NavBar';
@@ -19,7 +18,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

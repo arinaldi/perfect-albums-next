@@ -1,5 +1,4 @@
 'use server';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { MESSAGES, ROUTES_ADMIN } from 'utils/constants';
@@ -18,7 +17,7 @@ export async function signIn(_: State, formData: FormData): Promise<State> {
     };
   }
 
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const { error } = await supabase.auth.signInWithPassword(result.data);
 
   if (error) {
@@ -37,7 +36,7 @@ export async function sendOtp(email: string): Promise<State> {
     };
   }
 
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: { shouldCreateUser: false },
@@ -62,7 +61,7 @@ export async function verifyOtp(_: State, formData: FormData): Promise<State> {
     };
   }
 
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const { error } = await supabase.auth.verifyOtp({
     email: result.data.email,
     token: result.data.code,

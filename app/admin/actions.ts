@@ -1,5 +1,5 @@
 'use server';
-import { cookies, headers } from 'next/headers';
+import { headers } from 'next/headers';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -7,7 +7,7 @@ import { type MutateResult } from '@/utils/types';
 import { albumSchema, type AlbumInput } from './schema';
 
 export async function addAlbum(album: AlbumInput): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -51,7 +51,7 @@ export async function editAlbum(
   id: number,
   album: AlbumInput,
 ): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -97,7 +97,7 @@ export async function editAlbum(
 }
 
 export async function deleteAlbum(id: number): Promise<MutateResult> {
-  const supabase = createClient(cookies());
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
