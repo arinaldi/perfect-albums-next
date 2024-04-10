@@ -1,4 +1,4 @@
-import { ExclamationTriangleIcon, LinkBreak1Icon } from '@radix-ui/react-icons';
+import { LinkBreak1Icon } from '@radix-ui/react-icons';
 
 export default function NotFound() {
   return (
