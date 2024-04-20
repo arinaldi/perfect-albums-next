@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Pencil1Icon } from '@radix-ui/react-icons';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
@@ -34,6 +35,24 @@ interface Props {
   onClose: () => void;
   song: Song;
 }
+
+const Trigger = forwardRef<HTMLDivElement, any>((props, ref) => {
+  return (
+    <DropdownMenuItem
+      className="flex items-center gap-2"
+      onSelect={(event) => {
+        event.preventDefault();
+      }}
+      ref={ref}
+      {...props}
+    >
+      <Pencil1Icon className="size-4" />
+      Edit
+    </DropdownMenuItem>
+  );
+});
+
+Trigger.displayName = 'Trigger';
 
 export default function EditSongModal({ onClose, song }: Props) {
   const [open, setOpen] = useState(false);
@@ -70,13 +89,7 @@ export default function EditSongModal({ onClose, song }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <DropdownMenuItem
-            onSelect={(event) => {
-              event.preventDefault();
-            }}
-          >
-            Edit
-          </DropdownMenuItem>
+          <Trigger />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader className="text-left">
@@ -96,13 +109,7 @@ export default function EditSongModal({ onClose, song }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <DropdownMenuItem
-          onSelect={(event) => {
-            event.preventDefault();
-          }}
-        >
-          Edit
-        </DropdownMenuItem>
+        <Trigger />
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

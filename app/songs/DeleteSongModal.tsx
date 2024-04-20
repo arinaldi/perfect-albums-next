@@ -1,4 +1,5 @@
-import { FormEvent, useState } from 'react';
+import { forwardRef, FormEvent, useState } from 'react';
+import { TrashIcon } from '@radix-ui/react-icons';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
@@ -32,6 +33,24 @@ interface Props {
   song: Song;
 }
 
+const Trigger = forwardRef<HTMLDivElement, any>((props, ref) => {
+  return (
+    <DropdownMenuItem
+      className="flex items-center gap-2"
+      onSelect={(event) => {
+        event.preventDefault();
+      }}
+      ref={ref}
+      {...props}
+    >
+      <TrashIcon className="size-4" />
+      Delete
+    </DropdownMenuItem>
+  );
+});
+
+Trigger.displayName = 'Trigger';
+
 export default function DeleteSongModal({ onClose, song }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
@@ -53,13 +72,7 @@ export default function DeleteSongModal({ onClose, song }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <DropdownMenuItem
-            onSelect={(event) => {
-              event.preventDefault();
-            }}
-          >
-            Delete
-          </DropdownMenuItem>
+          <Trigger />
         </DialogTrigger>
         <DialogContent>
           <form className="space-y-8" onSubmit={onSubmit}>
@@ -80,13 +93,7 @@ export default function DeleteSongModal({ onClose, song }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <DropdownMenuItem
-          onSelect={(event) => {
-            event.preventDefault();
-          }}
-        >
-          Delete
-        </DropdownMenuItem>
+        <Trigger />
       </DrawerTrigger>
       <DrawerContent>
         <form onSubmit={onSubmit}>

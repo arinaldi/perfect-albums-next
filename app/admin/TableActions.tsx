@@ -1,7 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import {
+  DotsHorizontalIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
 import { ROUTES_ADMIN } from '@/utils/constants';
 import { Button } from '@/components/ui/button';
@@ -35,12 +39,18 @@ export default function TableActions({ id }: Props) {
         <Link
           href={`${ROUTES_ADMIN.edit.href}/${id}?${searchParams?.toString()}`}
         >
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-2">
+            <Pencil1Icon className="size-4" />
+            Edit
+          </DropdownMenuItem>
         </Link>
         <Link
           href={`${ROUTES_ADMIN.delete.href}/${id}?${searchParams?.toString()}`}
         >
-          <DropdownMenuItem>Delete</DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-2">
+            <TrashIcon className="size-4" />
+            Delete
+          </DropdownMenuItem>
         </Link>
       </DropdownMenuContent>
     </DropdownMenu>
