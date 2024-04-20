@@ -1,6 +1,4 @@
-'use client';
-import { FormEvent, useState } from 'react';
-import { TrashIcon } from '@radix-ui/react-icons';
+import { FormEvent } from 'react';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
@@ -24,19 +22,25 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/media-query';
 import SubmitButton from 'components/SubmitButton';
 import { deleteSong } from './actions';
 
 interface Props {
+  onOpenChange: (open: boolean) => void;
+  onSelect: () => void;
   song: Song;
 }
 
-export default function DeleteSongModal({ song }: Props) {
-  const [open, setOpen] = useState(false);
+export default function DeleteSongModal({
+  onOpenChange,
+  onSelect,
+  song,
+}: Props) {
   const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => setOpen(false)],
+    callbacks: [() => onOpenChange(false)],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
 
@@ -51,11 +55,16 @@ export default function DeleteSongModal({ song }: Props) {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
-          <Button size="icon" variant="outline">
-            <TrashIcon className="size-4" />
-          </Button>
+          <DropdownMenuItem
+            onSelect={(event) => {
+              event.preventDefault();
+              onSelect && onSelect();
+            }}
+          >
+            Delete
+          </DropdownMenuItem>
         </DialogTrigger>
         <DialogContent>
           <form className="space-y-8" onSubmit={onSubmit}>
@@ -74,11 +83,16 @@ export default function DeleteSongModal({ song }: Props) {
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>
-        <Button size="icon" variant="outline">
-          <TrashIcon className="size-4" />
-        </Button>
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault();
+            onSelect && onSelect();
+          }}
+        >
+          Delete
+        </DropdownMenuItem>
       </DrawerTrigger>
       <DrawerContent>
         <form onSubmit={onSubmit}>

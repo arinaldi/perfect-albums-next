@@ -1,8 +1,6 @@
-'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Pencil1Icon } from '@radix-ui/react-icons';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
@@ -26,17 +24,19 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/media-query';
 import { songSchema, type SongInput } from './schema';
 import { editSong } from './actions';
 import SongForm from './SongForm';
 
 interface Props {
+  onOpenChange: (open: boolean) => void;
+  onSelect: () => void;
   song: Song;
 }
 
-export default function EditSongModal({ song }: Props) {
-  const [open, setOpen] = useState(false);
+export default function EditSongModal({ onOpenChange, onSelect, song }: Props) {
   const isDesktop = useMediaQuery();
   const form = useForm<SongInput>({
     resolver: zodResolver(songSchema),
@@ -54,7 +54,7 @@ export default function EditSongModal({ song }: Props) {
   }, [reset, song]);
 
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => setOpen(false)],
+    callbacks: [() => onOpenChange(false)],
     handleSubmit,
     submitFn: async (data: SongInput) => {
       const result = await editSong(song.id, data);
@@ -68,11 +68,16 @@ export default function EditSongModal({ song }: Props) {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog onOpenChange={onOpenChange}>
         <DialogTrigger asChild>
-          <Button size="icon" variant="outline">
-            <Pencil1Icon className="size-4" />
-          </Button>
+          <DropdownMenuItem
+            onSelect={(event) => {
+              event.preventDefault();
+              onSelect && onSelect();
+            }}
+          >
+            Edit
+          </DropdownMenuItem>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader className="text-left">
@@ -90,11 +95,16 @@ export default function EditSongModal({ song }: Props) {
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>
-        <Button size="icon" variant="outline">
-          <Pencil1Icon className="size-4" />
-        </Button>
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault();
+            onSelect && onSelect();
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

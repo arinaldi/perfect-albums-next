@@ -5,14 +5,12 @@ import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import AddSongModal from './AddSongModal';
-import DeleteSongModal from './DeleteSongModal';
-import EditSongModal from './EditSongModal';
+import SongActions from './SongActions';
 
 interface Props {
   songs: Song[];
@@ -34,7 +32,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
         {songs.map((s) => (
           <Card key={s.id} className="relative">
             <CardHeader>
-              <CardTitle className="flex items-start justify-between gap-2">
+              <CardTitle className="flex items-center justify-between gap-2">
                 <a
                   className="leading-6 underline underline-offset-4 hover:text-muted-foreground"
                   href={s.link}
@@ -43,17 +41,10 @@ export default function FeaturedSongs({ songs, user }: Props) {
                 >
                   {s.title}
                 </a>
+                {user && <SongActions song={s} />}
               </CardTitle>
               <CardDescription>{s.artist}</CardDescription>
             </CardHeader>
-            {user && (
-              <CardContent>
-                <span className="flex gap-2">
-                  <EditSongModal song={s} />
-                  <DeleteSongModal song={s} />
-                </span>
-              </CardContent>
-            )}
           </Card>
         ))}
       </div>
