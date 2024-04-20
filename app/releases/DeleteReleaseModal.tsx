@@ -1,5 +1,4 @@
-'use client';
-import { FormEvent, useState } from 'react';
+import { forwardRef, FormEvent, useState } from 'react';
 import { TrashIcon } from '@radix-ui/react-icons';
 
 import { useSubmit } from '@/hooks/submit';
@@ -24,19 +23,39 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/media-query';
 import SubmitButton from 'components/SubmitButton';
 import { deleteRelease } from './actions';
 
 interface Props {
+  onClose: () => void;
   release: Release;
 }
 
-export default function DeleteReleaseModal({ release }: Props) {
+const Trigger = forwardRef<HTMLDivElement, any>((props, ref) => {
+  return (
+    <DropdownMenuItem
+      className="flex items-center gap-2"
+      onSelect={(event) => {
+        event.preventDefault();
+      }}
+      ref={ref}
+      {...props}
+    >
+      <TrashIcon className="size-4" />
+      Delete
+    </DropdownMenuItem>
+  );
+});
+
+Trigger.displayName = 'Trigger';
+
+export default function DeleteReleaseModal({ onClose, release }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => setOpen(false)],
+    callbacks: [() => setOpen(false), onClose],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
 
@@ -53,9 +72,7 @@ export default function DeleteReleaseModal({ release }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button size="icon" variant="outline">
-            <TrashIcon className="size-4" />
-          </Button>
+          <Trigger />
         </DialogTrigger>
         <DialogContent>
           <form className="space-y-8" onSubmit={onSubmit}>
@@ -76,9 +93,7 @@ export default function DeleteReleaseModal({ release }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button size="icon" variant="outline">
-          <TrashIcon className="size-4" />
-        </Button>
+        <Trigger />
       </DrawerTrigger>
       <DrawerContent>
         <form onSubmit={onSubmit}>

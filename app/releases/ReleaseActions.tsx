@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
-import { Song } from 'utils/types';
+import { Release } from '@/utils/types';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,14 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import DeleteSongModal from './DeleteSongModal';
-import EditSongModal from './EditSongModal';
+import DeleteReleaseModal from './DeleteReleaseModal';
+import EditReleaseModal from './EditReleaseModal';
 
 interface Props {
-  song: Song;
+  release: Release;
 }
 
-export default function SongActions({ song }: Props) {
+export default function ReleaseActions({ release }: Props) {
   const [open, setOpen] = useState(false);
 
   function onClose() {
@@ -41,8 +41,8 @@ export default function SongActions({ song }: Props) {
       >
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <EditSongModal onClose={onClose} song={song} />
-        <DeleteSongModal onClose={onClose} song={song} />
+        <EditReleaseModal onClose={onClose} release={release} />
+        <DeleteReleaseModal onClose={onClose} release={release} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -12,8 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import AddReleaseModal from './AddReleaseModal';
-import DeleteReleaseModal from './DeleteReleaseModal';
-import EditReleaseModal from './EditReleaseModal';
+import ReleaseActions from './ReleaseActions';
 
 interface Props {
   releases: Release[];
@@ -54,12 +53,7 @@ export default function NewReleases({ releases, user }: Props) {
                           </span>{' '}
                           {r.title}
                         </span>
-                        {user && (
-                          <span className="flex gap-2">
-                            <EditReleaseModal release={r} />
-                            <DeleteReleaseModal release={r} />
-                          </span>
-                        )}
+                        {user && <ReleaseActions release={r} />}
                       </span>
                     </li>
                   ))}

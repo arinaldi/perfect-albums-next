@@ -1,5 +1,4 @@
-'use client';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil1Icon } from '@radix-ui/react-icons';
@@ -27,16 +26,36 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useMediaQuery } from '@/hooks/media-query';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { editRelease } from './actions';
 import ReleaseForm from './ReleaseForm';
 
 interface Props {
+  onClose: () => void;
   release: Release;
 }
 
-export default function EditReleaseModal({ release }: Props) {
+const Trigger = forwardRef<HTMLDivElement, any>((props, ref) => {
+  return (
+    <DropdownMenuItem
+      className="flex items-center gap-2"
+      onSelect={(event) => {
+        event.preventDefault();
+      }}
+      ref={ref}
+      {...props}
+    >
+      <Pencil1Icon className="size-4" />
+      Edit
+    </DropdownMenuItem>
+  );
+});
+
+Trigger.displayName = 'Trigger';
+
+export default function EditReleaseModal({ onClose, release }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const form = useForm<ReleaseInput>({
@@ -55,7 +74,7 @@ export default function EditReleaseModal({ release }: Props) {
   }, [release, reset]);
 
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => setOpen(false)],
+    callbacks: [() => setOpen(false), onClose],
     handleSubmit,
     submitFn: async (data: ReleaseInput) => {
       const result = await editRelease(release.id, data);
@@ -71,9 +90,7 @@ export default function EditReleaseModal({ release }: Props) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button size="icon" variant="outline">
-            <Pencil1Icon className="size-4" />
-          </Button>
+          <Trigger />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader className="text-left">
@@ -93,9 +110,7 @@ export default function EditReleaseModal({ release }: Props) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button size="icon" variant="outline">
-          <Pencil1Icon className="size-4" />
-        </Button>
+        <Trigger />
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
