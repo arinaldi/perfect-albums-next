@@ -1,42 +1,48 @@
 'use client';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
-import { ROUTES_ADMIN } from 'utils/constants';
-import { Button } from 'components/ui/button';
+import { ROUTES_ADMIN } from '@/utils/constants';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface Props {
   id: number;
 }
 
 export default function TableActions({ id }: Props) {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex justify-end gap-2">
-      <Button
-        onClick={() => {
-          router.push(
-            `${ROUTES_ADMIN.edit.href}/${id}?${searchParams?.toString()}`,
-          );
-        }}
-        size="icon"
-        variant="outline"
-      >
-        <Pencil1Icon className="size-4" />
-      </Button>
-      <Button
-        onClick={() => {
-          router.push(
-            `${ROUTES_ADMIN.delete.href}/${id}?${searchParams?.toString()}`,
-          );
-        }}
-        size="icon"
-        variant="outline"
-      >
-        <TrashIcon className="size-4" />
-      </Button>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="size-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <DotsHorizontalIcon className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <Link
+          href={`${ROUTES_ADMIN.edit.href}/${id}?${searchParams?.toString()}`}
+        >
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+        </Link>
+        <Link
+          href={`${ROUTES_ADMIN.delete.href}/${id}?${searchParams?.toString()}`}
+        >
+          <DropdownMenuItem>Delete</DropdownMenuItem>
+        </Link>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

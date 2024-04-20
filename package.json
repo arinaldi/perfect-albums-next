@@ -24,7 +24,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@supabase/ssr": "^0.3.0",
-    "@supabase/supabase-js": "^2.42.4",
+    "@supabase/supabase-js": "^2.42.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
