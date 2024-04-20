@@ -97,7 +97,7 @@ export default function Admin({
                   )}
                 </TableCell>
                 <TableCell>{a.year}</TableCell>
-                <TableCell className="flex justify-end">
+                <TableCell className="text-right">
                   <TableActions id={a.id} />
                 </TableCell>
               </TableRow>
