@@ -25,7 +25,7 @@ export default async function ArtistsPage() {
   const { artists } = await getArtists();
 
   return (
-    <div className="flex flex-col gap-8 sm:flex-row">
+    <div className="flex flex-col gap-4 sm:flex-row md:gap-8">
       <ScrollArea className="h-[420px] rounded-md border">
         <div className="p-4">
           <h4 className="mb-4 text-sm font-medium italic leading-none">

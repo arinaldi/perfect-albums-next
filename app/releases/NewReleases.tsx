@@ -31,7 +31,7 @@ export default function NewReleases({ releases, user }: Props) {
       }
       titleAction={user && <AddReleaseModal />}
     >
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {Object.entries(formatReleases(releases))
           .sort(sortByDate)
           .map(([date, releases]) => (
