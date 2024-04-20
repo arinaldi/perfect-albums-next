@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -31,12 +31,12 @@ import { editSong } from './actions';
 import SongForm from './SongForm';
 
 interface Props {
-  onOpenChange: (open: boolean) => void;
-  onSelect: () => void;
+  onClose: () => void;
   song: Song;
 }
 
-export default function EditSongModal({ onOpenChange, onSelect, song }: Props) {
+export default function EditSongModal({ onClose, song }: Props) {
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const form = useForm<SongInput>({
     resolver: zodResolver(songSchema),
@@ -54,7 +54,7 @@ export default function EditSongModal({ onOpenChange, onSelect, song }: Props) {
   }, [reset, song]);
 
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => onOpenChange(false)],
+    callbacks: [() => setOpen(false), onClose],
     handleSubmit,
     submitFn: async (data: SongInput) => {
       const result = await editSong(song.id, data);
@@ -68,12 +68,11 @@ export default function EditSongModal({ onOpenChange, onSelect, song }: Props) {
 
   if (isDesktop) {
     return (
-      <Dialog onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <DropdownMenuItem
             onSelect={(event) => {
               event.preventDefault();
-              onSelect && onSelect();
             }}
           >
             Edit
@@ -95,12 +94,11 @@ export default function EditSongModal({ onOpenChange, onSelect, song }: Props) {
   }
 
   return (
-    <Drawer onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <DropdownMenuItem
           onSelect={(event) => {
             event.preventDefault();
-            onSelect && onSelect();
           }}
         >
           Edit

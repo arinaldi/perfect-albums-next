@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
@@ -28,19 +28,15 @@ import SubmitButton from 'components/SubmitButton';
 import { deleteSong } from './actions';
 
 interface Props {
-  onOpenChange: (open: boolean) => void;
-  onSelect: () => void;
+  onClose: () => void;
   song: Song;
 }
 
-export default function DeleteSongModal({
-  onOpenChange,
-  onSelect,
-  song,
-}: Props) {
+export default function DeleteSongModal({ onClose, song }: Props) {
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
   const { isSubmitting, onSubmit } = useSubmit({
-    callbacks: [() => onOpenChange(false)],
+    callbacks: [() => setOpen(false), onClose],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
 
@@ -55,12 +51,11 @@ export default function DeleteSongModal({
 
   if (isDesktop) {
     return (
-      <Dialog onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <DropdownMenuItem
             onSelect={(event) => {
               event.preventDefault();
-              onSelect && onSelect();
             }}
           >
             Delete
@@ -83,12 +78,11 @@ export default function DeleteSongModal({
   }
 
   return (
-    <Drawer onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <DropdownMenuItem
           onSelect={(event) => {
             event.preventDefault();
-            onSelect && onSelect();
           }}
         >
           Delete
