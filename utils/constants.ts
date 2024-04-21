@@ -18,9 +18,9 @@ export enum MESSAGES {
 }
 
 export enum PER_PAGE {
-  SMALL = 20,
-  MEDIUM = 40,
-  LARGE = 60,
+  SMALL = 25,
+  MEDIUM = 50,
+  LARGE = 100,
 }
 
 export enum SORT_DIRECTION {
