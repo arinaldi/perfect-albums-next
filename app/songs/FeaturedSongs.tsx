@@ -32,7 +32,7 @@ export default function FeaturedSongs({ songs, user }: Props) {
         {songs.map((s) => (
           <Card key={s.id} className="relative">
             <CardHeader>
-              <CardTitle className="flex items-center justify-between gap-2">
+              <CardTitle className="flex items-start justify-between gap-2">
                 <a
                   className="leading-6 underline underline-offset-4 hover:text-muted-foreground"
                   href={s.link}
