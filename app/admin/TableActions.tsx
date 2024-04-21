@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import {
-  DotsHorizontalIcon,
+  DotsVerticalIcon,
   Pencil1Icon,
   TrashIcon,
 } from '@radix-ui/react-icons';
@@ -30,7 +30,7 @@ export default function TableActions({ id }: Props) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="size-8 p-0">
           <span className="sr-only">Open menu</span>
-          <DotsHorizontalIcon className="size-4" />
+          <DotsVerticalIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

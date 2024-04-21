@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { DotsVerticalIcon } from '@radix-ui/react-icons';
 
 import { Song } from 'utils/types';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ export default function SongActions({ song }: Props) {
       <DropdownMenuTrigger asChild>
         <Button className="size-8 shrink-0 p-0" variant="ghost">
           <span className="sr-only">Open menu</span>
-          <DotsHorizontalIcon className="size-4" />
+          <DotsVerticalIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
