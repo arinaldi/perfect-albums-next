@@ -1,5 +1,5 @@
 import { MONTHS, PER_PAGE } from 'utils/constants';
-import { Album, Release, StudioValue } from 'utils/types';
+import { Album, Release, Song, StudioValue } from 'utils/types';
 
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value;
@@ -62,14 +62,51 @@ interface ReleaseResults {
 export function formatReleases(releases: Release[]): ReleaseResults {
   const results: ReleaseResults = {};
 
-  releases.forEach((release) => {
-    const releaseDate = release.date ? formatReleaseDate(release.date) : 'TBD';
+  releases.forEach((r) => {
+    const releaseDate = r.date ? formatReleaseDate(r.date) : 'TBD';
 
     if (results[releaseDate]) {
-      results[releaseDate].push(release);
+      results[releaseDate].push(r);
     } else {
-      results[releaseDate] = [release];
+      results[releaseDate] = [r];
     }
+  });
+
+  return results;
+}
+
+export interface SongResults {
+  [key: string]: Song[];
+}
+
+const NUMBER_SIGN = '#';
+
+export function formatSongs(songs: Song[]): SongResults {
+  const results: SongResults = {};
+  const alphabet = Array.from(Array(26)).map((_, i) =>
+    String.fromCharCode(i + 65),
+  );
+
+  [NUMBER_SIGN, ...alphabet].forEach((letter) => {
+    results[letter] = [];
+  });
+
+  songs.forEach((song) => {
+    let firstLetter = song.artist[0].toUpperCase();
+
+    if (/\d/.test(song.artist[0])) {
+      firstLetter = NUMBER_SIGN;
+    }
+
+    if (song.artist.startsWith('A ')) {
+      firstLetter = song.artist[2].toUpperCase();
+    }
+
+    if (song.artist.startsWith('The ')) {
+      firstLetter = song.artist[4].toUpperCase();
+    }
+
+    results[firstLetter].push(song);
   });
 
   return results;

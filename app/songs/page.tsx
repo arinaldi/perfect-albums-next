@@ -1,6 +1,7 @@
 import 'server-only';
-import FeaturedSongs from 'app/songs/FeaturedSongs';
-import { createClient } from 'utils/supabase/server';
+import { formatSongs } from '@/utils';
+import { createClient } from '@/utils/supabase/server';
+import FeaturedSongs from './FeaturedSongs';
 
 export const revalidate = 60;
 export const metadata = {
@@ -9,13 +10,16 @@ export const metadata = {
 
 export default async function FeaturedSongsPage() {
   const supabase = createClient();
-  const { data } = await supabase
-    .from('songs')
-    .select('*')
-    .order('created_at', { ascending: false });
+  const { data } = await supabase.from('songs').select('*').order('artist');
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return <FeaturedSongs songs={data ?? []} user={user} />;
+  return (
+    <FeaturedSongs
+      count={data?.length ?? 0}
+      data={formatSongs(data ?? [])}
+      user={user}
+    />
+  );
 }

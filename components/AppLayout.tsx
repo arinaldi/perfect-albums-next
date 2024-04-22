@@ -16,7 +16,7 @@ export default function AppLayout({
   titleAction,
 }: Props) {
   return (
-    <div className={cn('mx-auto max-w-7xl px-4 py-4 md:px-8', className)}>
+    <div className={cn('mx-auto max-w-7xl p-4 pb-8 md:px-8', className)}>
       <div className="mb-4 flex min-h-[40px] items-center justify-between">
         <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {title}
