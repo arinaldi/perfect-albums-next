@@ -28,7 +28,7 @@ export default function SongActions({ song }: Props) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button className="-mr-1 -mt-1 size-8 shrink-0 p-0" variant="ghost">
+        <Button className="-mt-1 size-8 shrink-0 p-0" variant="ghost">
           <span className="sr-only">Open menu</span>
           <DotsVerticalIcon className="size-4" />
         </Button>

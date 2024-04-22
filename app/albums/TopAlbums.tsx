@@ -43,7 +43,7 @@ export default function TopAlbums({ albums }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="ml-4 list-disc space-y-1">
+                <ul className="ml-3 list-disc space-y-1">
                   {favorites.map((f, index) => {
                     const query = encodeURI(`${f.artist} ${f.title}`);
                     const url = `${SPOTIFY_URL}/${query}`;

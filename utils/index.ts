@@ -55,7 +55,7 @@ function formatReleaseDate(isoString: string) {
   return `${date} ${MONTHS[month]} ${year}`;
 }
 
-interface ReleaseResults {
+export interface ReleaseResults {
   [key: string]: Release[];
 }
 

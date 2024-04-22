@@ -1,7 +1,6 @@
 import { type User } from '@supabase/supabase-js';
 
-import { formatReleases, sortByDate } from '@/utils';
-import { Release } from '@/utils/types';
+import { ReleaseResults, sortByDate } from '@/utils';
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -15,23 +14,24 @@ import AddReleaseModal from './AddReleaseModal';
 import ReleaseActions from './ReleaseActions';
 
 interface Props {
-  releases: Release[];
+  count: number;
+  data: ReleaseResults;
   user: User | null;
 }
 
-export default function NewReleases({ releases, user }: Props) {
+export default function NewReleases({ count, data, user }: Props) {
   return (
     <AppLayout
       title={
         <div className="flex items-center gap-2">
           <span>New releases</span>
-          <Badge variant="secondary">{releases.length.toLocaleString()}</Badge>
+          <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }
       titleAction={user && <AddReleaseModal />}
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-        {Object.entries(formatReleases(releases))
+        {Object.entries(data)
           .sort(sortByDate)
           .map(([date, releases]) => (
             <Card key={date}>
@@ -43,7 +43,7 @@ export default function NewReleases({ releases, user }: Props) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="ml-4 list-disc space-y-2">
+                <ul className="space-y-4">
                   {releases.map((r) => (
                     <li key={r.id} className="text-sm">
                       <span className="flex items-start justify-between gap-4">
