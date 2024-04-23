@@ -1,4 +1,7 @@
+import Link from 'next/link';
+
 import StatCard from '@/app/dashboard/StatCard';
+import { ROUTE_HREF } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardAlbums() {
@@ -9,5 +12,9 @@ export default async function DashboardAlbums() {
     .eq('favorite', true);
   const value = (count ?? 0).toLocaleString();
 
-  return <StatCard title="Top albums" value={value} variant="topAlbums" />;
+  return (
+    <Link href={ROUTE_HREF.TOP_ALBUMS}>
+      <StatCard title="Top albums" value={value} variant="topAlbums" />
+    </Link>
+  );
 }

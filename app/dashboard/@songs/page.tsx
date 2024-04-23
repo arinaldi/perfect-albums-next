@@ -1,4 +1,7 @@
+import Link from 'next/link';
+
 import StatCard from '@/app/dashboard/StatCard';
+import { ROUTE_HREF } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardSongs() {
@@ -8,5 +11,9 @@ export default async function DashboardSongs() {
     .select('*', { count: 'exact', head: true });
   const value = (count ?? 0).toLocaleString();
 
-  return <StatCard title="Featured songs" value={value} variant="songs" />;
+  return (
+    <Link href={ROUTE_HREF.FEATURED_SONGS}>
+      <StatCard title="Featured songs" value={value} variant="songs" />
+    </Link>
+  );
 }

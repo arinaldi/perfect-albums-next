@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
-import AppLayout from 'components/AppLayout';
-import { Children } from 'utils/types';
+import AppLayout from '@/components/AppLayout';
+import { Children } from '@/utils/types';
 
 export const metadata = {
   title: 'Dashboard | Perfect Albums',
