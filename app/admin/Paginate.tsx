@@ -55,7 +55,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isFirstPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(1)}
                 >
                   <span className="sr-only">Go to first page</span>
@@ -67,7 +67,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isFirstPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(page - 1)}
                 >
                   <span className="sr-only">Go to previous page</span>
@@ -79,7 +79,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isLastPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(page + 1)}
                 >
                   <span className="sr-only">Go to next page</span>
@@ -91,7 +91,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isLastPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(lastPage)}
                 >
                   <span className="sr-only">Go to last page</span>
@@ -110,7 +110,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isFirstPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(page - 1)}
                 >
                   <span className="sr-only">Go to previous page</span>
@@ -122,7 +122,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
               <Button asChild size="icon" variant="outline">
                 <Link
                   aria-disabled={isLastPage}
-                  className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                  className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
                   href={getHref(page + 1)}
                 >
                   <span className="sr-only">Go to next page</span>
