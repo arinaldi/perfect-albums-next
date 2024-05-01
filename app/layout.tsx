@@ -1,5 +1,6 @@
 import 'server-only';
 import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 
 import NavBar from '@/components/NavBar';
 import TailwindIndicator from '@/components/TailwindIndicator';
@@ -29,6 +30,7 @@ export default async function RootLayout({ children }: Children) {
         className={cn(
           'min-h-screen bg-background antialiased',
           GeistSans.className,
+          GeistMono.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

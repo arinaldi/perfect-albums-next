@@ -46,9 +46,7 @@ export default function Admin({
       }
       titleAction={
         <div className="flex items-center gap-4 dark:text-white">
-          <code className="font-mono text-xs">
-            {process.env.NEXT_PUBLIC_APP_VERSION}
-          </code>
+          <code className="text-xs">{process.env.NEXT_PUBLIC_APP_VERSION}</code>
           <span className="flex items-center gap-0.5">
             <Badge variant="secondary">{cdTotal.toLocaleString()}</Badge>
             <span className="text-sm leading-7">
