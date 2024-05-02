@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -74,18 +75,22 @@ export default function DeleteSongModal({ onClose, song }: Props) {
         <DialogTrigger asChild>
           <Trigger />
         </DialogTrigger>
-        <DialogContent>
-          <form className="space-y-8" onSubmit={onSubmit}>
-            <DialogHeader className="text-left">
-              <DialogTitle>Delete song</DialogTitle>
-              <DialogDescription>Are you sure?</DialogDescription>
+        <form onSubmit={onSubmit}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                Are you sure you want to delete {song.artist} &ndash;{' '}
+                {song.title}?
+              </DialogTitle>
+              <DialogDescription>
+                This action cannot be undone
+              </DialogDescription>
             </DialogHeader>
-            <p className="text-sm">
-              {song.artist} &ndash; {song.title}
-            </p>
-            <SubmitButton submitting={isSubmitting} variant="destructive" />
-          </form>
-        </DialogContent>
+            <DialogFooter>
+              <SubmitButton submitting={isSubmitting} variant="destructive" />
+            </DialogFooter>
+          </DialogContent>
+        </form>
       </Dialog>
     );
   }
@@ -98,13 +103,13 @@ export default function DeleteSongModal({ onClose, song }: Props) {
       <DrawerContent>
         <form onSubmit={onSubmit}>
           <DrawerHeader className="text-left">
-            <DrawerTitle>Delete song</DrawerTitle>
-            <DrawerDescription>Are you sure?</DrawerDescription>
+            <DrawerTitle>
+              Are you sure you want to delete {song.artist} &ndash; {song.title}
+              ?
+            </DrawerTitle>
+            <DrawerDescription>This action cannot be undone</DrawerDescription>
           </DrawerHeader>
           <div className="space-y-8 px-4">
-            <p className="text-sm">
-              {song.artist} &ndash; {song.title}
-            </p>
             <SubmitButton
               className="w-full"
               size="lg"

@@ -7,7 +7,6 @@ import { useSubmit } from '@/hooks/submit';
 import { formatDate } from 'utils';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -16,18 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { useMediaQuery } from '@/hooks/media-query';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { editRelease } from './actions';
 import ReleaseForm from './ReleaseForm';
@@ -57,7 +45,6 @@ Trigger.displayName = 'Trigger';
 
 export default function EditReleaseModal({ onClose, release }: Props) {
   const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery();
   const form = useForm<ReleaseInput>({
     resolver: zodResolver(releaseSchema),
   });
@@ -86,51 +73,22 @@ export default function EditReleaseModal({ onClose, release }: Props) {
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   });
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Trigger />
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader className="text-left">
-            <DialogTitle>Edit release</DialogTitle>
-            <DialogDescription>Update data for new release</DialogDescription>
-          </DialogHeader>
-          <ReleaseForm
-            form={form}
-            isSubmitting={isSubmitting}
-            onSubmit={onSubmit}
-          />
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         <Trigger />
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Edit release</DrawerTitle>
-          <DrawerDescription>Update data for new release</DrawerDescription>
-        </DrawerHeader>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader className="text-left">
+          <DialogTitle>Edit release</DialogTitle>
+          <DialogDescription>Update data for new release</DialogDescription>
+        </DialogHeader>
         <ReleaseForm
-          className="px-4"
           form={form}
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
         />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button size="lg" variant="outline">
-              Cancel
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 }
