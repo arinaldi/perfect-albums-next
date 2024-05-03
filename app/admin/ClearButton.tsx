@@ -9,10 +9,12 @@ interface ButtonProps {
 export default function ClearButton({ onClick }: ButtonProps) {
   return (
     <Button
-      className="absolute bottom-0 right-0 top-0 flex items-center justify-center p-2.5"
+      className="absolute right-0.5 top-0.5 size-8"
+      onClick={onClick}
+      size="icon"
       variant="ghost"
     >
-      <Cross2Icon onClick={onClick} />
+      <Cross2Icon />
     </Button>
   );
 }
