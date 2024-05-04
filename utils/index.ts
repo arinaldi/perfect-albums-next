@@ -94,16 +94,14 @@ export function formatSongs(songs: Song[]): SongResults {
   songs.forEach((song) => {
     let firstLetter = song.artist[0].toUpperCase();
 
-    if (/\d/.test(song.artist[0])) {
-      firstLetter = NUMBER_SIGN;
-    }
-
     if (song.artist.startsWith('A ')) {
       firstLetter = song.artist[2].toUpperCase();
+    } else if (song.artist.startsWith('The ')) {
+      firstLetter = song.artist[4].toUpperCase();
     }
 
-    if (song.artist.startsWith('The ')) {
-      firstLetter = song.artist[4].toUpperCase();
+    if (/\d/.test(firstLetter) || !results[firstLetter]) {
+      firstLetter = NUMBER_SIGN;
     }
 
     results[firstLetter].push(song);
