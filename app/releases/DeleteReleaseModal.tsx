@@ -75,22 +75,20 @@ export default function DeleteReleaseModal({ onClose, release }: Props) {
         <DialogTrigger asChild>
           <Trigger />
         </DialogTrigger>
-        <form onSubmit={onSubmit}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                Are you sure you want to delete {release.artist} &ndash;{' '}
-                {release.title}?
-              </DialogTitle>
-              <DialogDescription>
-                This action cannot be undone
-              </DialogDescription>
-            </DialogHeader>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure you want to delete {release.artist} &ndash;{' '}
+              {release.title}?
+            </DialogTitle>
+            <DialogDescription>This action cannot be undone</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={onSubmit}>
             <DialogFooter>
               <SubmitButton submitting={isSubmitting} variant="destructive" />
             </DialogFooter>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Dialog>
     );
   }

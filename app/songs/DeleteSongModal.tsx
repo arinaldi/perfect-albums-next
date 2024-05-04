@@ -75,22 +75,20 @@ export default function DeleteSongModal({ onClose, song }: Props) {
         <DialogTrigger asChild>
           <Trigger />
         </DialogTrigger>
-        <form onSubmit={onSubmit}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                Are you sure you want to delete {song.artist} &ndash;{' '}
-                {song.title}?
-              </DialogTitle>
-              <DialogDescription>
-                This action cannot be undone
-              </DialogDescription>
-            </DialogHeader>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Are you sure you want to delete {song.artist} &ndash; {song.title}
+              ?
+            </DialogTitle>
+            <DialogDescription>This action cannot be undone</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={onSubmit}>
             <DialogFooter>
               <SubmitButton submitting={isSubmitting} variant="destructive" />
             </DialogFooter>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Dialog>
     );
   }
