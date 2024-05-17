@@ -1,6 +1,5 @@
 import { type User } from '@supabase/supabase-js';
 
-import { cn } from '@/lib/utils';
 import { SongResults } from '@/utils';
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
@@ -24,41 +23,34 @@ export default function FeaturedSongs({ count, data, user }: Props) {
       }
       titleAction={user && <AddSongModal />}
     >
-      <div className="grid grid-flow-row-dense grid-cols-1 gap-8 md:grid-cols-2 md:gap-16 lg:grid-cols-3">
+      <div className="flex flex-col gap-8">
         {Object.entries(data).map(([letter, songs]) => {
           if (songs.length === 0) return null;
 
           return (
-            <div
-              className={cn(
-                letter < 'N' ? 'md:col-start-1' : '',
-                letter >= 'N' ? 'md:col-start-2' : '',
-                letter < 'J' ? 'lg:col-start-1' : '',
-                letter >= 'J' ? 'lg:col-start-2' : '',
-                letter >= 'S' ? 'lg:col-start-3' : '',
-              )}
-              key={letter}
-            >
+            <div key={letter}>
               <h2 className="border-b pb-2 text-xl font-semibold tracking-tight">
                 {letter}
               </h2>
-              <ul className="mt-2 space-y-6">
+              <ul className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {songs.map((s) => (
-                  <li key={s.id} className="">
-                    <div className="flex items-start justify-between gap-2">
-                      <a
-                        className="font-semibold leading-6 tracking-tight underline underline-offset-4 hover:text-muted-foreground"
-                        href={s.link}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {s.title}
-                      </a>
+                  <li key={s.id} className="text-sm">
+                    <span className="flex items-start gap-2">
+                      <span>
+                        <span className="text-muted-foreground">
+                          {s.artist} &ndash;
+                        </span>{' '}
+                        <a
+                          className="underline underline-offset-4 hover:text-muted-foreground"
+                          href={s.link}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {s.title}
+                        </a>
+                      </span>
                       {user && <SongActions song={s} />}
-                    </div>
-                    <p className="mt-0.5 text-sm text-muted-foreground">
-                      {s.artist}
-                    </p>
+                    </span>
                   </li>
                 ))}
               </ul>
