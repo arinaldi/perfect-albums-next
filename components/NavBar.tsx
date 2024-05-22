@@ -40,7 +40,7 @@ export default function NavBar({ user }: Props) {
   }
 
   return (
-    <div className="border-b">
+    <div className="sticky top-0 z-10 border-b bg-background">
       {/* Desktop */}
       <div className="hidden h-14 items-center justify-between px-5 sm:flex xl:px-8">
         <nav className="flex items-center gap-6">
