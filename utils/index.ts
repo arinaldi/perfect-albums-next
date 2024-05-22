@@ -96,7 +96,12 @@ export function formatSongs(songs: Song[]): SongResults {
 
     if (song.artist.startsWith('A ')) {
       firstLetter = song.artist[2].toUpperCase();
-    } else if (song.artist.startsWith('The ')) {
+    } else if (song.artist.startsWith('An ')) {
+      firstLetter = song.artist[3].toUpperCase();
+    } else if (
+      song.artist.startsWith('The ') ||
+      song.artist.startsWith('Tha ')
+    ) {
       firstLetter = song.artist[4].toUpperCase();
     }
 
@@ -114,13 +119,17 @@ export function formatSongs(songs: Song[]): SongResults {
 
       if (artistA.startsWith('A ')) {
         artistA = artistA.slice(2);
-      } else if (artistA.startsWith('The ')) {
+      } else if (artistA.startsWith('An ')) {
+        artistA = artistA.slice(3);
+      } else if (artistA.startsWith('The ') || artistA.startsWith('Tha ')) {
         artistA = artistA.slice(4);
       }
 
       if (artistB.startsWith('A ')) {
         artistB = artistB.slice(2);
-      } else if (artistB.startsWith('The ')) {
+      } else if (artistB.startsWith('An ')) {
+        artistB = artistB.slice(3);
+      } else if (artistB.startsWith('The ') || artistB.startsWith('Tha ')) {
         artistB = artistB.slice(4);
       }
 
