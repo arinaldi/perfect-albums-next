@@ -107,6 +107,27 @@ export function formatSongs(songs: Song[]): SongResults {
     results[firstLetter].push(song);
   });
 
+  Object.values(results).forEach((s) => {
+    s.sort((a, b) => {
+      let artistA = a.artist;
+      let artistB = b.artist;
+
+      if (artistA.startsWith('A ')) {
+        artistA = artistA.slice(2);
+      } else if (artistA.startsWith('The ')) {
+        artistA = artistA.slice(4);
+      }
+
+      if (artistB.startsWith('A ')) {
+        artistB = artistB.slice(2);
+      } else if (artistB.startsWith('The ')) {
+        artistB = artistB.slice(4);
+      }
+
+      return artistA.localeCompare(artistB);
+    });
+  });
+
   return results;
 }
 
