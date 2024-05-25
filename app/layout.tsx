@@ -28,14 +28,14 @@ export default async function RootLayout({ children }: Children) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-[calc(100vh-48px)] bg-background antialiased sm:min-h-[calc(100vh-56px)]',
+          'min-h-dvh bg-background antialiased',
           GeistSans.className,
           GeistMono.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NavBar user={user} />
-          <main className="mt-12 sm:mt-14">{children}</main>
+          <main>{children}</main>
           <Toaster position="top-right" richColors />
           <TailwindIndicator />
         </ThemeProvider>

@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 
 import { DECADES, ROUTE_HREF } from 'utils/constants';

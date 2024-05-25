@@ -80,14 +80,15 @@ export interface SongResults {
 }
 
 const NUMBER_SIGN = '#';
+const ALPHABET = Array.from(Array(26)).map((_, i) =>
+  String.fromCharCode(i + 65),
+);
+export const HEADER_LETTERS = [NUMBER_SIGN, ...ALPHABET];
 
 export function formatSongs(songs: Song[]): SongResults {
   const results: SongResults = {};
-  const alphabet = Array.from(Array(26)).map((_, i) =>
-    String.fromCharCode(i + 65),
-  );
 
-  [NUMBER_SIGN, ...alphabet].forEach((letter) => {
+  HEADER_LETTERS.forEach((letter) => {
     results[letter] = [];
   });
 
