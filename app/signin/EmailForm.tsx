@@ -30,7 +30,7 @@ export default function EmailForm({
   setViewPassword,
 }: Props) {
   const isDesktop = useMediaQuery();
-  const { isSubmitting, onSubmit: onOtpSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [() => setViewOtp()],
     handleSubmit: form.handleSubmit,
     submitFn: async (data: EmailInput) => {
@@ -88,15 +88,15 @@ export default function EmailForm({
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={onOtpSubmit}>
+        <form onSubmit={onSubmit}>
           <Button
             className="w-full"
-            disabled={isSubmitting}
+            disabled={submitting}
             size={isDesktop ? 'default' : 'lg'}
             type="submit"
             variant="outline"
           >
-            {isSubmitting ? (
+            {submitting ? (
               <Spinner className="mr-2 size-4" />
             ) : (
               <PaperPlaneIcon className="mr-2 size-4" />

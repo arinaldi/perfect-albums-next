@@ -55,7 +55,7 @@ Trigger.displayName = 'Trigger';
 export default function DeleteSongModal({ onClose, song }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery();
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [() => setOpen(false), onClose],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
@@ -85,7 +85,7 @@ export default function DeleteSongModal({ onClose, song }: Props) {
           </DialogHeader>
           <form onSubmit={onSubmit}>
             <DialogFooter>
-              <SubmitButton submitting={isSubmitting} variant="destructive" />
+              <SubmitButton submitting={submitting} variant="destructive" />
             </DialogFooter>
           </form>
         </DialogContent>
@@ -111,7 +111,7 @@ export default function DeleteSongModal({ onClose, song }: Props) {
             <SubmitButton
               className="w-full"
               size="lg"
-              submitting={isSubmitting}
+              submitting={submitting}
               variant="destructive"
             />
           </div>

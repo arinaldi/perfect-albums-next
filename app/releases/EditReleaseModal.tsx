@@ -60,7 +60,7 @@ export default function EditReleaseModal({ onClose, release }: Props) {
     });
   }, [release, reset]);
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [() => setOpen(false), onClose],
     handleSubmit,
     submitFn: async (data: ReleaseInput) => {
@@ -83,11 +83,7 @@ export default function EditReleaseModal({ onClose, release }: Props) {
           <DialogTitle>Edit release</DialogTitle>
           <DialogDescription>Update data for new release</DialogDescription>
         </DialogHeader>
-        <ReleaseForm
-          form={form}
-          isSubmitting={isSubmitting}
-          onSubmit={onSubmit}
-        />
+        <ReleaseForm form={form} onSubmit={onSubmit} submitting={submitting} />
       </DialogContent>
     </Dialog>
   );

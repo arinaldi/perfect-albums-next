@@ -59,7 +59,7 @@ export default function EditSongModal({ onClose, song }: Props) {
     });
   }, [reset, song]);
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [() => setOpen(false), onClose],
     handleSubmit,
     submitFn: async (data: SongInput) => {
@@ -82,7 +82,7 @@ export default function EditSongModal({ onClose, song }: Props) {
           <DialogTitle>Edit song</DialogTitle>
           <DialogDescription>Update data for featured song</DialogDescription>
         </DialogHeader>
-        <SongForm form={form} isSubmitting={isSubmitting} onSubmit={onSubmit} />
+        <SongForm form={form} onSubmit={onSubmit} submitting={submitting} />
       </DialogContent>
     </Dialog>
   );

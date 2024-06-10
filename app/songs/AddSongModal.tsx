@@ -36,7 +36,7 @@ export default function AddSongModal() {
     form.reset(defaultValues);
   }
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
     submitFn: async (data: SongInput) => {
@@ -61,7 +61,7 @@ export default function AddSongModal() {
             What&apos;s the next featured song?
           </DialogDescription>
         </DialogHeader>
-        <SongForm form={form} isSubmitting={isSubmitting} onSubmit={onSubmit} />
+        <SongForm form={form} onSubmit={onSubmit} submitting={submitting} />
       </DialogContent>
     </Dialog>
   );

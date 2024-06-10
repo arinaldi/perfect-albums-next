@@ -25,7 +25,7 @@ export default function AddAlbum() {
     resolver: zodResolver(albumSchema),
   });
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [
       () =>
         router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
@@ -44,7 +44,7 @@ export default function AddAlbum() {
 
   return (
     <AppLayout className="max-w-sm" title="Add album">
-      <AlbumForm form={form} isSubmitting={isSubmitting} onSubmit={onSubmit} />
+      <AlbumForm form={form} onSubmit={onSubmit} submitting={submitting} />
     </AppLayout>
   );
 }

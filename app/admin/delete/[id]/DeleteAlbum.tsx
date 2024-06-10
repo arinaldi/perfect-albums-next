@@ -17,7 +17,7 @@ export default function DeleteAlbum({ album }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [
       () =>
         router.push(`${ROUTES_ADMIN.base.href}?${searchParams?.toString()}`),
@@ -43,7 +43,7 @@ export default function DeleteAlbum({ album }: Props) {
         </div>
         <SubmitButton
           className="w-full sm:w-auto"
-          submitting={isSubmitting}
+          submitting={submitting}
           variant="destructive"
         />
       </form>

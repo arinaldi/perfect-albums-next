@@ -36,7 +36,7 @@ export default function AddReleaseModal() {
     form.reset(defaultValues);
   }
 
-  const { isSubmitting, onSubmit } = useSubmit({
+  const { onSubmit, submitting } = useSubmit({
     callbacks: [onClose],
     handleSubmit: form.handleSubmit,
     submitFn: async (data: ReleaseInput) => {
@@ -59,11 +59,7 @@ export default function AddReleaseModal() {
           <DialogTitle>Add release</DialogTitle>
           <DialogDescription>What&apos;s the newest release?</DialogDescription>
         </DialogHeader>
-        <ReleaseForm
-          form={form}
-          isSubmitting={isSubmitting}
-          onSubmit={onSubmit}
-        />
+        <ReleaseForm form={form} onSubmit={onSubmit} submitting={submitting} />
       </DialogContent>
     </Dialog>
   );

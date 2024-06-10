@@ -13,19 +13,19 @@ export interface Options {
 }
 
 interface Payload {
-  isSubmitting: boolean;
+  submitting: boolean;
   onSubmit: (event: FormEvent) => Promise<void>;
 }
 
 export function useSubmit(options: Options): Payload {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const { callbacks, handleSubmit, submitFn, successMessage = '' } = options;
 
   async function handler(data?: any) {
     try {
-      setIsSubmitting(true);
+      setSubmitting(true);
       await submitFn(data);
-      setIsSubmitting(false);
+      setSubmitting(false);
 
       callbacks?.forEach((c) => {
         c();
@@ -35,7 +35,7 @@ export function useSubmit(options: Options): Payload {
         toast.success(successMessage);
       }
     } catch (error: any) {
-      setIsSubmitting(false);
+      setSubmitting(false);
       let message: string = MESSAGES.ERROR;
 
       if (error?.info?.error) {
@@ -49,7 +49,7 @@ export function useSubmit(options: Options): Payload {
   }
 
   return {
-    isSubmitting,
     onSubmit: handleSubmit ? handleSubmit(handler) : handler,
+    submitting,
   };
 }

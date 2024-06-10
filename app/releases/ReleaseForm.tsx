@@ -17,15 +17,15 @@ import { type ReleaseInput } from './schema';
 interface Props {
   className?: string;
   form: UseFormReturn<ReleaseInput>;
-  isSubmitting: boolean;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
+  submitting: boolean;
 }
 
 export default function ReleaseForm({
   className,
   form,
-  isSubmitting,
   onSubmit,
+  submitting,
 }: Props) {
   return (
     <Form {...form}>
@@ -69,7 +69,7 @@ export default function ReleaseForm({
             </FormItem>
           )}
         />
-        <SubmitButton className="w-full sm:w-auto" submitting={isSubmitting} />
+        <SubmitButton className="w-full sm:w-auto" submitting={submitting} />
       </form>
     </Form>
   );

@@ -17,11 +17,11 @@ import { AlbumInput } from './schema';
 
 interface Props {
   form: UseFormReturn<AlbumInput>;
-  isSubmitting: boolean;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
+  submitting: boolean;
 }
 
-export default function AlbumForm({ form, isSubmitting, onSubmit }: Props) {
+export default function AlbumForm({ form, onSubmit, submitting }: Props) {
   return (
     <Form {...form}>
       <form className="space-y-8" onSubmit={onSubmit}>
@@ -121,7 +121,7 @@ export default function AlbumForm({ form, isSubmitting, onSubmit }: Props) {
             </FormItem>
           )}
         />
-        <SubmitButton className="w-full sm:w-auto" submitting={isSubmitting} />
+        <SubmitButton className="w-full sm:w-auto" submitting={submitting} />
       </form>
     </Form>
   );
