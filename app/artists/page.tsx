@@ -1,9 +1,8 @@
 import 'server-only';
 
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { BASE_URL } from '@/utils/constants';
-import Random from './Random';
+import { createClient } from '@/utils/supabase/server';
+import Artists from './Artists';
 
 interface Payload {
   artists: string[];
@@ -22,26 +21,11 @@ async function getArtists(): Promise<Payload> {
 }
 
 export default async function ArtistsPage() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const { artists } = await getArtists();
 
-  return (
-    <div className="flex flex-col gap-4 sm:flex-row md:gap-8">
-      <ScrollArea className="h-[420px] rounded-md border">
-        <div className="p-4">
-          <h4 className="mb-4 text-sm font-medium italic leading-none">
-            {artists.length.toLocaleString()} artists
-          </h4>
-          {artists.map((a, index) => (
-            <div key={a}>
-              <p className="text-sm">{a}</p>
-              {index !== artists.length - 1 && <Separator className="my-2" />}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-      <div className="order-1 flex-1">
-        <Random artists={artists} />
-      </div>
-    </div>
-  );
+  return <Artists artists={artists} user={user} />;
 }
