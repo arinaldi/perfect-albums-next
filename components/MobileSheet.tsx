@@ -71,10 +71,6 @@ export function MobileSheet({ signOut, user }: Props) {
               {r.label}
             </LinkWrapper>
           ))}
-          <LinkWrapper href={ROUTE_HREF.ARTISTS} onClick={onClose}>
-            <PersonIcon className={iconClassName} />
-            Artists
-          </LinkWrapper>
           {user ? (
             <>
               <LinkWrapper href={ROUTES_ADMIN.base.href} onClick={onClose}>

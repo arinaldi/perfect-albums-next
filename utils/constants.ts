@@ -1,8 +1,8 @@
 import {
   CalendarIcon,
   LayersIcon,
+  PersonIcon,
   SpeakerModerateIcon,
-  StackIcon,
 } from '@radix-ui/react-icons';
 
 /* ENUM */
@@ -108,6 +108,11 @@ export const ROUTES = [
     href: ROUTE_HREF.NEW_RELEASES,
     icon: CalendarIcon,
     label: 'New releases',
+  },
+  {
+    href: ROUTE_HREF.ARTISTS,
+    icon: PersonIcon,
+    label: 'Artists',
   },
 ];
 

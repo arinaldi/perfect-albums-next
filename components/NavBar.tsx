@@ -42,7 +42,7 @@ export default function NavBar({ user }: Props) {
   return (
     <div className="border-b">
       {/* Desktop */}
-      <div className="hidden h-14 items-center justify-between px-5 sm:flex xl:px-8">
+      <div className="hidden h-14 items-center justify-between px-5 md:flex xl:px-8">
         <nav className="flex items-center gap-6">
           <Link
             className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
@@ -97,10 +97,10 @@ export default function NavBar({ user }: Props) {
         </div>
       </div>
       {/* Mobile */}
-      <div className="flex h-12 items-center justify-between px-2 sm:hidden">
+      <div className="flex h-12 items-center justify-between px-2 md:hidden">
         <MobileSheet signOut={signOut} user={user} />
         <Link
-          className="text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
+          className="text-center text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
           href={ROUTE_HREF.DASHBOARD}
         >
           Perfect Albums

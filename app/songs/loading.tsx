@@ -4,7 +4,7 @@ import Spinner from 'components/Spinner';
 export default function FeaturedSongsLoading() {
   return (
     <AppLayout title="Featured songs">
-      <div className="mt-8 flex justify-center">
+      <div className="mt-4 flex justify-center">
         <Spinner />
       </div>
     </AppLayout>
