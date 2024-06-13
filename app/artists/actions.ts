@@ -42,7 +42,7 @@ interface SpotifyItem {
   release_date: string;
 }
 
-interface SpotifyData {
+interface SpotifyAlbums {
   href: string;
   total: number;
   items: SpotifyItem[];
@@ -68,7 +68,7 @@ export async function getArtistAlbums(
       },
     },
   );
-  const data: SpotifyData = await res.json();
+  const data: SpotifyAlbums = await res.json();
 
   return (
     data?.items?.map((item) => ({
@@ -77,6 +77,44 @@ export async function getArtistAlbums(
       id: item.id,
       name: item.name,
       type: item.album_type,
+    })) ?? []
+  );
+}
+
+interface SpotifyArtist {
+  external_urls: {
+    spotify: string;
+  };
+  id: string;
+  name: string;
+  type: string;
+}
+
+interface SpotifyArtists {
+  artists: SpotifyArtist[];
+}
+
+export async function getRelatedArtists(
+  token: string,
+  artistId: string,
+): Promise<Result[]> {
+  const res = await fetch(
+    `https://api.spotify.com/v1/artists/${artistId}/related-artists`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  const data: SpotifyArtists = await res.json();
+
+  return (
+    data?.artists.map((a) => ({
+      date: '',
+      href: a.external_urls.spotify,
+      id: a.id,
+      name: a.name,
+      type: a.type,
     })) ?? []
   );
 }
