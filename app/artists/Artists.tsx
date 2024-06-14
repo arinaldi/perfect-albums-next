@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { type User } from '@supabase/supabase-js';
-import { ShuffleIcon } from '@radix-ui/react-icons';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
@@ -194,7 +194,7 @@ export default function Artists({ artists, user }: Props) {
                           size="icon"
                           variant="ghost"
                         >
-                          <ShuffleIcon className="size-4" />
+                          <DotsHorizontalIcon className="size-4" />
                         </Button>
                       </div>
                       {index !== filteredArtists.length - 1 && (
