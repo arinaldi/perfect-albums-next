@@ -10,6 +10,7 @@ import { Album } from '@/utils/types';
 import { albumSchema, type AlbumInput } from '../../schema';
 import AlbumForm from '../../AlbumForm';
 import { editAlbum } from '../../actions';
+import DeleteAlbumModal from './DeleteAlbumModal';
 
 interface Props {
   album: Album;
@@ -50,6 +51,7 @@ export default function EditAlbum({ album }: Props) {
   return (
     <AppLayout className="max-w-sm" title="Edit album">
       <AlbumForm form={form} onSubmit={onSubmit} submitting={submitting} />
+      <DeleteAlbumModal album={album} className="mt-2 w-full sm:w-auto" />
     </AppLayout>
   );
 }

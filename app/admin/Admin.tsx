@@ -19,7 +19,7 @@ import DataEmptyPlaceholder from './DataEmptyPlaceholder';
 import Paginate from './Paginate';
 import Search from './Search';
 import SortableColumn from './SortableColumn';
-import TableActions from './TableActions';
+import TableLink from './TableLink';
 
 interface Props {
   albums: Album[];
@@ -96,7 +96,7 @@ export default function Admin({
                 </TableCell>
                 <TableCell>{a.year}</TableCell>
                 <TableCell className="text-right">
-                  <TableActions id={a.id} />
+                  <TableLink id={a.id} />
                 </TableCell>
               </TableRow>
             ))}
