@@ -58,20 +58,20 @@ export default function Artists({ artists, user }: Props) {
         token = await getAccessToken();
 
         if (!token) {
-          throw new Error(MESSAGES.ERROR);
+          throw new Error('No access token');
         }
       }
 
       const artistId = await getArtistId(token, artist);
 
       if (!artistId) {
-        throw new Error(MESSAGES.ERROR);
+        throw new Error('No artist ID');
       }
 
       const data = await getArtistAlbums(token, artistId);
 
       if (!data) {
-        throw new Error(MESSAGES.ERROR);
+        throw new Error('Failed to fetch releases');
       }
 
       setResults({
@@ -101,20 +101,20 @@ export default function Artists({ artists, user }: Props) {
         token = await getAccessToken();
 
         if (!token) {
-          throw new Error(MESSAGES.ERROR);
+          throw new Error('No token');
         }
       }
 
       const artistId = await getArtistId(token, artist);
 
       if (!artistId) {
-        throw new Error(MESSAGES.ERROR);
+        throw new Error('No artist ID');
       }
 
       const data = await getRelatedArtists(token, artistId);
 
       if (!data) {
-        throw new Error(MESSAGES.ERROR);
+        throw new Error('Failed to fetch related artists');
       }
 
       setResults({
