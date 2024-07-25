@@ -1,12 +1,18 @@
 'use client';
 import { useState } from 'react';
-import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import {
+  DotsVerticalIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
 import { Song } from 'utils/types';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -18,32 +24,60 @@ interface Props {
   song: Song;
 }
 
+interface ModalState {
+  open: boolean;
+  type: 'delete' | 'edit';
+}
+
 export default function SongActions({ song }: Props) {
-  const [open, setOpen] = useState(false);
+  const [modal, setModal] = useState<ModalState>({
+    open: false,
+    type: 'edit',
+  });
 
   function onClose() {
-    setOpen(false);
+    setModal((m) => ({ ...m, open: false }));
   }
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button className="-mt-1 size-8 shrink-0 p-0" variant="ghost">
-          <span className="sr-only">Open menu</span>
-          <DotsVerticalIcon className="size-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        onCloseAutoFocus={(event) => {
-          event.preventDefault();
-        }}
-      >
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <EditSongModal onClose={onClose} song={song} />
+    <Dialog
+      open={modal.open}
+      onOpenChange={(open) => setModal((m) => ({ ...m, open }))}
+    >
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <Button className="-mt-1 size-8 shrink-0 p-0" variant="ghost">
+            <span className="sr-only">Open menu</span>
+            <DotsVerticalIcon className="size-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DialogTrigger
+            asChild
+            onClick={() => setModal((m) => ({ ...m, type: 'edit' }))}
+          >
+            <DropdownMenuItem className="flex items-center gap-2">
+              <Pencil1Icon className="size-4" />
+              Edit
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DialogTrigger
+            asChild
+            onClick={() => setModal((m) => ({ ...m, type: 'delete' }))}
+          >
+            <DropdownMenuItem className="flex items-center gap-2">
+              <TrashIcon className="size-4" />
+              Delete
+            </DropdownMenuItem>
+          </DialogTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {modal.type === 'edit' && <EditSongModal onClose={onClose} song={song} />}
+      {modal.type === 'delete' && (
         <DeleteSongModal onClose={onClose} song={song} />
-      </DropdownMenuContent>
-    </DropdownMenu>
+      )}
+    </Dialog>
   );
 }

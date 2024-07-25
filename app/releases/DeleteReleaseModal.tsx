@@ -1,31 +1,15 @@
-import { forwardRef, FormEvent, useState } from 'react';
-import { TrashIcon } from '@radix-ui/react-icons';
+import { FormEvent } from 'react';
 
 import { useSubmit } from '@/hooks/submit';
 import { MESSAGES } from 'utils/constants';
 import { Release } from 'utils/types';
-import { Button } from '@/components/ui/button';
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { useMediaQuery } from '@/hooks/media-query';
 import SubmitButton from 'components/SubmitButton';
 import { deleteRelease } from './actions';
 
@@ -34,29 +18,9 @@ interface Props {
   release: Release;
 }
 
-const Trigger = forwardRef<HTMLDivElement, any>((props, ref) => {
-  return (
-    <DropdownMenuItem
-      className="flex items-center gap-2"
-      onSelect={(event) => {
-        event.preventDefault();
-      }}
-      ref={ref}
-      {...props}
-    >
-      <TrashIcon className="size-4" />
-      Delete
-    </DropdownMenuItem>
-  );
-});
-
-Trigger.displayName = 'Trigger';
-
 export default function DeleteReleaseModal({ onClose, release }: Props) {
-  const [open, setOpen] = useState(false);
-  const isDesktop = useMediaQuery();
   const { onSubmit, submitting } = useSubmit({
-    callbacks: [() => setOpen(false), onClose],
+    callbacks: [onClose],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
 
@@ -69,60 +33,20 @@ export default function DeleteReleaseModal({ onClose, release }: Props) {
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   });
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Trigger />
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              Are you sure you want to delete {release.artist} &ndash;{' '}
-              {release.title}?
-            </DialogTitle>
-            <DialogDescription>This action cannot be undone</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={onSubmit}>
-            <DialogFooter>
-              <SubmitButton submitting={submitting} variant="destructive" />
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Trigger />
-      </DrawerTrigger>
-      <DrawerContent>
-        <form onSubmit={onSubmit}>
-          <DrawerHeader className="text-left">
-            <DrawerTitle>
-              Are you sure you want to delete {release.artist} &ndash;{' '}
-              {release.title}?
-            </DrawerTitle>
-            <DrawerDescription>This action cannot be undone</DrawerDescription>
-          </DrawerHeader>
-          <div className="space-y-8 px-4">
-            <SubmitButton
-              className="w-full"
-              submitting={submitting}
-              variant="destructive"
-            />
-          </div>
-        </form>
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button size="lg" variant="outline">
-              Cancel
-            </Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>
+          Are you sure you want to delete {release.artist} &ndash;{' '}
+          {release.title}?
+        </DialogTitle>
+        <DialogDescription>This action cannot be undone</DialogDescription>
+      </DialogHeader>
+      <form onSubmit={onSubmit}>
+        <DialogFooter>
+          <SubmitButton submitting={submitting} variant="destructive" />
+        </DialogFooter>
+      </form>
+    </DialogContent>
   );
 }
