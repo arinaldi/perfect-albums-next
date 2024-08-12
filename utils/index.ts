@@ -205,3 +205,7 @@ export function parseAdminQuery(query: Record<string, QueryValue>) {
 export function setStringAsInt(v: string) {
   return v === '' ? undefined : parseInt(v, 10);
 }
+
+export async function wait(ms = 0) {
+  return new Promise<void>((resolve) => setTimeout(resolve, ms));
+}

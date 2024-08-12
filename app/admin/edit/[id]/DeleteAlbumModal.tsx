@@ -79,7 +79,9 @@ export default function DeleteAlbumModal({ album, className = '' }: Props) {
           </DialogHeader>
           <form onSubmit={onSubmit}>
             <DialogFooter>
-              <SubmitButton submitting={submitting} variant="destructive" />
+              <SubmitButton submitting={submitting} variant="destructive">
+                Delete
+              </SubmitButton>
             </DialogFooter>
           </form>
         </DialogContent>
@@ -113,7 +115,9 @@ export default function DeleteAlbumModal({ album, className = '' }: Props) {
               size="lg"
               submitting={submitting}
               variant="destructive"
-            />
+            >
+              Delete
+            </SubmitButton>
           </div>
         </form>
         <DrawerFooter className="pt-2">

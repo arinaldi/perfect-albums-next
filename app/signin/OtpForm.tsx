@@ -103,7 +103,7 @@ export default function OtpForm({ email, onCancel }: Props) {
             )}
           />
           <Input className="hidden" id="name" name="name" tabIndex={-1} />
-          <SubmitButton className="mt-6 w-full" />
+          <SubmitButton className="mt-6 w-full">Submit</SubmitButton>
         </form>
       </Form>
       <Button

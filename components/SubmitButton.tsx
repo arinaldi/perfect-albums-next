@@ -4,6 +4,7 @@ import { useFormStatus } from 'react-dom';
 import { Button, ButtonProps } from '@/components/ui/button';
 import Spinner from '@/components/Spinner';
 import { useMediaQuery } from '@/hooks/media-query';
+import { cn } from '@/lib/utils';
 
 interface Props extends ButtonProps {
   className?: string;
@@ -11,6 +12,7 @@ interface Props extends ButtonProps {
 }
 
 export default function SubmitButton({
+  children,
   className = '',
   submitting,
   ...props
@@ -22,13 +24,17 @@ export default function SubmitButton({
   return (
     <Button
       {...props}
-      className={className}
+      className={cn(className, 'relative')}
       disabled={loading}
       size={isDesktop ? 'default' : 'lg'}
       type="submit"
     >
-      {loading && <Spinner className="mr-2 size-4" />}
-      Submit
+      {loading && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          <Spinner className="size-4" />
+        </span>
+      )}
+      <span className={cn(loading ? 'invisible' : '')}>{children}</span>
     </Button>
   );
 }

@@ -43,7 +43,9 @@ export default function DeleteSongModal({ onClose, song }: Props) {
       </DialogHeader>
       <form onSubmit={onSubmit}>
         <DialogFooter>
-          <SubmitButton submitting={submitting} variant="destructive" />
+          <SubmitButton submitting={submitting} variant="destructive">
+            Delete
+          </SubmitButton>
         </DialogFooter>
       </form>
     </DialogContent>

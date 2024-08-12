@@ -69,7 +69,9 @@ export default function SongForm({
             </FormItem>
           )}
         />
-        <SubmitButton className="w-full sm:w-auto" submitting={submitting} />
+        <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
+          Save
+        </SubmitButton>
       </form>
     </Form>
   );

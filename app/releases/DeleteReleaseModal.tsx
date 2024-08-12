@@ -44,7 +44,9 @@ export default function DeleteReleaseModal({ onClose, release }: Props) {
       </DialogHeader>
       <form onSubmit={onSubmit}>
         <DialogFooter>
-          <SubmitButton submitting={submitting} variant="destructive" />
+          <SubmitButton submitting={submitting} variant="destructive">
+            Delete
+          </SubmitButton>
         </DialogFooter>
       </form>
     </DialogContent>
