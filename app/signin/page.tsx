@@ -6,6 +6,6 @@ export const metadata = {
   title: 'Sign in | Perfect Albums',
 };
 
-export default async function SigninPage() {
+export default async function SignInPage() {
   return <Signin />;
 }
