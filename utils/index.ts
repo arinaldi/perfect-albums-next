@@ -209,3 +209,7 @@ export function setStringAsInt(v: string) {
 export async function wait(ms = 0) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
+
+export function capitalizeFirstLetter(value: string) {
+  return `${value.charAt(0).toLocaleUpperCase()}${value.slice(1)}`;
+}

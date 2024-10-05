@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { capitalizeFirstLetter } from 'utils';
 import { MESSAGES } from 'utils/constants';
 import { Callback } from 'utils/types';
 
@@ -44,7 +45,7 @@ export function useSubmit(options: Options): Payload {
         message = error.message;
       }
 
-      toast.error(message);
+      toast.error(capitalizeFirstLetter(message));
     }
   }
 

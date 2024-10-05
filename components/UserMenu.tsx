@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type User } from '@supabase/supabase-js';
-import { AvatarIcon, CheckIcon } from '@radix-ui/react-icons';
+import { AvatarIcon } from '@radix-ui/react-icons';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -11,22 +11,17 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
 import { ROUTE_HREF } from '@/utils/constants';
 
 interface Props {
   signOut: () => void;
   user: User | null;
 }
-
-const themes = ['light', 'dark', 'system'];
 
 export function UserMenu({ signOut, user }: Props) {
   const router = useRouter();
@@ -65,26 +60,12 @@ export function UserMenu({ signOut, user }: Props) {
           </>
         )}
         <DropdownMenuGroup>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                {themes.map((t) => (
-                  <DropdownMenuItem
-                    className={cn(
-                      'capitalize',
-                      t === theme ? 'font-semibold' : '',
-                    )}
-                    key={t}
-                    onClick={() => setTheme(t)}
-                  >
-                    {t}
-                    {t === theme && <CheckIcon className="ml-2 size-4" />}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          <DropdownMenuLabel className="font-normal">Theme</DropdownMenuLabel>
+          <DropdownMenuRadioGroup onValueChange={setTheme} value={theme}>
+            <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         {user ? (
