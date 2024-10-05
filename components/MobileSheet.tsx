@@ -1,17 +1,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  EnterIcon,
-  ExitIcon,
-  HamburgerMenuIcon,
-  LockClosedIcon,
-  PersonIcon,
-} from '@radix-ui/react-icons';
+import { HamburgerMenuIcon, LockClosedIcon } from '@radix-ui/react-icons';
 import { type User } from '@supabase/supabase-js';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import LinkWrapper, { linkClassName } from '@/components/LinkWrapper';
+import LinkWrapper from '@/components/LinkWrapper';
 import {
   Sheet,
   SheetContent,
@@ -20,7 +13,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
 
 interface Props {
@@ -71,50 +63,13 @@ export function MobileSheet({ signOut, user }: Props) {
               {r.label}
             </LinkWrapper>
           ))}
-          {user ? (
-            <>
-              <LinkWrapper href={ROUTES_ADMIN.base.href} onClick={onClose}>
-                <LockClosedIcon className={iconClassName} />
-                {ROUTES_ADMIN.base.label}
-              </LinkWrapper>
-              <Button
-                className={cn(
-                  linkClassName,
-                  'h-auto justify-start text-muted-foreground hover:bg-transparent',
-                )}
-                onClick={() => {
-                  onClose();
-                  signOut();
-                }}
-                variant="ghost"
-              >
-                <ExitIcon className={iconClassName} />
-                Sign out
-              </Button>
-            </>
-          ) : (
-            <LinkWrapper href={ROUTE_HREF.SIGNIN} onClick={onClose}>
-              <EnterIcon className={iconClassName} />
-              Sign in
+          {user && (
+            <LinkWrapper href={ROUTES_ADMIN.base.href} onClick={onClose}>
+              <LockClosedIcon className={iconClassName} />
+              {ROUTES_ADMIN.base.label}
             </LinkWrapper>
           )}
         </nav>
-        {user && (
-          <div className="mt-auto flex items-center gap-3 px-2 py-1">
-            <Avatar>
-              <AvatarImage src="/avatars/02.png" />
-              <AvatarFallback>
-                {`${user.user_metadata.firstName[0]}${user.user_metadata.lastName[0]}`}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="text-sm font-medium">
-                {`${user.user_metadata.firstName} ${user.user_metadata.lastName}`}
-              </p>
-              <p className="text-xs text-muted-foreground">{user.email}</p>
-            </div>
-          </div>
-        )}
       </SheetContent>
     </Sheet>
   );

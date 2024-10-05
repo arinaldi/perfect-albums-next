@@ -2,13 +2,11 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { type User } from '@supabase/supabase-js';
-import { EnterIcon, ExitIcon } from '@radix-ui/react-icons';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
 import CommandMenu from '@/components/CommandMenu';
 import { MobileSheet } from '@/components/MobileSheet';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { UserMenu } from '@/components/UserMenu';
 import { useIsClient } from '@/hooks/is-client';
 import { cn } from '@/lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
@@ -80,19 +78,8 @@ export default function NavBar({ user }: Props) {
           {isClient && (
             <>
               <CommandMenu user={user} />
-              <ThemeToggle />
+              <UserMenu signOut={signOut} user={user} />
             </>
-          )}
-          {user ? (
-            <Button onClick={signOut} size="icon" variant="ghost">
-              <ExitIcon className="size-4" />
-            </Button>
-          ) : (
-            <Button asChild size="icon" variant="ghost">
-              <Link href={ROUTE_HREF.SIGNIN}>
-                <EnterIcon className="size-4" />
-              </Link>
-            </Button>
           )}
         </div>
       </div>
@@ -106,7 +93,11 @@ export default function NavBar({ user }: Props) {
           Perfect Albums
         </Link>
         <div className="text-right">
-          {isClient ? <ThemeToggle /> : <div className="size-9" />}
+          {isClient ? (
+            <UserMenu signOut={signOut} user={user} />
+          ) : (
+            <div className="size-9" />
+          )}
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ export default function SubmitButton({
     <Button
       {...props}
       className={cn(className, 'relative')}
-      disabled={loading}
+      disabled={props.disabled || loading}
       size={isDesktop ? 'default' : 'lg'}
       type="submit"
     >
@@ -34,7 +34,11 @@ export default function SubmitButton({
           <Spinner className="size-4" />
         </span>
       )}
-      <span className={cn(loading ? 'invisible' : '')}>{children}</span>
+      <span
+        className={cn(loading ? 'invisible' : '', 'flex items-center gap-2')}
+      >
+        {children}
+      </span>
     </Button>
   );
 }

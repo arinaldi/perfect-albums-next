@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import Spinner from '@/components/Spinner';
+import SubmitButton from '@/components/SubmitButton';
 import { useMediaQuery } from '@/hooks/media-query';
 import { useSubmit } from '@/hooks/submit';
 import { sendOtp } from './actions';
@@ -89,20 +89,14 @@ export default function EmailForm({
       </div>
       <Form {...form}>
         <form onSubmit={onSubmit}>
-          <Button
+          <SubmitButton
             className="w-full"
-            disabled={submitting}
-            size={isDesktop ? 'default' : 'lg'}
-            type="submit"
+            submitting={submitting}
             variant="outline"
           >
-            {submitting ? (
-              <Spinner className="mr-2 size-4" />
-            ) : (
-              <PaperPlaneIcon className="mr-2 size-4" />
-            )}
+            <PaperPlaneIcon className="size-4" />
             Send one-time password
-          </Button>
+          </SubmitButton>
         </form>
       </Form>
     </AppLayout>
