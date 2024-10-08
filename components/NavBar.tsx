@@ -92,13 +92,11 @@ export default function NavBar({ user }: Props) {
         >
           Perfect Albums
         </Link>
-        <div className="text-right">
-          {isClient ? (
-            <UserMenu signOut={signOut} user={user} />
-          ) : (
-            <div className="size-9" />
-          )}
-        </div>
+        {isClient ? (
+          <UserMenu signOut={signOut} user={user} />
+        ) : (
+          <div className="size-9" />
+        )}
       </div>
     </div>
   );
