@@ -28,8 +28,8 @@ export default function DashboardLayout({
 }: Props) {
   return (
     <AppLayout title="Dashboard">
-      <div className="flex flex-col gap-4 md:gap-8">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start">
+        <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
           {totalAlbums}
           {cds}
           {topAlbums}
@@ -37,9 +37,7 @@ export default function DashboardLayout({
           {releases}
           {artists}
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          {leaderboard}
-        </div>
+        <div className="flex-1">{leaderboard}</div>
       </div>
     </AppLayout>
   );
