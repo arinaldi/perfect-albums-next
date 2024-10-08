@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import {
   CalendarIcon,
   DiscIcon,
@@ -10,6 +9,7 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Icon } from '@/utils/types';
 
 type Variant =
   | 'artists'
@@ -26,24 +26,24 @@ interface Props {
   variant: Variant;
 }
 
-const className = 'size-4 text-muted-foreground shrink-0';
-const icons: Record<Variant, ReactNode> = {
-  artists: <PersonIcon className={className} />,
-  cds: <DiscIcon className={className} />,
-  releases: <CalendarIcon className={className} />,
-  songs: <SpeakerModerateIcon className={className} />,
-  topAlbums: <RocketIcon className={className} />,
-  totalAlbums: <LayersIcon className={className} />,
+const icons: Record<Variant, Icon> = {
+  artists: PersonIcon,
+  cds: DiscIcon,
+  releases: CalendarIcon,
+  songs: SpeakerModerateIcon,
+  topAlbums: RocketIcon,
+  totalAlbums: LayersIcon,
 };
 
 export default function StatCard(props: Props) {
   const { isLoading, title, value, variant } = props;
+  const IconComponent = icons[variant];
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        {icons[variant]}
+        <IconComponent className="size-4 shrink-0 text-muted-foreground" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">

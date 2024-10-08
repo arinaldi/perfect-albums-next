@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ForwardRefExoticComponent, ReactNode, SVGAttributes } from 'react';
 
 import type { Database } from 'utils/db-types';
 
@@ -16,6 +16,15 @@ export interface ErrorProps {
   error: Error;
   reset: () => void;
 }
+
+interface IconProps extends SVGAttributes<SVGElement> {
+  children?: never;
+  color?: string;
+}
+
+export type Icon = ForwardRefExoticComponent<
+  IconProps & React.RefAttributes<SVGSVGElement>
+>;
 
 interface SuccessResult {
   data: any;
