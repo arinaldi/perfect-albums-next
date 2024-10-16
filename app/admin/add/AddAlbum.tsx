@@ -21,6 +21,7 @@ export default function AddAlbum() {
       studio: false,
       cd: false,
       favorite: false,
+      best_of_year: false,
     },
     resolver: zodResolver(albumSchema),
   });

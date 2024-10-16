@@ -27,6 +27,7 @@ export default function EditAlbum({ album }: Props) {
       studio: album.studio,
       cd: album.cd,
       favorite: album.favorite,
+      best_of_year: album.best_of_year,
     },
     resolver: zodResolver(albumSchema),
   });

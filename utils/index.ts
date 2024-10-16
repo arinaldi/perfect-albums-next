@@ -18,6 +18,7 @@ export function formatDate(isoString: string): string {
 
 export interface ListItem {
   artist: string | null;
+  best?: boolean;
   title: string | null;
   id?: number;
 }
@@ -31,8 +32,12 @@ type Tuple = [string, ListItem[]];
 export function formatFavorites(favorites: Album[]): Results {
   const results: Results = {};
 
-  favorites.forEach(({ artist, title, year }) => {
-    const data = { artist, title };
+  favorites.forEach(({ artist, best_of_year, title, year }) => {
+    const data = {
+      artist,
+      best: best_of_year,
+      title,
+    };
 
     if (!year) return;
 

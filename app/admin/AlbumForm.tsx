@@ -121,6 +121,25 @@ export default function AlbumForm({ form, onSubmit, submitting }: Props) {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="best_of_year"
+          render={({ field }) => (
+            <FormItem className="flex space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  name={field.name}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Best of year</FormLabel>
+                <FormDescription>Is the album of the year?</FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
         <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
           Save
         </SubmitButton>

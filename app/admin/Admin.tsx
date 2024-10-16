@@ -1,4 +1,4 @@
-import { CheckIcon, DiscIcon } from '@radix-ui/react-icons';
+import { CheckIcon, DiscIcon, SketchLogoIcon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
@@ -92,6 +92,9 @@ export default function Admin({
                   </span>
                   {a.favorite && (
                     <CheckIcon className="mb-0.5 ml-1 inline size-4" />
+                  )}
+                  {a.best_of_year && (
+                    <SketchLogoIcon className="mb-0.5 ml-1 inline size-4" />
                   )}
                 </TableCell>
                 <TableCell>{a.year}</TableCell>
