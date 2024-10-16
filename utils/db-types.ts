@@ -46,6 +46,38 @@ export type Database = {
         };
         Relationships: [];
       };
+      rankings: {
+        Row: {
+          album_id: number;
+          created_at: string;
+          id: number;
+          position: number;
+          year: string;
+        };
+        Insert: {
+          album_id: number;
+          created_at?: string;
+          id?: number;
+          position: number;
+          year: string;
+        };
+        Update: {
+          album_id?: number;
+          created_at?: string;
+          id?: number;
+          position?: number;
+          year?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'rankings_album_id_fkey';
+            columns: ['album_id'];
+            isOneToOne: true;
+            referencedRelation: 'albums';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       releases: {
         Row: {
           artist: string;

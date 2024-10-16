@@ -1,20 +1,32 @@
-import 'server-only';
+import { notFound } from 'next/navigation';
 import invariant from 'tiny-invariant';
 
 import { formatFavorites } from 'utils';
 import { createClient } from 'utils/supabase/server';
-import TopAlbums from './TopAlbums';
+import EditRankings from './EditRankings';
 
-export const revalidate = 60;
+interface Props {
+  params: {
+    year: string;
+  };
+}
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 export const metadata = {
-  title: 'Top albums | Perfect Albums',
+  title: 'Edit rankings | Perfect Albums',
 };
 
-export default async function TopAlbumsPage() {
+export default async function EditRankingsPage({ params: { year } }: Props) {
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) {
+    notFound();
+  }
+
   const { data } = await supabase
     .from('albums')
     .select(
@@ -40,6 +52,11 @@ export default async function TopAlbumsPage() {
   invariant(data);
 
   const favorites = formatFavorites(data);
+  const favoritesThisYear = favorites[year];
 
-  return <TopAlbums count={data.length} favorites={favorites} user={user} />;
+  if (!favoritesThisYear) {
+    notFound();
+  }
+
+  return <EditRankings favorites={favoritesThisYear} />;
 }

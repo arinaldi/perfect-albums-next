@@ -1,6 +1,6 @@
 import { type User } from '@supabase/supabase-js';
 
-import { ReleaseResults, sortByDate } from '@/utils';
+import { ReleaseResults } from '@/utils';
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -32,7 +32,14 @@ export default function NewReleases({ count, data, user }: Props) {
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {Object.entries(data)
-          .sort(sortByDate)
+          .sort((a, b) => {
+            const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
+            const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
+
+            if (dateA < dateB) return -1;
+            if (dateA > dateB) return 1;
+            return 0;
+          })
           .map(([date, releases]) => (
             <Card key={date}>
               <CardHeader>

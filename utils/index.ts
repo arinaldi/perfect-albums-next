@@ -17,25 +17,31 @@ export function formatDate(isoString: string): string {
 }
 
 export interface ListItem {
-  artist: string | null;
-  best?: boolean;
-  title: string | null;
-  id?: number;
+  artist: string;
+  id: number;
+  ranking: number;
+  title: string;
 }
 
-interface Results {
+export interface FavoriteResults {
   [key: string]: ListItem[];
 }
 
-type Tuple = [string, ListItem[]];
+interface RankedAlbum extends Album {
+  ranking: {
+    position: number;
+  } | null;
+}
 
-export function formatFavorites(favorites: Album[]): Results {
-  const results: Results = {};
+export function formatFavorites(favorites: RankedAlbum[]): FavoriteResults {
+  const results: FavoriteResults = {};
 
-  favorites.forEach(({ artist, best_of_year, title, year }) => {
+  favorites.forEach(({ artist, best_of_year, id, ranking, title, year }) => {
     const data = {
       artist,
       best: best_of_year,
+      id,
+      ranking: ranking?.position ?? 0,
       title,
     };
 
@@ -144,19 +150,6 @@ export function formatSongs(songs: Song[]): SongResults {
   });
 
   return results;
-}
-
-export function sortByDate(a: Tuple, b: Tuple): number {
-  const dateA = a[0] === 'TBD' ? a[0] : new Date(a[0]).toISOString();
-  const dateB = b[0] === 'TBD' ? b[0] : new Date(b[0]).toISOString();
-
-  if (dateA < dateB) return -1;
-  if (dateA > dateB) return 1;
-  return 0;
-}
-
-export function sortDesc(a: Tuple, b: Tuple): number {
-  return Number(b[0]) - Number(a[0]);
 }
 
 export function getTitle(title: string): string {

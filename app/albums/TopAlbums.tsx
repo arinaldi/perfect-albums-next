@@ -1,10 +1,12 @@
-import { ArrowUpIcon, SketchLogoIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { type User } from '@supabase/supabase-js';
+import { ArrowUpIcon, Pencil1Icon } from '@radix-ui/react-icons';
 
-import { formatFavorites, sortDesc } from 'utils';
+import { type FavoriteResults } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
-import { Album } from 'utils/types';
 import AppLayout from 'components/AppLayout';
 import { Badge } from 'components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -15,80 +17,77 @@ import {
 import { DecadeSelect } from 'components/DecadeSelect';
 
 interface Props {
-  albums: Album[];
+  count: number;
+  favorites: FavoriteResults;
+  user: User | null;
 }
 
-export default function TopAlbums({ albums }: Props) {
+export default function TopAlbums({ count, favorites, user }: Props) {
   return (
     <AppLayout
       title={
         <div className="flex items-center gap-2">
           <span>Top albums</span>
-          <Badge variant="secondary">{albums.length.toLocaleString()}</Badge>
+          <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }
       titleAction={<DecadeSelect />}
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-        {Object.entries(formatFavorites(albums))
-          .sort(sortDesc)
-          .map(([year, favorites]) => {
-            const best = favorites.find((f) => f.best);
-
-            return (
-              <Card key={year}>
-                <CardHeader>
+        {Object.entries(favorites)
+          .sort((a, b) => Number(b[0]) - Number(a[0]))
+          .map(([year, favorites]) => (
+            <Card key={year}>
+              <CardHeader>
+                <div className="flex items-center justify-between">
                   <CardTitle id={year}>{year}</CardTitle>
-                  <CardDescription>
-                    {favorites.length.toLocaleString()} album
-                    {favorites.length > 1 && 's'}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {best && (
-                    <div className="mb-6 text-sm">
-                      <SketchLogoIcon className="inline size-4" />
-                      <span className="ml-1 text-muted-foreground">
-                        {best.artist} &ndash;
-                      </span>{' '}
-                      <a
-                        className="underline underline-offset-4 hover:text-muted-foreground"
-                        href={`${SPOTIFY_URL}/${encodeURI(`${best.artist} ${best.title}`)}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {best.title}
-                      </a>
-                    </div>
+                  {user && (
+                    <Link href={`/albums/${year}`}>
+                      <Button size="icon" variant="outline">
+                        <Pencil1Icon className="size-4" />
+                      </Button>
+                    </Link>
                   )}
-                  <ul className="ml-3 list-disc space-y-1">
-                    {favorites
-                      .filter((f) => !f.best)
-                      .map((f, index) => {
-                        const query = encodeURI(`${f.artist} ${f.title}`);
-                        const url = `${SPOTIFY_URL}/${query}`;
+                </div>
+                <CardDescription>
+                  {favorites.length.toLocaleString()} album
+                  {favorites.length > 1 && 's'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ol className="ml-4 list-decimal space-y-1">
+                  {favorites
+                    .sort((a, b) => {
+                      if (a.ranking > b.ranking) return 1;
+                      if (a.ranking < b.ranking) return -1;
 
-                        return (
-                          <li key={index} className="text-sm">
-                            <span className="text-muted-foreground">
-                              {f.artist} &ndash;
-                            </span>{' '}
-                            <a
-                              className="underline underline-offset-4 hover:text-muted-foreground"
-                              href={url}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              {f.title}
-                            </a>
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </CardContent>
-              </Card>
-            );
-          })}
+                      return 0;
+                    })
+                    .map((f, index) => {
+                      const query = encodeURI(`${f.artist} ${f.title}`);
+                      const url = `${SPOTIFY_URL}/${query}`;
+
+                      return (
+                        <li
+                          key={index}
+                          className="text-sm text-muted-foreground"
+                        >
+                          <span>{f.artist} &ndash;</span>{' '}
+                          <a
+                            className="text-foreground underline underline-offset-4 hover:text-muted-foreground"
+                            href={url}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            {f.title}
+                          </a>
+                        </li>
+                      );
+                    })}
+                </ol>
+              </CardContent>
+            </Card>
+          ))}
       </div>
       <a
         className="fixed bottom-0 right-0 p-5 text-sm text-muted-foreground"

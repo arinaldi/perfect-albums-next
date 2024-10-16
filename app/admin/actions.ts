@@ -1,5 +1,4 @@
 'use server';
-import { headers } from 'next/headers';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -73,8 +72,6 @@ export async function editAlbum(
   }
 
   const { year, ...rest } = result.data;
-  const referer = headers().get('referer') ?? '';
-  const url = new URL(referer);
   const { error } = await supabase
     .from('albums')
     .update({
@@ -116,8 +113,6 @@ export async function deleteAlbum(id: number): Promise<MutateResult> {
     };
   }
 
-  const referer = headers().get('referer') ?? '';
-  const url = new URL(referer);
   const { error } = await supabase.from('albums').delete().eq('id', id);
 
   if (error) {
