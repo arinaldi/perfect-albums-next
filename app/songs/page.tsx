@@ -1,4 +1,6 @@
 import 'server-only';
+import invariant from 'tiny-invariant';
+
 import { formatSongs } from '@/utils';
 import { createClient } from '@/utils/supabase/server';
 import FeaturedSongs from './FeaturedSongs';
@@ -15,11 +17,9 @@ export default async function FeaturedSongsPage() {
   } = await supabase.auth.getUser();
   const { data } = await supabase.from('songs').select('*').order('artist');
 
+  invariant(data);
+
   return (
-    <FeaturedSongs
-      count={data?.length ?? 0}
-      data={formatSongs(data ?? [])}
-      user={user}
-    />
+    <FeaturedSongs count={data.length} data={formatSongs(data)} user={user} />
   );
 }

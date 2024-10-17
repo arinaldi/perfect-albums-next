@@ -1,4 +1,6 @@
 import 'server-only';
+import invariant from 'tiny-invariant';
+
 import { formatReleases } from '@/utils';
 import { createClient } from '@/utils/supabase/server';
 import NewReleases from './NewReleases';
@@ -15,11 +17,9 @@ export default async function NewReleasesPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  invariant(data);
+
   return (
-    <NewReleases
-      count={data?.length ?? 0}
-      data={formatReleases(data ?? [])}
-      user={user}
-    />
+    <NewReleases count={data.length} data={formatReleases(data)} user={user} />
   );
 }
