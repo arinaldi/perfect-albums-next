@@ -42,12 +42,18 @@ export default function EditRankings({ favorites }: Props) {
   // TODO: use schema
   const form = useForm<FormInput>({
     defaultValues: {
-      albums: favorites.map((f) => ({
-        albumId: f.id,
-        artist: f.artist,
-        ranking: f.ranking?.toString() ?? '',
-        title: f.title,
-      })),
+      albums: favorites
+        .sort((a, b) => {
+          if (a.ranking > b.ranking) return 1;
+          if (a.ranking < b.ranking) return -1;
+          return 0;
+        })
+        .map((f) => ({
+          albumId: f.id,
+          artist: f.artist,
+          ranking: f.ranking?.toString() ?? '',
+          title: f.title,
+        })),
     },
   });
   const { fields } = useFieldArray({
@@ -91,41 +97,35 @@ export default function EditRankings({ favorites }: Props) {
     >
       <Form {...form}>
         <form className="space-y-4" onSubmit={onSubmit}>
-          {fields
-            .sort((a, b) => {
-              if (a.ranking > b.ranking) return 1;
-              if (a.ranking < b.ranking) return -1;
-              return 0;
-            })
-            .map((field, index) => (
-              <FormField
-                control={form.control}
-                key={`${field.artist}-${field.title}`}
-                name={`albums.${index}.ranking`}
-                render={({ field: f }) => (
-                  <FormItem className="flex items-center justify-between gap-4 space-y-0">
-                    <div>
-                      <FormLabel>{field.title}</FormLabel>
-                      <FormDescription>{field.artist}</FormDescription>
-                    </div>
-                    <div>
-                      <FormControl>
-                        <Input
-                          {...f}
-                          inputMode="numeric"
-                          min={1}
-                          max={99}
-                          maxLength={2}
-                          type="number"
-                          required
-                        />
-                      </FormControl>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
+          {fields.map((field, index) => (
+            <FormField
+              control={form.control}
+              key={`${field.artist}-${field.title}`}
+              name={`albums.${index}.ranking`}
+              render={({ field: f }) => (
+                <FormItem className="flex items-center justify-between gap-4 space-y-0">
+                  <div>
+                    <FormLabel>{field.title}</FormLabel>
+                    <FormDescription>{field.artist}</FormDescription>
+                  </div>
+                  <div>
+                    <FormControl>
+                      <Input
+                        {...f}
+                        inputMode="numeric"
+                        min={1}
+                        max={99}
+                        maxLength={2}
+                        type="number"
+                        required
+                      />
+                    </FormControl>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
           <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
             Save
           </SubmitButton>
