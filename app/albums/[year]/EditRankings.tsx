@@ -1,9 +1,11 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { MinusIcon, PlusIcon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -35,6 +37,8 @@ interface FormInput {
   albums: AlbumInput[];
 }
 
+type InputName = `albums.${number}.ranking`;
+
 export default function EditRankings({ favorites }: Props) {
   const params = useParams();
   const router = useRouter();
@@ -51,7 +55,7 @@ export default function EditRankings({ favorites }: Props) {
         .map((f) => ({
           albumId: f.id,
           artist: f.artist,
-          ranking: f.ranking?.toString() ?? '',
+          ranking: f.ranking?.toString() ?? '0',
           title: f.title,
         })),
     },
@@ -60,6 +64,20 @@ export default function EditRankings({ favorites }: Props) {
     control: form.control,
     name: 'albums',
   });
+
+  function onDecrement(name: InputName) {
+    const value = form.watch(name);
+    const newValue = parseInt(value) - 1;
+
+    form.setValue(name, newValue.toString());
+  }
+
+  function onIncrement(name: InputName) {
+    const value = form.watch(name);
+    const newValue = parseInt(value) + 1;
+
+    form.setValue(name, newValue.toString());
+  }
 
   const { onSubmit, submitting } = useSubmit({
     callbacks: [() => router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`)],
@@ -97,35 +115,61 @@ export default function EditRankings({ favorites }: Props) {
     >
       <Form {...form}>
         <form className="space-y-4" onSubmit={onSubmit}>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={`${field.artist}-${field.title}`}
-              name={`albums.${index}.ranking`}
-              render={({ field: f }) => (
-                <FormItem className="flex items-center justify-between gap-4 space-y-0">
-                  <div>
-                    <FormLabel>{field.title}</FormLabel>
-                    <FormDescription>{field.artist}</FormDescription>
-                  </div>
-                  <div>
-                    <FormControl>
-                      <Input
-                        {...f}
-                        inputMode="numeric"
-                        min={1}
-                        max={99}
-                        maxLength={2}
-                        type="number"
-                        required
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
+          {fields.map((field, index) => {
+            const name: InputName = `albums.${index}.ranking`;
+
+            return (
+              <FormField
+                control={form.control}
+                key={`${field.artist}-${field.title}`}
+                name={name}
+                render={({ field: f }) => (
+                  <FormItem className="flex items-center justify-between gap-4 space-y-0">
+                    <div>
+                      <FormLabel>{field.title}</FormLabel>
+                      <FormDescription>{field.artist}</FormDescription>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        className="shrink-0"
+                        disabled={parseInt(form.watch(name)) <= 1}
+                        onClick={() => onDecrement(name)}
+                        size="icon"
+                        type="button"
+                        variant="outline"
+                      >
+                        <MinusIcon className="size-4" />
+                      </Button>
+                      <FormControl>
+                        <Input
+                          {...f}
+                          inputMode="numeric"
+                          min={1}
+                          max={99}
+                          maxLength={2}
+                          type="number"
+                          required
+                        />
+                      </FormControl>
+                      <Button
+                        className="shrink-0"
+                        disabled={
+                          parseInt(form.watch(name)) >= favorites.length
+                        }
+                        onClick={() => onIncrement(name)}
+                        size="icon"
+                        type="button"
+                        variant="outline"
+                      >
+                        <PlusIcon className="size-4" />
+                      </Button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+          })}
           <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
             Save
           </SubmitButton>
