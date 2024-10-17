@@ -60,7 +60,6 @@ export default function TopAlbums({ count, favorites, user }: Props) {
                     .sort((a, b) => {
                       if (a.ranking > b.ranking) return 1;
                       if (a.ranking < b.ranking) return -1;
-
                       return 0;
                     })
                     .map((f, index) => {
