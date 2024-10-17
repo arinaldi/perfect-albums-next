@@ -7,7 +7,6 @@ export const albumSchema = z.object({
   studio: z.coerce.boolean(),
   cd: z.coerce.boolean(),
   favorite: z.coerce.boolean(),
-  best_of_year: z.coerce.boolean(),
 });
 
 export type AlbumInput = z.infer<typeof albumSchema>;

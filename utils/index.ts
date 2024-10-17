@@ -36,10 +36,9 @@ interface RankedAlbum extends Album {
 export function formatFavorites(favorites: RankedAlbum[]): FavoriteResults {
   const results: FavoriteResults = {};
 
-  favorites.forEach(({ artist, best_of_year, id, ranking, title, year }) => {
+  favorites.forEach(({ artist, id, ranking, title, year }) => {
     const data = {
       artist,
-      best: best_of_year,
       id,
       ranking: ranking?.position ?? 0,
       title,

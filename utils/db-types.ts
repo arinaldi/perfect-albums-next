@@ -12,7 +12,6 @@ export type Database = {
       albums: {
         Row: {
           artist: string;
-          best_of_year: boolean;
           cd: boolean;
           created_at: string;
           favorite: boolean;
@@ -24,7 +23,6 @@ export type Database = {
         };
         Insert: {
           artist: string;
-          best_of_year?: boolean;
           cd?: boolean;
           created_at?: string;
           favorite?: boolean;
@@ -35,7 +33,6 @@ export type Database = {
         };
         Update: {
           artist?: string;
-          best_of_year?: boolean;
           cd?: boolean;
           created_at?: string;
           favorite?: boolean;

@@ -33,7 +33,6 @@ export default async function EditRankingsPage({ params: { year } }: Props) {
       `
         artist,
         artist_title,
-        best_of_year,
         cd,
         created_at,
         favorite,

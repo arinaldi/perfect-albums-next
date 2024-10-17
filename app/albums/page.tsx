@@ -21,7 +21,6 @@ export default async function TopAlbumsPage() {
       `
         artist,
         artist_title,
-        best_of_year,
         cd,
         created_at,
         favorite,
