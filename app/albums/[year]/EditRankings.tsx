@@ -1,23 +1,25 @@
 'use client';
+import { FormEvent, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { MinusIcon, PlusIcon } from '@radix-ui/react-icons';
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  type DropResult,
+} from '@hello-pangea/dnd';
+import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import SubmitButton from '@/components/SubmitButton';
 import { useSubmit } from '@/hooks/submit';
+import { cn } from '@/lib/utils';
 import { ListItem, parseQuery } from '@/utils';
 import { ROUTE_HREF } from '@/utils/constants';
 import { editRankings } from '../actions';
@@ -26,74 +28,47 @@ interface Props {
   favorites: ListItem[];
 }
 
-interface AlbumInput {
-  albumId: number;
-  artist: string;
-  ranking: string;
-  title: string;
-}
+function reorder(list: ListItem[], startIndex: number, endIndex: number) {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
 
-interface FormInput {
-  albums: AlbumInput[];
+  return result;
 }
-
-type InputName = `albums.${number}.ranking`;
 
 export default function EditRankings({ favorites }: Props) {
   const params = useParams();
   const router = useRouter();
   const year = parseQuery(params?.year);
-  // TODO: use schema
-  const form = useForm<FormInput>({
-    defaultValues: {
-      albums: favorites
-        .sort((a, b) => {
-          if (a.ranking > b.ranking) return 1;
-          if (a.ranking < b.ranking) return -1;
-          return 0;
-        })
-        .map((f) => ({
-          albumId: f.id,
-          artist: f.artist,
-          ranking: f.ranking?.toString() ?? '0',
-          title: f.title,
-        })),
-    },
-  });
-  const { fields } = useFieldArray({
-    control: form.control,
-    name: 'albums',
-  });
+  const [items, setItems] = useState(
+    favorites.sort((a, b) => {
+      if (a.ranking > b.ranking) return 1;
+      if (a.ranking < b.ranking) return -1;
+      return 0;
+    }),
+  );
 
-  function onDecrement(name: InputName) {
-    const value = form.watch(name);
-    const newValue = parseInt(value) - 1;
+  function onDragEnd(result: DropResult<string>) {
+    if (!result.destination) return;
 
-    form.setValue(name, newValue.toString());
-  }
+    const newItems = reorder(
+      items,
+      result.source.index,
+      result.destination.index,
+    );
 
-  function onIncrement(name: InputName) {
-    const value = form.watch(name);
-    const newValue = parseInt(value) + 1;
-
-    form.setValue(name, newValue.toString());
+    setItems(newItems);
   }
 
   const { onSubmit, submitting } = useSubmit({
     callbacks: [() => router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`)],
-    handleSubmit: form.handleSubmit,
-    submitFn: async (data: FormInput) => {
-      const rankings = data.albums.map((a) => ({
-        id: a.albumId,
-        position: Number(a.ranking),
+    submitFn: async (event: FormEvent) => {
+      event.preventDefault();
+
+      const rankings = items.map((item, index) => ({
+        id: item.id,
+        position: index + 1,
       }));
-      const positions = rankings.map((r) => r.position);
-      const positionsSet = new Set(positions);
-
-      if (positionsSet.size !== favorites.length) {
-        throw new Error('Rankings must be unique: client');
-      }
-
       const result = await editRankings(rankings, year);
 
       if (result.type === 'error') {
@@ -113,68 +88,52 @@ export default function EditRankings({ favorites }: Props) {
         </div>
       }
     >
-      <Form {...form}>
-        <form className="space-y-4" onSubmit={onSubmit}>
-          {fields.map((field, index) => {
-            const name: InputName = `albums.${index}.ranking`;
-
-            return (
-              <FormField
-                control={form.control}
-                key={`${field.artist}-${field.title}`}
-                name={name}
-                render={({ field: f }) => (
-                  <FormItem className="flex items-center justify-between gap-4 space-y-0">
-                    <div>
-                      <FormLabel>{field.title}</FormLabel>
-                      <FormDescription>{field.artist}</FormDescription>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Button
-                        className="shrink-0"
-                        disabled={parseInt(form.watch(name)) <= 1}
-                        onClick={() => onDecrement(name)}
-                        size="icon"
-                        type="button"
-                        variant="outline"
+      <form onSubmit={onSubmit}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided) => (
+              <div
+                {...provided.droppableProps}
+                className="space-y-2"
+                ref={provided.innerRef}
+              >
+                {items.map((item, index) => (
+                  <Draggable
+                    draggableId={item.id.toString()}
+                    index={index}
+                    key={item.id}
+                  >
+                    {(provided, snapshot) => (
+                      <Card
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className={cn(
+                          snapshot.isDragging ? 'bg-primary-foreground' : '',
+                        )}
                       >
-                        <MinusIcon className="size-4" />
-                      </Button>
-                      <FormControl>
-                        <Input
-                          {...f}
-                          inputMode="numeric"
-                          min={1}
-                          max={99}
-                          maxLength={2}
-                          type="number"
-                          required
-                        />
-                      </FormControl>
-                      <Button
-                        className="shrink-0"
-                        disabled={
-                          parseInt(form.watch(name)) >= favorites.length
-                        }
-                        onClick={() => onIncrement(name)}
-                        size="icon"
-                        type="button"
-                        variant="outline"
-                      >
-                        <PlusIcon className="size-4" />
-                      </Button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            );
-          })}
-          <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
-            Save
-          </SubmitButton>
-        </form>
-      </Form>
+                        <CardHeader className="px-4 py-3">
+                          <CardTitle className="flex justify-between gap-4">
+                            <span className="font-medium">
+                              {index + 1}. {item.title}
+                            </span>
+                            <DragHandleDots2Icon className="size-4" />
+                          </CardTitle>
+                          <CardDescription>{item.artist}</CardDescription>
+                        </CardHeader>
+                      </Card>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <SubmitButton className="mt-4 w-full sm:w-auto" submitting={submitting}>
+          Save
+        </SubmitButton>
+      </form>
     </AppLayout>
   );
 }

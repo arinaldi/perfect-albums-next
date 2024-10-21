@@ -50,7 +50,7 @@ export async function editRankings(
   const positionsSet = new Set(positions);
 
   if (positionsSet.size !== favorites.length) {
-    throw new Error('Rankings must be unique: server');
+    throw new Error('Rankings must be unique');
   }
 
   const input = rankings.map((r) => ({
