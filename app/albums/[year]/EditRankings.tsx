@@ -11,13 +11,15 @@ import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import SubmitButton from '@/components/SubmitButton';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { useSubmit } from '@/hooks/submit';
 import { cn } from '@/lib/utils';
 import { ListItem, parseQuery } from '@/utils';
@@ -80,7 +82,7 @@ export default function EditRankings({ favorites }: Props) {
 
   return (
     <AppLayout
-      className="max-w-sm"
+      className="max-w-3xl"
       title={
         <div className="flex items-center gap-2">
           <span>Rankings for {year}</span>
@@ -92,41 +94,46 @@ export default function EditRankings({ favorites }: Props) {
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided) => (
-              <div
-                {...provided.droppableProps}
-                className="space-y-2"
-                ref={provided.innerRef}
-              >
-                {items.map((item, index) => (
-                  <Draggable
-                    draggableId={item.id.toString()}
-                    index={index}
-                    key={item.id}
-                  >
-                    {(provided, snapshot) => (
-                      <Card
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={cn(
-                          snapshot.isDragging ? 'bg-primary-foreground' : '',
-                        )}
-                      >
-                        <CardHeader className="px-4 py-3">
-                          <CardTitle className="flex justify-between gap-4">
-                            <span className="font-medium">
-                              {index + 1}. {item.title}
-                            </span>
+              <Table {...provided.droppableProps} ref={provided.innerRef}>
+                <TableHeader>
+                  <TableRow className="text-xs uppercase tracking-wider">
+                    <TableHead />
+                    <TableHead>Title</TableHead>
+                    <TableHead>Artist</TableHead>
+                    <TableHead />
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {items.map((item, index) => (
+                    <Draggable
+                      draggableId={item.id.toString()}
+                      index={index}
+                      key={item.id}
+                    >
+                      {(provided, snapshot) => (
+                        <TableRow
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={cn(
+                            snapshot.isDragging ? 'bg-primary-foreground' : '',
+                          )}
+                        >
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell className="font-medium">
+                            {item.title}
+                          </TableCell>
+                          <TableCell>{item.artist}</TableCell>
+                          <TableCell>
                             <DragHandleDots2Icon className="size-4" />
-                          </CardTitle>
-                          <CardDescription>{item.artist}</CardDescription>
-                        </CardHeader>
-                      </Card>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </TableBody>
+              </Table>
             )}
           </Droppable>
         </DragDropContext>
