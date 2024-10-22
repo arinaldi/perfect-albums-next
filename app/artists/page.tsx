@@ -14,14 +14,12 @@ export const metadata = {
 };
 
 async function getArtists(): Promise<Payload> {
-  const res = await fetch(`${BASE_URL}/api/artists`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${BASE_URL}/api/artists`);
   return res.json();
 }
 
 export default async function ArtistsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

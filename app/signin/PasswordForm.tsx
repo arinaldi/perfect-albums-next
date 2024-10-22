@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
+import { useActionState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -27,7 +26,7 @@ interface Props {
 }
 
 export default function PasswordForm({ email, onCancel }: Props) {
-  const [state, formAction] = useFormState(signIn, initialState);
+  const [state, formAction] = useActionState(signIn, initialState);
   const isDesktop = useMediaQuery();
   const form = useForm<SignInInput>({
     defaultValues: {
@@ -43,18 +42,10 @@ export default function PasswordForm({ email, onCancel }: Props) {
     toast.error(state.message);
   }, [state]);
 
-  async function action(formData: FormData) {
-    const valid = await form.trigger();
-
-    if (!valid) return;
-
-    formAction(formData);
-  }
-
   return (
     <AppLayout className="max-w-sm" title="Sign in">
       <Form {...form}>
-        <form action={action}>
+        <form action={formAction}>
           <FormField
             control={form.control}
             name="email"

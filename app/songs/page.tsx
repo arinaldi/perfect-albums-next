@@ -5,13 +5,12 @@ import { formatSongs } from '@/utils';
 import { createClient } from '@/utils/supabase/server';
 import FeaturedSongs from './FeaturedSongs';
 
-export const revalidate = 60;
 export const metadata = {
   title: 'Featured songs | Perfect Albums',
 };
 
 export default async function FeaturedSongsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

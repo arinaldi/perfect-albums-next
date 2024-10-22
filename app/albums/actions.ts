@@ -13,7 +13,7 @@ export async function editRankings(
   rankings: Rankings[],
   year: string,
 ): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

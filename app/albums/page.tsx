@@ -5,13 +5,12 @@ import { formatFavorites } from 'utils';
 import { createClient } from 'utils/supabase/server';
 import TopAlbums from './TopAlbums';
 
-export const revalidate = 60;
 export const metadata = {
   title: 'Top albums | Perfect Albums',
 };
 
 export default async function TopAlbumsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

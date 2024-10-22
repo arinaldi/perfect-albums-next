@@ -4,9 +4,7 @@ import StatCard from '@/app/dashboard/StatCard';
 import { BASE_URL, ROUTE_HREF } from '@/utils/constants';
 
 export default async function DashboardArtists() {
-  const res = await fetch(`${BASE_URL}/api/artists`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${BASE_URL}/api/artists`);
   const { artists } = await res.json();
   const value = artists.length.toLocaleString().toLocaleString();
 

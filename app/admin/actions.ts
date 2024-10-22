@@ -6,7 +6,7 @@ import { type MutateResult } from '@/utils/types';
 import { albumSchema, type AlbumInput } from './schema';
 
 export async function addAlbum(input: AlbumInput): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -50,7 +50,7 @@ export async function editAlbum(
   id: number,
   input: AlbumInput,
 ): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -120,7 +120,7 @@ export async function editAlbum(
 }
 
 export async function deleteAlbum(id: number): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

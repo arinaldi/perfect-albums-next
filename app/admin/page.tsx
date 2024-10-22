@@ -7,17 +7,17 @@ import { SORT_DIRECTION } from 'utils/constants';
 import { createClient } from 'utils/supabase/server';
 import { Album } from 'utils/types';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 export const metadata = {
   title: 'Admin | Perfect Albums',
 };
 const { ASC, DESC } = SORT_DIRECTION;
 
+type SearchParams = {
+  [key: string]: string;
+};
+
 interface Props {
-  searchParams: {
-    [key: string]: string;
-  };
+  searchParams: Promise<SearchParams>;
 }
 
 interface Payload {
@@ -27,7 +27,7 @@ interface Payload {
 
 async function getAlbums(
   supabase: SupabaseClient,
-  searchParams: Props['searchParams'],
+  searchParams: SearchParams,
 ): Promise<Payload> {
   const { artist, page, perPage, sort, studio, title } =
     parseAdminQuery(searchParams);
@@ -71,7 +71,7 @@ async function getAlbums(
 
 async function getCdCount(
   supabase: SupabaseClient,
-  searchParams: Props['searchParams'],
+  searchParams: SearchParams,
 ): Promise<number> {
   const { artist, studio, title } = parseAdminQuery(searchParams);
   let query = supabase
@@ -90,8 +90,9 @@ async function getCdCount(
   return count ?? 0;
 }
 
-export default async function AdminPage({ searchParams }: Props) {
-  const supabase = createClient();
+export default async function AdminPage(props: Props) {
+  const supabase = await createClient();
+  const searchParams = await props.searchParams;
   const [{ albums, total }, cdTotal] = await Promise.all([
     getAlbums(supabase, searchParams),
     getCdCount(supabase, searchParams),

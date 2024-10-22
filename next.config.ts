@@ -1,5 +1,6 @@
-// https://nextjs.org/docs/advanced-features/security-headers
+import type { NextConfig } from 'next';
 
+// https://nextjs.org/docs/advanced-features/security-headers
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
@@ -35,7 +36,7 @@ const securityHeaders = [
   },
 ];
 
-module.exports = {
+const config: NextConfig = {
   async headers() {
     return [
       {
@@ -45,5 +46,6 @@ module.exports = {
     ];
   },
   reactStrictMode: true,
-  swcMinify: true,
 };
+
+export default config;
