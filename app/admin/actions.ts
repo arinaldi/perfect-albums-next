@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { type MutateResult } from '@/utils/types';
 import { albumSchema, type AlbumInput } from './schema';
 
-export async function addAlbum(album: AlbumInput): Promise<MutateResult> {
+export async function addAlbum(input: AlbumInput): Promise<MutateResult> {
   const supabase = createClient();
   const {
     data: { user },
@@ -18,7 +18,7 @@ export async function addAlbum(album: AlbumInput): Promise<MutateResult> {
     };
   }
 
-  const result = albumSchema.safeParse(album);
+  const result = albumSchema.safeParse(input);
 
   if (!result.success) {
     return {
@@ -48,7 +48,7 @@ export async function addAlbum(album: AlbumInput): Promise<MutateResult> {
 
 export async function editAlbum(
   id: number,
-  album: AlbumInput,
+  input: AlbumInput,
 ): Promise<MutateResult> {
   const supabase = createClient();
   const {
@@ -62,9 +62,22 @@ export async function editAlbum(
     };
   }
 
-  const result = albumSchema.safeParse(album);
+  const { data: album } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  if (!id || !result.success) {
+  if (!album) {
+    return {
+      message: MESSAGES.NO_DATA,
+      type: 'error',
+    };
+  }
+
+  const result = albumSchema.safeParse(input);
+
+  if (!result.success) {
     return {
       message: MESSAGES.INVALID_DATA,
       type: 'error',
@@ -72,6 +85,19 @@ export async function editAlbum(
   }
 
   const { year, ...rest } = result.data;
+
+  if (album.favorite && !rest.favorite) {
+    const { data: ranking } = await supabase
+      .from('rankings')
+      .select('*')
+      .eq('album_id', id)
+      .single();
+
+    if (ranking) {
+      await supabase.from('rankings').delete().eq('id', ranking.id);
+    }
+  }
+
   const { error } = await supabase
     .from('albums')
     .update({
@@ -106,11 +132,29 @@ export async function deleteAlbum(id: number): Promise<MutateResult> {
     };
   }
 
-  if (!id) {
+  const { data: album } = await supabase
+    .from('albums')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!album) {
     return {
-      message: MESSAGES.INVALID_DATA,
+      message: MESSAGES.NO_DATA,
       type: 'error',
     };
+  }
+
+  if (album.favorite) {
+    const { data: ranking } = await supabase
+      .from('rankings')
+      .select('*')
+      .eq('album_id', id)
+      .single();
+
+    if (ranking) {
+      await supabase.from('rankings').delete().eq('id', ranking.id);
+    }
   }
 
   const { error } = await supabase.from('albums').delete().eq('id', id);

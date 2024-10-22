@@ -12,7 +12,7 @@ export enum MESSAGES {
   SONG_PREFIX = 'Song successfully',
   RELEASE_PREFIX = 'Release successfully',
   ERROR = 'Something went wrong',
-  NO_DATA = 'No Data',
+  NO_DATA = 'No data',
   NOT_AUTHORIZED = 'Not authorized',
   INVALID_DATA = 'Invalid data',
 }

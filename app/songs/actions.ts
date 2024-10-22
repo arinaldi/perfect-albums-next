@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server';
 import { type MutateResult } from '@/utils/types';
 import { SongInput, songSchema } from './schema';
 
-export async function addSong(song: SongInput): Promise<MutateResult> {
+export async function addSong(input: SongInput): Promise<MutateResult> {
   const supabase = createClient();
   const {
     data: { user },
@@ -19,7 +19,7 @@ export async function addSong(song: SongInput): Promise<MutateResult> {
     };
   }
 
-  const result = songSchema.safeParse(song);
+  const result = songSchema.safeParse(input);
 
   if (!result.success) {
     return {
@@ -28,7 +28,7 @@ export async function addSong(song: SongInput): Promise<MutateResult> {
     };
   }
 
-  const { error } = await supabase.from('songs').insert(song);
+  const { error } = await supabase.from('songs').insert(input);
 
   if (error) {
     return {
@@ -47,7 +47,7 @@ export async function addSong(song: SongInput): Promise<MutateResult> {
 
 export async function editSong(
   id: number,
-  song: SongInput,
+  input: SongInput,
 ): Promise<MutateResult> {
   const supabase = createClient();
   const {
@@ -61,7 +61,7 @@ export async function editSong(
     };
   }
 
-  const result = songSchema.safeParse(song);
+  const result = songSchema.safeParse(input);
 
   if (!id || !result.success) {
     return {
@@ -70,7 +70,7 @@ export async function editSong(
     };
   }
 
-  const { error } = await supabase.from('songs').update(song).eq('id', id);
+  const { error } = await supabase.from('songs').update(input).eq('id', id);
 
   if (error) {
     return {

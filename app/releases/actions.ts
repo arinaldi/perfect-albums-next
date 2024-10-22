@@ -6,7 +6,7 @@ import { createClient } from '@/utils/supabase/server';
 import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
-export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
+export async function addRelease(input: ReleaseInput): Promise<MutateResult> {
   const supabase = createClient();
   const {
     data: { user },
@@ -19,7 +19,7 @@ export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
     };
   }
 
-  const result = releaseSchema.safeParse(release);
+  const result = releaseSchema.safeParse(input);
 
   if (!result.success) {
     return {
@@ -29,8 +29,8 @@ export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
   }
 
   const { error } = await supabase.from('releases').insert({
-    ...release,
-    date: release.date || null,
+    ...input,
+    date: input.date || null,
   });
 
   if (error) {
@@ -50,7 +50,7 @@ export async function addRelease(release: ReleaseInput): Promise<MutateResult> {
 
 export async function editRelease(
   id: number,
-  release: ReleaseInput,
+  input: ReleaseInput,
 ): Promise<MutateResult> {
   const supabase = createClient();
   const {
@@ -64,7 +64,7 @@ export async function editRelease(
     };
   }
 
-  const result = releaseSchema.safeParse(release);
+  const result = releaseSchema.safeParse(input);
 
   if (!id || !result.success) {
     return {
@@ -76,8 +76,8 @@ export async function editRelease(
   const { error } = await supabase
     .from('releases')
     .update({
-      ...release,
-      date: release.date || null,
+      ...input,
+      date: input.date || null,
     })
     .eq('id', id);
 
