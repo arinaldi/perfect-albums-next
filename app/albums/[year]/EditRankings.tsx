@@ -97,10 +97,10 @@ export default function EditRankings({ favorites }: Props) {
               <Table {...provided.droppableProps} ref={provided.innerRef}>
                 <TableHeader>
                   <TableRow className="text-xs uppercase tracking-wider">
-                    <TableHead />
-                    <TableHead>Title</TableHead>
-                    <TableHead>Artist</TableHead>
-                    <TableHead />
+                    <TableHead className="p-2.5" />
+                    <TableHead className="p-2.5">Title</TableHead>
+                    <TableHead className="p-2.5">Artist</TableHead>
+                    <TableHead className="p-2.5" />
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -119,12 +119,12 @@ export default function EditRankings({ favorites }: Props) {
                             snapshot.isDragging ? 'bg-primary-foreground' : '',
                           )}
                         >
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell className="font-medium">
+                          <TableCell className="p-2.5">{index + 1}</TableCell>
+                          <TableCell className="p-2.5 font-medium">
                             {item.title}
                           </TableCell>
-                          <TableCell>{item.artist}</TableCell>
-                          <TableCell>
+                          <TableCell className="p-2.5">{item.artist}</TableCell>
+                          <TableCell className="p-2.5">
                             <DragHandleDots2Icon className="size-4" />
                           </TableCell>
                         </TableRow>
