@@ -11,7 +11,6 @@ import { createClient } from '@/utils/supabase/server';
 import { Children } from '@/utils/types';
 import 'styles/globals.css';
 
-export const revalidate = 0;
 export const metadata = {
   icons: {
     icon: 'https://fav.farm/🎧',
@@ -19,7 +18,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

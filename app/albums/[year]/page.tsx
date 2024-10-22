@@ -6,19 +6,18 @@ import { createClient } from 'utils/supabase/server';
 import EditRankings from './EditRankings';
 
 interface Props {
-  params: {
+  params: Promise<{
     year: string;
-  };
+  }>;
 }
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 export const metadata = {
   title: 'Edit rankings | Perfect Albums',
 };
 
-export default async function EditRankingsPage({ params: { year } }: Props) {
-  const supabase = createClient();
+export default async function EditRankingsPage(props: Props) {
+  const supabase = await createClient();
+  const { year } = await props.params;
   const {
     data: { user },
   } = await supabase.auth.getUser();

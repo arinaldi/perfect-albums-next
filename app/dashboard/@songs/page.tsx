@@ -5,7 +5,7 @@ import { ROUTE_HREF } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
 
 export default async function DashboardSongs() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { count } = await supabase
     .from('songs')
     .select('*', { count: 'exact', head: true });

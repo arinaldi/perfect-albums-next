@@ -7,7 +7,7 @@ import { type MutateResult } from '@/utils/types';
 import { SongInput, songSchema } from './schema';
 
 export async function addSong(input: SongInput): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -49,7 +49,7 @@ export async function editSong(
   id: number,
   input: SongInput,
 ): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -88,7 +88,7 @@ export async function editSong(
 }
 
 export async function deleteSong(id: number): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

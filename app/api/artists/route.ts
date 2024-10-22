@@ -18,7 +18,7 @@ async function getArtists(supabase: SupabaseClient): Promise<string[]> {
 }
 
 export async function GET() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     const artists = await getArtists(supabase);

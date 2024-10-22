@@ -24,7 +24,7 @@ interface Leaderboard {
 }
 
 export default async function DashboardLeaderboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data, error } = await supabase.rpc('leaderboard');
 
   if (!data || error) return <AppMessage />;

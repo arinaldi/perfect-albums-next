@@ -6,7 +6,7 @@ import { MutateResult } from '@/utils/types';
 import { ROUTE_HREF } from '@/utils/constants';
 
 export async function signOut(): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
 
   if (error) {

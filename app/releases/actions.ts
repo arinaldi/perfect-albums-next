@@ -7,7 +7,7 @@ import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
 export async function addRelease(input: ReleaseInput): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -52,7 +52,7 @@ export async function editRelease(
   id: number,
   input: ReleaseInput,
 ): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -97,7 +97,7 @@ export async function editRelease(
 }
 
 export async function deleteRelease(id: number): Promise<MutateResult> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

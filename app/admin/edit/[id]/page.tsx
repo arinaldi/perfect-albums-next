@@ -4,19 +4,18 @@ import { createClient } from 'utils/supabase/server';
 import EditAlbum from './EditAlbum';
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 export const metadata = {
   title: 'Edit album | Perfect Albums',
 };
 
-export default async function EditAlbumPage({ params: { id } }: Props) {
-  const supabase = createClient();
+export default async function EditAlbumPage(props: Props) {
+  const supabase = await createClient();
+  const { id } = await props.params;
   const { data } = await supabase
     .from('albums')
     .select('*')

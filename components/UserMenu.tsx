@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type User } from '@supabase/supabase-js';
-import { AvatarIcon } from '@radix-ui/react-icons';
+import { PersonIcon } from '@radix-ui/react-icons';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ export function UserMenu({ signOut, user }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="shrink-0 rounded-full" size="icon" variant="ghost">
+        <Button className="shrink-0 rounded-full" size="icon" variant="outline">
           {user ? (
             <Avatar className="size-8">
               <AvatarImage src="/avatars/02.png" />
@@ -40,7 +40,7 @@ export function UserMenu({ signOut, user }: Props) {
               </AvatarFallback>
             </Avatar>
           ) : (
-            <AvatarIcon className="size-5" />
+            <PersonIcon className="size-5" />
           )}
           <span className="sr-only">Toggle user menu</span>
         </Button>

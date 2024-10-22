@@ -1,54 +1,26 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-export const createClient = async (req: NextRequest) => {
-  let res = NextResponse.next({
-    request: {
-      headers: req.headers,
-    },
-  });
+import { ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 
+export async function updateSession(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request });
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return req.cookies.get(name)?.value;
+        getAll() {
+          return request.cookies.getAll();
         },
-        set(name: string, value: string, options: CookieOptions) {
-          req.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-          res = NextResponse.next({
-            request: {
-              headers: req.headers,
-            },
-          });
-          res.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          req.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
-          res = NextResponse.next({
-            request: {
-              headers: req.headers,
-            },
-          });
-          res.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            request.cookies.set(name, value),
+          );
+          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options),
+          );
         },
       },
     },
@@ -57,5 +29,23 @@ export const createClient = async (req: NextRequest) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return { res, user };
-};
+  if (request.nextUrl.pathname === '/') {
+    const url = request.nextUrl.clone();
+    url.pathname = user ? ROUTES_ADMIN.base.href : ROUTE_HREF.TOP_ALBUMS;
+    return NextResponse.redirect(url);
+  }
+
+  if (request.nextUrl.pathname === ROUTE_HREF.SIGNIN && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = ROUTES_ADMIN.base.href;
+    return NextResponse.redirect(url);
+  }
+
+  if (request.nextUrl.pathname.startsWith(ROUTES_ADMIN.base.href) && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = ROUTE_HREF.TOP_ALBUMS;
+    return NextResponse.redirect(url);
+  }
+
+  return supabaseResponse;
+}
