@@ -11,6 +11,7 @@ import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import SubmitButton from '@/components/SubmitButton';
 import {
   Table,
@@ -62,8 +63,12 @@ export default function EditRankings({ favorites }: Props) {
     setItems(newItems);
   }
 
+  function goBack() {
+    router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`);
+  }
+
   const { onSubmit, submitting } = useSubmit({
-    callbacks: [() => router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`)],
+    callbacks: [goBack],
     submitFn: async (event: FormEvent) => {
       event.preventDefault();
 
@@ -137,9 +142,19 @@ export default function EditRankings({ favorites }: Props) {
             )}
           </Droppable>
         </DragDropContext>
-        <SubmitButton className="mt-4 w-full sm:w-auto" submitting={submitting}>
-          Save
-        </SubmitButton>
+        <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row">
+          <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
+            Save
+          </SubmitButton>
+          <Button
+            className="w-full sm:w-auto"
+            onClick={goBack}
+            type="button"
+            variant="outline"
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </AppLayout>
   );

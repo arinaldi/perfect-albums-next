@@ -36,8 +36,10 @@ export async function editRankings(
         year
       `,
     )
-    .eq('favorite', true)
-    .eq('year', year);
+    .match({
+      favorite: true,
+      year,
+    });
 
   if (fetchError) {
     return {
