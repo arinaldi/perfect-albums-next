@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function PasswordForm({ email, onCancel }: Props) {
-  const [state, formAction] = useActionState(signIn, initialState);
+  const [state, formAction, pending] = useActionState(signIn, initialState);
   const isDesktop = useMediaQuery();
   const form = useForm<SignInInput>({
     defaultValues: {
@@ -71,7 +71,9 @@ export default function PasswordForm({ email, onCancel }: Props) {
             )}
           />
           <Input className="hidden" id="name" name="name" tabIndex={-1} />
-          <SubmitButton className="mt-6 w-full">Submit</SubmitButton>
+          <SubmitButton className="mt-6 w-full" submitting={pending}>
+            Submit
+          </SubmitButton>
         </form>
       </Form>
       <Button
