@@ -128,6 +128,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      albums_by_year: {
+        Args: Record<PropertyKey, never>;
+        Returns: Json;
+      };
       artist_title: {
         Args: {
           '': unknown;

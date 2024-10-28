@@ -38,6 +38,7 @@
     "react": "^19.0.0-rc-cae764ce-20241025",
     "react-dom": "^19.0.0-rc-cae764ce-20241025",
     "react-hook-form": "^7.53.0",
+    "recharts": "^2.13.0-alpha.5",
     "server-only": "^0.0.1",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.3",
@@ -71,6 +72,7 @@
   },
   "overrides": {
     "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "react-is": "^19.0.0-rc-cae764ce-20241025"
   }
 }
