@@ -15,6 +15,7 @@ interface Props extends Children {
   songs: ReactNode;
   topAlbums: ReactNode;
   totalAlbums: ReactNode;
+  version: ReactNode;
   years: ReactNode;
 }
 
@@ -26,6 +27,7 @@ export default function DashboardLayout({
   songs,
   topAlbums,
   totalAlbums,
+  version,
   years,
 }: Props) {
   return (
@@ -38,6 +40,7 @@ export default function DashboardLayout({
           {songs}
           {releases}
           {artists}
+          {version}
         </div>
         <div className="flex-1">{leaderboard}</div>
       </div>

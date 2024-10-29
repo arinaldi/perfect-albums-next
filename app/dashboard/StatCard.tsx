@@ -4,6 +4,7 @@ import {
   LayersIcon,
   PersonIcon,
   RocketIcon,
+  Share1Icon,
   SpeakerModerateIcon,
 } from '@radix-ui/react-icons';
 
@@ -17,7 +18,8 @@ type Variant =
   | 'releases'
   | 'songs'
   | 'topAlbums'
-  | 'totalAlbums';
+  | 'totalAlbums'
+  | 'version';
 
 interface Props {
   isLoading?: boolean;
@@ -33,6 +35,7 @@ const icons: Record<Variant, Icon> = {
   songs: SpeakerModerateIcon,
   topAlbums: RocketIcon,
   totalAlbums: LayersIcon,
+  version: Share1Icon,
 };
 
 export default function StatCard(props: Props) {
