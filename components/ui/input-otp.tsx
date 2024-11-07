@@ -6,33 +6,34 @@ import { OTPInput, SlotProps } from 'input-otp';
 
 import { cn } from '@/lib/utils';
 
-const InputOTP = React.forwardRef<
-  React.ComponentRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, ...props }, ref) => (
+const InputOTP = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof OTPInput>) => (
   <OTPInput
-    ref={ref}
     containerClassName={cn('flex items-center gap-2', className)}
     {...props}
   />
-));
+);
 InputOTP.displayName = 'InputOTP';
 
-const InputOTPGroup = React.forwardRef<
-  React.ComponentRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('flex items-center', className)} {...props} />
-));
+const InputOTPGroup = ({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) => (
+  <div className={cn('flex items-center', className)} {...props} />
+);
 InputOTPGroup.displayName = 'InputOTPGroup';
 
-const InputOTPSlot = React.forwardRef<
-  React.ComponentRef<'div'>,
-  SlotProps & React.ComponentPropsWithoutRef<'div'>
->(({ char, hasFakeCaret, isActive, className, ...props }, ref) => {
+const InputOTPSlot = ({
+  char,
+  hasFakeCaret,
+  isActive,
+  className,
+  ...props
+}: SlotProps & React.ComponentProps<'div'>) => {
   return (
     <div
-      ref={ref}
       className={cn(
         'relative flex h-9 w-9 items-center justify-center border-y border-r border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md',
         isActive && 'z-10 ring-1 ring-ring',
@@ -48,17 +49,14 @@ const InputOTPSlot = React.forwardRef<
       )}
     </div>
   );
-});
+};
 InputOTPSlot.displayName = 'InputOTPSlot';
 
-const InputOTPSeparator = React.forwardRef<
-  React.ComponentRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
->(({ ...props }, ref) => (
-  <div ref={ref} role="separator" {...props}>
+const InputOTPSeparator = (props: React.ComponentProps<'div'>) => (
+  <div role="separator" {...props}>
     <DashIcon />
   </div>
-));
+);
 InputOTPSeparator.displayName = 'InputOTPSeparator';
 
 export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
