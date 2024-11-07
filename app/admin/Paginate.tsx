@@ -4,9 +4,9 @@ import { useSearchParams } from 'next/navigation';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@radix-ui/react-icons';
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from 'lucide-react';
 
 import { parsePageQuery } from '@/utils';
 import { PER_PAGE } from '@/utils/constants';
@@ -59,7 +59,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
                   href={getHref(1)}
                 >
                   <span className="sr-only">Go to first page</span>
-                  <DoubleArrowLeftIcon className="size-4" />
+                  <ChevronsLeftIcon className="size-4" />
                 </Link>
               </Button>
             </PaginationItem>
@@ -95,7 +95,7 @@ export default function Paginate({ perPage, studio, total }: Props) {
                   href={getHref(lastPage)}
                 >
                   <span className="sr-only">Go to last page</span>
-                  <DoubleArrowRightIcon className="size-4" />
+                  <ChevronsRightIcon className="size-4" />
                 </Link>
               </Button>
             </PaginationItem>

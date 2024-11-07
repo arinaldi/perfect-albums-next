@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { DashIcon } from '@radix-ui/react-icons';
+import { MinusIcon } from 'lucide-react';
 import { OTPInput, SlotProps } from 'input-otp';
 
 import { cn } from '@/lib/utils';
@@ -54,7 +54,7 @@ InputOTPSlot.displayName = 'InputOTPSlot';
 
 const InputOTPSeparator = (props: React.ComponentProps<'div'>) => (
   <div role="separator" {...props}>
-    <DashIcon />
+    <MinusIcon />
   </div>
 );
 InputOTPSeparator.displayName = 'InputOTPSeparator';

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { type User } from '@supabase/supabase-js';
-import { AvatarIcon } from '@radix-ui/react-icons';
+import { CircleUserIcon } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export function UserMenu({ signOut, user }: Props) {
               </AvatarFallback>
             </Avatar>
           ) : (
-            <AvatarIcon className="size-5" />
+            <CircleUserIcon className="size-5" />
           )}
           <span className="sr-only">Toggle user menu</span>
         </Button>

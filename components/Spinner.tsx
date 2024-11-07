@@ -1,4 +1,4 @@
-import { ReloadIcon } from '@radix-ui/react-icons';
+import { LoaderCircleIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -8,7 +8,7 @@ interface Props {
 
 export default function Spinner({ className = '' }: Props) {
   return (
-    <ReloadIcon
+    <LoaderCircleIcon
       className={cn('inline-block size-6 animate-spin duration-500', className)}
     />
   );

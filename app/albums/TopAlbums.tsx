@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { type User } from '@supabase/supabase-js';
-import { ArrowUpIcon, Pencil1Icon } from '@radix-ui/react-icons';
+import { ArrowUpIcon, PencilIcon } from 'lucide-react';
 
 import { type FavoriteResults } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
@@ -44,7 +44,7 @@ export default function TopAlbums({ count, favorites, user }: Props) {
                   {user && (
                     <Link href={`/albums/${year}`}>
                       <Button size="icon" variant="outline">
-                        <Pencil1Icon className="size-4" />
+                        <PencilIcon className="size-4" />
                       </Button>
                     </Link>
                   )}

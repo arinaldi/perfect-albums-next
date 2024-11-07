@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowDownIcon } from '@radix-ui/react-icons';
+import { MoveDownIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { parseQuery } from 'utils';
@@ -54,7 +54,7 @@ export default function SortableColumn({
         <span
           className={cn('ml-1 flex-none', sortProp === prop ? '' : 'invisible')}
         >
-          <ArrowDownIcon
+          <MoveDownIcon
             aria-hidden="true"
             className={cn('inline size-4', desc ? 'rotate-180' : '')}
           />

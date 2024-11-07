@@ -1,42 +1,26 @@
 'use client';
 import { FormEvent, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  type DropResult,
-} from '@hello-pangea/dnd';
-import { DragHandleDots2Icon } from '@radix-ui/react-icons';
+import { Reorder } from 'framer-motion';
+import { GripIcon } from 'lucide-react';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import SubmitButton from '@/components/SubmitButton';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import SubmitButton from '@/components/SubmitButton';
 import { useSubmit } from '@/hooks/submit';
-import { cn } from '@/lib/utils';
 import { ListItem, parseQuery } from '@/utils';
 import { ROUTE_HREF } from '@/utils/constants';
 import { editRankings } from '../actions';
 
 interface Props {
   favorites: ListItem[];
-}
-
-function reorder(list: ListItem[], startIndex: number, endIndex: number) {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
 }
 
 export default function EditRankings({ favorites }: Props) {
@@ -50,18 +34,6 @@ export default function EditRankings({ favorites }: Props) {
       return 0;
     }),
   );
-
-  function onDragEnd(result: DropResult<string>) {
-    if (!result.destination) return;
-
-    const newItems = reorder(
-      items,
-      result.source.index,
-      result.destination.index,
-    );
-
-    setItems(newItems);
-  }
 
   function goBack() {
     router.push(`${ROUTE_HREF.TOP_ALBUMS}#${year}`);
@@ -87,7 +59,7 @@ export default function EditRankings({ favorites }: Props) {
 
   return (
     <AppLayout
-      className="max-w-3xl"
+      className="max-w-md"
       title={
         <div className="flex items-center gap-2">
           <span>Rankings for {year}</span>
@@ -95,54 +67,25 @@ export default function EditRankings({ favorites }: Props) {
         </div>
       }
     >
-      <form onSubmit={onSubmit}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppable">
-            {(provided) => (
-              <Table {...provided.droppableProps} ref={provided.innerRef}>
-                <TableHeader>
-                  <TableRow className="text-xs uppercase tracking-wider">
-                    <TableHead className="p-2.5" />
-                    <TableHead className="p-2.5">Title</TableHead>
-                    <TableHead className="p-2.5">Artist</TableHead>
-                    <TableHead className="p-2.5" />
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {items.map((item, index) => (
-                    <Draggable
-                      draggableId={item.id.toString()}
-                      index={index}
-                      key={item.id}
-                    >
-                      {(provided, snapshot) => (
-                        <TableRow
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className={cn(
-                            snapshot.isDragging ? 'bg-primary-foreground' : '',
-                          )}
-                        >
-                          <TableCell className="p-2.5">{index + 1}</TableCell>
-                          <TableCell className="p-2.5 font-medium">
-                            {item.title}
-                          </TableCell>
-                          <TableCell className="p-2.5">{item.artist}</TableCell>
-                          <TableCell className="p-2.5">
-                            <DragHandleDots2Icon className="size-4" />
-                          </TableCell>
-                        </TableRow>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </TableBody>
-              </Table>
-            )}
-          </Droppable>
-        </DragDropContext>
-        <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row">
+      <form className="space-y-4" onSubmit={onSubmit}>
+        <Reorder.Group onReorder={setItems} values={items}>
+          {items.map((item, index) => (
+            <Reorder.Item key={item.id} value={item}>
+              <Card className="mt-2 hover:cursor-grab active:cursor-grabbing">
+                <CardHeader className="p-4">
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="">
+                      {index + 1}. {item.title}
+                    </CardTitle>
+                    <GripIcon className="size-4 shrink-0" />
+                  </div>
+                  <CardDescription>{item.artist}</CardDescription>
+                </CardHeader>
+              </Card>
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+        <div className="flex flex-col items-center gap-2 sm:flex-row">
           <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
             Save
           </SubmitButton>

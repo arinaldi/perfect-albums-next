@@ -1,4 +1,4 @@
-import { CheckIcon, DiscIcon } from '@radix-ui/react-icons';
+import { CheckIcon, DiscIcon } from 'lucide-react';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';

@@ -1,5 +1,5 @@
 import { UseFormReturn } from 'react-hook-form';
-import { LockClosedIcon, PaperPlaneIcon } from '@radix-ui/react-icons';
+import { LockIcon, SendHorizontalIcon } from 'lucide-react';
 
 import AppLayout from '@/components/AppLayout';
 import { Button } from '@/components/ui/button';
@@ -72,7 +72,7 @@ export default function EmailForm({
             size={isDesktop ? 'default' : 'lg'}
             type="submit"
           >
-            <LockClosedIcon className="mr-2 size-4" />
+            <LockIcon className="mr-2 size-4" />
             Sign in with password
           </Button>
         </form>
@@ -94,7 +94,7 @@ export default function EmailForm({
             submitting={submitting}
             variant="outline"
           >
-            <PaperPlaneIcon className="size-4" />
+            <SendHorizontalIcon className="size-4" />
             Send one-time password
           </SubmitButton>
         </form>

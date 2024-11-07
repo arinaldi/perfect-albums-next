@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { ChevronRightIcon } from 'lucide-react';
 
 import { ROUTES_ADMIN } from '@/utils/constants';
 import { Button } from '@/components/ui/button';

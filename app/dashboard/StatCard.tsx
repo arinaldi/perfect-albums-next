@@ -1,12 +1,12 @@
 import {
   CalendarIcon,
   DiscIcon,
+  GitPullRequestIcon,
   LayersIcon,
-  PersonIcon,
   RocketIcon,
-  Share1Icon,
-  SpeakerModerateIcon,
-} from '@radix-ui/react-icons';
+  UserIcon,
+  Volume1Icon,
+} from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -29,13 +29,13 @@ interface Props {
 }
 
 const icons: Record<Variant, Icon> = {
-  artists: PersonIcon,
+  artists: UserIcon,
   cds: DiscIcon,
   releases: CalendarIcon,
-  songs: SpeakerModerateIcon,
+  songs: Volume1Icon,
   topAlbums: RocketIcon,
   totalAlbums: LayersIcon,
-  version: Share1Icon,
+  version: GitPullRequestIcon,
 };
 
 export default function StatCard(props: Props) {

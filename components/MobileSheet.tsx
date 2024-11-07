@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { HamburgerMenuIcon, LockClosedIcon } from '@radix-ui/react-icons';
+import { LockIcon, MenuIcon } from 'lucide-react';
 import { type User } from '@supabase/supabase-js';
 
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ export function MobileSheet({ signOut, user }: Props) {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button size="icon" variant="ghost">
-          <HamburgerMenuIcon className="size-4" />
+          <MenuIcon className="size-4" />
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
@@ -65,7 +65,7 @@ export function MobileSheet({ signOut, user }: Props) {
           ))}
           {user && (
             <LinkWrapper href={ROUTES_ADMIN.base.href} onClick={onClose}>
-              <LockClosedIcon className={iconClassName} />
+              <LockIcon className={iconClassName} />
               {ROUTES_ADMIN.base.label}
             </LinkWrapper>
           )}

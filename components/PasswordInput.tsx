@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { EyeOpenIcon, EyeNoneIcon } from '@radix-ui/react-icons';
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,9 +19,9 @@ const PasswordInput = (props: React.ComponentProps<'input'>) => {
         variant="ghost"
       >
         {on ? (
-          <EyeOpenIcon className="size-4" />
+          <EyeIcon className="size-4" />
         ) : (
-          <EyeNoneIcon className="size-4" />
+          <EyeOffIcon className="size-4" />
         )}
       </Button>
     </div>

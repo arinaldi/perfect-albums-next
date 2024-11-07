@@ -1,4 +1,4 @@
-import { TextAlignTopIcon } from '@radix-ui/react-icons';
+import { ListOrderedIcon } from 'lucide-react';
 
 import { createClient } from 'utils/supabase/server';
 import AppMessage from 'components/AppMessage';
@@ -36,7 +36,7 @@ export default async function DashboardLeaderboard() {
       <CardHeader>
         <div className="flex flex-row items-center justify-between gap-3 space-y-0">
           <CardTitle className="font-semibold">Leaderboard</CardTitle>
-          <TextAlignTopIcon className="size-4 text-muted-foreground" />
+          <ListOrderedIcon className="size-4 text-muted-foreground" />
         </div>
         <CardDescription>Top 10 artists by release count</CardDescription>
       </CardHeader>

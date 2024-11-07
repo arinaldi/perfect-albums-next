@@ -1,4 +1,4 @@
-import { CrossCircledIcon, InfoCircledIcon } from '@radix-ui/react-icons';
+import { CircleXIcon, InfoIcon } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Icon } from '@/utils/types';
@@ -13,8 +13,8 @@ interface Props {
 }
 
 const icons: Record<Variant, Icon> = {
-  default: InfoCircledIcon,
-  destructive: CrossCircledIcon,
+  default: InfoIcon,
+  destructive: CircleXIcon,
 };
 
 export default function AppMessage({

@@ -1,9 +1,4 @@
-import {
-  CalendarIcon,
-  LayersIcon,
-  PersonIcon,
-  SpeakerModerateIcon,
-} from '@radix-ui/react-icons';
+import { CalendarIcon, LayersIcon, UserIcon, Volume1Icon } from 'lucide-react';
 
 /* ENUM */
 
@@ -101,7 +96,7 @@ export const ROUTES = [
   },
   {
     href: ROUTE_HREF.FEATURED_SONGS,
-    icon: SpeakerModerateIcon,
+    icon: Volume1Icon,
     label: 'Featured songs',
   },
   {
@@ -111,7 +106,7 @@ export const ROUTES = [
   },
   {
     href: ROUTE_HREF.ARTISTS,
-    icon: PersonIcon,
+    icon: UserIcon,
     label: 'Artists',
   },
 ];

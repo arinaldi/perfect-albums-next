@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { type User } from '@supabase/supabase-js';
-import { ArrowUpIcon } from '@radix-ui/react-icons';
+import { ArrowUpIcon } from 'lucide-react';
 
 import { HEADER_LETTERS, SongResults } from '@/utils';
 import AppLayout from '@/components/AppLayout';

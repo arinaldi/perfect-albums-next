@@ -4,15 +4,15 @@ import { useRouter } from 'next/navigation';
 import { type User } from '@supabase/supabase-js';
 import {
   CalendarIcon,
-  DashboardIcon,
-  EnterIcon,
-  ExitIcon,
   LayersIcon,
-  PersonIcon,
+  LayoutDashboardIcon,
+  LogInIcon,
+  LogOutIcon,
   PlusIcon,
   RocketIcon,
-  SpeakerModerateIcon,
-} from '@radix-ui/react-icons';
+  UserIcon,
+  Volume1Icon,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
@@ -79,7 +79,7 @@ export default function CommandMenu({ user }: Props) {
               onSelect={navigate}
               value={ROUTE_HREF.DASHBOARD}
             >
-              <DashboardIcon />
+              <LayoutDashboardIcon />
               <span>Dashboard</span>
             </CommandItem>
             <CommandItem
@@ -95,7 +95,7 @@ export default function CommandMenu({ user }: Props) {
               onSelect={navigate}
               value={ROUTE_HREF.FEATURED_SONGS}
             >
-              <SpeakerModerateIcon />
+              <Volume1Icon />
               <span>Featured songs</span>
             </CommandItem>
             <CommandItem
@@ -111,7 +111,7 @@ export default function CommandMenu({ user }: Props) {
               onSelect={navigate}
               value={ROUTE_HREF.ARTISTS}
             >
-              <PersonIcon />
+              <UserIcon />
               <span>Artists</span>
             </CommandItem>
           </CommandGroup>
@@ -142,7 +142,7 @@ export default function CommandMenu({ user }: Props) {
           <CommandGroup heading="Authentication">
             {user ? (
               <CommandItem className="gap-2" onSelect={onSignOut}>
-                <ExitIcon />
+                <LogOutIcon />
                 <span>Sign out</span>
               </CommandItem>
             ) : (
@@ -151,7 +151,7 @@ export default function CommandMenu({ user }: Props) {
                 onSelect={navigate}
                 value={ROUTE_HREF.SIGNIN}
               >
-                <EnterIcon />
+                <LogInIcon />
                 <span>Sign in</span>
               </CommandItem>
             )}
