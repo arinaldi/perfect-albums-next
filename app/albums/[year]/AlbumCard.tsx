@@ -30,12 +30,10 @@ export default function AlbumCard({ item, position }: Props) {
             <CardTitle>
               {position}. {item.title}
             </CardTitle>
-            <div
-              className="hover:cursor-grab active:cursor-grabbing"
+            <GripIcon
+              className="size-4 shrink-0 hover:cursor-grab active:cursor-grabbing"
               onPointerDown={(event) => controls.start(event)}
-            >
-              <GripIcon className="size-4 shrink-0" />
-            </div>
+            />
           </div>
           <CardDescription>{item.artist}</CardDescription>
         </CardHeader>

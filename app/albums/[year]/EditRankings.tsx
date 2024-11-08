@@ -62,7 +62,7 @@ export default function EditRankings({ favorites }: Props) {
       }
     >
       <form className="space-y-4" onSubmit={onSubmit}>
-        <Reorder.Group onReorder={setItems} values={items}>
+        <Reorder.Group axis="y" onReorder={setItems} values={items}>
           <div className="space-y-2">
             {items.map((item, index) => (
               <AlbumCard key={item.id} item={item} position={index + 1} />
