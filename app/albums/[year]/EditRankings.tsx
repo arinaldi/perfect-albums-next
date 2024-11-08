@@ -2,22 +2,16 @@
 import { FormEvent, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Reorder } from 'framer-motion';
-import { GripIcon } from 'lucide-react';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import SubmitButton from '@/components/SubmitButton';
 import { useSubmit } from '@/hooks/submit';
 import { ListItem, parseQuery } from '@/utils';
 import { ROUTE_HREF } from '@/utils/constants';
 import { editRankings } from '../actions';
+import AlbumCard from './AlbumCard';
 
 interface Props {
   favorites: ListItem[];
@@ -69,21 +63,11 @@ export default function EditRankings({ favorites }: Props) {
     >
       <form className="space-y-4" onSubmit={onSubmit}>
         <Reorder.Group onReorder={setItems} values={items}>
-          {items.map((item, index) => (
-            <Reorder.Item key={item.id} value={item}>
-              <Card className="mt-2 hover:cursor-grab active:cursor-grabbing">
-                <CardHeader className="p-4">
-                  <div className="flex items-start justify-between">
-                    <CardTitle className="">
-                      {index + 1}. {item.title}
-                    </CardTitle>
-                    <GripIcon className="size-4 shrink-0" />
-                  </div>
-                  <CardDescription>{item.artist}</CardDescription>
-                </CardHeader>
-              </Card>
-            </Reorder.Item>
-          ))}
+          <div className="space-y-2">
+            {items.map((item, index) => (
+              <AlbumCard key={item.id} item={item} position={index + 1} />
+            ))}
+          </div>
         </Reorder.Group>
         <div className="flex flex-col items-center gap-2 sm:flex-row">
           <SubmitButton className="w-full sm:w-auto" submitting={submitting}>
