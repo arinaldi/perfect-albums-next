@@ -33,6 +33,7 @@ export default function AlbumCard({ item, position }: Props) {
             <GripIcon
               className="size-4 shrink-0 hover:cursor-grab active:cursor-grabbing"
               onPointerDown={(event) => controls.start(event)}
+              style={{ touchAction: 'none' }}
             />
           </div>
           <CardDescription>{item.artist}</CardDescription>
