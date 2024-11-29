@@ -2,7 +2,6 @@
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { type User } from '@supabase/supabase-js';
-import { EllipsisIcon } from 'lucide-react';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
@@ -20,7 +19,6 @@ import {
   getAccessToken,
   getArtistAlbums,
   getArtistId,
-  getRelatedArtists,
 } from './actions';
 
 interface Props {
@@ -92,49 +90,6 @@ export default function Artists({ artists, user }: Props) {
     setFetching(false);
   }
 
-  async function fetchRelated(artist: string) {
-    let { token } = results;
-    setFetching(true);
-
-    try {
-      if (!token) {
-        token = await getAccessToken();
-
-        if (!token) {
-          throw new Error('No token');
-        }
-      }
-
-      const artistId = await getArtistId(token, artist);
-
-      if (!artistId) {
-        throw new Error('No artist ID');
-      }
-
-      const data = await getRelatedArtists(token, artistId);
-
-      if (!data) {
-        throw new Error('Failed to fetch related artists');
-      }
-
-      setResults({
-        artist,
-        data: data.sort(sortByName),
-        token,
-        type: 'related',
-      });
-    } catch (error) {
-      const message =
-        error instanceof Error && error.message
-          ? error.message
-          : MESSAGES.ERROR;
-
-      toast.error(message);
-    }
-
-    setFetching(false);
-  }
-
   return (
     <AppLayout
       title={
@@ -172,31 +127,20 @@ export default function Artists({ artists, user }: Props) {
                 if (user) {
                   return (
                     <div key={a}>
-                      <div className="flex items-center justify-between gap-2">
-                        <Button
-                          className={cn(
-                            'block h-auto px-0 py-0.5 text-left text-sm',
-                            results.artist === a
-                              ? 'font-semibold'
-                              : 'font-normal',
-                          )}
-                          disabled={fetching}
-                          onClick={() => fetchReleases(a)}
-                          size="sm"
-                          variant="link"
-                        >
-                          {a}
-                        </Button>
-                        <Button
-                          className="size-6 shrink-0"
-                          disabled={fetching}
-                          onClick={() => fetchRelated(a)}
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <EllipsisIcon className="size-4" />
-                        </Button>
-                      </div>
+                      <Button
+                        className={cn(
+                          'block h-auto px-0 py-0.5 text-left text-sm',
+                          results.artist === a
+                            ? 'font-semibold'
+                            : 'font-normal',
+                        )}
+                        disabled={fetching}
+                        onClick={() => fetchReleases(a)}
+                        size="sm"
+                        variant="link"
+                      >
+                        {a}
+                      </Button>
                       {index !== filteredArtists.length - 1 && (
                         <Separator className="my-2" />
                       )}
