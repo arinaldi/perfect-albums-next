@@ -1,9 +1,10 @@
 import 'server-only';
 import { unstable_cache as cache } from 'next/cache';
 import invariant from 'tiny-invariant';
+import { createClient } from '@/utils/supabase/server';
 
 import { formatSongs } from '@/utils';
-import { createClient, type SupabaseClient } from '@/utils/supabase/server';
+import { type SupabaseClient } from '@/utils/supabase/server';
 import FeaturedSongs from './FeaturedSongs';
 
 export const metadata = {
@@ -25,9 +26,10 @@ const getSongs = cache(
 
 export default async function FeaturedSongsPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = null;
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
   const data = await getSongs(supabase);
 
   invariant(data);
