@@ -8,6 +8,7 @@ import FeaturedSongs from './FeaturedSongs';
 export const metadata = {
   title: 'Featured songs | Perfect Albums',
 };
+export const revalidate = 3600;
 
 export default async function FeaturedSongsPage() {
   const supabase = await createClient();
