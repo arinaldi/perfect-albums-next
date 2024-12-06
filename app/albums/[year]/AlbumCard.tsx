@@ -26,7 +26,7 @@ export default function AlbumCard({ item, position }: Props) {
     >
       <Card className="transition-shadow has-[svg:active]:shadow-lg">
         <CardHeader className="select-none p-4">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-2">
             <CardTitle>
               {position}. {item.title}
             </CardTitle>
