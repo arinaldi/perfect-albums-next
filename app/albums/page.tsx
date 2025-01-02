@@ -11,9 +11,6 @@ export const metadata = {
 
 export default async function TopAlbumsPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
   const { data } = await supabase
     .from('albums')
     .select(
@@ -39,5 +36,5 @@ export default async function TopAlbumsPage() {
 
   const favorites = formatFavorites(data);
 
-  return <TopAlbums count={data.length} favorites={favorites} user={user} />;
+  return <TopAlbums count={data.length} favorites={favorites} />;
 }

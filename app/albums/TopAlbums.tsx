@@ -1,12 +1,9 @@
-import Link from 'next/link';
-import { type User } from '@supabase/supabase-js';
-import { ArrowUpIcon, PencilIcon } from 'lucide-react';
+import { ArrowUpIcon } from 'lucide-react';
 
 import { type FavoriteResults } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
 import AppLayout from 'components/AppLayout';
 import { Badge } from 'components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -15,14 +12,14 @@ import {
   CardTitle,
 } from 'components/ui/card';
 import { DecadeSelect } from 'components/DecadeSelect';
+import RankingLink from './RankingLink';
 
 interface Props {
   count: number;
   favorites: FavoriteResults;
-  user: User | null;
 }
 
-export default function TopAlbums({ count, favorites, user }: Props) {
+export default function TopAlbums({ count, favorites }: Props) {
   return (
     <AppLayout
       title={
@@ -41,13 +38,7 @@ export default function TopAlbums({ count, favorites, user }: Props) {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle id={year}>{year}</CardTitle>
-                  {user && (
-                    <Link href={`/albums/${year}`}>
-                      <Button size="icon" variant="outline">
-                        <PencilIcon className="size-4" />
-                      </Button>
-                    </Link>
-                  )}
+                  <RankingLink year={year} />
                 </div>
                 <CardDescription>
                   {favorites.length.toLocaleString()} album
