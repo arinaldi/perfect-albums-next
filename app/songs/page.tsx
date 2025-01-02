@@ -12,13 +12,8 @@ export const metadata = {
 export default async function FeaturedSongsPage() {
   const supabase = await createClient();
   const { data } = await supabase.from('songs').select('*').order('artist');
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   invariant(data);
 
-  return (
-    <FeaturedSongs count={data.length} data={formatSongs(data)} user={user} />
-  );
+  return <FeaturedSongs count={data.length} data={formatSongs(data)} />;
 }

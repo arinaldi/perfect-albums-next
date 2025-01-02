@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { type User } from '@supabase/supabase-js';
 import { ArrowUpIcon } from 'lucide-react';
 
 import { HEADER_LETTERS, SongResults } from '@/utils';
@@ -11,10 +10,9 @@ import SongActions from './SongActions';
 interface Props {
   count: number;
   data: SongResults;
-  user: User | null;
 }
 
-export default function FeaturedSongs({ count, data, user }: Props) {
+export default function FeaturedSongs({ count, data }: Props) {
   return (
     <AppLayout
       title={
@@ -23,7 +21,7 @@ export default function FeaturedSongs({ count, data, user }: Props) {
           <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }
-      titleAction={user && <AddSongModal />}
+      titleAction={<AddSongModal />}
     >
       <div className="flex flex-wrap gap-1.5">
         {HEADER_LETTERS.map((l, index) => (
@@ -68,7 +66,7 @@ export default function FeaturedSongs({ count, data, user }: Props) {
                           {s.title}
                         </a>
                       </span>
-                      {user && <SongActions song={s} />}
+                      {<SongActions song={s} />}
                     </span>
                   </li>
                 ))}

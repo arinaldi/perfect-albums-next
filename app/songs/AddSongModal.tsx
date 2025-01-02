@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useUser } from '@/components/UserProvider';
 import { songSchema, type SongInput } from './schema';
 import { addSong } from './actions';
 import SongForm from './SongForm';
@@ -25,6 +26,7 @@ const defaultValues = {
 };
 
 export default function AddSongModal() {
+  const user = useUser();
   const [open, setOpen] = useState(false);
   const form = useForm<SongInput>({
     defaultValues,
@@ -48,6 +50,8 @@ export default function AddSongModal() {
     },
     successMessage: `${MESSAGES.SONG_PREFIX} added`,
   });
+
+  if (!user) return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

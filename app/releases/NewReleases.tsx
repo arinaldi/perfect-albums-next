@@ -1,5 +1,3 @@
-import { type User } from '@supabase/supabase-js';
-
 import { ReleaseResults } from '@/utils';
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
