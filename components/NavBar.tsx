@@ -1,41 +1,19 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { type User } from '@supabase/supabase-js';
-import { toast } from 'sonner';
+import { usePathname } from 'next/navigation';
 
 import CommandMenu from '@/components/CommandMenu';
 import { MobileSheet } from '@/components/MobileSheet';
 import { UserMenu } from '@/components/UserMenu';
+import { useUser } from '@/components/UserProvider';
 import { useIsClient } from '@/hooks/is-client';
 import { cn } from '@/lib/utils';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
-import { createClient } from '@/utils/supabase/client';
 
-interface Props {
-  user: User | null;
-}
-
-export default function NavBar({ user }: Props) {
+export default function NavBar() {
+  const user = useUser();
   const pathname = usePathname();
-  const router = useRouter();
-  const supabase = createClient();
   const isClient = useIsClient();
-
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-
-    if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
-      router.push(ROUTE_HREF.TOP_ALBUMS);
-    }
-
-    router.refresh();
-  }
 
   return (
     <div className="border-b">
@@ -77,26 +55,22 @@ export default function NavBar({ user }: Props) {
         <div className="flex items-center gap-0.5">
           {isClient && (
             <>
-              <CommandMenu user={user} />
-              <UserMenu signOut={signOut} user={user} />
+              <CommandMenu />
+              <UserMenu />
             </>
           )}
         </div>
       </div>
       {/* Mobile */}
       <div className="flex h-12 items-center justify-between px-2 md:hidden">
-        <MobileSheet signOut={signOut} user={user} />
+        <MobileSheet />
         <Link
           className="text-center text-sm font-bold uppercase tracking-wider transition-colors hover:text-primary"
           href={ROUTE_HREF.DASHBOARD}
         >
           Perfect Albums
         </Link>
-        {isClient ? (
-          <UserMenu signOut={signOut} user={user} />
-        ) : (
-          <div className="size-9" />
-        )}
+        {isClient ? <UserMenu /> : <div className="size-9" />}
       </div>
     </div>
   );

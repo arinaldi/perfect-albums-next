@@ -1,7 +1,7 @@
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { type User } from '@supabase/supabase-js';
 import { CircleUserIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -16,16 +16,31 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ROUTE_HREF } from '@/utils/constants';
+import { useUser } from '@/components/UserProvider';
+import { ROUTE_HREF, ROUTES_ADMIN } from '@/utils/constants';
+import { createClient } from '@/utils/supabase/client';
 
-interface Props {
-  signOut: () => void;
-  user: User | null;
-}
-
-export function UserMenu({ signOut, user }: Props) {
+export function UserMenu() {
+  const user = useUser();
+  const pathname = usePathname();
   const router = useRouter();
+  const supabase = createClient();
   const { setTheme, theme } = useTheme();
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
+      router.push(ROUTE_HREF.TOP_ALBUMS);
+    }
+
+    router.refresh();
+  }
 
   return (
     <DropdownMenu>

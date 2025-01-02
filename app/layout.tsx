@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: Children) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <NavBar user={user} />
+            <NavBar />
             <main className="isolate">{children}</main>
             <Toaster position="top-right" richColors />
             <TailwindIndicator />

@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { type User } from '@supabase/supabase-js';
 import {
   CalendarIcon,
   LayersIcon,
@@ -24,14 +23,12 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
+import { useUser } from '@/components/UserProvider';
 import { ROUTES_ADMIN, ROUTE_HREF } from '@/utils/constants';
 import { signOut } from '@/app/actions';
 
-interface Props {
-  user: User | null;
-}
-
-export default function CommandMenu({ user }: Props) {
+export default function CommandMenu() {
+  const user = useUser();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 

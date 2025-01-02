@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { LockIcon, MenuIcon } from 'lucide-react';
-import { type User } from '@supabase/supabase-js';
 
 import { Button } from '@/components/ui/button';
 import LinkWrapper from '@/components/LinkWrapper';
@@ -13,16 +12,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { useUser } from '@/components/UserProvider';
 import { ROUTE_HREF, ROUTES, ROUTES_ADMIN } from '@/utils/constants';
-
-interface Props {
-  signOut: () => void;
-  user: User | null;
-}
 
 const iconClassName = 'size-5';
 
-export function MobileSheet({ signOut, user }: Props) {
+export function MobileSheet() {
+  const user = useUser();
   const [open, setOpen] = useState(false);
 
   function onClose() {
