@@ -1,7 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { type User } from '@supabase/supabase-js';
 
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +10,7 @@ import InputClearButton from '@/components/InputClearButton';
 import InputSpinner from '@/components/InputSpinner';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { useUser } from '@/components/UserProvider';
 import { cn } from '@/lib/utils';
 import { MESSAGES } from '@/utils/constants';
 import Random from './Random';
@@ -23,7 +23,6 @@ import {
 
 interface Props {
   artists: string[];
-  user: User | null;
 }
 
 interface State {
@@ -33,7 +32,8 @@ interface State {
   type: 'releases' | 'related';
 }
 
-export default function Artists({ artists, user }: Props) {
+export default function Artists({ artists }: Props) {
+  const user = useUser();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState('');
   const [fetching, setFetching] = useState(false);

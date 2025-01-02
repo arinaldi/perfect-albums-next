@@ -20,10 +20,7 @@ async function getArtists(): Promise<Payload> {
 
 export default async function ArtistsPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
   const { artists } = await getArtists();
 
-  return <Artists artists={artists} user={user} />;
+  return <Artists artists={artists} />;
 }
