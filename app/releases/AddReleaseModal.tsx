@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useUser } from '@/components/UserProvider';
 import { releaseSchema, type ReleaseInput } from './schema';
 import { addRelease } from './actions';
 import ReleaseForm from './ReleaseForm';
@@ -25,6 +26,7 @@ const defaultValues = {
 };
 
 export default function AddReleaseModal() {
+  const user = useUser();
   const [open, setOpen] = useState(false);
   const form = useForm<ReleaseInput>({
     defaultValues,
@@ -48,6 +50,8 @@ export default function AddReleaseModal() {
     },
     successMessage: `${MESSAGES.RELEASE_PREFIX} added`,
   });
+
+  if (!user) return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

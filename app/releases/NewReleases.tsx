@@ -16,10 +16,9 @@ import ReleaseActions from './ReleaseActions';
 interface Props {
   count: number;
   data: ReleaseResults;
-  user: User | null;
 }
 
-export default function NewReleases({ count, data, user }: Props) {
+export default function NewReleases({ count, data }: Props) {
   return (
     <AppLayout
       title={
@@ -28,7 +27,7 @@ export default function NewReleases({ count, data, user }: Props) {
           <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }
-      titleAction={user && <AddReleaseModal />}
+      titleAction={<AddReleaseModal />}
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {Object.entries(data)
@@ -60,7 +59,7 @@ export default function NewReleases({ count, data, user }: Props) {
                           </span>{' '}
                           {r.title}
                         </span>
-                        {user && <ReleaseActions release={r} />}
+                        {<ReleaseActions release={r} />}
                       </span>
                     </li>
                   ))}

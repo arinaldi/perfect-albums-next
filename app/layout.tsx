@@ -6,6 +6,7 @@ import NavBar from '@/components/NavBar';
 import TailwindIndicator from '@/components/TailwindIndicator';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/sonner';
+import { UserProvider } from '@/components/UserProvider';
 import { cn } from 'lib/utils';
 import { createClient } from '@/utils/supabase/server';
 import { Children } from '@/utils/types';
@@ -25,20 +26,22 @@ export default async function RootLayout({ children }: Children) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-dvh bg-background antialiased',
-          GeistSans.className,
-          GeistMono.variable,
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NavBar user={user} />
-          <main className="isolate">{children}</main>
-          <Toaster position="top-right" richColors />
-          <TailwindIndicator />
-        </ThemeProvider>
-      </body>
+      <UserProvider user={user}>
+        <body
+          className={cn(
+            'min-h-dvh bg-background antialiased',
+            GeistSans.className,
+            GeistMono.variable,
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <NavBar user={user} />
+            <main className="isolate">{children}</main>
+            <Toaster position="top-right" richColors />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </body>
+      </UserProvider>
     </html>
   );
 }

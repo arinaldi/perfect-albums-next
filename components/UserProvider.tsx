@@ -4,7 +4,11 @@ import { type User } from '@supabase/supabase-js';
 
 import { Children } from '@/utils/types';
 
-const UserContext = createContext<User | null>(null);
+interface Context {
+  user: User | null;
+}
+
+const UserContext = createContext<Context>({ user: null });
 
 export function useUser() {
   const context = useContext(UserContext);
@@ -13,7 +17,7 @@ export function useUser() {
     throw new Error('useUser must be used within a UserProvider');
   }
 
-  return context;
+  return context.user;
 }
 
 interface Props extends Children {
@@ -21,5 +25,7 @@ interface Props extends Children {
 }
 
 export function UserProvider({ children, user }: Props) {
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  );
 }

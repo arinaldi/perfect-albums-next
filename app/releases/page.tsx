@@ -12,13 +12,8 @@ export const metadata = {
 export default async function NewReleasesPage() {
   const supabase = await createClient();
   const { data } = await supabase.from('releases').select('*').order('artist');
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   invariant(data);
 
-  return (
-    <NewReleases count={data.length} data={formatReleases(data)} user={user} />
-  );
+  return <NewReleases count={data.length} data={formatReleases(data)} />;
 }

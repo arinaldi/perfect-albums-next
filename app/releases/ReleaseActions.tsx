@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useUser } from '@/components/UserProvider';
 import DeleteReleaseModal from './DeleteReleaseModal';
 import EditReleaseModal from './EditReleaseModal';
 
@@ -26,6 +27,7 @@ interface ModalState {
 }
 
 export default function ReleaseActions({ release }: Props) {
+  const user = useUser();
   const [modal, setModal] = useState<ModalState>({
     open: false,
     type: 'edit',
@@ -34,6 +36,8 @@ export default function ReleaseActions({ release }: Props) {
   function onClose() {
     setModal((m) => ({ ...m, open: false }));
   }
+
+  if (!user) return null;
 
   return (
     <Dialog
