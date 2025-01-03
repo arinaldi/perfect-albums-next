@@ -46,6 +46,7 @@ export type Database = {
       rankings: {
         Row: {
           album_id: number;
+          all_time_position: number | null;
           created_at: string;
           id: number;
           position: number;
@@ -53,6 +54,7 @@ export type Database = {
         };
         Insert: {
           album_id: number;
+          all_time_position?: number | null;
           created_at?: string;
           id?: number;
           position: number;
@@ -60,6 +62,7 @@ export type Database = {
         };
         Update: {
           album_id?: number;
+          all_time_position?: number | null;
           created_at?: string;
           id?: number;
           position?: number;

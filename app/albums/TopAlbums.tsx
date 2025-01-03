@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from 'lucide-react';
 
-import { type FavoriteResults } from 'utils';
+import { capitalizeFirstLetter, type FavoriteResults } from 'utils';
 import { SPOTIFY_URL } from 'utils/constants';
 import AppLayout from 'components/AppLayout';
 import { Badge } from 'components/ui/badge';
@@ -32,12 +32,16 @@ export default function TopAlbums({ count, favorites }: Props) {
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {Object.entries(favorites)
-          .sort((a, b) => Number(b[0]) - Number(a[0]))
+          .sort((a, b) => {
+            if (a[0] === 'all-time') return -1;
+
+            return Number(b[0]) - Number(a[0]);
+          })
           .map(([year, favorites]) => (
             <Card key={year}>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle id={year}>{year}</CardTitle>
+                  <CardTitle id={year}>{capitalizeFirstLetter(year)}</CardTitle>
                   <RankingLink year={year} />
                 </div>
                 <CardDescription>
@@ -49,6 +53,16 @@ export default function TopAlbums({ count, favorites }: Props) {
                 <ol className="ml-4 list-decimal space-y-1">
                   {favorites
                     .sort((a, b) => {
+                      if (
+                        year === 'all-time' &&
+                        a.allTimeRanking !== null &&
+                        b.allTimeRanking !== null
+                      ) {
+                        if (a.allTimeRanking > b.allTimeRanking) return 1;
+                        if (a.allTimeRanking < b.allTimeRanking) return -1;
+                        return 0;
+                      }
+
                       if (a.ranking > b.ranking) return 1;
                       if (a.ranking < b.ranking) return -1;
                       return 0;

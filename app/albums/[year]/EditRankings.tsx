@@ -10,7 +10,7 @@ import SubmitButton from '@/components/SubmitButton';
 import { useSubmit } from '@/hooks/submit';
 import { ListItem, parseQuery } from '@/utils';
 import { ROUTE_HREF } from '@/utils/constants';
-import { editRankings } from '../actions';
+import { editRankings } from './actions';
 import AlbumCard from './AlbumCard';
 
 interface Props {

@@ -17,7 +17,7 @@ export default function Search({ autoFocus, type }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const query = parseQuery(searchParams?.get(type));
+  const query = parseQuery(searchParams.get(type));
   const [pending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
@@ -50,7 +50,7 @@ export default function Search({ autoFocus, type }: Props) {
   }
 
   function onClear() {
-    const params = new URLSearchParams(searchParams?.toString());
+    const params = new URLSearchParams(searchParams.toString());
 
     params.delete(type);
     params.delete('sort');

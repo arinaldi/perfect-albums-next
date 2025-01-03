@@ -25,6 +25,7 @@ export default async function TopAlbumsPage() {
         title,
         year,
         ranking:rankings (
+          all_time_position,
           position
       )
       `,

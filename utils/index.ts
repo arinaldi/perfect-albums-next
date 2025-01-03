@@ -17,10 +17,12 @@ export function formatDate(isoString: string): string {
 }
 
 export interface ListItem {
+  allTimeRanking: number | null;
   artist: string;
   id: number;
   ranking: number;
   title: string;
+  year: string;
 }
 
 export interface FavoriteResults {
@@ -29,27 +31,34 @@ export interface FavoriteResults {
 
 interface RankedAlbum extends Album {
   ranking: {
+    all_time_position: number | null;
     position: number;
   } | null;
 }
 
 export function formatFavorites(favorites: RankedAlbum[]): FavoriteResults {
-  const results: FavoriteResults = {};
+  const results: FavoriteResults = {
+    ['all-time']: [],
+  };
 
   favorites.forEach(({ artist, id, ranking, title, year }) => {
     const data = {
+      allTimeRanking: ranking?.all_time_position ?? null,
       artist,
       id,
       ranking: ranking?.position ?? 0,
       title,
+      year,
     };
-
-    if (!year) return;
 
     if (results[year]) {
       results[year].push(data);
     } else {
       results[year] = [data];
+    }
+
+    if (data.allTimeRanking !== null) {
+      results['all-time'].push(data);
     }
   });
 

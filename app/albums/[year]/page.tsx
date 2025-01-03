@@ -40,6 +40,7 @@ export default async function EditRankingsPage(props: Props) {
         title,
         year,
         ranking:rankings (
+          all_time_position,
           position
       )
       `,
