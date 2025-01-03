@@ -17,7 +17,7 @@ export default function AppLayout({
 }: Props) {
   return (
     <div className={cn('mx-auto max-w-7xl p-4 pb-8 md:px-8', className)}>
-      <div className="mb-4 flex min-h-[40px] items-center justify-between">
+      <div className="mb-4 flex min-h-[40px] items-start justify-between md:items-center">
         <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           {title}
         </h1>

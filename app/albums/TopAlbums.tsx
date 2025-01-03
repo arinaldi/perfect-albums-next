@@ -24,8 +24,8 @@ export default function TopAlbums({ count, favorites }: Props) {
   return (
     <AppLayout
       title={
-        <div className="flex flex-wrap items-center gap-2">
-          <span>Top albums</span>
+        <div className="flex items-center gap-2">
+          <span className="text-nowrap">Top albums</span>
           <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }

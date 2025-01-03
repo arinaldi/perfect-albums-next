@@ -11,6 +11,7 @@ interface Props {
 export default function AllTimeRankings({ favorites }: Props) {
   return (
     <AppLayout
+      className="max-w-md"
       title={
         <div className="flex items-center gap-2">
           <span>All-time albums</span>
