@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ArrowUpIcon } from 'lucide-react';
 
 import { capitalizeFirstLetter, type FavoriteResults } from 'utils';
@@ -23,20 +24,26 @@ export default function TopAlbums({ count, favorites }: Props) {
   return (
     <AppLayout
       title={
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <span>Top albums</span>
           <Badge variant="secondary">{count.toLocaleString()}</Badge>
         </div>
       }
-      titleAction={<DecadeSelect />}
+      titleAction={
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <Link
+            className="text-sm text-foreground underline underline-offset-4 hover:text-muted-foreground"
+            href="/albums/all-time"
+          >
+            All-time list
+          </Link>
+          <DecadeSelect />
+        </div>
+      }
     >
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {Object.entries(favorites)
-          .sort((a, b) => {
-            if (a[0] === 'all-time') return -1;
-
-            return Number(b[0]) - Number(a[0]);
-          })
+          .sort((a, b) => Number(b[0]) - Number(a[0]))
           .map(([year, favorites]) => (
             <Card key={year}>
               <CardHeader>
@@ -53,16 +60,6 @@ export default function TopAlbums({ count, favorites }: Props) {
                 <ol className="ml-4 list-decimal space-y-1">
                   {favorites
                     .sort((a, b) => {
-                      if (
-                        year === 'all-time' &&
-                        a.allTimeRanking !== null &&
-                        b.allTimeRanking !== null
-                      ) {
-                        if (a.allTimeRanking > b.allTimeRanking) return 1;
-                        if (a.allTimeRanking < b.allTimeRanking) return -1;
-                        return 0;
-                      }
-
                       if (a.ranking > b.ranking) return 1;
                       if (a.ranking < b.ranking) return -1;
                       return 0;
