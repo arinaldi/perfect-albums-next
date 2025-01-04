@@ -65,21 +65,21 @@ export default function EditAllTimeRankings({ candidates, favorites }: Props) {
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-8">
         <div>
-          <Search type="title" />
+          <Search autoFocus type="title" />
           {candidates.length === 0 && title && (
             <div className="mt-4 flex justify-center">
               <DataEmptyPlaceholder />
             </div>
           )}
           {candidates.length > 0 && (
-            <div className="mt-4 space-y-4">
+            <div className="mt-4 space-y-3 rounded-md border p-4">
               {candidates.map((c) => (
                 <div
                   className="flex items-start justify-between gap-2"
                   key={c.id}
                 >
                   <div>
-                    <p className="text-base font-medium">{c.title}</p>
+                    <p className="text-sm font-medium">{c.title}</p>
                     <p className="text-sm text-muted-foreground">{c.artist}</p>
                     <p className="text-xs text-muted-foreground">{c.year}</p>
                   </div>

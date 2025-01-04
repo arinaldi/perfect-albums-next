@@ -63,10 +63,13 @@ export default async function EditAllTimeRankingsPage(props: Props) {
   const { sort, title } = parseAdminQuery(searchParams);
   const [sortProp, desc] = sort.split(':') ?? [];
   const direction = desc ? DESC : ASC;
-  let query = supabase
-    .from('albums')
-    .select(
-      `
+  let candidates: AllTimeListItem[] = [];
+
+  if (title) {
+    let query = supabase
+      .from('albums')
+      .select(
+        `
           artist,
           id,
           title,
@@ -77,28 +80,29 @@ export default async function EditAllTimeRankingsPage(props: Props) {
             position
           )
         `,
-    )
-    .gte('rankings.position', 1)
-    .ilike('title', `%${title}%`)
-    .range(0, 24)
-    .order('artist', { ascending: direction === ASC });
+      )
+      .gte('rankings.position', 1)
+      .ilike('title', `%${title}%`)
+      .range(0, 24)
+      .order('artist', { ascending: direction === ASC });
 
-  if (sortProp) {
-    query = query.order(sortProp, { ascending: direction === ASC });
+    if (sortProp) {
+      query = query.order(sortProp, { ascending: direction === ASC });
+    }
+
+    const { data } = await query;
+
+    invariant(data);
+
+    candidates = data.map((d) => ({
+      allTimeRanking: d.ranking?.all_time_position ?? 0,
+      artist: d.artist,
+      id: d.id,
+      ranking: d.ranking?.position ?? 0,
+      title: d.title,
+      year: d.year,
+    }));
   }
-
-  const { data } = await query;
-
-  invariant(data);
-
-  const candidates = data.map((d) => ({
-    allTimeRanking: d.ranking?.all_time_position ?? 0,
-    artist: d.artist,
-    id: d.id,
-    ranking: d.ranking?.position ?? 0,
-    title: d.title,
-    year: d.year,
-  }));
 
   return (
     <EditAllTimeRankings candidates={candidates} favorites={allTimeFavorites} />
