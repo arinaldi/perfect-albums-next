@@ -1,6 +1,10 @@
+import { Fragment } from 'react';
+
 import AppLayout from '@/components/AppLayout';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
 import { SPOTIFY_URL } from 'utils/constants';
 import { AllTimeListItem } from './edit/EditAllTimeRankings';
 import EditButton from './EditButton';
@@ -23,23 +27,33 @@ export default function AllTimeRankings({ favorites }: Props) {
     >
       <Card>
         <CardContent className="pt-6">
-          <ol className="ml-4 list-decimal space-y-1">
+          <ol className="ml-4 list-decimal">
             {favorites.map((f, index) => {
               const query = encodeURI(`${f.artist} ${f.title}`);
               const url = `${SPOTIFY_URL}/${query}`;
 
               return (
-                <li key={index} className="text-sm text-muted-foreground">
-                  <span>{f.artist} &ndash;</span>{' '}
-                  <a
-                    className="text-foreground underline underline-offset-4 hover:text-muted-foreground"
-                    href={url}
-                    rel="noopener noreferrer"
-                    target="_blank"
+                <Fragment key={f.id}>
+                  <li
+                    className={cn(
+                      'text-sm text-muted-foreground',
+                      index > 0 && 'mt-1',
+                    )}
                   >
-                    {f.title}
-                  </a>
-                </li>
+                    <span>{f.artist} &ndash;</span>{' '}
+                    <a
+                      className="text-foreground underline underline-offset-4 hover:text-muted-foreground"
+                      href={url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {f.title}
+                    </a>
+                  </li>
+                  {(index + 1) % 10 === 0 && favorites[index + 1] && (
+                    <Separator className="my-4" />
+                  )}
+                </Fragment>
               );
             })}
           </ol>
