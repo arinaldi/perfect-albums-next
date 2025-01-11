@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import invariant from 'tiny-invariant';
 
-import { formatFavorites } from 'utils';
 import { createClient } from 'utils/supabase/server';
+import { AllTimeListItem } from '../all-time/edit/EditAllTimeRankings';
 import EditRankings from './EditRankings';
 
 interface Props {
@@ -26,36 +26,35 @@ export default async function EditRankingsPage(props: Props) {
     notFound();
   }
 
-  const { data } = await supabase
-    .from('albums')
+  const { data: rankings } = await supabase
+    .from('rankings')
     .select(
       `
-        artist,
-        artist_title,
-        cd,
-        created_at,
-        favorite,
-        id,
-        studio,
-        title,
-        year,
-        ranking:rankings (
-          all_time_position,
-          position
-      )
-      `,
+            all_time_position,
+            id,
+            position,
+            album:albums (
+              artist,
+              id,
+              title,
+              year
+            )
+          `,
     )
-    .eq('favorite', true)
-    .order('artist', { ascending: true });
+    .eq('year', year)
+    .order('position', { ascending: true });
 
-  invariant(data);
+  invariant(rankings);
 
-  const favorites = formatFavorites(data);
-  const favoritesThisYear = favorites[year];
+  const favorites: AllTimeListItem[] = rankings.map((r) => ({
+    allTimeRanking: r.all_time_position,
+    artist: r.album?.artist ?? '',
+    id: r.album?.id ?? 0,
+    ranking: r.position,
+    rankingId: r.id,
+    title: r.album?.title ?? '',
+    year: r.album?.year ?? '',
+  }));
 
-  if (!favoritesThisYear) {
-    notFound();
-  }
-
-  return <EditRankings favorites={favoritesThisYear} />;
+  return <EditRankings favorites={favorites} />;
 }

@@ -8,13 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import SubmitButton from '@/components/SubmitButton';
 import { useSubmit } from '@/hooks/submit';
-import { ListItem, parseQuery } from '@/utils';
+import { parseQuery } from '@/utils';
 import { ROUTE_HREF } from '@/utils/constants';
+import { AllTimeListItem } from '../all-time/edit/EditAllTimeRankings';
 import { editRankings } from './actions';
 import AlbumCard from './AlbumCard';
 
 interface Props {
-  favorites: ListItem[];
+  favorites: AllTimeListItem[];
 }
 
 export default function EditRankings({ favorites }: Props) {

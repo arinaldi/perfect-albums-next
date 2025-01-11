@@ -7,14 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ListItem } from '@/utils';
+import { AllTimeListItem } from '../all-time/edit/EditAllTimeRankings';
+import RemoveAllTimeRankingModal from '../all-time/edit/RemoveAllTimeRankingModal';
 
 interface Props {
-  item: ListItem;
+  item: AllTimeListItem;
   position: number;
+  removeItem?: (id: number) => void;
 }
 
-export default function AlbumCard({ item, position }: Props) {
+export default function AlbumCard({ item, position, removeItem }: Props) {
   const controls = useDragControls();
 
   return (
@@ -35,7 +37,12 @@ export default function AlbumCard({ item, position }: Props) {
               onPointerDown={(event) => controls.start(event)}
             />
           </div>
-          <CardDescription>{item.artist}</CardDescription>
+          <CardDescription className="flex items-center gap-0.5">
+            {item.artist}
+            {removeItem && (
+              <RemoveAllTimeRankingModal item={item} removeItem={removeItem} />
+            )}
+          </CardDescription>
         </CardHeader>
       </Card>
     </Reorder.Item>

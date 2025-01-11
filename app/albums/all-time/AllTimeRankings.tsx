@@ -25,7 +25,11 @@ export default function AllTimeRankings({ favorites }: Props) {
       }
       titleAction={<EditButton />}
     >
-      <Card>
+      <p className="text-sm">
+        These are the albums I revisit often or have a deep personal meaning.
+        They shaped my musical tastes and changed the way I think about music.
+      </p>
+      <Card className="mt-2">
         <CardContent className="pt-6">
           <ol className="ml-4 list-decimal">
             {favorites.map((f, index) => {

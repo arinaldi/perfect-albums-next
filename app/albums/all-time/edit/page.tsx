@@ -57,6 +57,7 @@ export default async function EditAllTimeRankingsPage(props: Props) {
     artist: r.album?.artist ?? '',
     id: r.album?.id ?? 0,
     ranking: r.position,
+    rankingId: r.id,
     title: r.album?.title ?? '',
     year: r.album?.year ?? '',
   }));
@@ -99,6 +100,7 @@ export default async function EditAllTimeRankingsPage(props: Props) {
       artist: d.artist,
       id: d.id,
       ranking: d.ranking?.position ?? 0,
+      rankingId: d.ranking?.id ?? 0,
       title: d.title,
       year: d.year,
     }));

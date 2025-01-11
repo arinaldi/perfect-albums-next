@@ -17,6 +17,7 @@ import { editAllTimeRankings } from './actions';
 
 export interface AllTimeListItem extends ListItem {
   allTimeRanking: number | null;
+  rankingId: number;
 }
 
 interface Props {
@@ -32,6 +33,10 @@ export default function EditAllTimeRankings({ candidates, favorites }: Props) {
 
   function goBack() {
     router.push(`${ROUTE_HREF.TOP_ALBUMS}/all-time`);
+  }
+
+  function removeItem(id: number) {
+    setItems((prev) => prev.filter((item) => item.id !== id));
   }
 
   const { onSubmit, submitting } = useSubmit({
@@ -58,7 +63,7 @@ export default function EditAllTimeRankings({ candidates, favorites }: Props) {
     <AppLayout
       title={
         <div className="flex items-center gap-2">
-          <span>All-time rankings</span>
+          <span>Edit all-time rankings</span>
           <Badge variant="secondary">{favorites.length.toLocaleString()}</Badge>
         </div>
       }
@@ -102,7 +107,12 @@ export default function EditAllTimeRankings({ candidates, favorites }: Props) {
           <Reorder.Group axis="y" onReorder={setItems} values={items}>
             <div className="space-y-2">
               {items.map((item, index) => (
-                <AlbumCard key={item.id} item={item} position={index + 1} />
+                <AlbumCard
+                  key={item.id}
+                  item={item}
+                  position={index + 1}
+                  removeItem={removeItem}
+                />
               ))}
             </div>
           </Reorder.Group>

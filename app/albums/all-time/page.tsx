@@ -35,6 +35,7 @@ export default async function AllTimeRankingsPage() {
     artist: r.album?.artist ?? '',
     id: r.album?.id ?? 0,
     ranking: r.position,
+    rankingId: r.id,
     title: r.album?.title ?? '',
     year: r.album?.year ?? '',
   }));

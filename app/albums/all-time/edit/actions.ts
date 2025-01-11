@@ -1,4 +1,5 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -42,6 +43,48 @@ export async function editAllTimeRankings(
       type: 'error',
     };
   }
+
+  return {
+    data: null,
+    type: 'success',
+  };
+}
+
+export async function removeAllTimeRanking(id: number): Promise<MutateResult> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return {
+      message: MESSAGES.NOT_AUTHORIZED,
+      type: 'error',
+    };
+  }
+
+  if (!id) {
+    return {
+      message: MESSAGES.INVALID_DATA,
+      type: 'error',
+    };
+  }
+
+  const { error } = await supabase
+    .from('rankings')
+    .update({
+      all_time_position: null,
+    })
+    .eq('id', id);
+
+  if (error) {
+    return {
+      message: error.message,
+      type: 'error',
+    };
+  }
+
+  revalidatePath('/albums/all-time/edit');
 
   return {
     data: null,
