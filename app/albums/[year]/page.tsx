@@ -26,34 +26,33 @@ export default async function EditRankingsPage(props: Props) {
     notFound();
   }
 
-  const { data: rankings } = await supabase
-    .from('rankings')
+  const { data: albums } = await supabase
+    .from('albums')
     .select(
       `
-            all_time_position,
-            id,
-            position,
-            album:albums (
-              artist,
-              id,
-              title,
-              year
-            )
-          `,
+      artist,
+      id,
+      title,
+      year,
+      ranking:rankings (
+        all_time_position,
+        id,
+        position
+      )
+    `,
     )
-    .eq('year', year)
-    .order('position', { ascending: true });
+    .match({ favorite: true, year });
 
-  invariant(rankings);
+  invariant(albums);
 
-  const favorites: AllTimeListItem[] = rankings.map((r) => ({
-    allTimeRanking: r.all_time_position,
-    artist: r.album?.artist ?? '',
-    id: r.album?.id ?? 0,
-    ranking: r.position,
-    rankingId: r.id,
-    title: r.album?.title ?? '',
-    year: r.album?.year ?? '',
+  const favorites: AllTimeListItem[] = albums.map((a) => ({
+    allTimeRanking: a.ranking?.all_time_position ?? 0,
+    artist: a.artist,
+    id: a.id,
+    ranking: a.ranking?.position ?? 0,
+    rankingId: a.ranking?.id ?? 0,
+    title: a.title,
+    year: a.year,
   }));
 
   return <EditRankings favorites={favorites} />;
