@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 
@@ -14,7 +14,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({ request });
@@ -42,9 +42,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith(ROUTES_ADMIN.base.href) && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTE_HREF.TOP_ALBUMS;
-    return NextResponse.redirect(url);
+    return NextResponse.rewrite(new URL('/not-found', request.url));
   }
 
   return supabaseResponse;

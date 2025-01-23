@@ -3,14 +3,12 @@ import { revalidatePath } from 'next/cache';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { type MutateResult } from '@/utils/types';
 import { releaseSchema, type ReleaseInput } from './schema';
 
 export async function addRelease(input: ReleaseInput): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -28,6 +26,7 @@ export async function addRelease(input: ReleaseInput): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase.from('releases').insert({
     ...input,
     date: input.date || null,
@@ -52,10 +51,7 @@ export async function editRelease(
   id: number,
   input: ReleaseInput,
 ): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -73,6 +69,7 @@ export async function editRelease(
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase
     .from('releases')
     .update({
@@ -97,10 +94,7 @@ export async function editRelease(
 }
 
 export async function deleteRelease(id: number): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -116,6 +110,7 @@ export async function deleteRelease(id: number): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase.from('releases').delete().eq('id', id);
 
   if (error) {

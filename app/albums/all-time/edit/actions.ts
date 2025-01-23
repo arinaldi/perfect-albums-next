@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { type MutateResult } from '@/utils/types';
 
 interface Rankings {
@@ -15,10 +16,7 @@ interface Rankings {
 export async function editAllTimeRankings(
   rankings: Rankings[],
 ): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -33,6 +31,7 @@ export async function editAllTimeRankings(
     position: r.position,
     year: r.year,
   }));
+  const supabase = await createClient();
   const { error: upsertError } = await supabase
     .from('rankings')
     .upsert(input, { onConflict: 'album_id' });
@@ -51,10 +50,7 @@ export async function editAllTimeRankings(
 }
 
 export async function removeAllTimeRanking(id: number): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -70,6 +66,7 @@ export async function removeAllTimeRanking(id: number): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase
     .from('rankings')
     .update({

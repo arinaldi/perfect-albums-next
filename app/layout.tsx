@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/sonner';
 import { UserProvider } from '@/components/UserProvider';
 import { cn } from 'lib/utils';
-import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { Children } from '@/utils/types';
 import 'styles/globals.css';
 
@@ -19,10 +19,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }: Children) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   return (
     <html lang="en" suppressHydrationWarning>

@@ -4,6 +4,7 @@ import invariant from 'tiny-invariant';
 import { parseAdminQuery } from '@/utils';
 import { SORT_DIRECTION } from '@/utils/constants';
 import { createClient } from 'utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import EditAllTimeRankings, {
   type AllTimeListItem,
 } from './EditAllTimeRankings';
@@ -22,16 +23,14 @@ interface Props {
 }
 
 export default async function EditAllTimeRankingsPage(props: Props) {
-  const supabase = await createClient();
-  const searchParams = await props.searchParams;
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     notFound();
   }
 
+  const supabase = await createClient();
+  const searchParams = await props.searchParams;
   const { data: rankings } = await supabase
     .from('rankings')
     .select(

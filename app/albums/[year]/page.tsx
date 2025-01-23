@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import invariant from 'tiny-invariant';
 
 import { createClient } from 'utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { AllTimeListItem } from '../all-time/edit/EditAllTimeRankings';
 import EditRankings from './EditRankings';
 
@@ -16,16 +17,14 @@ export const metadata = {
 };
 
 export default async function EditRankingsPage(props: Props) {
-  const supabase = await createClient();
-  const { year } = await props.params;
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     notFound();
   }
 
+  const supabase = await createClient();
+  const { year } = await props.params;
   const { data: albums } = await supabase
     .from('albums')
     .select(

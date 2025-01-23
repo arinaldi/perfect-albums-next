@@ -2,14 +2,12 @@
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { type MutateResult } from '@/utils/types';
 import { albumSchema, type AlbumInput } from './schema';
 
 export async function addAlbum(input: AlbumInput): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -28,6 +26,7 @@ export async function addAlbum(input: AlbumInput): Promise<MutateResult> {
   }
 
   const { year, ...rest } = result.data;
+  const supabase = await createClient();
   const { error } = await supabase.from('albums').insert({
     ...rest,
     year: year.toString(),
@@ -50,10 +49,7 @@ export async function editAlbum(
   id: number,
   input: AlbumInput,
 ): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -62,6 +58,7 @@ export async function editAlbum(
     };
   }
 
+  const supabase = await createClient();
   const { data: album } = await supabase
     .from('albums')
     .select('*')
@@ -120,10 +117,7 @@ export async function editAlbum(
 }
 
 export async function deleteAlbum(id: number): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -132,6 +126,7 @@ export async function deleteAlbum(id: number): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { data: album } = await supabase
     .from('albums')
     .select('*')

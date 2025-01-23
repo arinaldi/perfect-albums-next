@@ -3,12 +3,11 @@ import Link from 'next/link';
 import StatCard from '@/app/dashboard/StatCard';
 import { ROUTES_ADMIN } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 
 export default async function DashboardAlbums() {
+  const user = await getUser();
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
   const { count } = await supabase
     .from('albums')
     .select('*', { count: 'exact', head: true });

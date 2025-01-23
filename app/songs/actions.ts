@@ -3,14 +3,12 @@ import { revalidatePath } from 'next/cache';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { type MutateResult } from '@/utils/types';
 import { SongInput, songSchema } from './schema';
 
 export async function addSong(input: SongInput): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -28,6 +26,7 @@ export async function addSong(input: SongInput): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase.from('songs').insert(input);
 
   if (error) {
@@ -49,10 +48,7 @@ export async function editSong(
   id: number,
   input: SongInput,
 ): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -70,6 +66,7 @@ export async function editSong(
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase.from('songs').update(input).eq('id', id);
 
   if (error) {
@@ -88,10 +85,7 @@ export async function editSong(
 }
 
 export async function deleteSong(id: number): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -107,6 +101,7 @@ export async function deleteSong(id: number): Promise<MutateResult> {
     };
   }
 
+  const supabase = await createClient();
   const { error } = await supabase.from('songs').delete().eq('id', id);
 
   if (error) {

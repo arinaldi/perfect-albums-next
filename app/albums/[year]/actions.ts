@@ -2,6 +2,7 @@
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
+import { getUser } from '@/utils/supabase/user';
 import { type MutateResult } from '@/utils/types';
 
 interface Rankings {
@@ -13,10 +14,7 @@ export async function editRankings(
   rankings: Rankings[],
   year: string,
 ): Promise<MutateResult> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getUser();
 
   if (!user) {
     return {
@@ -25,6 +23,7 @@ export async function editRankings(
     };
   }
 
+  const supabase = await createClient();
   const { data: favorites, error: fetchError } = await supabase
     .from('albums')
     .select(
