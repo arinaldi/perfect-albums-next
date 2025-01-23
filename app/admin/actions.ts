@@ -59,13 +59,13 @@ export async function editAlbum(
   }
 
   const supabase = await createClient();
-  const { data: album } = await supabase
+  const { data: album, error: albumError } = await supabase
     .from('albums')
     .select('*')
     .eq('id', id)
     .single();
 
-  if (!album) {
+  if (!album || albumError) {
     return {
       message: MESSAGES.NO_DATA,
       type: 'error',
@@ -84,11 +84,18 @@ export async function editAlbum(
   const { year, ...rest } = result.data;
 
   if (album.favorite && !rest.favorite) {
-    const { data: ranking } = await supabase
+    const { data: ranking, error: rankingError } = await supabase
       .from('rankings')
       .select('*')
       .eq('album_id', id)
       .single();
+
+    if (rankingError) {
+      return {
+        message: rankingError.message,
+        type: 'error',
+      };
+    }
 
     if (ranking) {
       await supabase.from('rankings').delete().eq('id', ranking.id);
@@ -127,13 +134,13 @@ export async function deleteAlbum(id: number): Promise<MutateResult> {
   }
 
   const supabase = await createClient();
-  const { data: album } = await supabase
+  const { data: album, error: albumError } = await supabase
     .from('albums')
     .select('*')
     .eq('id', id)
     .single();
 
-  if (!album) {
+  if (!album || albumError) {
     return {
       message: MESSAGES.NO_DATA,
       type: 'error',
@@ -141,11 +148,18 @@ export async function deleteAlbum(id: number): Promise<MutateResult> {
   }
 
   if (album.favorite) {
-    const { data: ranking } = await supabase
+    const { data: ranking, error: rankingError } = await supabase
       .from('rankings')
       .select('*')
       .eq('album_id', id)
       .single();
+
+    if (rankingError) {
+      return {
+        message: rankingError.message,
+        type: 'error',
+      };
+    }
 
     if (ranking) {
       await supabase.from('rankings').delete().eq('id', ranking.id);

@@ -9,9 +9,7 @@ async function getSessionUser() {
   try {
     const { data, error } = await supabase.auth.getUser();
 
-    if (error) {
-      return null;
-    }
+    if (error) return null;
 
     return data.user;
   } catch (error) {

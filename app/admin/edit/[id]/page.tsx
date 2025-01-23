@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import invariant from 'tiny-invariant';
 
 import { createClient } from 'utils/supabase/server';
 import EditAlbum from './EditAlbum';
@@ -22,9 +22,7 @@ export default async function EditAlbumPage(props: Props) {
     .eq('id', id)
     .single();
 
-  if (!data) {
-    notFound();
-  }
+  invariant(data);
 
   return <EditAlbum album={data} />;
 }

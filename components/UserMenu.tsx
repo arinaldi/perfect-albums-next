@@ -35,7 +35,7 @@ export function UserMenu() {
       return;
     }
 
-    if (pathname?.startsWith(ROUTES_ADMIN.base.href)) {
+    if (pathname.startsWith(ROUTES_ADMIN.base.href)) {
       router.push(ROUTE_HREF.TOP_ALBUMS);
     }
 
