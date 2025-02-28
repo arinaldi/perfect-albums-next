@@ -4,14 +4,10 @@ import { createClient } from 'utils/supabase/server';
 import EditAlbum from './EditAlbum';
 
 interface Props {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
-export const metadata = {
-  title: 'Edit album | Perfect Albums',
-};
+export const metadata = { title: 'Edit album | Perfect Albums' };
 
 export default async function EditAlbumPage(props: Props) {
   const supabase = await createClient();
@@ -19,7 +15,7 @@ export default async function EditAlbumPage(props: Props) {
   const { data } = await supabase
     .from('albums')
     .select('*')
-    .eq('id', id)
+    .eq('id', parseInt(id, 10))
     .single();
 
   invariant(data);
