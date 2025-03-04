@@ -2,7 +2,7 @@ import 'server-only';
 import invariant from 'tiny-invariant';
 
 import { formatReleases } from '@/utils';
-import { createClient } from '@/utils/supabase/general';
+import { supabase } from '@/utils/supabase/general';
 import NewReleases from './NewReleases';
 
 export const metadata = {
@@ -11,7 +11,6 @@ export const metadata = {
 
 async function getReleases() {
   'use cache';
-  const supabase = createClient();
   const { data } = await supabase.from('releases').select('*').order('artist');
 
   return data;

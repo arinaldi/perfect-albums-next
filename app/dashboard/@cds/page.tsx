@@ -1,8 +1,7 @@
 import StatCard from '@/app/dashboard/StatCard';
-import { createClient } from '@/utils/supabase/general';
+import { supabase } from '@/utils/supabase/general';
 
 export default async function DashboardCDs() {
-  const supabase = createClient();
   const { count } = await supabase
     .from('albums')
     .select('*', { count: 'exact', head: true })

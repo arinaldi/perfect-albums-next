@@ -2,7 +2,7 @@ import 'server-only';
 import invariant from 'tiny-invariant';
 
 import { formatFavorites } from 'utils';
-import { createClient } from 'utils/supabase/general';
+import { supabase } from 'utils/supabase/general';
 import TopAlbums from './TopAlbums';
 
 export const metadata = {
@@ -11,7 +11,6 @@ export const metadata = {
 
 async function getAlbums() {
   'use cache';
-  const supabase = createClient();
   const { data } = await supabase
     .from('albums')
     .select(
