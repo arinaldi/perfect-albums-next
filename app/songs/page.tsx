@@ -9,9 +9,16 @@ export const metadata = {
   title: 'Featured songs | Perfect Albums',
 };
 
-export default async function FeaturedSongsPage() {
+async function getSongs() {
+  'use cache';
   const supabase = createClient();
   const { data } = await supabase.from('songs').select('*').order('artist');
+
+  return data;
+}
+
+export default async function FeaturedSongsPage() {
+  const data = await getSongs();
 
   invariant(data);
 

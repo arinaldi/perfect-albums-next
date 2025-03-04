@@ -45,6 +45,9 @@ const config: NextConfig = {
       },
     ];
   },
+  experimental: {
+    useCache: true,
+  },
   reactStrictMode: true,
 };
 

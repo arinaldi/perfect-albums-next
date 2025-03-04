@@ -9,9 +9,16 @@ export const metadata = {
   title: 'New releases | Perfect Albums',
 };
 
-export default async function NewReleasesPage() {
+async function getReleases() {
+  'use cache';
   const supabase = createClient();
   const { data } = await supabase.from('releases').select('*').order('artist');
+
+  return data;
+}
+
+export default async function NewReleasesPage() {
+  const data = await getReleases();
 
   invariant(data);
 

@@ -1,4 +1,5 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 
 import { MESSAGES } from '@/utils/constants';
 import { createClient } from '@/utils/supabase/server';
@@ -69,6 +70,8 @@ export async function editRankings(
       type: 'error',
     };
   }
+
+  revalidatePath('/albums');
 
   return {
     data: null,
