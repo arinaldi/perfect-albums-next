@@ -3,7 +3,7 @@
   "version": "7.0.1",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next dev --turbo -p 3006",
+    "dev": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next dev --turbopack -p 3006",
     "build": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next build",
     "lint": "next lint",
     "start": "NEXT_PUBLIC_APP_VERSION=$npm_package_version next start",

@@ -2,7 +2,7 @@ import 'server-only';
 import invariant from 'tiny-invariant';
 
 import { formatSongs } from '@/utils';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/general';
 import FeaturedSongs from './FeaturedSongs';
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default async function FeaturedSongsPage() {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data } = await supabase.from('songs').select('*').order('artist');
 
   invariant(data);

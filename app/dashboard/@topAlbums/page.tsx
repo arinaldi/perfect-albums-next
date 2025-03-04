@@ -2,10 +2,10 @@ import Link from 'next/link';
 
 import StatCard from '@/app/dashboard/StatCard';
 import { ROUTE_HREF } from '@/utils/constants';
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@/utils/supabase/general';
 
 export default async function DashboardAlbums() {
-  const supabase = await createClient();
+  const supabase = createClient();
   const { count } = await supabase
     .from('albums')
     .select('*', { count: 'exact', head: true })
