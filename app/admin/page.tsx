@@ -1,10 +1,9 @@
 import 'server-only';
-import { type SupabaseClient } from '@supabase/supabase-js';
 
 import Admin from 'app/admin/Admin';
 import { parseAdminQuery } from 'utils';
 import { SORT_DIRECTION } from 'utils/constants';
-import { createClient } from 'utils/supabase/server';
+import { createClient, type SupabaseClient } from 'utils/supabase/server';
 import { Album } from 'utils/types';
 
 export const metadata = {

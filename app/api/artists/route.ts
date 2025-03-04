@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import { type SupabaseClient } from '@supabase/supabase-js';
 
-import { createClient } from 'utils/supabase/server';
+import { createClient, type SupabaseClient } from 'utils/supabase/server';
 
 interface Artist {
   artist: string;
@@ -10,7 +9,7 @@ interface Artist {
 async function getArtists(supabase: SupabaseClient): Promise<string[]> {
   // https://www.jeffreyknox.dev/blog/postgresql-functions-in-supabase/
   const { data, error } = await supabase.rpc('get_artists');
-  const artists: Artist[] = data;
+  const artists = data as unknown as Artist[];
 
   if (error) throw error;
   if (artists) return artists.map((a) => a.artist);

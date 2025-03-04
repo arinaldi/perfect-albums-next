@@ -1,7 +1,6 @@
 import 'server-only';
 
 import { BASE_URL } from '@/utils/constants';
-import { createClient } from '@/utils/supabase/server';
 import Artists from './Artists';
 
 interface Payload {
@@ -19,7 +18,6 @@ async function getArtists(): Promise<Payload> {
 }
 
 export default async function ArtistsPage() {
-  const supabase = await createClient();
   const { artists } = await getArtists();
 
   return <Artists artists={artists} />;

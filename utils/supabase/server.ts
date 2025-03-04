@@ -4,6 +4,15 @@ import { createServerClient } from '@supabase/ssr';
 
 import { type Database } from 'utils/db-types';
 
+function createFetch(options: Pick<RequestInit, 'next' | 'cache'>) {
+  return function (url: RequestInfo | URL, init?: RequestInit) {
+    return fetch(url, {
+      ...init,
+      ...options,
+    });
+  };
+}
+
 export async function createClient() {
   const cookieStore = await cookies();
 
@@ -22,6 +31,14 @@ export async function createClient() {
             );
           } catch (error) {}
         },
+      },
+      global: {
+        fetch: createFetch({
+          next: {
+            revalidate: 3600,
+            tags: ['supabase'],
+          },
+        }),
       },
     },
   );
