@@ -13,8 +13,11 @@ export const metadata = {
 };
 
 async function getArtists(): Promise<Payload> {
+  'use cache';
   const res = await fetch(`${BASE_URL}/api/artists`);
-  return res.json();
+  const data = await res.json();
+
+  return data;
 }
 
 export default async function ArtistsPage() {

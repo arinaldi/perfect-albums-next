@@ -4,7 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ROUTE_HREF, ROUTES_ADMIN } from 'utils/constants';
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request });
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -17,9 +21,9 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );
-          supabaseResponse = NextResponse.next({ request });
+          response = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options),
+            response.cookies.set(name, value, options),
           );
         },
       },
@@ -45,5 +49,5 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.rewrite(new URL('/not-found', request.url));
   }
 
-  return supabaseResponse;
+  return response;
 }
