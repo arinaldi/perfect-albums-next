@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: Children) {
       <UserProvider user={user}>
         <body
           className={cn(
-            'min-h-dvh bg-background antialiased',
+            'bg-background min-h-dvh antialiased',
             GeistSans.className,
             GeistMono.variable,
           )}
@@ -34,8 +34,8 @@ export default async function RootLayout({ children }: Children) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <NavBar />
             <main className="isolate">{children}</main>
-            <Toaster position="top-right" richColors />
             <TailwindIndicator />
+            <Toaster position="top-right" richColors />
           </ThemeProvider>
         </body>
       </UserProvider>
