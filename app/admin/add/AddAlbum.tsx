@@ -13,7 +13,7 @@ import { addAlbum } from '../actions';
 export default function AddAlbum() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const form = useForm<AlbumInput>({
+  const form = useForm({
     defaultValues: {
       artist: '',
       title: '',

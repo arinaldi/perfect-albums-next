@@ -18,7 +18,7 @@ import PasswordInput from '@/components/PasswordInput';
 import SubmitButton from '@/components/SubmitButton';
 import { useMediaQuery } from '@/hooks/media-query';
 import { signIn } from './actions';
-import { initialState, SignInInput, signInSchema } from './schema';
+import { initialState, signInSchema } from './schema';
 
 interface Props {
   email: string;
@@ -28,7 +28,7 @@ interface Props {
 export default function PasswordForm({ email, onCancel }: Props) {
   const [state, formAction, pending] = useActionState(signIn, initialState);
   const isDesktop = useMediaQuery();
-  const form = useForm<SignInInput>({
+  const form = useForm({
     defaultValues: {
       email,
       password: '',

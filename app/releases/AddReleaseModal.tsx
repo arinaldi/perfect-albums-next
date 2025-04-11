@@ -28,7 +28,7 @@ const defaultValues = {
 export default function AddReleaseModal() {
   const user = useUser();
   const [open, setOpen] = useState(false);
-  const form = useForm<ReleaseInput>({
+  const form = useForm({
     defaultValues,
     resolver: zodResolver(releaseSchema),
   });

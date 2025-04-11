@@ -23,7 +23,7 @@ import {
 import SubmitButton from '@/components/SubmitButton';
 import { useMediaQuery } from '@/hooks/media-query';
 import { verifyOtp } from './actions';
-import { initialState, verifyOtpSchema, type VerifyOtpInput } from './schema';
+import { initialState, verifyOtpSchema } from './schema';
 
 interface Props {
   email: string;
@@ -33,7 +33,7 @@ interface Props {
 export default function OtpForm({ email, onCancel }: Props) {
   const [state, formAction, pending] = useActionState(verifyOtp, initialState);
   const isDesktop = useMediaQuery();
-  const form = useForm<VerifyOtpInput>({
+  const form = useForm({
     defaultValues: {
       code: '',
       email,

@@ -19,7 +19,7 @@ interface Props {
 export default function EditAlbum({ album }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const form = useForm<AlbumInput>({
+  const form = useForm({
     defaultValues: {
       artist: album.artist,
       title: album.title,

@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function EditSongModal({ onClose, song }: Props) {
-  const form = useForm<SongInput>({
+  const form = useForm({
     defaultValues: {
       artist: song.artist,
       title: song.title,

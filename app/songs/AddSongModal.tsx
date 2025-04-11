@@ -28,7 +28,7 @@ const defaultValues = {
 export default function AddSongModal() {
   const user = useUser();
   const [open, setOpen] = useState(false);
-  const form = useForm<SongInput>({
+  const form = useForm({
     defaultValues,
     resolver: zodResolver(songSchema),
   });

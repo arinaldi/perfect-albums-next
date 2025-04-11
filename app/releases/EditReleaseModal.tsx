@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function EditReleaseModal({ onClose, release }: Props) {
-  const form = useForm<ReleaseInput>({
+  const form = useForm({
     defaultValues: {
       artist: release.artist,
       title: release.title,
