@@ -3,18 +3,18 @@ import { cache } from 'react';
 
 import { createClient } from './server';
 
-async function getSessionUser() {
+async function getClaims() {
   const supabase = await createClient();
 
   try {
-    const { data, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getClaims();
 
-    if (error) return null;
+    if (!data || error) return null;
 
-    return data.user;
+    return data.claims;
   } catch (error) {
     return null;
   }
 }
 
-export const getUser = cache(getSessionUser);
+export const getUser = cache(getClaims);

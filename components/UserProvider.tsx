@@ -1,11 +1,11 @@
 'use client';
 import { createContext, useContext } from 'react';
-import { type User } from '@supabase/supabase-js';
+import { type JwtPayload, type User } from '@supabase/supabase-js';
 
 import { Children } from '@/utils/types';
 
 interface Context {
-  user: User | null;
+  user: JwtPayload | null;
 }
 
 const UserContext = createContext<Context>({ user: null });
@@ -21,7 +21,7 @@ export function useUser() {
 }
 
 interface Props extends Children {
-  user: User | null;
+  user: JwtPayload | null;
 }
 
 export function UserProvider({ children, user }: Props) {
