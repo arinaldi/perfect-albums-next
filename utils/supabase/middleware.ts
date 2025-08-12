@@ -29,23 +29,21 @@ export async function updateSession(request: NextRequest) {
       },
     },
   );
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
   if (request.nextUrl.pathname === '/') {
     const url = request.nextUrl.clone();
-    url.pathname = user ? ROUTES_ADMIN.base.href : ROUTE_HREF.TOP_ALBUMS;
+    url.pathname = data ? ROUTES_ADMIN.base.href : ROUTE_HREF.TOP_ALBUMS;
     return NextResponse.redirect(url);
   }
 
-  if (request.nextUrl.pathname === ROUTE_HREF.SIGNIN && user) {
+  if (request.nextUrl.pathname === ROUTE_HREF.SIGNIN && data) {
     const url = request.nextUrl.clone();
     url.pathname = ROUTES_ADMIN.base.href;
     return NextResponse.redirect(url);
   }
 
-  if (request.nextUrl.pathname.startsWith(ROUTES_ADMIN.base.href) && !user) {
+  if (request.nextUrl.pathname.startsWith(ROUTES_ADMIN.base.href) && !data) {
     return NextResponse.rewrite(new URL('/not-found', request.url));
   }
 

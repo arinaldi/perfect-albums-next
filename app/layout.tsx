@@ -1,4 +1,5 @@
 import 'server-only';
+import { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 
@@ -12,7 +13,7 @@ import { getUser } from '@/utils/supabase/user';
 import { Children } from '@/utils/types';
 import 'styles/globals.css';
 
-export const metadata = {
+export const metadata: Metadata = {
   icons: {
     icon: 'https://fav.farm/🎧',
   },
@@ -26,7 +27,7 @@ export default async function RootLayout({ children }: Children) {
       <UserProvider user={user}>
         <body
           className={cn(
-            'bg-background min-h-dvh antialiased',
+            'bg-background min-h-dvh overscroll-none antialiased',
             GeistSans.className,
             GeistMono.variable,
           )}
