@@ -1,8 +1,8 @@
 'use client';
 import * as React from 'react';
-import { type DialogProps } from '@radix-ui/react-dialog';
+import { VisuallyHidden } from 'radix-ui';
 import { SearchIcon } from 'lucide-react';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+
 import { Command as CommandPrimitive } from 'cmdk';
 
 import { cn } from '@/lib/utils';
@@ -27,15 +27,16 @@ const Command = ({
 );
 Command.displayName = CommandPrimitive.displayName;
 
-interface CommandDialogProps extends DialogProps {}
-
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({
+  children,
+  ...props
+}: React.ComponentProps<typeof Dialog>) => {
   return (
     <Dialog {...props}>
-      <VisuallyHidden>
+      <VisuallyHidden.Root>
         <DialogTitle />
         <DialogDescription />
-      </VisuallyHidden>
+      </VisuallyHidden.Root>
       <DialogContent className="overflow-hidden p-0">
         <Command
           className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-1.5 [&_[cmdk-item]_svg]:size-4"
