@@ -1,11 +1,12 @@
 import 'server-only';
+import { Metadata } from 'next';
 import invariant from 'tiny-invariant';
 
 import { formatReleases } from '@/utils';
 import { supabase } from '@/utils/supabase/general';
 import NewReleases from './NewReleases';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'New releases | Perfect Albums',
 };
 

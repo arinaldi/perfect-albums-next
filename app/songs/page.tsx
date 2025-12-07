@@ -1,11 +1,12 @@
 import 'server-only';
+import { Metadata } from 'next';
 import invariant from 'tiny-invariant';
 
 import { formatSongs } from '@/utils';
 import { supabase } from '@/utils/supabase/general';
 import FeaturedSongs from './FeaturedSongs';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Featured songs | Perfect Albums',
 };
 

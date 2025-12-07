@@ -1,4 +1,5 @@
 import 'server-only';
+import { Metadata } from 'next';
 
 import Admin from 'app/admin/Admin';
 import { parseAdminQuery } from 'utils';
@@ -6,7 +7,7 @@ import { SORT_DIRECTION } from 'utils/constants';
 import { createClient, type SupabaseClient } from 'utils/supabase/server';
 import { Album } from 'utils/types';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Admin | Perfect Albums',
 };
 const { ASC, DESC } = SORT_DIRECTION;

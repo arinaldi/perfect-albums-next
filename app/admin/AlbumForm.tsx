@@ -16,7 +16,18 @@ import SubmitButton from '@/components/SubmitButton';
 import { AlbumInput } from './schema';
 
 interface Props {
-  form: UseFormReturn<AlbumInput>;
+  form: UseFormReturn<
+    {
+      artist: string;
+      title: string;
+      year: unknown;
+      studio: unknown;
+      cd: unknown;
+      favorite: unknown;
+    },
+    unknown,
+    AlbumInput
+  >;
   onSubmit: (event: FormEvent<Element>) => Promise<void>;
   submitting: boolean;
 }
@@ -58,7 +69,12 @@ export default function AlbumForm({ form, onSubmit, submitting }: Props) {
             <FormItem>
               <FormLabel>Year</FormLabel>
               <FormControl>
-                <Input inputMode="numeric" type="number" {...field} />
+                <Input
+                  {...field}
+                  inputMode="numeric"
+                  type="number"
+                  value={field.value as number}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -68,10 +84,10 @@ export default function AlbumForm({ form, onSubmit, submitting }: Props) {
           control={form.control}
           name="studio"
           render={({ field }) => (
-            <FormItem className="flex space-x-3 space-y-0">
+            <FormItem className="flex space-y-0 space-x-3">
               <FormControl>
                 <Checkbox
-                  checked={field.value}
+                  checked={field.value as boolean}
                   name={field.name}
                   onCheckedChange={field.onChange}
                 />
@@ -87,10 +103,10 @@ export default function AlbumForm({ form, onSubmit, submitting }: Props) {
           control={form.control}
           name="cd"
           render={({ field }) => (
-            <FormItem className="flex space-x-3 space-y-0">
+            <FormItem className="flex space-y-0 space-x-3">
               <FormControl>
                 <Checkbox
-                  checked={field.value}
+                  checked={field.value as boolean}
                   name={field.name}
                   onCheckedChange={field.onChange}
                 />
@@ -106,10 +122,10 @@ export default function AlbumForm({ form, onSubmit, submitting }: Props) {
           control={form.control}
           name="favorite"
           render={({ field }) => (
-            <FormItem className="flex space-x-3 space-y-0">
+            <FormItem className="flex space-y-0 space-x-3">
               <FormControl>
                 <Checkbox
-                  checked={field.value}
+                  checked={field.value as boolean}
                   name={field.name}
                   onCheckedChange={field.onChange}
                 />

@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import invariant from 'tiny-invariant';
 
@@ -9,7 +10,7 @@ import EditAllTimeRankings, {
   type AllTimeListItem,
 } from './EditAllTimeRankings';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Edit all-time rankings | Perfect Albums',
 };
 const { ASC, DESC } = SORT_DIRECTION;

@@ -1,10 +1,11 @@
+import { Metadata } from 'next';
 import invariant from 'tiny-invariant';
 
 import { createClient } from 'utils/supabase/server';
 import { type AllTimeListItem } from './edit/EditAllTimeRankings';
 import AllTimeRankings from './AllTimeRankings';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'All-time albums | Perfect Albums',
 };
 

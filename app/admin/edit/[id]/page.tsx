@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import invariant from 'tiny-invariant';
 
 import { createClient } from 'utils/supabase/server';
@@ -7,7 +8,7 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-export const metadata = { title: 'Edit album | Perfect Albums' };
+export const metadata: Metadata = { title: 'Edit album | Perfect Albums' };
 
 export default async function EditAlbumPage(props: Props) {
   const supabase = await createClient();

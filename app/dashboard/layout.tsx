@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
+import { Metadata } from 'next';
 
 import AppLayout from '@/components/AppLayout';
 import { Children } from '@/utils/types';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Dashboard | Perfect Albums',
 };
 
@@ -16,7 +17,6 @@ interface Props extends Children {
   topAlbums: ReactNode;
   totalAlbums: ReactNode;
   version: ReactNode;
-  years: ReactNode;
 }
 
 export default function DashboardLayout({
@@ -28,7 +28,6 @@ export default function DashboardLayout({
   topAlbums,
   totalAlbums,
   version,
-  years,
 }: Props) {
   return (
     <AppLayout title="Dashboard">
@@ -44,7 +43,6 @@ export default function DashboardLayout({
         </div>
         <div className="flex-1">{leaderboard}</div>
       </div>
-      <div className="mt-4">{years}</div>
     </AppLayout>
   );
 }

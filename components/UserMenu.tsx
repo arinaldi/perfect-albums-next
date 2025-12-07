@@ -51,7 +51,7 @@ export function UserMenu() {
               <AvatarImage src="/avatars/02.png" />
               <AvatarFallback>
                 {' '}
-                {`${user.user_metadata.firstName[0]}${user.user_metadata.lastName[0]}`}
+                {`${user.user_metadata?.firstName[0]}${user.user_metadata?.lastName[0]}`}
               </AvatarFallback>
             </Avatar>
           ) : (
@@ -65,7 +65,7 @@ export function UserMenu() {
           <>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm leading-none font-medium">{`${user.user_metadata.firstName} ${user.user_metadata.lastName}`}</p>
+                <p className="text-sm leading-none font-medium">{`${user.user_metadata?.firstName} ${user.user_metadata?.lastName}`}</p>
                 <p className="text-muted-foreground text-xs leading-none">
                   {user.email}
                 </p>

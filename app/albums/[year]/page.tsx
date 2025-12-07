@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import invariant from 'tiny-invariant';
 
@@ -12,7 +13,7 @@ interface Props {
   }>;
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Edit rankings | Perfect Albums',
 };
 

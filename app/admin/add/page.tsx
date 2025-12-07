@@ -1,6 +1,8 @@
+import { Metadata } from 'next';
+
 import AddAlbum from './AddAlbum';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Add album | Perfect Albums',
 };
 

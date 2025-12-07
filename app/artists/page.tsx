@@ -1,4 +1,5 @@
 import 'server-only';
+import { Metadata } from 'next';
 
 import { BASE_URL } from '@/utils/constants';
 import Artists from './Artists';
@@ -8,7 +9,7 @@ interface Payload {
   success: boolean;
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Artists | Perfect Albums',
 };
 
